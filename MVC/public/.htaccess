@@ -1,0 +1,8 @@
+RewriteEngine On
+#if it is a valid director or file go to that file or directory
+RewriteCond %{REQUEST_FILENAME} !-f 
+RewriteCond %{REQUEST_FILENAME} !-d
+
+#if not go to index 
+RewriteRule ^(.*)$ index.php?url=$1 [L,QSA]
+ 
