@@ -8,6 +8,14 @@ Trait Model{
     protected $limit = 10;
     protected $offset = 0;
 
+    public function findAll()
+	{
+	 
+		$query = "select * from $this->table order by $this->order_column $this->order_type limit $this->limit offset $this->offset";
+
+		return $this->query($query);
+	}
+
 
     public function where($data,$data_not=[]){
 
@@ -86,13 +94,10 @@ Trait Model{
         
         $query .= " where $id_column=:$id_column";
 
-         $this->query($query, $data);
-         echo $query;
-        return false;
+        $data[$id_column] = $id;
 
-        if($result){
-            return $result[0];
-        }
+         $this->query($query, $data);
+         
         return false;
 
 
@@ -100,7 +105,7 @@ Trait Model{
 
     public function delete($id,$id_column='id'){
 
-        $data['id_column'] = $id;
+        $data[$id_column] = $id;
         
         $query = "delete from $this->table where $id_column=:$id_column";
     
