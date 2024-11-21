@@ -9,7 +9,7 @@ Trait Model {
     protected $offset = 0;
     protected $order_type = "desc";
     protected $order_column = "userid";
-    protected $errors = [];
+    public $errors = [];
 
     function test(){
         $query= "SELECT * FROM user";

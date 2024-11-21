@@ -6,19 +6,24 @@
     <link rel="stylesheet" href="<?=ROOT?>/assets/css/uma/main.css">
 </head>
 <body>
-<div id="preloader">
-        <img src="<?=ROOT?>/assets/images/logo.png" alt="PEAK Logo" class="logoo">
-    </div>
-    <div  id="main-content" style="display: none;">
-        <section class="header">
+    
+    <section class="header">
         <nav>
             <a href="index.view.html"><img src="<?=ROOT?>/assets/images/logo.png"></a>
             <div class="nav-links" id="navLinks">
                 <span onclick="hidenav()" class="close-btn">&#215;</span> <!-- Move this line -->
                 <ul>
-                    <li><a href="#">Home</a></li>
-                    <li><a href="<?=ROOT?>/signup">Signup</a></li>
-                    <li><a href="<?=ROOT?>/login" class=button>Log In</a></li>
+                <li><a href="index.view.html">Home</a></li>
+                    <li><a href="reservations.view.html">Reservations</a></li>
+                    <li><a href="contact.view.html">Contact Us</a></li>
+                    <li class="dropdown">
+                        <a href="javascript:void(0)" onclick="toggleDropdown()">Profile &#9662;</a>
+                        <div class="dropdown-content" id="profileDropdown">
+                            <a href="profile.view.html">Settings</a>
+                            <a href="">Logout</a>
+                        </div>
+                    </li>
+
                     
             
                 </ul>
@@ -35,11 +40,11 @@
                 we’ve got you covered.</p>
             <a href="<?=ROOT?>/login"" class="herobutton">Make a Reservation now!</a>
         </div>
-        </section>
+    </section>
        
 
 
-        <section class="offer">
+    <section class="offer">
         <h2>What We Offer</h2>
         <div class="row">
             
@@ -61,10 +66,10 @@
                 </div>
             </div>
         </div>   
-        </section>
+    </section>
 
 
-        <section class="facilities">
+    <section class="facilities">
         <h2> Our Facilities</h2>
         <p>At Peak, we offer a range of exceptional sports facilities, each designed 
             for optimal performance and versatility. From spacious outdoor areas to 
@@ -98,9 +103,9 @@
                  it ensures a top-notch experience for athletes and spectators alike.</p>
             </div>
        </div>
-        </section>
+    </section>
 
-        <section class="feedbacks">
+    <section class="feedbacks">
         <h2>Community Highlights</h2>
         <p>See what others have to say about their experience with our facilities! Here's some feedback
              from past users who made reservations and enjoyed our top-quality venues.</p>
@@ -140,9 +145,9 @@
                     </div>
                 </div>
              </div>
-        </section>
+    </section>
 
-        <section class="footer">
+    <section class="footer">
         <h4>About Us</h4>
         <p>© 2024 Physical Education Department, University of Colombo. All rights reserved. 
             We are committed to fostering a vibrant community that promotes health, wellness, 
@@ -155,8 +160,8 @@
                 <img src="<?=ROOT?>/assets/images/phone.webp">
                 <img src="<?=ROOT?>/assets/images/thefreeforty_location-128.webp">
              </div>
-        </section>
-    </div>
+    </section>
+
 
 
     <!-- JavaScript for toggle menu -->

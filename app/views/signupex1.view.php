@@ -19,32 +19,85 @@
 
         <main>
             <div class="role-selection">
-            <form action="<?=ROOT?>/signupex2" method="post" class="signup-form">
-            <input type="text" name="fullName" placeholder="Full Name with Initials" required>
-            <input type="text" name="nic" placeholder="NIC" required>
-            <input type="email" name="email" placeholder="E-mail Address" required>
-            <input type="text" name="contactNumber" placeholder="Contact Number" required>
-            <input type="text" name="company" placeholder="Company" required>
-            <input type="text" name="address" placeholder="Address" required>
-            <input type="date" name="dob" placeholder="Date of Birth" required>
+            <form  method="post" class="signup-form">
+
+
+
+
+            
+        <div class="formlable">Name with Initials </div>
+        <input type="text" name="fullName" >
+        
+
+        <div class="formlable">Date of Birth </div>
+         <input type="date" name="dob" >
+        
+
+         <div class="formlable">NIC </div>
+        <input type="text" name="nic"  >
+        
+
+        <div class="formlable">Contact Number </div>
+        <input type="text" name="contactNumber" >
+       
+
+    
+  
+        <div class="formlable">E-mail </div>
+            <input type="email" name="email"  >
+
+            <div class="formlable">Organization ID</div>   
+            <input type="text" name="companyid"  >
+           
+
+            <div class="formlable">Organization Name</div>   
+            <input type="text" name="company"  >
+            
+          
+
+            <div class="formlable">Organization Address </div>
+            <input type="text" name="address" >
+            
+           
 
             <div class="gender-selection">
-                <label>Gender:</label>
+                <label class="formlable">Gender</label>
                 <div>
-                <input type="radio" id="male" name="gender" value="male" required>
+                <input type="radio" id="male" name="gender" value="male" >
                 <label for="male">Male</label>
 
-                <input type="radio" id="female" name="gender" value="female" required>
+                <input type="radio" id="female" name="gender" value="female" >
                 <label for="female">Female</label>
                 </div>
             </div>
+            
 
-            <button type="submit" class="button">Next</button>
+            
+           
 
-        </form>   
-            </div>
+            <div class="formlable">Password </div>
+            <input type="password"  >
+           
+            <div class="formlable">Confirm Password </div>
+            <input type="password"  >
+            
+
+           
+
+
+
+            <div class="terms-conditions">
+                <input type="checkbox" id="terms" >
+                <label for="terms">I have read and agree to the <a href="#">Terms</a>, <a href="#">Privacy Policy</a>, and <a href="#">Cookies Policy</a>.</label>
+                
+            
+                </div>
+            <button type="submit" class="button">Sign Up</button>
+            </form>    
+           
         </main>
     </div>
+    <script src="<?=ROOT?>/assets/js/image.js"></script>
 </body>
 </html>
 

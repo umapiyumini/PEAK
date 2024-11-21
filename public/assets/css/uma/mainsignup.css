@@ -18,8 +18,8 @@ body, html {
 
 .top-border::before {
     content: '';
-    position: absolute;
-    top: 0;
+    position: absolute; 
+    top: 0;            
     right: 0;
     border-left: 60px solid transparent;
     border-bottom: 50px solid #2c0827;
@@ -129,6 +129,7 @@ h2 {
     background-color: #eee;
 }
 
+
 /* Media Queries for Responsiveness */
 @media (max-width: 768px) {
     .logo {
@@ -166,8 +167,125 @@ h2 {
 
 /* external second page  */
 
+.signup-form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px; /* Space between rows */
+}
+
+.form-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start; /* Align items at the top */
+    gap: 20px; /* Space between the fields and image uploader */
+}
+
+.form-fields {
+    display: flex;
+    flex-direction: column;
+    gap: 10px; /* Space between individual input fields */
+    flex: 1; /* Allow it to grow */
+    
+}
+
+.form-fields input {
+    width: 400px; /* Set a fixed width */
+    padding: 10px; /* Adds spacing inside the input */
+    font-size: 16px; /* Adjusts text size */
+    border: 1px solid #ccc; /* Optional: Add a border for better visibility */
+    border-radius: 5px; /* Optional: Make corners rounded */
+    box-sizing: border-box; /* Ensures padding doesn't increase total width */
+}
+
+/* image uploader */
+.imageUploadBox {
+    position: relative;
+    top: 10px;
+    left: 50px;
+    width: 240px;
+    padding: 15px;
+    padding-bottom: 2px;
+    background-color:#d8cfe0;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    font-family: Arial, sans-serif;
+    /* z-index: 1000; */
+    height:250px;
+    
+    margin-bottom: 30px;
+    margin-right: 60px;
+    justify-content: center;
+    flex-shrink: 0; /* Prevent shrinking */
+   
+    
+}
+
+.imageUploadBox p{
+    color: #500047;
+}
+
+.imagePreviewBox {
+    width: 100%;
+    height: 150px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    background-color: #f0f0f0;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 10px;
+}
+
+#imageContainer img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 8px;
+}
+
+
+.imageChooseInput {
+    display: none;
+}
+
+
+.imageChooseBtn, .imageRemoveBtn {
+    display: inline-block;
+    padding: 8px 16px;
+    font-size: 14px;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    margin-top: 8px;
+    margin-bottom: 8px;
+    width:auto;
+}
+
+
+.imageChooseBtn {
+    background-color:#500047;
+}
+
+.imageChooseBtn:hover {
+    background-color:#2c0827;
+}
+
+
+.imageRemoveBtn {
+    background-color: #9d0909;
+}
+
+.imageRemoveBtn:hover {
+    background-color: #470a0a;
+}
+
 .role-selection input, .role-selection select {
-    width: 80%;
+    width: 100%;
     padding: 10px;
     margin-bottom: 20px;
     border: none;
@@ -187,7 +305,7 @@ h2 {
     align-items: center; /* Vertically align items */
     margin-bottom: 30px;
     width: 100%;
-    margin-left: 60px;
+    margin-left: 10px;
 }
 
 .gender-selection > label {
@@ -205,7 +323,7 @@ h2 {
 .gender-selection div label {
     font-size: 1rem;
     color: #500047;
-    padding: 10px 20px;
+    padding: 5px 10px;
     background-color: #d8cfe0;
     border: 2px solid #2c0827;
     border-radius: 25px;
@@ -252,22 +370,24 @@ h2 {
 /* Terms and conditions */
 .terms-conditions {
     display: flex;
-    align-items: center;
+    align-items: flex-start; /* Start alignment from the top */
+    gap: 10px; /* Add space between the checkbox and text */
     margin-bottom: 20px;
     font-size: 0.9rem;
     color: #500047;
 }
 
 .terms-conditions input[type="checkbox"] {
-    accent-color: #2c0827;
-    margin-left: 10px; /* Makes the checkbox purple */
-    padding: 0%;
-
+    accent-color: #2c0827; /* Set the checkbox color */
+    margin: 0; /* Reset any default margin */
+    padding: 0; /* Reset padding */
+    width: 16px; /* Standardize checkbox size */
+    height: 16px; /* Standardize checkbox size */
 }
 
 .terms-conditions label {
-    display: inline; /* Ensure label appears next to checkbox */
-    text-align: left;
+    flex: 1; /* Allow the label to take remaining space */
+    line-height: 1.5; /* Ensure proper line spacing */
 }
 
 .terms-conditions label a {
@@ -275,7 +395,18 @@ h2 {
     text-decoration: underline;
 }
 
+.alert {
+    color: #9d0909;
+    font-size: 14px;
+    text-align: left;
+    margin-bottom: 15px;
+}
 
+.formlable{
+    text-align: left;
+    color: #500047;
+    padding-right: 20px;
+}
 
 @media (max-width: 480px) {
     .top-border {

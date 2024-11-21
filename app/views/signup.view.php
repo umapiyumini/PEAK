@@ -28,9 +28,9 @@
                     <div class="role-icon">
                         <img src="<?=ROOT?>/assets/images/student.jpg" alt="Student Icon">
                     </div>
-                    <h3>Student or Staff of UOC</h3>
+                    <h3>Student of UOC</h3>
                     <p>Access and manage your personal and team-related activities.</p>
-                    <a href="<?=ROOT?>/signups1" class="role-button"><span>➔</span></a>
+                    <a href="<?=ROOT?>/signups2" class="role-button"><span>➔</span></a>
                 </div>
                 <div class="role-card">
                     <div class="role-icon">
