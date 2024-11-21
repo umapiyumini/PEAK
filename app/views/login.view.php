@@ -18,8 +18,8 @@
             <div class="login-box">
                 <img src="<?=ROOT?>/assets/images/logo.png" class="logo">
                 <h1>Welcome to PEAK!</h1>
-                <form action="login.php" method="POST"> <!-- Form action set to login.php -->
-                    <label for="username">Username</label>
+                <form  method="POST"> <!-- Form action set to login.php -->
+                    <label for="username">Email</label>
                     <input type="text" id="username" name="username" required>
                     <label for="password">Password</label>
                     <input type="password" id="password" name="password" required>

@@ -38,3 +38,17 @@ facilities.forEach(facility => {
 observer.observe(facility); // Start observing each facility
 });
 });
+
+// entry animation
+window.addEventListener('load', () => {
+    console.log('Page loaded');
+    const preloader = document.getElementById('preloader');
+    const mainContent = document.getElementById('main-content');
+
+    // Fade out preloader
+    preloader.style.opacity = '0';
+    setTimeout(() => {
+        preloader.style.display = 'none';
+        mainContent.style.display = 'block';
+    }, 1000); // Matches fade-out duration
+});
