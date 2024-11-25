@@ -1,0 +1,132 @@
+:root {
+    --darkpurple: #360335;
+    --mediumpurple: #4b0a4a;
+    --lightpurple: #ecafec;
+    --white: #ffffff;
+    --black: #000000;
+    --grey: #d5d1d1;
+    --purplegrey: #f7e3f7;
+    --lightgrey: #eee6f3;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: var(--white);
+    color: var(--black);
+    margin: 0;
+    padding: 0;
+}
+
+
+.about-us {
+    background-color: var(--white);
+    padding: 40px 20px;
+    margin-top: 20px;
+    text-align: justify;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.about-us h2 {
+    font-size: 2em;
+    color: var(--mediumpurple);
+    text-align: center;
+}
+
+.about-us p {
+    font-size: 1.1em;
+    line-height: 1.6;
+    color: var(--black);
+    margin-top: 40px;
+}
+
+.about-us ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.about-us li {
+    font-size: 1.1em;
+    padding: 8px;
+}
+
+.about-us img {
+    width: 100%;
+    max-width: 700px;
+    height: auto;
+    margin-top: 20px;
+    border-radius: 10px;
+}
+
+
+.section-title {
+    color: var(--mediumpurple);
+    font-size: 1.5em;
+    margin-top: 30px;
+}
+
+/* ------------------------------------------ */
+.about-us .image-container {
+    display: flex;  /* Align images in a row */
+    overflow-x: scroll;  /* Enables horizontal scrolling */
+    scroll-snap-type: x mandatory;  /* Makes the scroll snap to images */
+    gap: 20px;  /* Space between images */
+    padding-bottom: 10px;  /* Optional: Adds padding at the bottom */
+    margin-top: 20px;  /* Optional: Adds margin above the images */
+    width: 100%;  /* Ensures the container takes full width */
+    max-width: 100%;  /* Ensure no width restrictions */
+}
+
+.about-us img {
+    width: 50%;  /* Width of each image */
+    height: auto;  /* Maintain aspect ratio */
+    border-radius: 10px;  /* Optional: Adds rounded corners to images */
+    scroll-snap-align: start;  /* Ensures images align nicely when scrolled */
+}
+
+/* Optional: Adds styling for the scroll bar */
+.about-us .image-container::-webkit-scrollbar {
+    height: 8px;  /* Scroll bar height */
+}
+
+.about-us .image-container::-webkit-scrollbar-thumb {
+    background: var(--darkpurple);  /* Scrollbar color */
+    border-radius: 4px;
+}
+
+.about-us .image-container::-webkit-scrollbar-track {
+    background: var(--lightgrey);  /* Track color */
+}
+
+/* ----ped logo--- */
+
+.about-container {
+    display: flex;  /* Aligns text and logo horizontally */
+    justify-content: space-between;  /* Adds space between the text and the logo */
+    align-items: center;  /* Vertically centers the items */
+    gap: 20px;  /* Adds space between text and logo */
+    flex-wrap: wrap;  /* Ensures responsiveness on smaller screens */
+}
+
+.text-section {
+    flex: 1;  /* Takes up available space for the text */
+    max-width: 70%;  /* Limit text section width */
+}
+
+.logo-section {
+    flex: 0 0 30%;  /* Limits logo section width */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;  /* Centers logo horizontally */
+    align-items: center;  /* Centers logo vertically */
+}
+
+.logo-section img {
+    max-width: 100%;  /* Ensures the logo doesn't exceed the container */
+    height: auto;  /* Maintains aspect ratio */
+    max-height: 150px;  /* Sets a max height for the logo */
+}
+
+.right{
+    text-align:justify;
+}
