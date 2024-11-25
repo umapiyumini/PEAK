@@ -1,176 +1,138 @@
 <!DOCTYPE html>
-<html>
-<head>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Home</title>
-    <link rel="stylesheet" href="<?=ROOT?>/assets/css/uma/main.css">
-</head>
-<body>
-    
-    <section class="header">
-        <nav>
-            <a href="index.view.html"><img src="<?=ROOT?>/assets/images/logo.png"></a>
-            <div class="nav-links" id="navLinks">
-                <span onclick="hidenav()" class="close-btn">&#215;</span> <!-- Move this line -->
-                <ul>
-                <li><a href="index.view.html">Home</a></li>
-                    <li><a href="reservations.view.html">Reservations</a></li>
-                    <li><a href="contact.view.html">Contact Us</a></li>
-                    <li class="dropdown">
-                        <a href="javascript:void(0)" onclick="toggleDropdown()">Profile &#9662;</a>
-                        <div class="dropdown-content" id="profileDropdown">
-                            <a href="profile.view.html">Settings</a>
-                            <a href="">Logout</a>
-                        </div>
-                    </li>
-
-                    
-            
-                </ul>
-               
-            </div>
-            <span onclick="shownav()" class="menu-btn">&#9776;</span>
-        </nav>
-
-        <div class="textbox">
-            <h1>Welcome to PEAK</h1>
-            <p>Your gateway to seamless interaction within the Physical Education 
-                Department of the University of Colombo. Whether you're here to book 
-                our state-of-the-art facilities or engage with our vibrant sports community, 
-                we’ve got you covered.</p>
-            <a href="<?=ROOT?>/login"" class="herobutton">Make a Reservation now!</a>
-        </div>
-    </section>
-       
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-1.0">
+        <link rel="stylesheet" href="<?=ROOT?>/assets/css/uma/edashboard.css">
+        <title>External User Dashboard</title>
+    </head>
 
 
-    <section class="offer">
-        <h2>What We Offer</h2>
-        <div class="row">
-            
-            <div class="col text-col">
-                <h3> At Peak...</h3>
-                <p> we offer top-notch sports facilities including a spacious ground, 
-                    a modern indoor stadium, and well-maintained tennis courts. Our venues are 
-                    perfect for training, competitions, and recreational activities, ensuring an 
-                    optimal experience for all users.</p>
+    <body>
+        <!-- navigation bar -->
+        <?php include 'enav.view.php'; ?>
+        <div class="main">
+        <?php include 'top.view.php'; ?>
+                <div class="container1">
+                 <div class="namecard">
+                    <h1 class="titlecard">Welcome John!</h1>
+                    <img src="<?=ROOT?>/assets/images/user1.jpg" class="propic">
+                    <p class="aboutcard">Company ABC Pvt Ltd</p>
                    
-            </div>
-            <div class="col slider-col">
-                <div class="slidercontainer">
-                <div class="slider">
-                    <img src="<?=ROOT?>/assets/images/basketball.jpg"  >
-                    <img src="<?=ROOT?>/assets/images/ground.jpg">
-                    <img src="<?=ROOT?>/assets/images/indoor.jpg">
-                    <img src="<?=ROOT?>/assets/images/tennis.jpg">
-                </div>
-            </div>
-        </div>   
-    </section>
-
-
-    <section class="facilities">
-        <h2> Our Facilities</h2>
-        <p>At Peak, we offer a range of exceptional sports facilities, each designed 
-            for optimal performance and versatility. From spacious outdoor areas to 
-            modern indoor arenas, our venues are carefully maintained and equipped to 
-            meet the needs of athletes, providing a high-quality experience for both
-             training and competitions.</p>
-
-       <div class="row">
-        <div class="f-col">
-            <img class="facility" id="facility1" src="<?=ROOT?>/assets/images/ground.jpg">
-            <h3> Multi-functional Ground</h3>
-            <p>Our ground features a well-maintained, expansive area perfect
-                for various sports and events. Equipped with quality turf and 
-                state-of-the-art facilities, it provides an excellent environment 
-                for athletes to train and compete.</p>
-        </div>
-
-        <div class="f-col">
-            <img class="facility" id="facility2" src="<?=ROOT?>/assets/images/tennis.jpg">
-            <h3> Top tier Tennis court</h3>
-            <p>Our tennis courts offer a pristine playing surface for enthusiasts and professionals. 
-                Well-maintained and equipped with the latest amenities, they provide an excellent 
-                environment for both practice and competitive matches</p>
-        </div>
-
-        <div class="f-col">
-            <img class="facility" id="facility3" src="<?=ROOT?>/assets/images/indoor.jpg">
-            <h3> State-of-the-art Indoor stadium</h3>
-            <p>Our indoor stadium is a versatile facility designed to host a wide range of 
-                sports and events. With modern amenities, ample seating, and high-quality courts,
-                 it ensures a top-notch experience for athletes and spectators alike.</p>
-            </div>
-       </div>
-    </section>
-
-    <section class="feedbacks">
-        <h2>Community Highlights</h2>
-        <p>See what others have to say about their experience with our facilities! Here's some feedback
-             from past users who made reservations and enjoyed our top-quality venues.</p>
-
-
-             <div class="row">
-                <div class="feed-col facility" id="facility1">
-                    <img src="<?=ROOT?>/assets/images/user1.jpg">
-                    <div> 
-                        <p>
-                            "The facilities are top-notch! The Tennis court was well-maintained, 
-                            and our team loved the atmosphere. We had an amazing time during our session"</p>
-                           <h3>M H M Hamdi</h3> 
-                           <span class="star"> &#9733;</span>
-                           <span class="star"> &#9733;</span>
-                           <span class="star"> &#9733;</span>
-                           <span class="star"> &#9733;</span>
-                           <span class="star"> &#9733;</span>
-                       
+                    </p>
+                    </div>
+                
+                 <div class="popularreservations">
+                    <h2 class="sectiontitle">Top Reservation Picks</h2>
+                    <div class="imagecontainer">
+                        <div class="imageitem">
+                            <img src="<?=ROOT?>/assets/images/ground.jpg" alt="Ground" class="reservationimage">
+                            <p class="price">Baseball ground</p>
+                            <p class="price">Rs 10,000 / hour</p>
+                        </div>
+                        <div class="imageitem">
+                            <img src="<?=ROOT?>/assets/images/indoor.jpg" alt="Stadium" class="reservationimage">
+                            <p class="price">Badminton Court</p>
+                            <p class="price">Rs 15,000 / hour</p>
+                        </div>
+                        <div class="imageitem">
+                            <img src="<?=ROOT?>/assets/images/tennis.jpg" alt="Tennis Court" class="reservationimage">
+                            <p class="price">Tennis Court</p>
+                            <p class="price">Rs 5,000 / hour</p>
+                        </div>
+                        <div class="imageitem">
+                            <img src="<?=ROOT?>/assets/images/basketball.jpg" alt="Basketball Court" class="reservationimage">
+                            <p class="price">Basketball Court</p>
+                            <p class="price">Rs 7,000 / hour</p>
+                        </div>
                     </div>
                 </div>
 
-                <div class="feed-col facility" id="facility2">
-                    <img src="<?=ROOT?>/assets/images/user2.jpg">
-                    <div> 
-                        <p>
-                            "The ground  was ideal for our sports day event. It was spacious, clean, 
-                            and the perfect setting for our activities. All our participants had a blast!"</p>
-                           <h3>Amantha Sirikantha</h3> 
+            </div>
 
-                           <span class="star"> &#9733;</span>
-                           <span class="star"> &#9733;</span>
-                           <span class="star"> &#9733;</span>
-                           <span class="star"> &#9733;</span>
-                           <span class="star"> &#9734;</span>
-                       
-                    </div>
-                </div>
-             </div>
-    </section>
+                <!-- Second row of cards -->
+<div class="container2">
+    <!-- Pending Requests Card -->
+    <div class="namecard">
+        <h3>Pending Requests</h3>
+        <div class="request-details">
+            <div class="request-item">
+                <p><strong>Facility:</strong> Tennis Court</p>
+                <p><strong>Booking Time:</strong> 10:00 AM - 12:00 PM</p>
+                <p><strong>Price:</strong> Rs 5,000</p>
+            </div>
+           
+        </div>
+    </div>
 
-    <section class="footer">
-        <h4>About Us</h4>
-        <p>© 2024 Physical Education Department, University of Colombo. All rights reserved. 
-            We are committed to fostering a vibrant community that promotes health, wellness, 
-            and physical activity through a wide range of sports and recreational programs.
-             Join us in our efforts to enhance your physical and mental well-being. <br>
-             For any inquiries or further information, please contact us</p>
-             <div class="icons">
-                <img src="<?=ROOT?>/assets/images/Instagram-128.webp">
-                <img src="<?=ROOT?>/assets/images/facebook.webp">
-                <img src="<?=ROOT?>/assets/images/phone.webp">
-                <img src="<?=ROOT?>/assets/images/thefreeforty_location-128.webp">
-             </div>
-    </section>
+    <!-- Payments Due Card -->
+    <div class="namecard">
+    <h3>Payments Due</h3>
+    <div class="payment-details">
+        <div class="payment-item">
+            <p><strong>Facility:</strong> Tennis Court</p>
+            <p><strong>Booking Time:</strong> 10:00 AM - 12:00 PM</p>
+            <p><strong>Price:</strong> Rs 5,000</p>
+        </div>
+        <div class="payment-item">
+            <p><strong>Facility:</strong> Basketball Court</p>
+            <p><strong>Booking Time:</strong> 2:00 PM - 4:00 PM</p>
+            <p><strong>Price:</strong> Rs 8,000</p>
+        </div>
+        <div class="payment-item">
+            <p><strong>Facility:</strong> Indoor Stadium</p>
+            <p><strong>Booking Time:</strong> 5:00 PM - 7:00 PM</p>
+            <p><strong>Price:</strong> Rs 10,000</p>
+        </div>
+    </div>
+    <div class="total-payment">
+        <h4>Total Due: Rs 30,000</h4> <!-- Replace with dynamic total -->
+    </div>
+</div>
 
-
-
-    <!-- JavaScript for toggle menu -->
-    <script src="<?=ROOT?>/assets/js/landing.js"></script>
-       
+    <!-- Quick Action Cards -->
+    <!-- <div class="namecard">
+        <h3>Quick Actions</h3>
+        <div class="action-buttons">
+            <button class="action-button">Make New Reservation</button>
+            <a href="prices"><button class="action-button">View <br> Prices</button></a>
+            <button class="action-button">View Discounts</button>
+            <button class="action-button">View Availabilities</button>
+        </div>
+    </div>
     
-</body>
+</div> -->
+
+<div class="namecard">
+    <h3>Quick Actions</h3>
+    <div class="action-buttons">
+        <a href="reservations" >
+            <button class="action-button">Make New Reservation</button>
+        </a>
+        <a href="prices" >
+            <button class="action-button">View <br> Prices</button>
+        </a>
+        <a href="discounts">
+            <button class="action-button">View <br> Discounts</button>
+        </a>
+        <a href="rules" >
+            <button class="action-button">View Rules and regulations</button>
+        </a>
+    </div>
+</div>
+
+        </div>
+       <script> 
+        let toggle = document.querySelector(".toggle");
+                let navigation = document.querySelector(".navigation");
+                let main = document.querySelector(".main");
+
+                toggle.onclick = function(){
+                navigation.classList.toggle("active");
+                main.classList.toggle("active");
+  
+            }
+       </script>
+        <script src="../js/dashboard.js"></script>
+    </body>
 </html>
-
-
-
-

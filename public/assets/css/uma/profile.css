@@ -1,0 +1,518 @@
+*{
+    font-family: Arial, Helvetica, sans-serif;
+    margin: 0%;
+    padding: 0;
+    box-sizing:border-box ;
+}
+
+:root{
+    --darkpurple: #360335;
+    --mediumpurple: #4b0a4a;
+    --lightpurple: #ecafec;
+    --white: #ffffff;
+    --black: #000000;
+    --grey: #d5d1d1;
+    --purplegrey:  #f7e3f7;
+    --lightgrey:#eee6f3;
+}
+
+body{
+    min-height: 100vh;
+    overflow-x: hidden;
+}
+
+.container{
+    position: relative;
+    width: 100%;
+}
+
+.navigation{
+    position: fixed;
+    width: 200px;
+    height: 100%;
+    background: var(--darkpurple);
+    border-left: 10px solid var(--darkpurple);
+    transition: 0.5s;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column; /* Stack items vertically */
+    align-items: center;
+}
+
+.navigation.active{
+    width:80px;
+
+}
+
+.navigation ul{
+    position: absolute;
+    top: 0;
+    left:0px;
+    width: 100%;
+}
+
+.navigation ul li{
+    position: relative;
+    width: 100%;
+    list-style: none;
+    border-top-left-radius:15px;
+    border-bottom-left-radius:15px ;
+}
+
+.navigation ul li:hover,
+.navigation ul li.hovered{
+    background: var(--white);
+    
+}
+.navigation ul li:hover a ,
+.navigation ul li.hovered a{
+    color: var(--darkpurple); 
+}
+
+.navigation ul li:hover .icon img {
+    filter: brightness(0) ;/* Change image to black using filter */
+}
+
+.navigation ul li:hover .title {
+    color: var(--darkpurple); 
+}
+
+.navigation ul li:nth-child(1){
+    margin-top:20px;
+    margin-bottom:20px;
+    pointer-events: none;
+    
+}
+
+.title{
+    margin-left: 10px; /* Add spacing between icon and title text */
+    font-size: 16px; /* Adjust font size */
+    font-weight: 500; /* Optional: Make text slightly bold */
+} 
+
+.icon img{
+    width: 40px;
+    height: 40px;
+    flex-shrink: 0;
+}
+
+.navigation ul li a {
+    display: flex; /* Use flexbox to align icon and text side by side */
+    align-items: center; /* Vertically align icon and text */
+    padding: 15px 20px; /* Add padding for spacing */
+    color: var(--lightpurple); /* Ensure text color matches */
+    text-decoration: none; /* Remove underline */
+    transition: 0.3s; /* Smooth hover effect */
+}
+
+.navigation .logo img {
+    width: 120px; /* Default size for the full navigation bar */
+    height: auto; /* Maintain aspect ratio */
+    transition: 0.3s ease; 
+}
+
+.logo {
+    display: flex;
+    justify-content: center; /* Center horizontally */
+    align-items: center; /* Center vertically */
+    height: 100%; /* Full height of the navigation bar */
+    width: 100%; /* Ensure it takes full width */
+    transition: 0.3s ease; /* Smooth transition */
+}
+
+.navigation.active .logo {
+    height: 80px; /* Adjust the height of the logo container in the collapsed state */
+    width: 100%; 
+}
+
+.navigation.active .logo img {
+    width: 70px; /* Smaller size for the collapsed navigation */
+    height: auto; /* Maintain aspect ratio */
+}
+
+
+
+
+
+.navigation ul li:hover a::before,
+.navigation ul li.hovered a::before{
+    content: '';
+    position: absolute;
+    right:0;
+    top:-50px;
+    width: 50px;
+    height:50px;
+    background-color:transparent;
+    border-radius: 50%;
+    box-shadow: 35px 35px 0 10px var(--white) ;
+    pointer-events: none;
+} 
+
+.navigation ul li:hover a::after,
+.navigation ul li.hovered a::after{
+    content: '';
+    position: absolute;
+    right:0;
+    bottom:-50px;
+    width: 50px;
+    height:50px;
+    background-color:transparent;
+    border-radius: 50%;
+    box-shadow: 35px -35px 0 10px var(--white) ;
+    pointer-events: none;
+
+} 
+
+/* main content */
+.main{
+    position:absolute;
+    width:calc(100% -200px) ;
+    left:200px;
+    right: 0;
+    min-height:100vh ;
+    background-color: var(--white);
+    transition: 0.5s;
+}
+
+.main.active{
+    width:calc(100%-80px);
+    left:80px;
+    
+}
+
+.topbar{
+    width:100%;
+    height: 60px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 10px;
+    /* background-color: var(--darkpurple); */
+    background: var(--lightgrey);
+}
+
+.toggle{
+    position:relative;
+    width: 60px;
+    height: 60px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    font-size: 2.5rem;
+
+}
+
+.user {
+    position:relative;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    overflow: hidden;
+    cursor: pointer;
+}
+
+.user img {
+    position: absolute;
+    top: 0;
+    left: 0px;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+
+}
+
+
+/* edit profile */
+
+.details-column {
+    margin: 30px;
+    
+}
+
+
+.details-row {
+    display: flex;
+    align-items: flex-start; /* Aligns items at the top */
+    gap: 30px; /* Space between the profile picture and details */
+}
+.details-column h1 {
+    font-size: 24px;
+    margin-bottom: 40px;
+    font-weight: 300;
+}
+
+.details-column p {
+    display: flex;
+    /* justify-content: center; */
+    /* align-items: center; */
+    margin-bottom: 10px;
+    font-size: 16px;
+    color: #333;
+}
+
+.details-column p strong {
+    width: 15%; /* Adjust width as needed */
+    font-weight: 300;
+    color: black;
+}
+
+.boxes {
+    background-color: #f0f0f0; /* Light gray background */
+    padding: 8px 12px;         /* Padding inside the box */
+    border-radius: 10px;       /* Rounded corners */
+    display: inline-block;      /* Keeps box width to content */
+    border: 1px solid #ccc;    /* Subtle border for definition */
+    width:50%;  /* Makes the box full width minus padding */
+    box-sizing: border-box;     /* Ensures padding is included in width */
+
+}
+
+
+#editProfileBtn {
+    background-color:#2f0629; /* Purple background */
+    color: white; /* White text */
+    border: none; /* No border */
+    padding: 10px 20px; /* Top/bottom and left/right padding */
+    text-align: center; /* Center the text */
+    text-decoration: none; /* Remove underline */
+    display: inline-block; /* Make the button inline */
+    font-size: 16px; /* Font size */
+    margin-top: 20px; /* Space above the button */
+    cursor: pointer; /* Pointer cursor on hover */
+    border-radius: 10px; /* Rounded corners */
+    transition: background-color 0.3s ease; /* Smooth transition */
+}
+
+/* Hover effect */
+#editProfileBtn:hover {
+    background-color:#4b0947; /* Darker purple on hover */
+}
+
+
+#logoutBtn {
+    background-color:#310105; /* Purple background */
+    color: white; /* White text */
+    border: none; /* No border */
+    padding: 10px 20px; /* Top/bottom and left/right padding */
+    text-align: center; /* Center the text */
+    text-decoration: none; /* Remove underline */
+    display: inline-block; /* Make the button inline */
+    font-size: 16px; /* Font size */
+    margin-top: 20px; /* Space above the button */
+    cursor: pointer; /* Pointer cursor on hover */
+    border-radius: 10px; /* Rounded corners */
+    transition: background-color 0.3s ease; /* Smooth transition */
+}
+
+/* Hover effect */
+#logoutBtn:hover {
+    background-color:#a71d2a; /* Darker purple on hover */
+}
+
+#deleteaccount {
+    background-color:#310105; /* Purple background */
+    color: white; /* White text */
+    border: none; /* No border */
+    padding: 10px 20px; /* Top/bottom and left/right padding */
+    text-align: center; /* Center the text */
+    text-decoration: none; /* Remove underline */
+    display: inline-block; /* Make the button inline */
+    font-size: 16px; /* Font size */
+    margin-top: 20px; /* Space above the button */
+    cursor: pointer; /* Pointer cursor on hover */
+    border-radius: 10px; /* Rounded corners */
+    transition: background-color 0.3s ease; /* Smooth transition */
+}
+
+/* Hover effect */
+#deleteaccount:hover {
+    background-color:#a71d2a; /* Darker purple on hover */
+}
+
+
+/* Flex container for layout */
+.details-row {
+    display: flex;
+    justify-content: space-between; /* Align details and profile picture */
+    align-items: flex-start; /* Align items at the top */
+    gap: 30px;
+}
+
+/* Profile details */
+.profile-details {
+    flex: 2;
+}
+
+/* ----------------image------------------ */
+.imageUploadBox {
+    position: relative;
+    top: 10px;
+    right: 70px;
+    width: 240px;
+    padding: 15px;
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    font-family: Arial, sans-serif;
+    z-index: 1000;
+    
+}
+
+.imagePreviewBox {
+    width: 100%;
+    height: 150px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    background-color: #f0f0f0;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 10px;
+}
+
+#imageContainer img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 8px;
+}
+
+
+.imageChooseInput {
+    display: none;
+}
+
+
+.imageChooseBtn, .imageRemoveBtn {
+    display: inline-block;
+    padding: 8px 16px;
+    font-size: 14px;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    margin-top: 8px;
+}
+
+
+.imageChooseBtn {
+    background-color:var(--darkpurple);
+}
+
+.imageChooseBtn:hover {
+    background-color: var(--mediumpurple
+    );
+}
+
+
+.imageRemoveBtn {
+    background-color: #310105;
+}
+
+.imageRemoveBtn:hover {
+    background-color: #a71d2a;
+}
+/* ----------------modal------------------ */
+.modal {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1000; /* Sit on top */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    /* overflow: auto;  */
+    background-color: transparent; /* Fallback color */
+    justify-content: center;
+    align-items: center;
+    
+}
+
+
+
+
+.modal-content {
+    
+    background-color:#f7f7f7;
+    padding: 20px;
+    border: 1px solid #2f0629;
+    border-radius: 10px;
+    box-shadow: 20px 20px 50px rgba(0, 0, 0, 0.5); 
+    width: 500px;
+    height: auto;
+    max-height: 80%;
+    max-width: 90%;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column; /* Flex layout for better alignment of elements */
+    align-items: flex-start;
+}
+
+.modal-content h2 {
+    font-size: 24px;
+    margin-bottom: 0 0 20px 0; /* Space below the title */
+    font-weight: 300;
+    color: #2f0629; /* Dark purple for title */
+}
+
+.modal-content p {
+    font-size: 16px;
+    color: #333; /* Text color */
+    width: 100%; /* Ensure p tags take full width */
+    margin: 0 0 10px 0;
+}
+
+.modal-content input[type="text"],
+.modal-content input[type="email"],
+.modal-content input[type="tel"],
+.modal-content textarea {
+    width: 100%; /* Full width inputs */
+    padding: 10px; /* Padding for inputs */
+    margin-bottom: 10px; /* Space below inputs */
+    border: 1px solid #ccc; /* Border for inputs */
+    border-radius: 10px; /* Rounded corners */
+    box-sizing: border-box; /* Includes padding and border in element's total width and height */
+    background: #f0f0f0;
+}
+
+.modal-content button {
+    background-color: #2f0629; /* Purple background for buttons */
+    color: white; /* White text */
+    border: none; /* No border */
+    padding: 10px 20px; /* Padding for buttons */
+    text-align: center; /* Center text */
+    text-decoration: none; /* Remove underline */
+    font-size: 16px; /* Font size */
+    border-radius: 10px; /* Rounded corners */
+    cursor: pointer; /* Pointer cursor on hover */
+    transition: background-color 0.3s ease; /* Smooth transition */
+}
+
+/* Hover effect for buttons */
+.modal-content button:hover {
+    background-color: #4b0947; /* Darker purple on hover */
+}
+
+.close {
+    color: #aaa; /* Close button color */
+    float: right; /* Align to the right */
+    font-size: 28px; /* Font size for close button */
+    font-weight: bold; /* Bold text */
+}
+
+.close:hover,
+.close:focus {
+    color: black; /* Change color on hover */
+    text-decoration: none; /* Remove underline */
+    cursor: pointer; /* Pointer cursor on hover */
+}
+
+.disabled-cursor {
+    cursor:not-allowed;
+}
+

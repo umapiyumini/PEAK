@@ -1,5 +1,5 @@
 <?php
-class Staff extends Controller{
+class Staffdashboard extends Controller{
    public function index(){
 
         $this->view('staff/staffdashboard');

@@ -1,0 +1,66 @@
+
+/* ------------------------------------ */
+.container1 {
+    max-width: 1200px;
+    margin: 0 auto;
+    background-color: var(--white);
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  }
+  
+  .title1 {
+    text-align: center;
+    font-size: 2rem;
+    color: var(--darkpurple);
+    margin-bottom: 1.5rem;
+  }
+  
+  .rates-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+  }
+  
+  .rates-table thead th {
+    background-color: var(--white);
+    color: var(--darkpurple);
+    padding: 10px;
+    border: 1px solid var(--border);
+    text-align: center;
+  }
+  
+  .rates-table tbody td {
+    padding: 10px;
+    border: 1px solid var(--border);
+    text-align: center;
+  }
+  
+  .rates-table tbody tr:nth-child(even) {
+    background-color: var(--lightgrey);
+  }
+
+  /* Add search container styling */
+.search-container {
+    margin-bottom: 20px;
+    text-align: center;
+  }
+  
+  #search-bar {
+    width: 80%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+    outline: none;
+  }
+  
+  #search-bar:focus {
+    border-color: var(--darkpurple);
+    box-shadow: 0 0 5px var(--lightpurple);
+  }
+
+  .subtitle{
+    text-align: center;
+  }
+  

@@ -1,0 +1,569 @@
+* {
+    font-family: Arial, Helvetica, sans-serif;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --darkpurple: #360335;
+    --mediumpurple: #4b0a4a;
+    --lightpurple: #ecafec;
+    --white: #ffffff;
+    --black: #000000;
+    --grey: #d5d1d1;
+    --purplegrey: #f7e3f7;
+    --lightgrey: #eee6f3;
+}
+
+body {
+    min-height: 100vh;
+    overflow-x: hidden;
+}
+
+/* ---------------top bar -----------------------------------*/
+
+.topbar{
+    width:100%;
+    height: 60px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 10px;
+    /* background-color: var(--darkpurple); */
+    background: var(--lightgrey);
+}
+
+.topbar {
+    width: 100%;
+    height: 60px;
+    display: flex;
+    justify-content: space-between; /* Space between elements */
+    align-items: center;
+    padding: 0 10px;
+    background: var(--lightgrey);
+}
+
+.logo{
+    margin-left: 20px;
+    margin-top: 10px;
+}
+
+.logo img{
+    
+    width: 150px;
+    height:auto;
+}
+
+.user {
+    position: relative;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    overflow: hidden;
+    cursor: pointer;
+    margin-left: auto; /* Push the user image to the right */
+}
+
+.dropdown {
+    position: absolute;
+    top: 50px; /* Adjust based on your design */
+    right: 0;
+    background-color: white;
+    border: 1px solid #ccc;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    width: 150px;
+    display: none;
+    flex-direction: column;
+    z-index: 1000;
+}
+
+.dropdown a {
+    padding: 10px 15px;
+    text-decoration: none;
+    color: #333;
+    display: block;
+    font-size: 14px;
+}
+
+.dropdown a:hover {
+    background-color: #f0f0f0;
+}
+
+.hidden {
+    display: none;
+}
+
+.dropdown.show {
+    display: flex;
+}
+.user img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* ------------------ main content ---------------------------- */
+
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: var(--white);
+    margin: 0;
+    padding: 0;
+    color: var(--darkpurple);
+}
+
+.container {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    grid-template-rows: auto auto;
+    gap: 20px;
+    padding: 20px;
+}
+
+.reservations, .todo-list, .inventory-management {
+    background-color: var(--white);
+    border: 2px solid var(--mediumpurple);
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.reservations {
+    grid-column: 1 / 2;
+    grid-row: 1 / 2;
+}
+
+.todo-list {
+    grid-column: 2 / 3;
+    grid-row: 1 / 2;
+}
+
+.inventory-management {
+    grid-column: 1 / 3;
+    grid-row: 2 / 3;
+}
+
+h2 {
+    margin: 0 0 15px;
+    color: var(--darkpurple);
+}
+
+label {
+    font-weight: bold;
+}
+
+select {
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0;
+    border: 2px solid var(--mediumpurple);
+    border-radius: 4px;
+    background-color: var(--lightgrey);
+    color: var(--darkpurple);
+}
+.time-slots {
+    margin-top: 20px;
+    display: grid; /* Change from flex to grid */
+    grid-template-columns: repeat(2, 1fr); /* Create 2 equal columns */
+    gap: 15px; /* Add space between cards */
+}
+
+.time-slot {
+    padding: 15px;
+    background-color: var(--lightgrey);
+    border: 1px solid var(--mediumpurple);
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    font-size: 14px;
+    text-align: center;
+}
+
+.reserved-slot {
+    background-color: var(--mediumpurple);
+    color: var(--white);
+    border: 1px solid var(--darkpurple);
+}
+
+#dateNavigation {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 20px 0;
+}
+
+#dateNavigation button {
+    padding: 10px 15px;
+    margin: 0 10px;
+    border: none;
+    border-radius: 5px;
+    background-color: var(--mediumpurple);
+    color: var(--white);
+    cursor: pointer;
+    font-size: 14px;
+    transition: background-color 0.2s;
+}
+
+#dateNavigation button:hover {
+    background-color: var(--darkpurple);
+}
+
+#currentDate {
+    font-size: 16px;
+    font-weight: bold;
+    color: var(--darkpurple);
+}
+
+
+/* -------to do list------------ */
+#toDoListContainer {
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 10px;
+    width: 100%;
+    margin: 0 auto;
+}
+
+#taskFilter {
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+#taskFilterSelect {
+    padding: 5px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    font-size: 16px;
+}
+
+.table-wrapper {
+    max-height: 400px;
+    overflow-y: auto;
+    margin-top: 20px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+table th, table td {
+    padding: 5px;
+    text-align: center;
+    
+    border: 1px solid #ccc;
+}
+
+table th {
+    background-color: #4b0a4a;
+    color: white;
+    
+    font-size: 15px;
+}
+
+table tr:hover {
+    background-color: #f1f1f1;
+}
+
+.complete-checkbox {
+    width: 20px;
+    height: 20px;
+}
+
+.remarksTextArea {
+    width: 200px;
+    height: 50px;
+    padding: 5px;
+}
+
+select.remarksSelect {
+    width: 200px;
+    padding: 5px;
+}
+
+textarea.customRemarks {
+    display: none; /* Hidden by default */
+    width: 200px;
+    height: 50px;
+    padding: 5px;
+    margin-top: 5px;
+}
+
+
+button {
+    padding: 5px 10px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+button:hover {
+    background-color: #45a049;
+}
+
+
+/*------------------------ INEVENTORY MANAGEMENT -----------------------  */
+
+
+/* Search Bar Styling inside the Inventory Section */
+.search-container {
+    margin-bottom: 20px;
+    padding: 10px;
+   
+    
+   
+}
+
+.search-container label {
+    margin-right: 10px;
+    font-size: 14px;
+}
+
+.search-container input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid var(--mediumpurple);
+    border-radius: 5px;
+    background-color: var(--lightgrey);
+}
+
+/* General Styles */
+.inventory-management {
+    padding: 20px;
+    background-color: var(--white);
+    border-radius: 10px;
+    border: 1px solid var(--mediumpurple);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Horizontal Layout for Inventory and Requests */
+.containers {
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+}
+
+/* Inventory and Requests Containers with Borders */
+.inventory-container, .requests-container {
+    width: 48%;
+    padding: 20px;
+    background-color: var(--white);
+    border: 1px solid var(--lightgrey); /* Border for both sections */
+    border-radius: 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Light box-shadow for emphasis */
+    height: 500px; /* Set fixed height for both containers */
+    overflow: hidden; /* Hide overflow */
+}
+
+/* Make the inventory and requests tables scrollable */
+.inventory-table, #requestsTable {
+    width: 100%;
+    border-collapse: collapse;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    height: calc(100% - 80px); /* Adjust height to leave room for search and buttons */
+    overflow-y: auto; /* Vertical scrollbar */
+    display: block; /* Make the table block-level so scrollbars can appear */
+}
+
+/* Tables Styling */
+.inventory-table th, #requestsTable th, .inventory-table td, #requestsTable td {
+    padding: 10px;
+    text-align: center;
+    border: 1px solid var(--mediumpurple);
+}
+
+.inventory-table th, #requestsTable th {
+    background-color: var(--mediumpurple);
+    color: var(--white);
+}
+
+.inventory-table tr:hover, #requestsTable tr:hover {
+    background-color: var(--lightgrey);
+}
+
+/* Modal Styles */
+.modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    justify-content: center;
+    align-items: center;
+}
+
+.modal-content {
+    background-color: var(--white);
+    padding: 20px;
+    border-radius: 10px;
+    width: 300px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.quantity-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.quantity-container button {
+    padding: 5px;
+    background-color: var(--mediumpurple);
+    color: var(--white);
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.quantity-container button:hover {
+    background-color: var(--darkpurple);
+}
+
+button {
+    padding: 10px;
+    background-color: var(--mediumpurple);
+    color: var(--white);
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+    margin-top: 10px;
+}
+
+button:hover {
+    background-color: var(--darkpurple);
+}
+
+
+.add{
+    margin-top: 20px;
+    margin-bottom: 40px;
+}
+
+
+/* ------------- */
+/* Modal background */
+.modal {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
+    overflow: auto; /* Enable scrolling if needed */
+    padding-top: 50px; /* Top space */
+}
+
+/* Modal content */
+.modal-content {
+    background-color: #fff;
+    margin: 5% auto; /* Center the modal */
+    padding: 20px;
+    border-radius: 10px; /* Rounded corners */
+    width: 80%; /* Set width of modal */
+    max-width: 500px; /* Max width */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); /* Shadow */
+}
+
+/* Header inside the modal */
+.modal-content h3 {
+    text-align: center;
+    font-size: 24px;
+    margin-bottom: 20px;
+}
+
+/* Label styling */
+label {
+    display: block;
+    font-size: 14px;
+    margin-bottom: 8px;
+}
+
+/* Input field */
+input[type="text"],
+input[type="number"],
+select {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 20px;
+    font-size: 14px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box;
+}
+
+/* Quantity button container */
+.quantity-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.quantity-container button {
+    padding: 8px 16px;
+    font-size: 18px;
+    cursor: pointer;
+    border: 1px solid #ccc;
+    background-color: var(--mediumpurple);
+    margin: 0 8px;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+}
+
+.quantity-container button:hover {
+    background-color:var(--darkpurple);
+}
+
+.quantity-container input[type="number"] {
+    width: 60px;
+    text-align: center;
+    font-size: 16px;
+    padding: 8px;
+    margin: 0 8px;
+}
+
+/* Button styling */
+button {
+    padding: 10px 20px;
+    font-size: 16px;
+    background-color: var(--mediumpurple);
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    margin: 10px 0;
+}
+
+button:hover {
+    background-color: var(--darkpurple);
+}
+
+/* Close button styling */
+#closeModal {
+    background-color:#3a0201;
+}
+
+#closeModal:hover {
+    background-color: #e53935;
+}
+
+/* Show modal when active */
+.modal.show {
+    display: block;
+}

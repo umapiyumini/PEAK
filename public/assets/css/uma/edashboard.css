@@ -1,0 +1,443 @@
+*{
+    font-family: Arial, Helvetica, sans-serif;
+    margin: 0%;
+    padding: 0;
+    box-sizing:border-box ;
+}
+
+:root{
+    --darkpurple: #360335;
+    --mediumpurple: #4b0a4a;
+    --lightpurple: #ecafec;
+    --white: #ffffff;
+    --black: #000000;
+    --grey: #d5d1d1;
+    --purplegrey:  #f7e3f7;
+    --lightgrey:#eee6f3;
+}
+
+body{
+    min-height: 100vh;
+    overflow-x: hidden;
+}
+
+.container{
+    position: relative;
+    width: 100%;
+}
+
+.navigation{
+    position: fixed;
+    width: 200px;
+    height: 100%;
+    background: var(--darkpurple);
+    border-left: 10px solid var(--darkpurple);
+    transition: 0.5s;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column; /* Stack items vertically */
+    align-items: center;
+}
+
+.navigation.active{
+    width:80px;
+
+}
+
+.navigation ul{
+    position: absolute;
+    top: 0;
+    left:0px;
+    width: 100%;
+}
+
+.navigation ul li{
+    position: relative;
+    width: 100%;
+    list-style: none;
+    border-top-left-radius:15px;
+    border-bottom-left-radius:15px ;
+}
+
+.navigation ul li:hover,
+.navigation ul li.hovered{
+    background: var(--white);
+    
+}
+.navigation ul li:hover a ,
+.navigation ul li.hovered a{
+    color: var(--darkpurple); 
+}
+
+.navigation ul li:hover .icon img {
+    filter: brightness(0) ;/* Change image to black using filter */
+}
+
+.navigation ul li:hover .title {
+    color: var(--darkpurple); 
+}
+
+.navigation ul li:nth-child(1){
+    margin-top:20px;
+    margin-bottom:20px;
+    pointer-events: none;
+    
+}
+
+.title{
+    margin-left: 10px; /* Add spacing between icon and title text */
+    font-size: 16px; /* Adjust font size */
+    font-weight: 500; /* Optional: Make text slightly bold */
+} 
+
+.icon img{
+    width: 40px;
+    height: 40px;
+    flex-shrink: 0;
+}
+
+.navigation ul li a {
+    display: flex; /* Use flexbox to align icon and text side by side */
+    align-items: center; /* Vertically align icon and text */
+    padding: 15px 20px; /* Add padding for spacing */
+    color: var(--lightpurple); /* Ensure text color matches */
+    text-decoration: none; /* Remove underline */
+    transition: 0.3s; /* Smooth hover effect */
+}
+
+.navigation .logo img {
+    width: 120px; /* Default size for the full navigation bar */
+    height: auto; /* Maintain aspect ratio */
+    transition: 0.3s ease; 
+}
+
+.logo {
+    display: flex;
+    justify-content: center; /* Center horizontally */
+    align-items: center; /* Center vertically */
+    height: 100%; /* Full height of the navigation bar */
+    width: 100%; /* Ensure it takes full width */
+    transition: 0.3s ease; /* Smooth transition */
+}
+
+.navigation.active .logo {
+    height: 80px; /* Adjust the height of the logo container in the collapsed state */
+    width: 100%; 
+}
+
+.navigation.active .logo img {
+    width: 70px; /* Smaller size for the collapsed navigation */
+    height: auto; /* Maintain aspect ratio */
+}
+
+
+
+
+
+.navigation ul li:hover a::before,
+.navigation ul li.hovered a::before{
+    content: '';
+    position: absolute;
+    right:0;
+    top:-50px;
+    width: 50px;
+    height:50px;
+    background-color:transparent;
+    border-radius: 50%;
+    box-shadow: 35px 35px 0 10px var(--white) ;
+    pointer-events: none;
+} 
+
+.navigation ul li:hover a::after,
+.navigation ul li.hovered a::after{
+    content: '';
+    position: absolute;
+    right:0;
+    bottom:-50px;
+    width: 50px;
+    height:50px;
+    background-color:transparent;
+    border-radius: 50%;
+    box-shadow: 35px -35px 0 10px var(--white) ;
+    pointer-events: none;
+
+} 
+
+/* main content */
+.main{
+    position:absolute;
+    width:calc(100% -200px) ;
+    left:200px;
+    right: 0;
+    min-height:100vh ;
+    background-color: var(--white);
+    transition: 0.5s;
+}
+
+.main.active{
+    width:calc(100%-80px);
+    left:80px;
+    
+}
+
+.topbar{
+    width:100%;
+    height: 60px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 10px;
+    /* background-color: var(--darkpurple); */
+    background: var(--lightgrey);
+}
+
+.toggle{
+    position:relative;
+    width: 60px;
+    height: 60px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    font-size: 2.5rem;
+
+}
+
+.user {
+    position:relative;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    overflow: hidden;
+    cursor: pointer;
+}
+
+.user img {
+    position: absolute;
+    top: 0;
+    left: 0px;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+
+}
+
+/* Container to arrange cards side by side */
+.container1{
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-top: 20px;
+}
+
+/* ---------------------------------Name card styling------------------------------ */
+.namecard {
+    width: 30%;
+    padding: 20px;
+    border: 1px solid var(--grey);
+    border-radius: 10px;
+    text-align: center;
+    margin: 10px;
+    height:300px;
+    background:var(--white);
+    overflow: auto;
+}
+
+.namecard .titlecard {
+    font-size: 24px;
+    margin-bottom: 10px;
+}
+
+.namecard .propic {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-bottom: 10px;
+}
+
+.namecard .aboutcard {
+    font-size: 16px;
+    color: #666;
+}
+
+/* ----------------------Popular Reservations Section---------------------- */
+.popularreservations {
+    width: 65%;
+    background-color: #f9f9f9;
+    padding: 20px;
+    border: 1px solid var(--grey);
+    border-radius: 10px;
+    text-align: center;
+    margin: 10px;
+    height:300px;
+    background:var(--white);
+}
+
+/* Section Title */
+.sectiontitle {
+    font-size: 24px;
+    font-weight: bold;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+/* Container for images with horizontal scroll */
+
+
+/* Each Image Item */
+.imageitem {
+    flex-shrink: 0;
+    text-align: center;
+    position: relative;
+}
+
+/* Image Styling */
+.reservationimage {
+    width: 200px;
+    height: 170px;
+    border-radius: 8px;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+}
+
+.imagecontainer {
+    display: flex;
+    overflow-x: scroll;
+    gap: 20px;
+    padding-bottom: 8px;
+    scroll-behavior: smooth; /* Smooth scrolling */
+    
+    /* Hide the scrollbar */
+    -ms-overflow-style: none; /* For Internet Explorer */
+    scrollbar-width: none; /* For Firefox */
+}
+
+.imagecontainer::-webkit-scrollbar {
+    display: none; /* Hide scrollbar for Chrome/Safari */
+}
+
+
+/* Hover Effect for Images */
+.reservationimage:hover {
+    transform: scale(1.05);
+}
+
+/* Price Styling */
+.price {
+    margin-top: 8px;
+    font-size: 16px;
+    font-weight: bold;
+    color: var(--darkpurple); /* Elegant blue color */
+}
+
+/* ----------------------next row */
+
+
+ .container2 {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-top: 20px;
+}
+
+
+/* Styling for Pending Requests and Payments Due Cards */
+
+.namecard h3 {
+    font-size: 22px;
+    font-weight: bold;
+}
+
+.namecard p {
+    font-size: 16px;
+    color: var(--darkpurple);
+}
+
+
+/* Ensure buttons are stacked vertically */
+.action-buttons {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);  /* Two columns */
+    gap: 20px;  /* Space between buttons */
+}
+
+.namecard button {
+    width: 100%;  /* Buttons will take the full width of each grid cell */
+    padding: 15px;
+    font-size: 16px;
+    color: var(--white);
+    background-color: var(--darkpurple);
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    margin-top: 25px;
+}
+
+/* Hover effect for buttons */
+.namecard button:hover {
+    background-color: var(--mediumpurple);
+}
+
+/* payments due */
+
+.payment-details {
+    flex-grow: 1; /* Allow the payment details section to grow and take up available space */
+    overflow-y: auto; /* Enable vertical scrolling */
+    margin-bottom: 20px;
+}
+
+
+.payment-item {
+    background-color: var(--white);
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.payment-item p {
+    margin: 5px 0;
+    font-size: 16px;
+    color: var(--darkgray);
+}
+
+.payment-item strong {
+    color: var(--darkpurple);
+}
+
+.total-payment h4 {
+    position: sticky;
+    bottom: 0; /* Keep the total payment fixed at the bottom */
+    background-color: var(--white);
+    padding: 10px;
+    border-top: 2px solid var(--darkpurple);
+    text-align: center;
+}
+
+
+/* pending */
+.request-details {
+    flex-grow: 1; /* Allows the request details section to take available space */
+    overflow-y: auto; /* Enable vertical scrolling */
+    margin-bottom: 20px;
+}
+
+.request-item {
+    background-color: var(--white);
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.request-item p {
+    margin: 5px 0;
+    font-size: 16px;
+    color: var(--darkgray);
+}
+
+.request-item strong {
+    color: var(--darkpurple);
+}
