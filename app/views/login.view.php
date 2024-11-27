@@ -19,6 +19,10 @@
                 <img src="<?=ROOT?>/assets/images/logo.png" class="logo">
                 <h1>Welcome to PEAK!</h1>
                 <form  method="POST"> <!-- Form action set to login.php -->
+                    <?php if(!empty($errors)): ?>
+                       invalid login
+                    <?php endif;?>
+
                     <label for="username">Email</label>
                     <input type="text" id="username" name="username" required>
                     <label for="password">Password</label>

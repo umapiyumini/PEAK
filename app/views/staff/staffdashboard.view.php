@@ -123,29 +123,33 @@
 
             <!-- Edit Equipment Modal -->
             <div id="editModal" class="modal">
-                <div class="modal-content">
-                    <h3>Edit Equipment</h3>
-                    <label for="equipmentName">Equipment Name:</label>
-                    <input type="text" id="equipmentName" disabled>
-                    
-                    <label for="quantity">Quantity:</label>
-                    <div class="quantity-container">
-                        <button id="subtractQty">-</button>
-                        <input type="number" id="quantity" value="0">
-                        <button id="addQty">+</button>
-                    </div>
-                    
-                    <label for="reason">Reason:</label>
-                    <select id="reason">
-                        <option value="broken">Broken</option>
-                        <option value="lost">Lost</option>
-                        <option value="other">Other</option>
-                    </select>
+    <div class="modal-content">
+        <h3>Edit Equipment</h3>
+        <label for="equipmentName">Equipment Name:</label>
+        <input type="text" id="equipmentName" disabled>
+        
+        <label for="quantity">Quantity:</label>
+        <div class="quantity-container">
+            <button id="subtractQty">-</button>
+            <input type="number" id="quantity" value="0">
+            <button id="addQty">+</button>
+        </div>
+        
+        <label for="reason">Reason:</label>
+        <select id="reason">
+            <option value="broken">Broken</option>
+            <option value="lost">Lost</option>
+            <option value="other">Other</option>
+        </select>
 
-                    <button id="submitEdit">Submit</button>
-                    <button id="closeModal">Close</button>
-                </div>
-            </div>
+        <!-- Button container -->
+        <div class="button-container">
+            <button id="submitEdit">Submit</button>
+            <button id="closeModal">Close</button>
+        </div>
+    </div>
+</div>
+
         </div>
 
         <!-- Requests Table Container with Border -->
@@ -175,25 +179,29 @@
 
             <!-- New Request Modal -->
             <div id="newRequestModal" class="modal">
-                <div class="modal-content">
-                    <h3>New Stock Request</h3>
-                    
-                    <label for="equipmentSelect">Equipment:</label>
-                    <select id="equipmentSelect">
-                        <!-- Populate options dynamically -->
-                    </select>
+    <div class="modal-content">
+        <h3>New Stock Request</h3>
+        
+        <label for="equipmentSelect">Equipment:</label>
+        <select id="equipmentSelect">
+            <!-- Populate options dynamically -->
+        </select>
 
-                    <label for="requestQuantity">Quantity:</label>
-                    <div class="quantity-container">
-                        <button id="subtractRequestQty">-</button>
-                        <input type="number" id="requestQuantity" value="0">
-                        <button id="addRequestQty">+</button>
-                    </div>
+        <label for="requestQuantity">Quantity:</label>
+        <div class="quantity-container">
+            <button id="subtractRequestQty">-</button>
+            <input type="number" id="requestQuantity" value="0">
+            <button id="addRequestQty">+</button>
+        </div>
 
-                    <button id="submitNewRequest">Submit Request</button>
-                    <button id="closeRequestModal">Close</button>
-                </div>
-            </div>
+        <!-- Button container -->
+        <div class="button-container">
+            <button id="submitNewRequest">Confirm</button>
+            <button id="closeRequestModal">Close</button>
+        </div>
+    </div>
+</div>
+
         </div>
     </div>
     </div>
