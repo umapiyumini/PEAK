@@ -310,6 +310,8 @@ body{
     background:var(--lightgrey);
     position: relative;
     overflow: hidden;
+    margin-top: 0px;
+    margin-left: 100px;
 }
 
 .contactform::before {
@@ -395,7 +397,7 @@ body{
 }
 
 .map {
-    width: 70%;
+    width: 100%;
     margin-top: 20px;
     display: flex;
     justify-content: center;
@@ -403,16 +405,12 @@ body{
     transition: transform 0.9s ease;
 }
 
-.map:hover{
-    transform: scale(1.1);
-}
 
-
-.map img {
-    width: 100%;
-    border-radius: 15px;
-    box-shadow: 10px 10px 30px rgba(0, 0, 0, 0.5);
-}
+.contact-info iframe {
+    /* You can set a custom height */
+    border: none;
+    border-radius: 10px;
+  }
 
 
 /* -----------feedback---------------- */

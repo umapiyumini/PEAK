@@ -374,19 +374,42 @@ button:hover {
     height: calc(100% - 80px); /* Adjust height to leave room for search and buttons */
     overflow-y: auto; /* Vertical scrollbar */
     display: block; /* Make the table block-level so scrollbars can appear */
+    margin: 0; /* Remove extra margins */
+    padding: 0; /* Remove extra padding */
+}
+
+.inventory-table table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 0;
+    padding: 0;
 }
 
 /* Tables Styling */
-.inventory-table th, #requestsTable th, .inventory-table td, #requestsTable td {
+.inventory-table th, #requestsTable th {
+    position: sticky;
+    top: 0; /* Stick to the very top of the scrolling area */
+    background-color: var(--mediumpurple);
+    color: var(--white);
+    z-index: 1; /* Keep above other content */
+    padding: 10px;
+    text-align: center;
+    border: 1px solid var(--mediumpurple);
+    margin: 0; /* Remove any default margins */
+    box-sizing: border-box; /* Ensure padding and borders are included in the element’s dimensions */
+}
+
+.inventory-table td, #requestsTable td {
     padding: 10px;
     text-align: center;
     border: 1px solid var(--mediumpurple);
 }
 
-.inventory-table th, #requestsTable th {
+
+/* .inventory-table th, #requestsTable th {
     background-color: var(--mediumpurple);
     color: var(--white);
-}
+} */
 
 .inventory-table tr:hover, #requestsTable tr:hover {
     background-color: var(--lightgrey);
@@ -440,7 +463,6 @@ button {
     border: none;
     cursor: pointer;
     border-radius: 5px;
-    margin-top: 10px;
 }
 
 button:hover {
@@ -459,7 +481,7 @@ button:hover {
 .modal {
     display: none; /* Hidden by default */
     position: fixed; /* Stay in place */
-    z-index: 1; /* Sit on top */
+    z-index: 100; /* Sit on top */
     left: 0;
     top: 0;
     width: 100%; /* Full width */
@@ -566,4 +588,22 @@ button:hover {
 /* Show modal when active */
 .modal.show {
     display: block;
+}
+
+.button-container {
+    display: flex;
+    justify-content: center; /* Align items horizontally at the center */
+    gap: 20px; /* Add space between buttons */
+    margin-top: 20px; /* Add some space above the buttons */
+}
+
+
+input[type="number"]::-webkit-inner-spin-button, 
+input[type="number"]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+input[type="number"] {
+    -moz-appearance: textfield; /* Remove spinner in Firefox */
 }
