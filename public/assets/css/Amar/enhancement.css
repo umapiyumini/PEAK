@@ -8,7 +8,7 @@ body {
     background-color: #f4f4f4;
   }
 
-  container{
+  .container{
     background-color:  #D8BFD8;
     ;
   }
@@ -17,7 +17,7 @@ body {
     display: flex;
     flex-direction: row;
     gap: 50px; /* space between boxes */
-    margin: 70px;
+    margin: 50px;
     
   }
   
@@ -32,7 +32,7 @@ body {
     width: 350px;
     height: 200px;
     border-radius: 20px;
-    margin-left: 200px;
+    margin-left: 250px;
 
   }
 

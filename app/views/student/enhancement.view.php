@@ -16,7 +16,9 @@ include 'nav.view.php';
   <div class="container1">
     <!-- UCSC -->
     <div class="box1">
-    <a href="UCSC_Enhancemrnt.pdf" Download><img src="ucscc.png" alt=""></a>
+    <a href="UCSC_Enhancemrnt.pdf" Download>
+    <img src="<?=ROOT?>/assets/images/amar/ucsc.png" alt="UCSC">
+
       
         
     </div>
@@ -29,7 +31,8 @@ include 'nav.view.php';
     <!-- Science -->
     <div class="box2">
     <a href="UCSC_Enhancement.pdf" Download>
-    <img src="fos.png" alt=""></a>
+    <img src="<?=ROOT?>/assets/images/amar/fos.png" alt="FOS">
+
       
     </div>
    

@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="<?=ROOT?>/assets/css/amar/football.css">
 
-    <title>Hockey</title>
+    <title>FootBall</title>
     
 </head>
 <body>
@@ -28,23 +28,27 @@
 		
 		<div class="content-container">
             <section class="main-content">
-                <img src="football team.jpg" alt="Team Photo">
+            <img src="<?=ROOT?>/assets/images/amar/football_team.jpg" alt="football_team">
+
                 <h1>Team 2024</h1>
 				<article class="captains">
 			<div class="tile2">
-				<img src="football_mencaptain.png" alt="cap-men">
+            <img src="<?=ROOT?>/assets/images/amar/football_mencaptain.png" alt="cap-men">
+
 				<p>Men's Captain</p>
 				</div>
 				<div class="tile2">
-				<img src="football_womenscaptain.png" alt="cap-women">
-					<p>Women's Captain</p>
+                <img src="<?=ROOT?>/assets/images/amar/football_womenscaptain.png" alt="cap-women">
+                <p>Women's Captain</p>
 				</div>
 				<div class="tile2">
-				<img src="football_mensvicecaptain.png" alt="vc-men">
+                <img src="<?=ROOT?>/assets/images/amar/football_mensvicecaptain.png" alt="vc-men">
+
 					<p>Men's ViceCaptain</p>
 				</div>
 				<div class="tile2">
-				<img src="football_womensvicecaptain.png" alt="vc-women">
+                <img src="<?=ROOT?>/assets/images/amar/football_womensvicecaptain.png" alt="vc-women">
+
 					<p>Women's viceCaptain</p>
 				</div>
 			</article>

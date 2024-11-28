@@ -29,26 +29,30 @@
 		
 		<div class="content-container">
             <section class="main-content">
-                <img src="swimming_team.jpg" alt="Team Photo">
+			<img src="<?=ROOT?>/assets/images/amar/swimming_team.jpg" alt="Swimming_Team">
+
                 <h1>Team 2024</h1>
 				<article class="captains">
 			<div class="tile2">
 
 
-            
-				<img src="Swimming_menscaptain.png" alt="cap-men">
+			<img src="<?=ROOT?>/assets/images/amar/Swimming_menscaptain.png" alt="cap-women">
+
 				<p>Men's Captain</p>
 				</div>
 				<div class="tile2">
-				<img src="Swimming_womenscaptain.png" alt="cap-women">
+				<img src="<?=ROOT?>/assets/images/amar/Swimming_womenscaptain.png" alt="cap-women">
+
 					<p>Women's Captain</p>
 				</div>
 				<div class="tile2">
-				<img src="Swimming_mensvicecaptain.png" alt="vc-men">
+				<img src="<?=ROOT?>/assets/images/amar/Swimming_mensvicecaptain.png" alt="vc-men">
+
 					<p>Men's ViceCaptain</p>
 				</div>
 				<div class="tile2">
-				<img src="Swimming_womensvicecaptain.png" alt="vc-women">
+				<img src="<?=ROOT?>/assets/images/amar/Swimming_womensvicecaptain.png" alt="vc-women">
+
 					<p>Women's viceCaptain</p>
 				</div>
 			</article>

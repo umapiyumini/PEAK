@@ -27,15 +27,15 @@ include 'nav.view.php';
                     <p>Football Rules Are here</p>
                     <button class="btn"><a href="football">Read more</a></button>
                 </div>
-                <img src="uoc football.png" alt="Yoga class">
-            </div>
+                <img src="<?=ROOT?>/assets/images/amar/uocfootball.png" alt="Football">
+                </div>
             <div class="blog-post">
                 <div class="post-info">
                     <h2>New Swimming Pool Rules</h2>
                     <p>New swimming pool rules are now in effect. Please review them before your next visit.</p>
                     <button class="btn"><a href="swimming">Read more</a></button>
                 </div>
-                <img src="uoc swimming.jpg" alt="Swimming pool">
+                <img src="<?=ROOT?>/assets/images/amar/uocswimming.jpg" alt="Swimming">
             </div>
             <div class="blog-post">
                 <div class="post-info">
@@ -43,7 +43,8 @@ include 'nav.view.php';
                     <p>Registration for our annual basketball tournament is now open. Sign up today!</p>
                     <button class="btn"><a href="basketball">Read more</a></button>
                 </div>
-                <img src="uoc basketball.jpg" alt="Basketball court">
+                <img src="<?=ROOT?>/assets/images/amar/uocbasketball.jpg" alt="Basketball">
+
             </div>
         </main>
     </div>

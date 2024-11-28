@@ -16,7 +16,8 @@
     <div class="sidebar">
         <div class="logo">
             <a href="home.php">
-                <img src="logo.png" alt="Logo">
+            <img src="<?=ROOT?>/assets/images/amar/logo.png" alt="PEAK">
+
             </a>
         </div>
         
