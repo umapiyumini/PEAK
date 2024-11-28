@@ -255,7 +255,8 @@ nav a.active {
     <div class="sidebar">
         <div class="logo">
             <a href="home.php">
-                <img src="logo.png" alt="Logo">
+            <img src="<?=ROOT?>/assets/images/amar/logO.png" alt="PED">
+
             </a>
         </div>
         
@@ -272,13 +273,7 @@ nav a.active {
                 </a>
             </li>
 
-             <!-- calendar -->
-             <li class="nav-item">
-                <a href="calendar" class="nav-link">
-                    <i class="uil uil-user"></i>
-                    Calendar
-                </a>
-            </li>
+            
 
 
         <!-- Attendance -->

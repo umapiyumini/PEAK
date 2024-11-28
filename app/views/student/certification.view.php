@@ -16,18 +16,9 @@ include 'nav.view.php';
 ?>
 
         <main class="main-content">
-            <h1>Certification</h1>
             
             <section class="section">
-                <h2>Recruitment</h2>
-                <div class="item">
-                    <div class="item-icon">📄</div>
-                    <div class="item-info">
-                        <p>Rugby Overall Mens First Place at SLUG</p>
-                        <span class="item-date">2022-06-07 14:00</span>
-                    </div>
-                    <button class="request-btn">Request</button>
-                </div>
+                
             </section>
             
             <section class="section">
@@ -48,7 +39,17 @@ include 'nav.view.php';
                     </div>
                     <button class="request-btn">Request</button>
                 </div>
+
+                <div class="item">
+                    <div class="item-icon">📄</div>
+                    <div class="item-info">
+                        <p>Rugby Overall Mens First Place at SLUG</p>
+                        <span class="item-date">2022-06-07 14:00</span>
+                    </div>
+                    <button class="request-btn">Request</button>
+                </div>
             </section>
+           
             
            
         </main>

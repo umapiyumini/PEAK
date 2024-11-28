@@ -31,7 +31,7 @@ include 'nav.view.php';
     <!-- Science -->
     <div class="box2">
     <a href="UCSC_Enhancement.pdf" Download>
-    <img src="<?=ROOT?>/assets/images/amar/fos.png" alt="FOS">
+    <img src="<?=ROOT?>/assets/images/amar/fos.png" alt="">
 
       
     </div>

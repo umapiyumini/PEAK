@@ -32,6 +32,7 @@ include 'nav.view.php';
             <div class="basic-info">
                 <p>Registration No: <span id="studentRegNo"></span></p>
                 <p>Faculty: <span id="studentFaculty"></span></p>
+                <p>Email: <span id="email"></span></p>
             </div>
         </div>
         <div class="profile-right">
