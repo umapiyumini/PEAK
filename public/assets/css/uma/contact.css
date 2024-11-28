@@ -1,0 +1,527 @@
+*{
+    font-family: Arial, Helvetica, sans-serif;
+    margin: 0%;
+    padding: 0;
+    box-sizing:border-box ;
+}
+
+:root{
+    --darkpurple: #360335;
+    --mediumpurple: #4b0a4a;
+    --lightpurple: #ecafec;
+    --white: #ffffff;
+    --black: #000000;
+    --grey: #d5d1d1;
+    --purplegrey:  #f7e3f7;
+    --lightgrey:#eee6f3;
+    --darkgrey:#474747;
+}
+
+body{
+    min-height: 100vh;
+    overflow-x: hidden;
+}
+
+.container{
+    position: relative;
+    width: 100%;
+}
+
+.navigation{
+    position: fixed;
+    width: 200px;
+    height: 100%;
+    background: var(--darkpurple);
+    border-left: 10px solid var(--darkpurple);
+    transition: 0.5s;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column; /* Stack items vertically */
+    align-items: center;
+}
+
+.navigation.active{
+    width:80px;
+
+}
+
+.navigation ul{
+    position: absolute;
+    top: 0;
+    left:0px;
+    width: 100%;
+}
+
+.navigation ul li{
+    position: relative;
+    width: 100%;
+    list-style: none;
+    border-top-left-radius:15px;
+    border-bottom-left-radius:15px ;
+}
+
+.navigation ul li:hover,
+.navigation ul li.hovered{
+    background: var(--white);
+    
+}
+.navigation ul li:hover a ,
+.navigation ul li.hovered a{
+    color: var(--darkpurple); 
+}
+
+.navigation ul li:hover .icon img {
+    filter: brightness(0) ;/* Change image to black using filter */
+}
+
+.navigation ul li:hover .title {
+    color: var(--darkpurple); 
+}
+
+.navigation ul li:nth-child(1){
+    margin-top:20px;
+    margin-bottom:20px;
+    pointer-events: none;
+    
+}
+
+.title{
+    margin-left: 10px; /* Add spacing between icon and title text */
+    font-size: 16px; /* Adjust font size */
+    font-weight: 500; /* Optional: Make text slightly bold */
+} 
+
+.icon img{
+    width: 40px;
+    height: 40px;
+    flex-shrink: 0;
+}
+
+.navigation ul li a {
+    display: flex; /* Use flexbox to align icon and text side by side */
+    align-items: center; /* Vertically align icon and text */
+    padding: 15px 20px; /* Add padding for spacing */
+    color: var(--lightpurple); /* Ensure text color matches */
+    text-decoration: none; /* Remove underline */
+    transition: 0.3s; /* Smooth hover effect */
+}
+
+.navigation .logo img {
+    width: 120px; /* Default size for the full navigation bar */
+    height: auto; /* Maintain aspect ratio */
+    transition: 0.3s ease; 
+}
+
+.logo {
+    display: flex;
+    justify-content: center; /* Center horizontally */
+    align-items: center; /* Center vertically */
+    height: 100%; /* Full height of the navigation bar */
+    width: 100%; /* Ensure it takes full width */
+    transition: 0.3s ease; /* Smooth transition */
+}
+
+.navigation.active .logo {
+    height: 80px; /* Adjust the height of the logo container in the collapsed state */
+    width: 100%; 
+}
+
+.navigation.active .logo img {
+    width: 70px; /* Smaller size for the collapsed navigation */
+    height: auto; /* Maintain aspect ratio */
+}
+
+
+
+
+
+.navigation ul li:hover a::before,
+.navigation ul li.hovered a::before{
+    content: '';
+    position: absolute;
+    right:0;
+    top:-50px;
+    width: 50px;
+    height:50px;
+    background-color:transparent;
+    border-radius: 50%;
+    box-shadow: 35px 35px 0 10px var(--white) ;
+    pointer-events: none;
+} 
+
+.navigation ul li:hover a::after,
+.navigation ul li.hovered a::after{
+    content: '';
+    position: absolute;
+    right:0;
+    bottom:-50px;
+    width: 50px;
+    height:50px;
+    background-color:transparent;
+    border-radius: 50%;
+    box-shadow: 35px -35px 0 10px var(--white) ;
+    pointer-events: none;
+
+} 
+
+/* main content */
+.main{
+    position:absolute;
+    width:calc(100% -200px) ;
+    left:200px;
+    right: 0;
+    min-height:100vh ;
+    background-color: var(--white);
+    transition: 0.5s;
+}
+
+.main.active{
+    width:calc(100%-80px);
+    left:80px;
+    
+}
+
+.topbar{
+    width:100%;
+    height: 60px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 10px;
+    /* background-color: var(--darkpurple); */
+    background: var(--lightgrey);
+    
+}
+
+.toggle{
+    position:relative;
+    width: 60px;
+    height: 60px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    font-size: 2.5rem;
+    
+
+}
+
+.user {
+    position:relative;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    overflow: hidden;
+    cursor: pointer;
+    z-index: 1000;
+}
+
+.user img {
+    position: absolute;
+    top: 0;
+    left: 0px;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+
+}
+
+/* contact content */
+
+.contact{
+    position: relative;
+    min-height: 100vh;
+    padding: 50px 100px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    background:var(--white)
+}
+
+.contact .content{
+    max-width: 800px;
+    text-align: center;
+}
+
+.contact .content h2{
+    font-size: 30px;
+    font-weight: 500;
+    color:var(--darkpurple);
+    padding-bottom: 20px;
+}
+
+.contact .content p{
+    font-weight: 300;
+    color: var(--black);
+}
+
+.contain{
+      width:100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-top: 30px;
+}
+
+.contain .contactinfo{
+    width:50%;
+    display: flex;
+    flex-direction:column ;
+}
+
+.contain .contactinfo .box{
+    position: relative;
+    padding: 20px 0;
+    display: flex;
+}
+
+.contain .contactinfo .box img{
+    min-width: 40px;
+    height: 40px;
+    background:var(--white);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 20%;
+}
+
+.contain .contactinfo .box .text{
+    display: flex;
+    margin-left: 20px;
+    font-size:16px ;
+    color: #777;
+    flex-direction: column;
+    font-weight: 300;
+}
+
+.contain .contactinfo .box .text h3{
+    font-weight: 500;
+    color:var(--darkpurple);
+
+}
+
+
+.contactform {
+    width: 40%;
+    padding: 40px;
+    box-shadow: 20px 20px 50px rgba(0, 0, 0, 0.5);
+    border-radius: 15px;
+    background:var(--lightgrey);
+    position: relative;
+    overflow: hidden;
+    margin-top: 0px;
+    margin-left: 100px;
+}
+
+.contactform::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: var(--lightgrey); /* semi-transparent overlay */
+    backdrop-filter: blur(10px); /* apply blur here */
+    z-index: 1;
+    border-radius: 15px; /* match the main container's border radius */
+}
+
+.contactform * {
+    position: relative;
+    z-index: 2;
+}
+
+.contactform h2{
+    font-size: 30px;
+    color:var(--black);
+    font-weight: 500;
+}
+
+.contactform .inputbox{
+    position: relative;
+    width: 100%;
+    margin-top: 10px;
+}
+
+
+
+.contactform .inputbox input, 
+.contactform .inputbox textarea {
+    width: 100%;
+    padding:5px 0;
+    font-size: 16px;
+    margin: 10px 0;
+    border:none;
+    border-bottom:2px solid var(--darkgrey) ;
+    outline:none;
+    background:transparent;
+    resize: none;
+}
+
+.contactform .inputbox span{
+    position: absolute;
+    left:0;
+    padding:5px 0;
+    font-size: 16px;
+    margin: 10px 0;
+    color:var(--darkpurple);
+    font-size: 18px;
+    font-weight: 100;
+    pointer-events: none;
+    transition:0.5s;
+ 
+
+    
+}
+
+.contactform .inputbox input:focus ~span,
+.contactform .inputbox input:valid ~span,
+.contactform .inputbox textarea:focus ~span,
+.contactform .inputbox textarea:valid ~span{
+    color:#30033a;
+    font-size: 12px;
+    transform: translateY(-15px) ;
+}
+
+
+.contactform .inputbox input[type="submit"]{
+    width:100px;
+    background:var(--darkpurple);
+    color: var(--purplegrey);
+    border: none;
+    cursor: pointer;
+    padding: 10px;
+    font-size: 18px;
+    border-radius: 10px;
+}
+
+.map {
+    width: 100%;
+    margin-top: 20px;
+    display: flex;
+    justify-content: center;
+    height:200px;
+    transition: transform 0.9s ease;
+}
+
+
+.contact-info iframe {
+    /* You can set a custom height */
+    border: none;
+    border-radius: 10px;
+  }
+
+
+/* -----------feedback---------------- */
+/* Modal background */
+.fwrapper{
+    display: none; /* Hidden by default */
+    position: fixed; /* Position fixed to overlay above everything else */
+    top: 50%; /* Center the modal vertically */
+    left: 50%; /* Center the modal horizontally */
+    transform: translate(-50%, -50%); /* Adjust for perfect centering */
+    background: var(--darkpurple);
+    padding: 2rem;
+    max-width: 576px;
+    width: 100%;
+    border-radius: .75rem;
+    box-shadow: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    z-index: 1000;
+    overflow: hidden; /* Prevent overflow */
+}
+
+/* Modal title */
+.fwrapper h3{
+    font-size: 1.5rem;
+    font-weight: 300;
+    margin-bottom: 1rem;
+    color: var(--lightpurple);
+    text-align: center;
+}
+
+/* Rating container */
+.rating {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    grid-gap: .5rem;
+    font-size: 2rem;
+    color: #eac9e5;
+    margin-bottom: 15px;
+}
+
+/* Star styles */
+.rating .star {
+    cursor: pointer;
+}
+
+.rating .star.active {
+    opacity: 0;
+    animation: animate .5s ease-in-out forwards;
+}
+
+/* Star animation */
+@keyframes animate {
+    0% {
+        opacity: 0;
+        transform: scale(1);
+    }
+
+    50% {
+        opacity: 1;
+        transform: scale(1.2);
+    }
+
+    100% {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+/* Hover effect for stars */
+.rating .star:hover {
+    transform: scale(1.1);
+}
+
+/* Textarea */
+.fwrapper textarea {
+    width: 100%;
+    background-color:var(--lightgrey);
+    padding: 10px;
+    border-radius: 10px;
+    border: none;
+    outline: none;
+    resize: none;
+    margin-bottom: 10px;
+}
+
+/* Button group */
+.btn-group {
+    display: flex;
+    grid-gap: .5rem;
+    align-items: center;
+}
+
+/* Submit and Cancel button styles */
+.btn-group .fbtn {
+    padding: 10px 15px;
+    border-radius: 8px;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    color: #ecd8e9;
+    background: #621256;
+}
+
+/* Hover effect for buttons */
+.btn-group .fbtn.submit:hover {
+    background: #2f0629;
+}
+
+.btn-group .fbtn.cancel:hover {
+    background: #2f0629;
+}

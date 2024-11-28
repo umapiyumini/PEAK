@@ -1,0 +1,278 @@
+:root {
+    --darkpurple: #360335;
+    --mediumpurple: #4b0a4a;
+    --lightpurple: #ecafec;
+    --white: #ffffff;
+    --black: #000000;
+    --grey: #d5d1d1;
+    --purplegrey: #f7e3f7;
+    --lightgrey: #eee6f3;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: var(--lightgrey);
+    color: var(--darkpurple);
+    margin: 0;
+    padding: 0;
+}
+
+.container1 {
+    max-width: 90%;
+    margin: 50px auto;
+    background-color: var(--white);
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.title1 {
+    text-align: center;
+    color: var(--mediumpurple);
+}
+
+form label {
+    font-weight: bold;
+    margin-top: 10px;
+    display: block;
+}
+
+form select,
+form input[type="date"],
+form input[type="text"] {
+    width: 100%;
+    padding: 10px;
+    margin-top: 5px;
+    margin-bottom: 15px;
+    border: 1px solid var(--grey);
+    border-radius: 5px;
+    background-color: var(--lightgrey);
+}
+
+form input[readonly] {
+    background-color: var(--grey);
+}
+
+button[type="submit"] {
+    width: 10%;
+    padding: 10px;
+    background-color: var(--mediumpurple);
+    color: var(--white);
+    font-size: 16px;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    margin-top:20px;
+}
+
+button[type="submit"]:hover {
+    background-color: var(--darkpurple);
+}
+
+.rules{
+    margin-top: 40px;
+    margin-bottom: 40px;
+}
+.rules ul {
+    list-style-type: disc;
+    padding-left: 20px;
+    margin-top: 10px;
+}
+
+.rules li {
+    margin-bottom: 10px;
+}
+
+
+
+/* ----------slots-------------- */
+/* Styling for the time slots container */
+
+
+/* Header for available time slots */
+#timeSlots > p {
+    font-size: 1.2em;
+    color: var(--darkpurple);
+    margin-bottom: 15px;
+    margin-top: 15px;
+    font-weight: bold;
+    
+}
+
+/* Styling for time slot buttons */
+.slot {
+    padding: 10px 20px;
+    margin: 5px;
+    border: 2px solid var(--mediumpurple);
+    background-color: var(--lightgrey);
+    color: var(--darkpurple);
+    cursor: pointer;
+    border-radius: 8px;
+    font-size: 0.9em;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* Hover effect for enabled buttons */
+.slot:not(.disabled):hover {
+    background-color: var(--mediumpurple);
+    color: var(--white);
+}
+
+/* Disabled time slot buttons */
+.slot.disabled {
+    background-color: var(--grey);
+    color: var(--white);
+    cursor: not-allowed;
+    border: 1px solid var(--lightgrey);
+}
+
+/* General container styles for better alignment */
+button.slot {
+    display: inline-block;
+    margin: 10px;
+}
+
+
+.slot.selected {
+    background-color: var(--darkpurple);  /* Dark purple color */
+    color: white;  /* Text color when selected */
+}
+
+/* -----------modal---------------------- */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+.modal-content {
+    background-color: var(--white);
+    margin: 10% auto;
+    padding: 20px;
+    border: 1px solid var(--grey);
+    border-radius: 10px;
+    width: 80%;
+    max-width: 500px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+.modal-content h2 {
+    color: var(--mediumpurple);
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.summary-details p {
+    font-size: 16px;
+    margin: 5px 0;
+    text-align: center;
+}
+
+.summary-details hr {
+    border: 0;
+    height: 1px;
+    background: var(--grey);
+    margin: 10px 0;
+}
+
+.close {
+    color: var(--darkpurple);
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.close:hover {
+    color: var(--mediumpurple);
+}
+/* 
+button#confirmReservation {
+    width: 100%;
+    padding: 10px;
+    background-color: var(--mediumpurple);
+    color: var(--white);
+    font-size: 16px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 20px;
+    transition: background-color 0.3s ease;
+}
+
+button#confirmReservation:hover {
+    background-color: var(--darkpurple);
+} */
+
+
+/* jhnuj */
+.modal-buttons {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+}
+
+.modal-buttons button {
+    width: 48%;
+    padding: 10px;
+    font-size: 16px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+#backToForm {
+    background-color: var(--mediumpurple);
+    color: var(--white);
+}
+
+#backToForm:hover {
+    background-color: var(--darkgrey);
+}
+
+#confirmReservation {
+    background-color: var(--mediumpurple);
+    color: var(--white);
+}
+
+#confirmReservation:hover {
+    background-color: var(--darkpurple);
+}
+
+.modal-buttons a{
+    text-decoration: none;
+    color: var(--white);
+
+}
+
+
+/* --------------document of proof----------------- */
+input[type="file"] {
+    display: block;
+    margin: 10px 0;
+    padding: 8px 10px;
+    font-family: Arial, sans-serif;
+    font-size: 14px;
+    color: var(--darkpurple);
+    background-color: var(--lightgrey);
+    border: 2px solid var(--mediumpurple);
+    border-radius: 5px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+
+
+input[type="file"]:focus {
+    outline: none;
+    box-shadow: 0 0 5px var(--darkpurple);
+    border-color: var(--darkpurple);
+}

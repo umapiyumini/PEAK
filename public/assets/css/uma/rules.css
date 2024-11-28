@@ -1,0 +1,71 @@
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: var(--lightgrey);
+    color: var(--black);
+    margin: 0;
+    padding: 0;
+}
+
+.container1 {
+    width: 90%;
+    margin: 20px auto;
+    background-color: var(--white);
+    border: 1px solid var(--mediumpurple);
+    border-radius: 10px;
+    padding: 20px;
+}
+
+h1 {
+    text-align: center;
+    color: var(--darkpurple);
+    margin-bottom: 20px;
+}
+
+h2 {
+    margin-top: 20px;
+    color: var(--mediumpurple);
+    margin-bottom: 15px;
+}
+
+.payment-method{
+    margin-left: 20px;
+}
+
+.rules-section{
+    margin-left: 20px;
+}
+
+.upload-section{
+    margin-left: 20px;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 15px;
+}
+
+table th, table td {
+    border: 1px solid var(--grey);
+    padding: 10px;
+    text-align: left;
+}
+
+table th {
+    background-color: var(--mediumpurple);
+    color: var(--white);
+}
+
+table td {
+    background-color: var(--white);
+}
+
+.payment-method {
+    margin-bottom: 20px;
+    padding: 15px;
+    background-color: var(--lightgrey);
+    border: 1px solid var(--grey);
+    border-radius: 5px;
+}
+
