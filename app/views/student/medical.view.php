@@ -40,7 +40,7 @@ include 'nav.view.php';
         
         <div class="actions">
             <button class="cancel-btn">Cancel</button>
-            <button class="next-btn">Next</button>
+            <button class="next-btn">Submit</button>
         </div>
     </main>
 </body>
