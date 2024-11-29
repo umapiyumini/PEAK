@@ -116,8 +116,21 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <!-- Rows will populate dynamically here -->
+                        <?php if (!empty($unpacked)): ?>
+                            <?php foreach ($unpacked as $item): ?>
+                                <tr>
+                                    <td><?php echo $item->name; ?></td>
+                                    <td><?php echo $item->quantity; ?></td>
+                                    <td><button>Edit</button></td> <!-- Replace this with your edit functionality if needed -->
+                                </tr>
+                            <?php endforeach; ?>
+                        <?php else: ?>
+                            <tr>
+                                <td colspan="3">No data available</td>
+                            </tr>
+                        <?php endif; ?>
                     </tbody>
+
                 </table>
             </div>
 
@@ -156,51 +169,70 @@
         <div class="requests-container">
             <h3>Stock Requests</h3>
             
-            <!-- Requests Table -->
-            <table id="requestsTable">
-
-            
+         <!-- Requests Table -->
+        <table id="requestsTable">
             <button class="add" id="addNewRequestBtn">Add New Request</button>
-
-                <thead>
+            <thead>
+                <tr>
+                    <th>Equipment</th>
+                    <th>Quantity Requested</th>
+                    <th>Date</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php if (!empty($request)): ?>
+                    <?php foreach ($request as $item): ?>
+                        <tr data-id="<?php echo htmlspecialchars($item->requestid); ?>">
+                            <td><?php echo htmlspecialchars($item->name); ?></td>
+                            <td><?php echo htmlspecialchars($item->quantityrequested); ?></td>
+                            <td><?php echo htmlspecialchars($item->date); ?></td>
+                            <td><button class="delete-btn" data-request-id="<?php echo htmlspecialchars($item->requestid); ?>">Delete</button></td>
+                        </tr>
+                    <?php endforeach; ?>
+                <?php else: ?>
                     <tr>
-                        <th>Equipment</th>
-                        <th>Quantity Requested</th>
-                        <th>Date</th>
-                        <th>Actions</th>
+                        <td colspan="4">No requests available</td>
                     </tr>
-                </thead>
-                <tbody>
-                    <!-- Request rows will populate dynamically here -->
-                </tbody>
-            </table>
+                <?php endif; ?>
+            </tbody>
+
+        </table>
 
             
 
-            <!-- New Request Modal -->
-            <div id="newRequestModal" class="modal">
-    <div class="modal-content">
-        <h3>New Stock Request</h3>
-        
-        <label for="equipmentSelect">Equipment:</label>
-        <select id="equipmentSelect">
-            <!-- Populate options dynamically -->
-        </select>
+                    <!-- New Request Modal -->
+                    <div id="newRequestModal" class="modal">
+            <div class="modal-content">
+                <h3>New Stock Request</h3>
+                
+                <label for="equipmentSelect">Equipment:</label>
+                <select id="equipmentSelect">
+                    <?php if (!empty($dropdown)): ?>
+                        <?php foreach ($dropdown as $item): ?>
+                            <option value="<?php echo htmlspecialchars($item->name); ?>">
+                                <?php echo htmlspecialchars($item->name); ?>
+                            </option>
+                        <?php endforeach; ?>
+                    <?php else: ?>
+                        <option value="">No equipment available</option>
+                    <?php endif; ?>
+                </select>
 
-        <label for="requestQuantity">Quantity:</label>
-        <div class="quantity-container">
-            <button id="subtractRequestQty">-</button>
-            <input type="number" id="requestQuantity" value="0">
-            <button id="addRequestQty">+</button>
-        </div>
+                <label for="requestQuantity">Quantity:</label>
+                <div class="quantity-container">
+                    <button id="subtractRequestQty">-</button>
+                    <input type="number" id="requestQuantity" value="0" min="1">
+                    <button id="addRequestQty">+</button>
+                </div>
 
-        <!-- Button container -->
-        <div class="button-container">
-            <button id="submitNewRequest">Confirm</button>
-            <button id="closeRequestModal">Close</button>
+                <!-- Button container -->
+                <div class="button-container">
+                    <button id="submitNewRequest">Confirm</button>
+                    <button id="closeRequestModal">Close</button>
+                </div>
+            </div>
         </div>
-    </div>
-</div>
 
         </div>
     </div>

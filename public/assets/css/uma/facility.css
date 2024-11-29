@@ -256,24 +256,11 @@ body {
     overflow: hidden;
 }
 
-/* Black overlay */
-.facility-card .overlay {
-    position: absolute;
-    bottom: 0; /* Start from the bottom */
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(210, 177, 213, 0.6); /* Black overlay with opacity */
-    transition: height 0.5s ease; /* Slide effect */
-}
 
-/* Wipe effect on hover (slide the black overlay away from the bottom) */
-.facility-card:hover .overlay {
-    height: 0%; /* On hover, make the overlay disappear by reducing its height */
-}
+
 
 .facility-card:hover {
-    transform: translateY(-10px);
+    transform: translateY(-20px);
 }
 
 .facility-card img {

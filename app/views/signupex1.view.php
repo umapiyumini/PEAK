@@ -26,11 +26,12 @@
 
             
         <div class="formlable">Name with Initials </div>
-        <input type="text" name="fullName" >
+        <input type="text" name="name" >
+        
         
 
         <div class="formlable">Date of Birth </div>
-         <input type="date" name="dob" >
+         <input type="date" name="date_of_birth" >
         
 
          <div class="formlable">NIC </div>
@@ -38,7 +39,7 @@
         
 
         <div class="formlable">Contact Number </div>
-        <input type="text" name="contactNumber" >
+        <input type="text" name="contact_number" >
        
 
     
@@ -76,7 +77,7 @@
            
 
             <div class="formlable">Password </div>
-            <input type="password"  >
+            <input type="password" name="password" >
            
             <div class="formlable">Confirm Password </div>
             <input type="password"  >
@@ -87,7 +88,7 @@
 
 
             <div class="terms-conditions">
-                <input type="checkbox" id="terms" >
+                <input type="checkbox" id="terms" value="1" >
                 <label for="terms">I have read and agree to the <a href="#">Terms</a>, <a href="#">Privacy Policy</a>, and <a href="#">Cookies Policy</a>.</label>
                 
             
