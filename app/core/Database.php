@@ -39,10 +39,3 @@ Trait Database {
        return false;
     }
 }
-
-
-
-
-
-
-

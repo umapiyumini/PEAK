@@ -249,33 +249,47 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 
+
+
+
+
+
+
 // --------INVENTORY MANAGEMENT --------------------------------------
 // Sample Data (You can replace this with dynamic data from your database)
-const inventoryData = [
-    { equipment: "Hockey Stick", quantity: 10 },
-    { equipment: "Cricket Bat", quantity: 15 },
-    { equipment: "Cricket Ball", quantity: 50 },
-    { equipment: "Football", quantity: 20 },
-    { equipment: "Tennis Racket", quantity: 8 }
-];
+// const inventoryData = [
+//     { equipment: "Hockey Stick", quantity: 10 },
+//     { equipment: "Cricket Bat", quantity: 15 },
+//     { equipment: "Cricket Ball", quantity: 50 },
+//     { equipment: "Football", quantity: 20 },
+//     { equipment: "Tennis Racket", quantity: 8 }
+// ];
 
 // Populate the inventory table with sample data
-function populateInventoryTable() {
-    const tableBody = document.querySelector("#inventoryTable tbody");
-    tableBody.innerHTML = ""; // Clear existing rows
+// function populateInventoryTable() {
+//     const tableBody = document.querySelector("#inventoryTable tbody");
+//     tableBody.innerHTML = ""; // Clear existing rows
 
-    inventoryData.forEach(item => {
-        const row = document.createElement("tr");
-        row.innerHTML = `
-            <td>${item.equipment}</td>
-            <td>${item.quantity}</td>
-            <td><button class="editBtn" onclick="editEquipment('${item.equipment}')">Edit</button></td>
-        `;
-        tableBody.appendChild(row);
-    });
-}
+//     inventoryData.forEach(item => {
+//         const row = document.createElement("tr");
+//         row.innerHTML = `
+//             <td>${item.equipment}</td>
+//             <td>${item.quantity}</td>
+//             <td><button class="editBtn" onclick="editEquipment('${item.equipment}')">Edit</button></td>
+//         `;
+//         tableBody.appendChild(row);
+//     });
+// }
 
 // Function to filter inventory based on search input
+
+
+
+
+
+
+
+
 function searchEquipment() {
     const searchQuery = document.getElementById("searchEquipment").value.toLowerCase();
     const rows = document.querySelectorAll("#inventoryTable tbody tr");
@@ -293,6 +307,14 @@ function searchEquipment() {
 // Add event listener to the search bar to trigger searchEquipment() on input
 document.getElementById("searchEquipment").addEventListener("input", searchEquipment);
 
+
+
+
+
+
+
+
+// ------EDIT MODAL--------------------
 
 // Edit equipment modal handling
 function editEquipment(equipmentName) {
@@ -341,55 +363,31 @@ document.getElementById("closeModal").addEventListener("click", function() {
     document.getElementById("editModal").style.display = "none";
 });
 
+
+
+
+
+
+
+
+
+// -----------------ADD REQUEST MODAL---------------------------
+
 // Add New Request functionality
 document.getElementById("addNewRequestBtn").addEventListener("click", function() {
     document.getElementById("newRequestModal").style.display = "flex";
-});
-
-// Handle quantity adjustment in new request modal
-document.getElementById("subtractRequestQty").addEventListener("click", function() {
-    const requestQuantityField = document.getElementById("requestQuantity");
-    if (requestQuantityField.value > 0) {
-        requestQuantityField.value--;
-    }
-});
-
-document.getElementById("addRequestQty").addEventListener("click", function() {
-    const requestQuantityField = document.getElementById("requestQuantity");
-    requestQuantityField.value++;
-});
-
-// Submit New Request
-document.getElementById("submitNewRequest").addEventListener("click", function() {
-    const selectedEquipment = document.getElementById("equipmentSelect").value;
-    const requestedQuantity = parseInt(document.getElementById("requestQuantity").value);
-
-    // Here you would add the new request data to the database or an array
-    const newRequest = {
-        equipment: selectedEquipment,
-        quantityRequested: requestedQuantity,
-        date: new Date().toLocaleDateString()
-    };
-
-    // Example of dynamically adding the new request to the table
-    const requestTableBody = document.querySelector("#requestsTable tbody");
-    const newRow = document.createElement("tr");
-    newRow.innerHTML = `
-        <td>${newRequest.equipment}</td>
-        <td>${newRequest.quantityRequested}</td>
-        <td>${newRequest.date}</td>
-        <td><button class="editBtn">Edit</button><button class="deleteBtn">Delete</button></td>
-    `;
-    requestTableBody.appendChild(newRow);
-
-    // Close the new request modal
-    document.getElementById("newRequestModal").style.display = "none";
 });
 
 // Close new request modal
 document.getElementById("closeRequestModal").addEventListener("click", function() {
     document.getElementById("newRequestModal").style.display = "none";
 });
+
+
+
+
+
+
 
 // Delete Request functionality (with confirmation)
 document.querySelector("#requestsTable").addEventListener("click", function(event) {
@@ -417,5 +415,5 @@ populateInventoryTable();
 populateEquipmentDropdown();
 
 
-// --------toggle log out------------------
+// --------new stufff-------------------------------
 
