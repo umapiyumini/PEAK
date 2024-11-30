@@ -1,0 +1,120 @@
+/* Existing styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+  body {
+    font-family: Arial, sans-serif;
+    background-color: #f7ebfb;
+    display: flex;
+    flex-direction: column; /* Stack items vertically */
+    justify-content: center;
+    align-items: center;
+    min-height: 80vh;
+    margin: 0;
+}
+
+.topic-header {
+    font-size: 32px;
+    font-weight: bold;
+    text-align: center;
+    color: #000000;
+    margin-bottom: 20px;
+}
+
+.container {
+    width: 100%;
+    max-width: 1080px;
+    background-color: #ffffff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+  
+  .request-list {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+  }
+  
+  .request-item {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    border-bottom: 1px solid #eaeaea;
+  }
+  
+  .request-item img {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    margin-right: 15px;
+  }
+  
+  .request-info h2 {
+    font-size: 1rem;
+    margin-bottom: 5px;
+  }
+  
+  .request-info p {
+    font-size: 0.9rem;
+    color: #706c6c;
+  }
+  
+  .buttons {
+    margin-left: auto;
+    display: flex;
+    gap: 10px;
+  }
+  
+  button {
+    padding: 5px 10px;
+    border: none;
+    border-radius: 5px;
+    font-size: 0.9rem;
+    cursor: pointer;
+  }
+  
+  .approve {
+    background-color: #7a5f87;
+    color: #fff;
+  }
+  
+  .reject {
+    background-color: #c25858;
+    color: #fff;
+  }
+  
+  /* Modal styles */
+  .modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .modal-content {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    max-width: 400px;
+    width: 90%;
+    text-align: center;
+  }
+  
+  .close {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    font-size: 24px;
+    cursor: pointer;
+  }
+  

@@ -1,0 +1,283 @@
+@import url(../reservation/ped.css);
+
+
+
+.header {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    flex-wrap: wrap;
+    margin-bottom: 1rem;
+}
+
+.header .sub-topic {
+    font-size: 18px;
+    color: #666;
+    margin-top: 5px;
+}
+.header .btn-add{
+    margin-left: 40rem;
+
+}
+
+.btn {
+    background-color: var(--edit-color);
+    color: #fff;
+    padding: 8px 16px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+.btn-danger {
+    background-color: var(--danger-color);
+}
+
+.btn-add {
+    background-color: #3E034A;
+   
+}
+
+.btn:hover {
+    opacity: 0.9;
+}
+
+.filters {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    margin-bottom: 20px;
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+.filter-group {
+    flex: 1;
+    min-width: 200px;
+}
+
+.filter-group label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+    color: #666;
+}
+
+.filter-group select,
+.filter-group input,
+.form-group input,
+.form-group select {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 14px;
+}
+
+/* Modal container styles */
+.modal {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1000; /* Sit on top */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgba(0, 0, 0, 0.4); /* Black background with opacity */
+}
+
+/* Modal content styles */
+.modal-content {
+    background-color: #ffffff;
+    margin: 10% auto; /* Center the modal */
+    padding: 20px;
+    border-radius: 10px;
+    width: 40%; /* Adjust as needed */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    animation: fadeIn 0.3s ease-in-out;
+}
+
+/* Close button */
+.close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.close:hover,
+.close:focus {
+    color: #000;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+/* Modal heading */
+.modal-content h2 {
+    margin-top: 0;
+    color: #5a2e8a;
+    text-align: center;
+}
+
+/* Form styles */
+.form-group {
+    margin-bottom: 15px;
+    text-align: left;
+}
+
+label {
+    font-weight: bold;
+    color: #5a2e8a;
+    display: block;
+    margin-bottom: 5px;
+}
+
+input, textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-size: 14px;
+    resize: none; /* Prevent resizing for textareas */
+}
+
+input:focus, textarea:focus {
+    border-color: #5a2e8a;
+    box-shadow: 0 0 5px rgba(90, 46, 138, 0.3);
+    outline: none;
+}
+
+/* Submit button */
+.submit-btn {
+    background-color: #5a2e8a;
+    color: #ffffff;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 16px;
+    width: 100%;
+    transition: background-color 0.3s ease;
+}
+
+.submit-btn:hover {
+    background-color: #743dbb;
+}
+
+/* Animation for modal appearance */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+.records-table {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    overflow-x: auto;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+th, td {
+    padding: 12px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+th {
+    background-color: var(--gray-light);
+    font-weight: bold;
+
+}
+
+tr:hover {
+    background-color: #f8f9fa;
+}
+
+.action-buttons {
+    display: flex;
+    gap: 8px;
+}
+
+.participants-list {
+    padding: 20px;
+}
+
+.participants-list ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+.participants-list li {
+    padding: 8px 0;
+}
+
+@media (max-width: 768px) {
+    .filters {
+        flex-direction: column;
+    }
+    
+    .filter-group {
+        width: 100%;
+    }
+}
+
+.tabs {
+    display: flex;
+    justify-content: space-around;
+    margin-bottom: 20px;
+  }
+
+  .tab-button {
+    padding: 10px 20px;
+    cursor: pointer;
+    background-color: #f1f1f1;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+  }
+
+  .tab-button:hover, .tab-button.active {
+    background-color: #4CAF50;
+    color: white;
+  }
+
+  .tab-content {
+    display: none;
+  }
+
+  .tab-content.active {
+    display: block;
+  }
+
+  /* Add styles for the tournament details table */
+  .records-table table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+  }
+
+  .records-table th, .records-table td {
+    padding: 10px;
+    border: 1px solid #ddd;
+  }
+
+  .filter-group {
+    display: inline-block;
+    margin-right: 20px;
+  }
