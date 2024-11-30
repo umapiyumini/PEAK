@@ -1,0 +1,81 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f1f1f1;
+    margin: 0;
+    padding: 0;
+  }
+  
+  .container {
+    max-width: 100%;
+    padding: 20px;
+    background: #fff;
+    border-radius: 8px;
+    margin-left: 220px  ;
+    height:100vh;
+    background-color: #D8BFD8;
+  }
+  
+  h1 {
+    text-align: center;
+    color: #000000;
+    margin: 25px;
+  }
+  
+  .attendance-controls, .filter-section {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+    margin-left: 20px;
+  }
+  
+  input, select, button {
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+  }
+  
+  button {
+    background-color: #3E034A;
+    color: #fff;
+    cursor: pointer;
+  }
+  
+  button:hover {
+    background-color: #59056a;
+  }
+  
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+  }
+  
+  thead {
+    background-color: #f0f0f0;
+    color: #070707;
+  }
+  
+  th, td {
+    padding: 10px;
+    text-align: center;
+    border: 1px solid #ddd;
+  }
+  
+  tr.present td {
+    background-color: #f1f1f1;
+  }
+  
+  tr.absent td {
+    background-color: #f8d7da;
+  }
+  
+  .summary {
+    text-align: center;
+    font-size: 1.1em;
+    color: #333;
+  }
+
+  .attendance-table
+  {
+   margin: 10px;
+  }
