@@ -18,7 +18,7 @@
             <div class="login-box">
                 <img src="<?=ROOT?>/assets/images/logo.png" class="logo">
                 <h1>Welcome to PEAK!</h1>
-                <form  method="POST"> <!-- Form action set to login.php -->
+                <form  method="POST"> 
                     <?php if(!empty($errors)): ?>
                        invalid login
                     <?php endif;?>
@@ -36,3 +36,5 @@
     </div>
 </body>
 </html>
+
+
