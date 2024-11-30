@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 28, 2024 at 08:37 PM
+-- Generation Time: Nov 29, 2024 at 06:39 PM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -20,6 +20,8 @@ SET time_zone = "+00:00";
 --
 -- Database: `peak`
 --
+CREATE DATABASE IF NOT EXISTS `peak` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
+USE `peak`;
 
 -- --------------------------------------------------------
 
@@ -40,10 +42,21 @@ CREATE TABLE `amalgamatedclub` (
 
 CREATE TABLE `equipments` (
   `equipmentid` int(11) NOT NULL,
+  `sport_id` int(20) NOT NULL,
   `name` varchar(255) NOT NULL,
   `type` varchar(100) NOT NULL,
+  `issued_amount` int(20) NOT NULL DEFAULT 0,
   `description` text DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `equipments`
+--
+
+INSERT INTO `equipments` (`equipmentid`, `sport_id`, `name`, `type`, `issued_amount`, `description`) VALUES
+(1, 3, 'Sticks', 'Team', 0, NULL),
+(2, 1, 'ball', 'recreational', 5, 'abc'),
+(3, 4, 'foot balls', 'recreational', 5, 'abc');
 
 -- --------------------------------------------------------
 
@@ -73,21 +86,6 @@ CREATE TABLE `ground_indoor_staff` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `inventory`
---
-
-CREATE TABLE `inventory` (
-  `productID` int(11) NOT NULL,
-  `sport` varchar(50) NOT NULL,
-  `quantity` int(11) NOT NULL,
-  `incharge` varchar(100) NOT NULL,
-  `usage_type` enum('Team','Recreational') NOT NULL,
-  `type` enum('Packed','Unpacked','Non-refundable') NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
--- --------------------------------------------------------
-
---
 -- Table structure for table `inventoryedit`
 --
 
@@ -112,16 +110,12 @@ CREATE TABLE `inventoryrequest` (
   `bywhom` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
--- --------------------------------------------------------
-
 --
--- Table structure for table `packedinventory`
+-- Dumping data for table `inventoryrequest`
 --
 
-CREATE TABLE `packedinventory` (
-  `equipmentid` int(11) NOT NULL,
-  `quantity` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+INSERT INTO `inventoryrequest` (`requestid`, `equipmentid`, `quantityrequested`, `date`, `bywhom`) VALUES
+(1, 2, 50, '2024-11-05', 'abc');
 
 -- --------------------------------------------------------
 
@@ -134,6 +128,27 @@ CREATE TABLE `ped_incharge` (
   `staff_id` varchar(20) NOT NULL,
   `subrole` varchar(50) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `sport`
+--
+
+CREATE TABLE `sport` (
+  `sport_id` int(20) NOT NULL,
+  `sport_name` varchar(20) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `sport`
+--
+
+INSERT INTO `sport` (`sport_id`, `sport_name`) VALUES
+(1, 'Cricket'),
+(2, 'Baseball'),
+(3, 'Hockey'),
+(4, 'Football');
 
 -- --------------------------------------------------------
 
@@ -157,7 +172,11 @@ CREATE TABLE `sports_captain` (
 CREATE TABLE `stock` (
   `stockid` int(11) NOT NULL,
   `equipmentid` int(11) DEFAULT NULL,
+  `indent_no` varchar(20) NOT NULL,
+  `description` varchar(255) NOT NULL,
+  `unit` int(11) NOT NULL,
   `quantity` int(11) NOT NULL,
+  `issued_quantity` int(20) NOT NULL,
   `date` date NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -184,6 +203,14 @@ CREATE TABLE `unpackedinventory` (
   `equipmentid` int(11) NOT NULL,
   `quantity` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `unpackedinventory`
+--
+
+INSERT INTO `unpackedinventory` (`equipmentid`, `quantity`) VALUES
+(2, 2),
+(3, 2);
 
 -- --------------------------------------------------------
 
@@ -232,7 +259,8 @@ ALTER TABLE `amalgamatedclub`
 -- Indexes for table `equipments`
 --
 ALTER TABLE `equipments`
-  ADD PRIMARY KEY (`equipmentid`);
+  ADD PRIMARY KEY (`equipmentid`),
+  ADD KEY `sportequipmentFK` (`sport_id`);
 
 --
 -- Indexes for table `external_user`
@@ -245,12 +273,6 @@ ALTER TABLE `external_user`
 --
 ALTER TABLE `ground_indoor_staff`
   ADD PRIMARY KEY (`userid`);
-
---
--- Indexes for table `inventory`
---
-ALTER TABLE `inventory`
-  ADD PRIMARY KEY (`productID`);
 
 --
 -- Indexes for table `inventoryedit`
@@ -267,16 +289,16 @@ ALTER TABLE `inventoryrequest`
   ADD KEY `equipmentid` (`equipmentid`);
 
 --
--- Indexes for table `packedinventory`
---
-ALTER TABLE `packedinventory`
-  ADD PRIMARY KEY (`equipmentid`);
-
---
 -- Indexes for table `ped_incharge`
 --
 ALTER TABLE `ped_incharge`
   ADD PRIMARY KEY (`userid`);
+
+--
+-- Indexes for table `sport`
+--
+ALTER TABLE `sport`
+  ADD PRIMARY KEY (`sport_id`);
 
 --
 -- Indexes for table `sports_captain`
@@ -321,13 +343,7 @@ ALTER TABLE `user`
 -- AUTO_INCREMENT for table `equipments`
 --
 ALTER TABLE `equipments`
-  MODIFY `equipmentid` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT for table `inventory`
---
-ALTER TABLE `inventory`
-  MODIFY `productID` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `equipmentid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `inventoryedit`
@@ -339,7 +355,13 @@ ALTER TABLE `inventoryedit`
 -- AUTO_INCREMENT for table `inventoryrequest`
 --
 ALTER TABLE `inventoryrequest`
-  MODIFY `requestid` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `requestid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- AUTO_INCREMENT for table `sport`
+--
+ALTER TABLE `sport`
+  MODIFY `sport_id` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `stock`
@@ -364,6 +386,12 @@ ALTER TABLE `amalgamatedclub`
   ADD CONSTRAINT `amalgamatedclub_ibfk_1` FOREIGN KEY (`userid`) REFERENCES `user` (`userid`);
 
 --
+-- Constraints for table `equipments`
+--
+ALTER TABLE `equipments`
+  ADD CONSTRAINT `sportequipmentFK` FOREIGN KEY (`sport_id`) REFERENCES `sport` (`sport_id`);
+
+--
 -- Constraints for table `external_user`
 --
 ALTER TABLE `external_user`
@@ -386,12 +414,6 @@ ALTER TABLE `inventoryedit`
 --
 ALTER TABLE `inventoryrequest`
   ADD CONSTRAINT `inventoryrequest_ibfk_1` FOREIGN KEY (`equipmentid`) REFERENCES `unpackedinventory` (`equipmentid`);
-
---
--- Constraints for table `packedinventory`
---
-ALTER TABLE `packedinventory`
-  ADD CONSTRAINT `packedinventory_ibfk_1` FOREIGN KEY (`equipmentid`) REFERENCES `equipments` (`equipmentid`);
 
 --
 -- Constraints for table `ped_incharge`
@@ -421,7 +443,7 @@ ALTER TABLE `student`
 -- Constraints for table `unpackedinventory`
 --
 ALTER TABLE `unpackedinventory`
-  ADD CONSTRAINT `unpackedinventory_ibfk_1` FOREIGN KEY (`equipmentid`) REFERENCES `packedinventory` (`equipmentid`);
+  ADD CONSTRAINT `unpackedinventory_ibfk_1` FOREIGN KEY (`equipmentid`) REFERENCES `equipments` (`equipmentid`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

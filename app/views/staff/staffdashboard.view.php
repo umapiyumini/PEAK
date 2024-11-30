@@ -121,7 +121,7 @@
                                 <tr>
                                     <td><?php echo $item->name; ?></td>
                                     <td><?php echo $item->quantity; ?></td>
-                                    <td><button>Edit</button></td> <!-- Replace this with your edit functionality if needed -->
+                                    <td><button action = "#">Edit</button></td> <!-- Replace this with your edit functionality if needed -->
                                 </tr>
                             <?php endforeach; ?>
                         <?php else: ?>
@@ -187,7 +187,7 @@
                             <td><?php echo htmlspecialchars($item->name); ?></td>
                             <td><?php echo htmlspecialchars($item->quantityrequested); ?></td>
                             <td><?php echo htmlspecialchars($item->date); ?></td>
-                            <td><button class="delete-btn" data-request-id="<?php echo htmlspecialchars($item->requestid); ?>">Delete</button></td>
+                            <td><button class="delete-btn" onclick="">Delete</button></td>
                         </tr>
                     <?php endforeach; ?>
                 <?php else: ?>
@@ -240,6 +240,7 @@
     </div>
 
     <script src="<?=ROOT?>/assets/js/uma/staff.js"></script>
+    
     
 </body>
 </html>
