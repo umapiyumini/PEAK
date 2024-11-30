@@ -6,12 +6,12 @@ class Inventoryrequest {
     protected $table = 'inventoryrequest';
     protected $fillable = ['requestid','equipmentid','quantityrequested','date','bywhom'];
 
-    public function recquesttable(){
-        $query = "SELECT e.name,i.quantityrequested,i.date FROM inventoryrequest i
-                    JOIN equipments e ON i.equipmentid = e.equipmentid
-                    WHERE e.type = 'recreational' ";
-
-        // $data = ['equipmentid' => $equipmentid];
+    public function recquesttable() {
+        $query = "SELECT i.requestid, e.name, i.quantityrequested, i.date 
+                  FROM inventoryrequest i
+                  JOIN equipments e ON i.equipmentid = e.equipmentid
+                  WHERE e.type = 'recreational'";
+    
         return $this->query($query);
     }
     public function createRequest($equipmentName, $quantity)
@@ -39,8 +39,21 @@ class Inventoryrequest {
         return false;
     }
     
+// ====================== DELETE FUNCTION =========================
+public function deleteRequest($requestid) {
+    $query = "DELETE FROM inventoryrequest WHERE requestid = :requestid";
+    $result = $this->query($query, ['requestid' => $requestid]);
+
+    if ($result) {
+        return true;
+    } else {
+        error_log("Delete failed for requestid: $requestid"); // Log error
+        return false;
+    }
+}
 
      
 
     
 }
+
