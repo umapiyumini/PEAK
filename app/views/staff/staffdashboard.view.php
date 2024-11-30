@@ -208,40 +208,49 @@
 
         </table>
 
-            
 
-                    <!-- New Request Modal -->
-                    <div id="newRequestModal" class="modal">
-            <div class="modal-content">
-                <h3>New Stock Request</h3>
-                
-                <label for="equipmentSelect">Equipment:</label>
-                <select id="equipmentSelect">
-                    <?php if (!empty($dropdown)): ?>
-                        <?php foreach ($dropdown as $item): ?>
-                            <option value="<?php echo htmlspecialchars($item->name); ?>">
-                                <?php echo htmlspecialchars($item->name); ?>
-                            </option>
-                        <?php endforeach; ?>
-                    <?php else: ?>
-                        <option value="">No equipment available</option>
-                    <?php endif; ?>
-                </select>
 
-                <label for="requestQuantity">Quantity:</label>
-                <div class="quantity-container">
-                    <button id="subtractRequestQty">-</button>
-                    <input type="number" id="requestQuantity" value="0" min="1">
-                    <button id="addRequestQty">+</button>
-                </div>
 
-                <!-- Button container -->
-                <div class="button-container">
-                    <button id="submitNewRequest">Confirm</button>
-                    <button id="closeRequestModal">Close</button>
-                </div>
+
+        
+        <div id="newRequestModal" class="modal">
+    <div class="modal-content">
+        <h3>New Stock Request</h3>
+
+        <form method="POST">
+            <label for="equipmentSelect">Equipment:</label>
+            <select id="equipmentSelect" name="name">
+                <?php if (!empty($dropdown)): ?>
+                    <?php foreach ($dropdown as $item): ?>
+                        <option value="<?php echo htmlspecialchars($item->name); ?>">
+                            <?php echo htmlspecialchars($item->name); ?>
+                        </option>
+                    <?php endforeach; ?>
+                <?php else: ?>
+                    <option value="">No equipment available</option>
+                <?php endif; ?>
+            </select>
+
+            <label for="requestQuantity">Quantity:</label>
+            <div class="quantity-container">
+                <button type="button" id="subtractRequestQty">-</button>
+                <input type="number" id="requestQuantity" value="0" min="1" name="quantityrequested">
+                <button type="button" id="addRequestQty">+</button>
             </div>
-        </div>
+
+            <!-- Button container -->
+            <div class="button-container">
+                <button type="submit" id="submitNewRequest">Confirm</button>
+                <button type="button" id="closeRequestModal">Close</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+    </div>
+</div>
+
+
 
         </div>
     </div>
@@ -251,7 +260,14 @@
     
 
 
-
+    <?php if (isset($this->data['success']) && $this->data['success']): ?>
+    <script type="text/javascript">
+        // JavaScript to reload the page after the successful request
+        window.onload = function() {
+            location.reload();  // This will reload the page once
+        }
+    </script>
+<?php endif; ?>
 
     <script src="<?=ROOT?>/assets/js/uma/staff.js"></script>
     <script>
