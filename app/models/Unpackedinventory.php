@@ -23,5 +23,10 @@ class Unpackedinventory  {
         return $this->query($query);
 
     }
+    public function updateQuantity($equipmentId, $quantity, $reason) {
+        // Assuming `reason` is stored or logged somewhere
+        $query = "UPDATE unpackedinventory SET quantity = ? WHERE equipmentid = ?";
+        return $this->query($query, [$quantity, $equipmentId]);
+    }
      
     }

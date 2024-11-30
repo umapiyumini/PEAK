@@ -107,41 +107,34 @@
                 <input type="text" id="searchEquipment" placeholder="Search by name...">
             </div>
 
-            <!-- Inventory Table -->
-            <div class="inventory-table">
-                <table id="inventoryTable">
-                    <thead>
-                        <tr>
-                            <th>Equipment</th>
-                            <th>Available Quantity</th>
-                            <th>Edit</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <?php if (!empty($unpacked)): ?>
-                            <?php foreach ($unpacked as $item): ?>
-                                <tr>
-                                    <td><?php echo $item->name; ?></td>
-                                    <td><?php echo $item->quantity; ?></td>
-                                    
+<!-- Inventory Table -->
+<table id="inventoryTable">
+    <thead>
+        <tr>
+            <th>Equipment</th>
+            <th>Available Quantity</th>
+            <th>Edit</th>
+        </tr>
+    </thead>
+    <tbody>
+        <?php if (!empty($unpacked)): ?>
+            <?php foreach ($unpacked as $item): ?>
+                <tr>
+                    <td><?php echo $item->name; ?></td>
+                    <td><?php echo $item->quantity; ?></td>
+                    <td><button class="edit-btn" data-id="<?php echo $item->equipmentid; ?>" data-name="<?php echo $item->name; ?>" data-quantity="<?php echo $item->quantity; ?>">Edit</button></td>
+                </tr>
+            <?php endforeach; ?>
+        <?php else: ?>
+            <tr>
+                <td colspan="3">No data available</td>
+            </tr>
+        <?php endif; ?>
+    </tbody>
+</table>
 
-                                    <td><button class="edit-btn" data-id="<?php echo $item->id; ?>">Edit</button></td>
-
-
-                                </tr>
-                            <?php endforeach; ?>
-                        <?php else: ?>
-                            <tr>
-                                <td colspan="3">No data available</td>
-                            </tr>
-                        <?php endif; ?>
-                    </tbody>
-
-                </table>
-            </div>
-
-            <!-- Edit Equipment Modal -->
-            <div id="editModal" class="modal">
+<!-- Edit Equipment Modal -->
+<div id="editModal" class="modal">
     <div class="modal-content">
         <h3>Edit Equipment</h3>
         <label for="equipmentName">Equipment Name:</label>
@@ -158,19 +151,19 @@
         <select id="reason">
             <option value="broken">Broken</option>
             <option value="lost">Lost</option>
-            <option value="lost">Expired </option>
-            <option value="lost">Theft </option>
-            <option value="lost">Safety Hazards</option>
+            <option value="expired">Expired</option>
+            <option value="theft">Theft</option>
+            <option value="safety_hazard">Safety Hazard</option>
             <option value="other">Other</option>
         </select>
 
-        <!-- Button container -->
         <div class="button-container">
             <button id="submitEdit">Submit</button>
             <button id="closeModal">Close</button>
         </div>
     </div>
 </div>
+
 
         </div>
 
@@ -279,6 +272,82 @@
         }
     });
 });
+
+
+//update-------------------------------------------------
+document.addEventListener("DOMContentLoaded", function() {
+    // Open modal when Edit button is clicked
+    const editButtons = document.querySelectorAll(".edit-btn");
+    editButtons.forEach(button => {
+        button.addEventListener("click", function() {
+            const equipmentId = this.getAttribute("data-id");
+            const equipmentName = this.getAttribute("data-name");
+            const equipmentQuantity = this.getAttribute("data-quantity");
+
+            // Pre-fill the modal fields
+            document.getElementById("equipmentName").value = equipmentName;
+            document.getElementById("quantity").value = equipmentQuantity;
+
+            // Open the modal
+            document.getElementById("editModal").style.display = "block";
+
+            // Save the equipment ID to be used later for updates
+            document.getElementById("submitEdit").setAttribute("data-id", equipmentId);
+        });
+    });
+
+    // Close the modal when "Close" is clicked
+    document.getElementById("closeModal").addEventListener("click", function() {
+        document.getElementById("editModal").style.display = "none";
+    });
+
+    // Update quantity when + or - button is clicked
+    document.getElementById("addQty").addEventListener("click", function() {
+        const quantityField = document.getElementById("quantity");
+        quantityField.value = parseInt(quantityField.value) + 1;
+    });
+
+    document.getElementById("subtractQty").addEventListener("click", function() {
+        const quantityField = document.getElementById("quantity");
+        if (quantityField.value > 0) {
+            quantityField.value = parseInt(quantityField.value) - 1;
+        }
+    });
+
+    // Submit updated equipment details
+    document.getElementById("submitEdit").addEventListener("click", function() {
+        const equipmentId = this.getAttribute("data-id");
+        const updatedQuantity = document.getElementById("quantity").value;
+        const reason = document.getElementById("reason").value;
+
+        // Send data to the server via AJAX
+        fetch('/update-equipment', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                equipmentId: equipmentId,
+                quantity: updatedQuantity,
+                reason: reason
+            })
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                // Update the table row in the frontend with the new data
+                const row = document.querySelector(`button[data-id="${equipmentId}"]`).closest('tr');
+                row.querySelector('td:nth-child(2)').textContent = updatedQuantity;
+                
+                // Close the modal
+                document.getElementById("editModal").style.display = "none";
+            } else {
+                alert("Failed to update equipment. Please try again.");
+            }
+        });
+    });
+});
+
 
 
 </script>
