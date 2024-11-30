@@ -155,6 +155,9 @@
         <select id="reason">
             <option value="broken">Broken</option>
             <option value="lost">Lost</option>
+            <option value="lost">Expired </option>
+            <option value="lost">Theft </option>
+            <option value="lost">Safety Hazards</option>
             <option value="other">Other</option>
         </select>
 
