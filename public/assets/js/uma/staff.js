@@ -371,23 +371,32 @@ document.getElementById("closeModal").addEventListener("click", function() {
 
 
 
-// -----------------ADD REQUEST MODAL---------------------------
+// -----------------ADD REQUEST MODAL
 
 // Add New Request functionality
 document.getElementById("addNewRequestBtn").addEventListener("click", function() {
     document.getElementById("newRequestModal").style.display = "flex";
 });
 
+// Handle quantity adjustment in new request modal
+document.getElementById("subtractRequestQty").addEventListener("click", function() {
+    const requestQuantityField = document.getElementById("requestQuantity");
+    if (requestQuantityField.value > 0) {
+        requestQuantityField.value--;
+    }
+});
+
+document.getElementById("addRequestQty").addEventListener("click", function() {
+    const requestQuantityField = document.getElementById("requestQuantity");
+    requestQuantityField.value++;
+});
+
+
+ 
 // Close new request modal
 document.getElementById("closeRequestModal").addEventListener("click", function() {
     document.getElementById("newRequestModal").style.display = "none";
 });
-
-
-
-
-
-
 
 // Delete Request functionality (with confirmation)
 document.querySelector("#requestsTable").addEventListener("click", function(event) {
@@ -411,9 +420,104 @@ function populateEquipmentDropdown() {
 }
 
 // Initial population of the inventory table
-populateInventoryTable();
-populateEquipmentDropdown();
 
 
-// --------new stufff-------------------------------
+
+// --------EDIT MODAL-------------------------------
+document.addEventListener('DOMContentLoaded', function () {
+    // Access the modal and modal elements
+    const editModal = document.getElementById('editModal');
+    const closeModalBtn = document.getElementById('closeModal');
+    const submitEditBtn = document.getElementById('submitEdit');
+    const equipmentNameInput = document.getElementById('equipmentName');
+    const quantityInput = document.getElementById('quantity');
+    const reasonSelect = document.getElementById('reason');
+    
+    // Get all the edit buttons
+    const editButtons = document.querySelectorAll('.edit-btn');
+    console.log('Number of edit buttons found:', editButtons.length);  // Debugging log
+
+    // Loop through all edit buttons and add click event listeners
+    editButtons.forEach(button => {
+        button.addEventListener('click', function () {
+            console.log('Edit button clicked'); // Debugging log
+
+            // Get the equipment ID, name, and available quantity
+            const equipmentId = this.getAttribute('data-id');
+            const equipmentName = this.closest('tr').querySelector('td:first-child').textContent;
+            const availableQuantity = this.closest('tr').querySelector('td:nth-child(2)').textContent;
+
+            // Log the retrieved values
+            console.log('Equipment ID:', equipmentId);
+            console.log('Equipment Name:', equipmentName);
+            console.log('Available Quantity:', availableQuantity);
+
+            // Populate the modal with the retrieved data
+            equipmentNameInput.value = equipmentName;
+            equipmentNameInput.setAttribute('data-id', equipmentId);
+            quantityInput.value = availableQuantity;
+            reasonSelect.value = 'broken';  // Default reason value
+
+            // Open the modal
+            editModal.style.display = 'flex';
+            console.log('Modal visibility:', editModal.style.display);  // Debugging log
+        });
+    });
+
+    // Close the modal when the "Close" button is clicked
+    closeModalBtn.addEventListener('click', function () {
+        editModal.style.display = 'none';
+        console.log('Modal is closed');  // Debugging log
+    });
+
+    // Handle form submission
+    submitEditBtn.addEventListener('click', function () {
+        const equipmentId = equipmentNameInput.getAttribute('data-id');
+        const quantity = quantityInput.value;
+        const reason = reasonSelect.value;
+
+        // Validation (optional)
+        if (!quantity || quantity <= 0) {
+            alert('Please enter a valid quantity.');
+            return;
+        }
+
+        // Submit the form data (AJAX or form submission logic here)
+        console.log('Editing equipment with ID:', equipmentId);
+        console.log('New Quantity:', quantity);
+        console.log('Reason:', reason);
+
+        // Close the modal after submission
+        editModal.style.display = 'none';
+        console.log('Modal is closed after submission');
+    });
+
+    // Close the modal if clicked outside of it
+    window.addEventListener('click', function (event) {
+        if (event.target === editModal) {
+            editModal.style.display = 'none';
+            console.log('Modal is closed by clicking outside');
+        }
+    });
+});
+
+
+// ------------logout-------------
+
+// -----------------logout---------------
+// Attach event listener for the logout button
+document.getElementById("logout").addEventListener("click", handleLogout);
+
+// Function to handle logout
+function handleLogout() {
+    const confirmLogout = confirm("Are you sure you want to log out?");
+    if (confirmLogout) {
+        // Clear session or perform any necessary cleanup actions
+        console.log("User logged out");
+
+        // Redirect to the login page
+        window.location.href = "http://localhost/PEAK/public/login"; // Update with your actual login page URL
+    }
+}
+
 

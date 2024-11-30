@@ -3,7 +3,11 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
+<<<<<<< HEAD
 -- Generation Time: Nov 29, 2024 at 06:39 PM
+=======
+-- Generation Time: Nov 30, 2024 at 07:33 AM
+>>>>>>> bca1cab9677aede17c33670c54aeda41ea784bc6
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -110,12 +114,36 @@ CREATE TABLE `inventoryrequest` (
   `bywhom` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+<<<<<<< HEAD
 --
 -- Dumping data for table `inventoryrequest`
 --
 
 INSERT INTO `inventoryrequest` (`requestid`, `equipmentid`, `quantityrequested`, `date`, `bywhom`) VALUES
 (1, 2, 50, '2024-11-05', 'abc');
+=======
+--
+-- Dumping data for table `inventoryrequest`
+--
+
+INSERT INTO `inventoryrequest` (`requestid`, `equipmentid`, `quantityrequested`, `date`, `bywhom`) VALUES
+(1, 2, 50, '2024-11-05', 'abc');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `noticeboard`
+--
+
+CREATE TABLE `noticeboard` (
+  `noticeid` int(11) NOT NULL,
+  `title` varchar(200) NOT NULL,
+  `content` varchar(1000) NOT NULL,
+  `publishdate` date NOT NULL,
+  `publishetime` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `userid` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+>>>>>>> bca1cab9677aede17c33670c54aeda41ea784bc6
 
 -- --------------------------------------------------------
 
@@ -289,6 +317,16 @@ ALTER TABLE `inventoryrequest`
   ADD KEY `equipmentid` (`equipmentid`);
 
 --
+<<<<<<< HEAD
+=======
+-- Indexes for table `noticeboard`
+--
+ALTER TABLE `noticeboard`
+  ADD PRIMARY KEY (`noticeid`),
+  ADD KEY `userid` (`userid`);
+
+--
+>>>>>>> bca1cab9677aede17c33670c54aeda41ea784bc6
 -- Indexes for table `ped_incharge`
 --
 ALTER TABLE `ped_incharge`
@@ -358,6 +396,15 @@ ALTER TABLE `inventoryrequest`
   MODIFY `requestid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
+<<<<<<< HEAD
+=======
+-- AUTO_INCREMENT for table `noticeboard`
+--
+ALTER TABLE `noticeboard`
+  MODIFY `noticeid` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+>>>>>>> bca1cab9677aede17c33670c54aeda41ea784bc6
 -- AUTO_INCREMENT for table `sport`
 --
 ALTER TABLE `sport`
@@ -416,6 +463,15 @@ ALTER TABLE `inventoryrequest`
   ADD CONSTRAINT `inventoryrequest_ibfk_1` FOREIGN KEY (`equipmentid`) REFERENCES `unpackedinventory` (`equipmentid`);
 
 --
+<<<<<<< HEAD
+=======
+-- Constraints for table `noticeboard`
+--
+ALTER TABLE `noticeboard`
+  ADD CONSTRAINT `noticeboard_ibfk_1` FOREIGN KEY (`userid`) REFERENCES `user` (`userid`);
+
+--
+>>>>>>> bca1cab9677aede17c33670c54aeda41ea784bc6
 -- Constraints for table `ped_incharge`
 --
 ALTER TABLE `ped_incharge`
