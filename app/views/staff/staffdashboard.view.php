@@ -123,12 +123,11 @@
                                 <tr>
                                     <td><?php echo $item->name; ?></td>
                                     <td><?php echo $item->quantity; ?></td>
-<<<<<<< HEAD
-                                    <td><button action = "#">Edit</button></td> <!-- Replace this with your edit functionality if needed -->
-=======
+                                    
+
                                     <td><button class="edit-btn" data-id="<?php echo $item->id; ?>">Edit</button></td>
 
->>>>>>> bca1cab9677aede17c33670c54aeda41ea784bc6
+
                                 </tr>
                             <?php endforeach; ?>
                         <?php else: ?>
