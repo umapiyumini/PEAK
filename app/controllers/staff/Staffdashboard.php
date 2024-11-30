@@ -9,8 +9,10 @@ class Staffdashboard extends Controller{
    
 
     $inventoryrequest = new InventoryRequest;
-    $this->data['request'] = $inventoryrequest->recquesttable(); 
-     
+    $this->data['request'] = $inventoryrequest->recquesttable();
+    
+    
+   
    // Stop execution to see the output
 
     
@@ -20,7 +22,10 @@ class Staffdashboard extends Controller{
       
     }
 
- 
+
+    
+
+   
     
 }
 
