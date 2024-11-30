@@ -1,129 +1,137 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-          <meta charset="UTF-8">
-          <meta name="viewport" content="width=device-width, initial-scale=1.0">
-          <title>Attendance Tracker</title>
-          <link rel="stylesheet" href="<?=ROOT?>/assets/css/amar/amalgamated/attendance.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Attendance Chart</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 110px 0px 0px 200px;
+            padding: 0;
+            background-color: #f4f4f9;
+            color: #333;
+        }
 
-         
-        </head>
-        <body>
-          
-        <?php include 'nav.view.php';?>
- 
+        header {
+            color: rgb(0, 0, 0);
+            padding: 20px;
+            padding-bottom: 0px;
+            text-align: center;
+        }
 
-          <div class="container">
-            <h1>Attendance Tracker</h1>
-            
-            <!-- Attendance Management Section -->
-            <div class="attendance-controls">
-              <input type="text" id="memberName" placeholder="Enter team member's name" />
-              <input type="date" id="attendanceDate" />
-              <button id="addMemberBtn">Add Member</button>
-            </div>
-            
-            <!-- Filter Section -->
-            <div class="filter-section">
-              <select id="filterStatus">
-                <option value="all">All</option>
-                <option value="present">Present</option>
-                <option value="absent">Absent</option>
-              </select>
-              <button id="applyFilterBtn">Apply Filter</button>
-            </div>
-            
-            <!-- Attendance Table -->
-            <table class="attendance-table">
-              <thead>
+        main {
+            padding: 20px;
+        }
+
+        .controls {
+            margin-bottom: 20px;
+            display: flex;
+            justify-content: flex-start;
+            margin-left: 20px;
+        }
+
+        #search-bar {
+            padding: 10px;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            width: 50%;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: white;
+            border-radius: 5px;
+            overflow: hidden;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            margin-top: 20px;
+            margin-left: 20px; /* Aligning table to the left with margin of 20px */
+        }
+
+        table th, table td {
+            padding: 12px;
+            text-align: center;
+            border: 1px solid #ddd;
+        }
+
+        table th {
+            background-color: #5a2e8a;
+            color: white;
+        }
+
+        .present {
+            background-color: #d4edda;
+            color: #155724;
+            font-weight: bold;
+        }
+
+        .absent {
+            background-color: #f8d7da;
+            color: #721c24;
+            font-weight: bold;
+        }
+
+        table tr:hover {
+            background-color: #f1f1f1;
+        }
+    </style>
+</head>
+<body>
+
+    <?php include 'nav.view.php'; ?>
+    <main>
+        <div class="controls">
+            <input type="text" id="search-bar" placeholder="Search by player name..." onkeyup="filterTable()">
+        </div>
+        <table id="attendance-chart">
+            <thead>
                 <tr>
-                  <th>Name</th>
-                  <th>Date</th>
-                  <th>Status</th>
-                  <th>Action</th>
+                    <th>Player Name</th>
+                    <th>2024-11-22</th>
+                    <th>2024-11-23</th>
+                    <th>2024-11-24</th>
+                    <th>2024-11-25</th>
                 </tr>
-              </thead>
-              <tbody id="attendanceTable">
-                <!-- Rows will be dynamically added here -->
-              </tbody>
-            </table>
-        
-            <!-- Summary Section -->
-            <div class="summary">
-              <h3>Attendance Summary</h3>
-              <p id="summaryText">No data available</p>
-            </div>
-          </div>
-          
-          <script>
-            let attendanceData = [];
+            </thead>
+            <tbody>
+                <tr>
+                    <td>John Doe</td>
+                    <td class="present">Present</td>
+                    <td class="absent" title="Sick">Absent</td>
+                    <td class="present">Present</td>
+                    <td class="absent" title="Sick">Absent</td>
+                </tr>
+                <tr>
+                    <td>Jane Smith</td>
+                    <td class="present">Present</td>
+                    <td class="present">Present</td>
+                    <td class="absent" title="Sick">Absent</td>
+                    <td class="present">Present</td>
+                </tr>
+                <tr>
+                    <td>Mike Johnson</td>
+                    <td class="absent" title="Sick">Absent</td>
+                    <td class="absent" title="Sick">Absent</td>
+                    <td class="present">Present</td>
+                    <td class="present">Present</td>
+                </tr>
+            </tbody>
+        </table>
+    </main>
 
-document.getElementById('addMemberBtn').addEventListener('click', () => {
-  const name = document.getElementById('memberName').value.trim();
-  const date = document.getElementById('attendanceDate').value;
+    <script>
+        function filterTable() {
+            const searchInput = document.getElementById("search-bar").value.toLowerCase();
+            const table = document.getElementById("attendance-chart");
+            const rows = table.getElementsByTagName("tr");
 
-  if (!name || !date) {
-    alert('Please provide both name and date.');
-    return;
-  }
-
-  attendanceData.push({ name, date, status: 'pending' });
-  renderTable();
-  document.getElementById('memberName').value = '';
-  document.getElementById('attendanceDate').value = '';
-});
-
-document.getElementById('attendanceTable').addEventListener('click', (e) => {
-  const rowIndex = e.target.dataset.index;
-  if (e.target.classList.contains('presentBtn')) {
-    attendanceData[rowIndex].status = 'present';
-  } else if (e.target.classList.contains('absentBtn')) {
-    attendanceData[rowIndex].status = 'absent';
-  }
-  renderTable();
-});
-
-document.getElementById('applyFilterBtn').addEventListener('click', () => {
-  renderTable();
-});
-
-function renderTable() {
-  const filterStatus = document.getElementById('filterStatus').value;
-  const tableBody = document.getElementById('attendanceTable');
-  tableBody.innerHTML = '';
-
-  const filteredData = attendanceData.filter(item => 
-    filterStatus === 'all' || item.status === filterStatus
-  );
-
-  filteredData.forEach((item, index) => {
-    const row = document.createElement('tr');
-    row.className = item.status;
-
-    row.innerHTML = `
-      <td>${item.name}</td>
-      <td>${item.date}</td>
-      <td>${item.status}</td>
-      <td>
-        <button class="presentBtn" data-index="${index}">Present</button>
-        <button class="absentBtn" data-index="${index}">Absent</button>
-      </td>
-    `;
-    tableBody.appendChild(row);
-  });
-
-  updateSummary();
-}
-
-function updateSummary() {
-  const presentCount = attendanceData.filter(item => item.status === 'present').length;
-  const absentCount = attendanceData.filter(item => item.status === 'absent').length;
-
-  document.getElementById('summaryText').textContent = 
-    `Present: ${presentCount}, Absent: ${absentCount}`;
-}
-
-          </script>
-        </body>
-        </html>
-     
+            for (let i = 1; i < rows.length; i++) { // Start from 1 to skip the header row
+                const playerName = rows[i].getElementsByTagName("td")[0]?.textContent.toLowerCase();
+                rows[i].style.display = playerName.includes(searchInput) ? "" : "none";
+            }
+        }
+    </script>
+</body>
+</html>

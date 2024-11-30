@@ -1,112 +1,72 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Full Calendar</title>
-  <link rel="stylesheet" href="home.css">
-	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-	<link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.8/css/line.css">
-    <link rel="stylesheet" href="<?=ROOT?>/assets/css/amar/amalgamated/notice.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="<?=ROOT?>/assets/css/amar/notice.css">
 
-   
+    <title>Sports Management</title>
 
-
+    
 </head>
 <body>
-<?php
-include 'nav.view.php';?>
- <main>
-	 <section class="content">
-		 <h1>Physical Education Administrative Kit</h1>
-		 <h1>University Of Colombo</h1>
-         <img src="<?=ROOT?>/assets/images/amar/Amal_Logo.png" alt="Amalgamated Club">
+
+<?php 
+include 'nav.view.php';
+?>
 
 
-		 <!--div class="year_plan"><a href="#">Year Plan</a></div-->
-		 
-     <h1>Notices</h1>
-     <div class="notice-container">
-          <div class="notice">
-            <h2>Annual Sports Meet</h2>
-            <p><strong>Date:</strong> March 10, 2024</p>
-            <p><strong>Venue:</strong> Main Sports Ground</p>
-            <p><strong>Details:</strong> All departments are invited to participate. Registration closes on March 5, 2024.</p>
-          </div>
-          <div class="notice">
-            <h2>Gym Membership Renewal</h2>
-            <p><strong>Deadline:</strong> February 25, 2024</p>
-            <p><strong>Details:</strong> Renew your gym membership online or visit the office between 9 AM and 4 PM.</p>
-          </div>
-          <div class="notice">
-            <h2>Inter-Department Cricket League</h2>
-            <p><strong>Start Date:</strong> April 1, 2024</p>
-            <p><strong>Venue:</strong> University Cricket Ground</p>
-            <p><strong>Details:</strong> Teams must submit their final player list by March 20, 2024.</p>
-          </div>
-          <div class="notice">
-            <h2>Colors Night 2024</h2>
-            <p><strong>Date:</strong> May 15, 2024</p>
-            <p><strong>Venue:</strong> University Auditorium</p>
-            <p><strong>Details:</strong> Celebrate the achievements of our athletes. Tickets are available now!</p>
-          </div>
+
+    <!-- Header Section -->
+    <header class="hero">
+        <div class="hero-content">
+            <h1>Welcome to  Peak</h1>
+            <p>Your ultimate platform for UOC Sports activities adn updates.</p>
         </div>
-      
-			 
-		 
-	 </section>
-    <aside class="calendar">
-      <div class="calendar-header">
-        <span id="prev" class="nav_cal"><i class="uil uil-arrow-left"></i></span>
-        <span id="month-year"></span>
-        <span id="next" class="nav_cal"><i class="uil uil-arrow-right"></i></span>
-      </div>
+    </header>
 
-		
-      <div class="calendar-body">
-        <div class="days">
-          <div>Mon</div>
-          <div>Tue</div>
-          <div>Wed</div>
-          <div>Thu</div>
-          <div>Fri</div>
-          <div>Sat</div>
-          <div>Sun</div>
+    <!-- Notices Section -->
+    <section class="notices">
+        <h2>Notices</h2>
+        <div class="notices-grid">
+            <div class="notice-card">
+                <h3>Sports Blog</h3>
+                <p>On our sports blog, you can dive into the world of every sport with ease
+                    . Whether you're into football, basketball, tennis, or niche sports, each category 
+                    offers a concise summary that keeps you updated on the latest results, key moments, 
+                    and standout performances. Our summaries are designed to give you a quick yet thorough overview, 
+                    so you never miss out on the 
+                    action—no matter which sport you're passionate about.</p>
+            </div>
+            <div class="notice-card">
+                <h3>Gym and Pool Pass</h3>
+                <p>
+                    Stay active and fit with access to our pool and gym facilities! Get your pass now to enjoy swimming, weight training, cardio, and more. Whether you're looking to relax by the pool or power through your workout, the facilities are here to help you meet your fitness goals.
+                     Don't wait—get your pass today and make the most of our campus amenities
+                </p>
+            </div>
+            <div class="notice-card">
+                <h3>Inter-Faculty Freshers tournament</h3>
+                <p>he Inter-Faculty Freshers Tournament is an exciting event that brings together students
+                     from different faculties for some friendly competition. It's a chance for newcomers to showcase 
+                     their talents, build connections, and get involved in campus life right from the start. Whether
+                      it’s sports, games, or other activities, the tournament fosters team spirit, camaraderie, and 
+                      a sense of belonging, 
+                    making it the perfect way for freshers to kick off their university journey.!</p>
+            </div>
+            <div class="notice-card">
+                <h3>Enhancement and Execuse Letters</h3>
+                <p>
+                    <b>Enhancement Letters:</b> For requests regarding course or grade enhancements, 
+                    please submit your letters along with the necessary documentation before the specified deadline.
+<br>
+<br>
+
+<b>Excuse Letters:</b> For absences due to medical or personal reasons, submit an excuse letter with
+ the required proof (e.g., medical certificate) within 3 days of your absence.
+                </p>
+            </div>
         </div>
-        <div class="dates" id="dates"></div>
-      </div>
-		<a href="home_calendar.php">View full calendar</a>
-		<a href=" ../Gym/calendar.html">View Gym Calendar</a>
-	
-    <div class="upcoming-events">
-      <h2>Upcoming Events</h2>
-      <div class="events-grid">
-        <a href="#" class="event-card">
-          <h3>Fitness Challenge</h3>
-          <p>Date: 1st June 2024</p>
-          <p>Time: 4:00 PM - 7:00 PM</p>
-          <p>Venue: University Gymnasium</p>
-        </a>
-        <a href="event-schedule.html" class="event-card">
-          <h3>Inter faculty hockey</h3>
-          <p>Date: 10th July 2024</p>
-          <p>Time: 9:30 AM - 12:30 PM</p>
-          <p>Venue: UOC ground</p>
-        </a>
-        <a href="#" class="event-card">
-          <h3>Leadership program</h3>
-          <p>Date: 20th August 2024</p>
-          <p>Time: 1:00 PM - 5:00 PM</p>
-          <p>Venue: UOC ground</p>
-        </a>
-      </div>
-    </div>
-    </aside>
-  </main>
-	
-
-  <script src="<?=ROOT?>/assets/js/amar/home.js"></script>
-  <script src="<?=ROOT?>/assets/js/amar/nav.js"></script>
+    </section>
 </body>
 </html>
-

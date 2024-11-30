@@ -2,7 +2,7 @@
 class Hostel extends Controller{
    public function index(){
 
-        $this->view('amalgamated/hostel');    
+        $this->view('amalgamated/hostel');
     }
 
    

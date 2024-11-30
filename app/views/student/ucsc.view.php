@@ -3,17 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Medical Certificate Request</title>
+    <title>Achievement Certificate Request</title>
     <style>
         body {
             font-family: Arial, sans-serif;
             background-color: #f4f4f4;
             margin: 0;
             padding: 0;
+            overflow-x: hidden;
         }
         .form-container {
             background-color: #ffffff;
-            width: 100%%;
+            width: 84%;
             padding: 30px;
             border-radius: 8px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
@@ -62,30 +63,42 @@
 <body>
     <?php include 'nav.view.php';?>
 
-    <div class="form-container" id="medical-form">
-        <h1>Medical Certificate Request</h1>
+    <div class="form-container" id="achievement-form">
+        <h1>Achievement Enhancement Request</h1>
         <form>
             <div class="form-group">
-                <label for="name">Full Name</label>
-                <input type="text" id="name" placeholder="Enter Full Name">
-            </div>
-            
-            <div class="form-group">
-                <label for="registration-id">Student Registration ID</label>
-                <input type="text" id="registration-id" placeholder="Enter Registration ID">
+                <label for="name-with-initials">Name with Initials</label>
+                <input type="text" id="name-with-initials" placeholder="Enter Name with Initials" required>
             </div>
             <div class="form-group">
-                <label for="medical-reason">Reason for Medical</label>
-                <textarea id="medical-reason" placeholder="Enter Reason for Medical" rows="4"></textarea>
+                <label for="index-number">Index Number</label>
+                <input type="text" id="index-number" placeholder="Enter Index Number" required>
             </div>
             <div class="form-group">
-                <label for="medical-duration">How long did the medical take?</label>
-                <input type="text" id="medical-duration" placeholder="Enter Duration of Medical (e.g., 1 week)">
+                <label for="registration-number">Registration Number</label>
+                <input type="text" id="registration-number" placeholder="Enter Registration Number" required>
             </div>
-
+            <div class="form-group">
+                <label for="sport-name">Name of Sport</label>
+                <input type="text" id="sport-name" placeholder="Enter Name of Sport" required>
+            </div>
+            <div class="form-group">
+                <label for="year-of-achievement">Year of Achievement</label>
+                <input type="number" id="year-of-achievement" placeholder="Enter Year of Achievement" required>
+            </div>
+            <div class="form-group">
+                <label for="achievement-level">Achievement Level</label>
+                <select id="achievement-level" required>
+                    <option value="" disabled selected>Select Achievement Level</option>
+                    <option value="university">University Level</option>
+                    <option value="national">National Level</option>
+                    <option value="international">International Level</option>
+                    <option value="university-colours">University Colours</option>
+                    <option value="slusa-colours">SLUSA Colours</option>
+                </select>
+            </div>
             <button type="submit" class="submit-btn">Submit</button>
         </form>
     </div>
-
 </body>
 </html>

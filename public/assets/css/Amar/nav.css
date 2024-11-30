@@ -100,16 +100,15 @@ body {
 }
 
 .logo {
-    padding: 2rem;  
+    padding: 2rem;
     text-align: center;
     border-center: 1px solid #b6b4b4;
-    background: linear-gradient(to bottom, rgba(255,255,255,0.1), transparent);
     width: 100px;
     height: 100px;
 }
 
 .logo img {
-    width: 08rem;  
+    width: 08rem;
     margin: 0;
     transition: transform 0.3s ease;
 }

@@ -2,7 +2,7 @@
 class Home extends Controller{
    public function index(){
 
-        $this->view('amalgamated/home');
+        $this->view('student/home');
     }
 
    

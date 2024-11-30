@@ -2,7 +2,7 @@
 class Rules extends Controller{
    public function index(){
 
-        $this->view('amalgamated/rules');    
+        $this->view('amalgamated/rules');
     }
 
    

@@ -2,7 +2,7 @@
 class Attendance extends Controller{
    public function index(){
 
-        $this->view('amalgamated/attendance');    
+        $this->view('amalgamated/attendance');
     }
 
    

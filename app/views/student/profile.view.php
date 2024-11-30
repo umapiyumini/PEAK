@@ -32,7 +32,8 @@ include 'nav.view.php';
             <div class="basic-info">
                 <p>Registration No: <span id="studentRegNo"></span></p>
                 <p>Faculty: <span id="studentFaculty"></span></p>
-                <p>Email: <span id="email"></span></p>
+                <p>Email: <span id="Email Address"></span></p>
+
             </div>
         </div>
         <div class="profile-right">
@@ -101,8 +102,9 @@ include 'nav.view.php';
             </div>
 
     </div>
+    
                     <div class="actions">
-          <button><a href="profile_edit">Edit Profile</a></button>
+          <button><a href="profil_edit">Request to Edit</a></button>
         </div>
                 </div>
             

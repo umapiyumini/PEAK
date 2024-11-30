@@ -129,8 +129,3 @@ renderCalendar();
         }
 
         renderNotices();
-
-
-
-
-

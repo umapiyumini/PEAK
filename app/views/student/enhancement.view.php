@@ -16,9 +16,12 @@ include 'nav.view.php';
   <div class="container1">
     <!-- UCSC -->
     <div class="box1">
-    <a href="UCSC_Enhancemrnt.pdf" Download>
-    <img src="<?=ROOT?>/assets/images/amar/ucsc.png" alt="UCSC">
+    <a href="ucsc">
+    <img src="<?=ROOT?>/assets/images/amar/ucsc.png" alt="fos" id="fos">
+    </a>
+  
 
+      
       
         
     </div>
@@ -30,9 +33,8 @@ include 'nav.view.php';
 <div class="container2">
     <!-- Science -->
     <div class="box2">
-    <a href="UCSC_Enhancement.pdf" Download>
-    <img src="<?=ROOT?>/assets/images/amar/fos.png" alt="">
-
+    <a href="ucsc" >
+    <img src="<?=ROOT?>/assets/images/amar/fos.png" alt="fos" id="fos">
       
     </div>
    

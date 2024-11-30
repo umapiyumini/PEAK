@@ -69,11 +69,12 @@
 /* Right content styles */
 .profile-right {
     padding: 2rem;
+    background-color:#f8f9fa;
     
 }
 
 .info-card {
-    background: #D3A6FF;
+    background: white;
     border-radius: 10px;
     padding: 1.5rem;
     margin-bottom: 1.5rem;
