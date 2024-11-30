@@ -128,6 +128,24 @@ h2 {
     margin: 20px;
 }
 
+.input-field {
+    margin-bottom: 20px;
+}
+
+.input-field label {
+    font-size: 16px;
+    color: #555;
+}
+
+.input-field input {
+    width: 100%;
+    padding: 10px;
+    margin-top: 5px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 16px;
+}
+
 </style>
 </head>
 <body>
@@ -136,25 +154,38 @@ h2 {
 
 <main class="main-content">
     <h2>Inventory Requests Status</h2>
+
+    <!-- New input field for sports -->
+    <div class="input-field">
+        <label for="sports">Sports</label>
+        <input type="text" id="sports" name="sports" placeholder="Enter sports type">
+    </div>
+
     <table class="inventory-table">
         <thead>
             <tr>
+                <th>Sports</th> <!-- New Column for Sports -->
                 <th>Time</th>
                 <th>Product Name</th>
                 <th>Quantity</th>
                 <th>Additional Status</th>
                 <th>Status</th>
+                
             </tr>
         </thead>
         <tbody>
             <tr>
+                <td>Badminton</td> <!-- Sports Data -->
                 <td>Jan 30</td>
                 <td>Shuttle</td>
                 <td>6x</td>
                 <td>Pending Review</td>
                 <td><span class="status pending">Pending</span></td>
+                
             </tr>
             <tr>
+                <td>Volleyball</td> <!-- Sports Data -->
+
                 <td>Jan 30</td>
                 <td>Net</td>
                 <td>1x</td>
@@ -162,11 +193,13 @@ h2 {
                 <td><span class="status approved">Approved</span></td>
             </tr>
             <tr>
+                <td>Basketball</td> <!-- Sports Data -->
                 <td>Jan 25</td>
                 <td>Basketballs</td>
                 <td>2x</td>
                 <td>In Progress by Warehouse</td>
                 <td><span class="status in-progress">In Progress</span></td>
+                
             </tr>
             <tr>
                 <td>Jan 20</td>
@@ -174,27 +207,34 @@ h2 {
                 <td>1x</td>
                 <td>Ready for Pickup</td>
                 <td><span class="status approved">Approved</span></td>
+                <td>Football</td> <!-- Sports Data -->
             </tr>
             <tr>
+                <td>Cricket</td> <!-- Sports Data -->
                 <td>Jan 15</td>
                 <td>Bats</td>
                 <td>3x</td>
                 <td>Not Approved</td>
                 <td><span class="status declined">Declined</span></td>
+                
             </tr>
             <tr>
+                <td>Swimming</td> <!-- Sports Data -->
                 <td>Jan 10</td>
                 <td>Goggles</td>
                 <td>4x</td>
                 <td>Pending Approval</td>
                 <td><span class="status pending">Pending</span></td>
+              
             </tr>
             <tr>
+                <td>Multiple Sports</td> <!-- Sports Data -->
                 <td>Jan 5</td>
                 <td>Balls</td>
                 <td>5x</td>
                 <td>In Progress</td>
                 <td><span class="status in-progress">In Progress</span></td>
+               
             </tr>
         </tbody>
     </table>

@@ -1,201 +1,223 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tournaments Dashboard</title>
-    <style>
-        * {
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Inventory Requests</title>
+
+<style>
+    /* styles.css */
+
+* {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
     font-family: Arial, sans-serif;
 }
 
+body {
+    background-color: #f4f7fb;
+}
+
 .container {
     display: flex;
-    height: 100vh;
-    background-color: #f4f7fa;
+    min-height: 100vh;
 }
 
 .sidebar {
-    width: 200px;
-    background-color: #e9eff5;
+    width: 250px;
+    background-color: #eef2f7;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     padding: 20px;
 }
 
-.sidebar ul {
-    list-style: none;
+.sidebar nav ul {
+    list-style-type: none;
+    width: 100%;
 }
 
-.sidebar ul li {
-    padding: 15px 0;
+.sidebar nav ul li a {
+    text-decoration: none;
     color: #333;
+    display: block;
+    padding: 10px;
+    border-radius: 5px;
+    font-weight: 500;
+}
+
+.sidebar nav ul li a.active,
+.sidebar nav ul li a:hover {
+    background-color: #dde6f2;
+}
+
+.new-request-btn {
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    margin-top: 20px;
+    border-radius: 5px;
     cursor: pointer;
 }
 
-.sidebar ul li.active {
-    font-weight: bold;
-    color: #0077ff;
-}
-
-.content {
+.main-content {
     flex: 1;
-    padding: 30px;
-    background-color: white;
+    padding: 20px;
+    margin-left: 230px;
+    margin-top: 10px;
 }
 
-.content h1 {
-    font-size: 2em;
-    margin-bottom: 10px;
+.main-content h1 {
+    font-size: 24px;
+    margin-bottom: 20px;
+    color: #333;
 }
 
-.content p {
-    color: #666;
+.inventory-table {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: #fff;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.inventory-table thead {
+    background-color: #f4f4f4;
+    font-weight: 600;
+}
+
+.inventory-table th,
+.inventory-table td {
+    padding: 15px;
+    text-align: left;
+    color: #555;
+}
+
+.inventory-table tbody tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+.status {
+    padding: 5px 10px;
+    border-radius: 5px;
+    font-weight: bold;
+    color: #fff;
+}
+
+.status.pending {
+    background-color: #9370DB;
+}
+
+.status.approved {
+    background-color: #4B0082;
+}
+
+.status.in-progress {
+    background-color: #D8BFD8;
+}
+
+.status.declined {
+    background-color: #800080;
+}
+
+h2 {
+    font-size: 24px;
+    margin: 20px;
+}
+
+.input-field {
     margin-bottom: 20px;
 }
 
-.new-tournament {
-    background-color: #ffffff;
-    padding: 20px;
-    border-radius: 8px;
-    margin-bottom: 30px;
-    display: flex;
-    flex-direction: column;
+.input-field label {
+    font-size: 16px;
+    color: #555;
 }
 
-.new-tournament span {
-    font-weight: bold;
-}
-
-.new-tournament p {
+.input-field input {
+    width: 100%;
+    padding: 10px;
     margin-top: 5px;
-    margin-bottom: 10px;
-    color: #888;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 16px;
 }
 
-.new-tournament button {
-    background-color: #0077ff;
-    color: white;
-    padding: 10px 20px;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-}
-
-.tournaments h2 {
-    font-size: 1.5em;
-    margin-top: 30px;
-    color: #333;
-}
-
-.tournament-card {
-    display: flex;
-    background-color: #D8BFD8;
-    border-radius: 8px;
-    overflow: hidden;
-    margin: 15px 0;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    margin-left: 220px;
-}
-
-.tournament-card img {
-    width: 100px;
-    height: 100px;
-    object-fit: cover;
-}
-
-.tournament-card .info {
-    padding: 15px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    margin: 2px;
-}
-
-.tournament-card .info span {
-    color: #888;
-    font-size: 0.9em;
-}
-
-.tournament-card .info h3 {
-    font-size: 1.2em;
-    color: white;
-}
-
-.tournament-card .info p {
-    font-size: 0.9em;
-    color: red;
-    
-}
-
-.tournament-card .info button {
-    background-color: #0077ff;
-    color: white;
-    padding: 8px 12px;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    margin-top: 10px;
-    align-self: start;
-}
-
-
-
-h2{
-    text-align: center;
-    margin-left: 150px;
-}
-
-
-    </style>
+</style>
 </head>
 <body>
 
-<?php include 'nav.view.php'; ?>
-  
-        </aside>
-        
-        <main class="content">
-          
-            <h2>Hostel Requests</h2>
-            
-            <section class="tournaments">
-                <div class="tournament-card">
-                    <div class="info">
-                        <h3>2022/IS/002</h3>
-                        <br>
-                        <p>Distance: 110Km</p>
-                        <p>Period: 2024:04:02 to 2024:04:11</p>
-                        <p>Duration: 5 Min</p>
-                    </div>
-                </div>
-                
-                <div class="tournament-card">
-                    <div class="info">
-                        <h3>2022/IS/046</h3>
-                        <br>
-                        <p>Distance: 35 Km</p>
-                        <p>Period: 2024:03:02 to 2024:03:05</p>
-                        <p>Duration: 2 Min</p>
-                    </div>
-                </div>
-                
-                <div class="tournament-card">
-                    <div class="info">
-                        
-                        <h3>2022/IS/038</h3>
-                        <br>
-                        <p>Distance: 12 Km</p>
-                        <p>Period: 2024:06:02 to 2024:06:03</p>
-                        <p>Duration: 1 Min</p>
-                    </div>
-                </div>
-            
-                </div>
-            </section>
-        </main>
-        
-    </div>
+<?php include 'nav.view.php';?>
+
+<main class="main-content">
+    <h2>Sport Requests with Student Details</h2>
+
+    <table class="inventory-table">
+        <thead>
+            <tr>
+                <th>Sport Name</th>
+                <th>Student Details (Registration No.)</th>
+                <th>Priority (1-5)</th>
+                <th>Starting Date</th>
+                <th>End Date</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Badminton</td>
+                <td>John Doe (20210001)</td>
+                <td>5</td>
+                <td>Jan 1, 2024</td>
+                <td>Jan 15, 2024</td>
+            </tr>
+            <tr>
+                <td>Volleyball</td>
+                <td>Jane Smith (20210002)</td>
+                <td>4</td>
+                <td>Jan 10, 2024</td>
+                <td>Jan 20, 2024</td>
+            </tr>
+            <tr>
+                <td>Basketball</td>
+                <td>Michael Lee (20210003)</td>
+                <td>3</td>
+                <td>Jan 5, 2024</td>
+                <td>Jan 15, 2024</td>
+            </tr>
+            <tr>
+                <td>Football</td>
+                <td>Emily Clark (20210004)</td>
+                <td>2</td>
+                <td>Jan 12, 2024</td>
+                <td>Jan 18, 2024</td>
+            </tr>
+            <tr>
+                <td>Cricket</td>
+                <td>James Brown (20210005)</td>
+                <td>4</td>
+                <td>Jan 8, 2024</td>
+                <td>Jan 22, 2024</td>
+            </tr>
+            <tr>
+                <td>Swimming</td>
+                <td>Sarah White (20210006)</td>
+                <td>1</td>
+                <td>Jan 4, 2024</td>
+                <td>Jan 14, 2024</td>
+            </tr>
+            <tr>
+                <td>Multiple Sports</td>
+                <td>Daniel Green (20210007)</td>
+                <td>3</td>
+                <td>Jan 3, 2024</td>
+                <td>Jan 10, 2024</td>
+            </tr>
+        </tbody>
+    </table>
+</main>
+
 </body>
 </html>
