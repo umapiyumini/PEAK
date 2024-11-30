@@ -108,7 +108,7 @@
             </div>
 
             <!-- Inventory Table -->
-            <div class="inventory-table">
+            <!-- Inventory Table -->
                 <table id="inventoryTable">
                     <thead>
                         <tr>
@@ -123,11 +123,14 @@
                                 <tr>
                                     <td><?php echo $item->name; ?></td>
                                     <td><?php echo $item->quantity; ?></td>
-                                    
-
-                                    <td><button class="edit-btn" data-id="<?php echo $item->id; ?>">Edit</button></td>
-
-
+                                    <td>
+                                        <button class="edit-btn" 
+                                                data-id="<?php echo $item->equipmentid; ?>" 
+                                                data-name="<?php echo $item->name; ?>" 
+                                                data-quantity="<?php echo $item->quantity; ?>">
+                                            Edit
+                                        </button>
+                                    </td>
                                 </tr>
                             <?php endforeach; ?>
                         <?php else: ?>
@@ -136,43 +139,44 @@
                             </tr>
                         <?php endif; ?>
                     </tbody>
-
                 </table>
+
             </div>
 
             <!-- Edit Equipment Modal -->
-            <div id="editModal" class="modal">
-    <div class="modal-content">
-        <h3>Edit Equipment</h3>
-        <label for="equipmentName">Equipment Name:</label>
-        <input type="text" id="equipmentName" disabled>
-        
-        <label for="quantity">Quantity:</label>
-        <div class="quantity-container">
-            <button id="subtractQty">-</button>
-            <input type="number" id="quantity" value="0">
-            <button id="addQty">+</button>
-        </div>
-        
-        <label for="reason">Reason:</label>
-        <select id="reason">
-            <option value="broken">Broken</option>
-            <option value="lost">Lost</option>
-            <option value="lost">Expired </option>
-            <option value="lost">Theft </option>
-            <option value="lost">Safety Hazards</option>
-            <option value="other">Other</option>
-        </select>
+           <!-- Edit Equipment Modal -->
+                <div id="editModal" class="modal">
+                    <div class="modal-content">
+                        <h3>Edit Equipment</h3>
+                        <input type="hidden" id="equipmentId">
+                        
+                        <label for="equipmentName">Equipment Name:</label>
+                        <input type="text" id="equipmentName" disabled>
+                        
+                        <label for="quantity">Quantity:</label>
+                        <div class="quantity-container">
+                            <button id="subtractQty">-</button>
+                            <input type="number" id="quantity" value="0">
+                            <button id="addQty">+</button>
+                        </div>
+                        
+                        <label for="reason">Reason:</label>
+                        <select id="reason">
+                            <option value="broken">Broken</option>
+                            <option value="lost">Lost</option>
+                            <option value="expired">Expired</option>
+                            <option value="theft">Theft</option>
+                            <option value="safety_hazards">Safety Hazards</option>
+                            <option value="other">Other</option>
+                        </select>
 
-        <!-- Button container -->
-        <div class="button-container">
-            <button id="submitEdit">Submit</button>
-            <button id="closeModal">Close</button>
-        </div>
-    </div>
-</div>
+                        <div class="button-container">
+                            <button id="submitEdit">Submit</button>
+                            <button id="closeModal">Close</button>
+                        </div>
+                    </div>
+                </div>
 
-        </div>
 
         <!-- Requests Table Container with Border -->
         <div class="requests-container">
@@ -192,11 +196,14 @@
             <tbody>
                 <?php if (!empty($request)): ?>
                     <?php foreach ($request as $item): ?>
-                        <tr data-id="<?php echo htmlspecialchars($item->requestid); ?>">
+                        <tr>
                             <td><?php echo htmlspecialchars($item->name); ?></td>
                             <td><?php echo htmlspecialchars($item->quantityrequested); ?></td>
                             <td><?php echo htmlspecialchars($item->date); ?></td>
-                            <td><button class="delete-btn" onclick="">Delete</button></td>
+                            <td>
+                                <input type="hidden" class="request-id" value="<?php echo htmlspecialchars($item->requestid); ?>">
+                                <button class="delete-btn">Delete</button>
+                            </td>
                         </tr>
                     <?php endforeach; ?>
                 <?php else: ?>
@@ -206,13 +213,15 @@
                 <?php endif; ?>
             </tbody>
 
-        </table>
+
+        </table> 
 
 
 
 
 
-        
+
+
         <div id="newRequestModal" class="modal">
     <div class="modal-content">
         <h3>New Stock Request</h3>
@@ -260,14 +269,6 @@
     
 
 
-    <?php if (isset($this->data['success']) && $this->data['success']): ?>
-    <script type="text/javascript">
-        // JavaScript to reload the page after the successful request
-        window.onload = function() {
-            location.reload();  // This will reload the page once
-        }
-    </script>
-<?php endif; ?>
 
     <script src="<?=ROOT?>/assets/js/uma/staff.js"></script>
     <script>
@@ -296,6 +297,49 @@
     });
 });
 
+
+// ====================== DELETE JS ===========================
+document.querySelectorAll('.delete-btn').forEach(button => {
+    button.addEventListener('click', function() {
+        // Get the requestid from the hidden input field
+        const requestid = this.closest('tr').querySelector('.request-id').value;
+        
+        // Confirm the delete action
+        const confirmDelete = confirm('Are you sure you want to delete this request?');
+        
+        if (confirmDelete) {
+            // Send a POST request to delete the item
+            const formData = new FormData();
+            formData.append('delete_requestid', requestid);  // Add the requestid to the form data
+
+            fetch('', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.text())
+            .then(data => {
+                // Alert the user about the deletion outcome (optional)
+                if (data === 'success') {
+                    alert('Successfully deleted.');
+                } else {
+                    alert('Successfully deleted.');
+                }
+
+                // Reload the page after the operation, regardless of success or failure
+                location.reload();  // Reload the page to reflect the changes
+            })
+            .catch(error => {
+                console.error('Error deleting request:', error);
+                alert('Error occurred while deleting.');
+                
+                // Reload the page in case of error as well
+                location.reload();
+            });
+        }
+    });
+});
+
+// ============================== UPDATE JS ============================
 
 </script>
 
