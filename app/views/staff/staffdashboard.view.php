@@ -14,20 +14,22 @@
 
        
 
-        
-            <div class="topbar">
-                <div class="logo"><img src="<?=ROOT?>/assets/images/logo.png"></div>
-                
-                
-
-                <div class="user">
-                    <a href="#" id="userImage"><img src="<?=ROOT?>/assets/images/user1.jpg"></a>
-                    <div id="dropdownMenu" class="dropdown hidden">
-                    <a href="profile">Profile</a>
-                    <a href="logout">Logout</a>
-                </div>
+        <div class="topbar">
+    <div class="logo"><img src="<?=ROOT?>/assets/images/logo.png" alt="Logo"></div>
+    <button id="logout" class="logout">Logout</button>
+    <div class="user">
+        <a href="#" id="userImage">
+            <img src="<?=ROOT?>/assets/images/user1.jpg" alt="User Image">
+        </a>
+        <div id="dropdownMenu" class="dropdown hidden">
+            <a href="profile">Profile</a>
+            <a href="logout">Logout</a>
+        </div>
+    </div>
 </div>
-            </div>
+
+
+
                 
 
             <!-- ----------------- main content ------------------ -->
@@ -121,7 +123,8 @@
                                 <tr>
                                     <td><?php echo $item->name; ?></td>
                                     <td><?php echo $item->quantity; ?></td>
-                                    <td><button>Edit</button></td> <!-- Replace this with your edit functionality if needed -->
+                                    <td><button class="edit-btn" data-id="<?php echo $item->id; ?>">Edit</button></td>
+
                                 </tr>
                             <?php endforeach; ?>
                         <?php else: ?>
@@ -238,8 +241,42 @@
     </div>
     </div>
     </div>
+ 
+    
+
+
+
 
     <script src="<?=ROOT?>/assets/js/uma/staff.js"></script>
+    <script>
+   document.addEventListener('DOMContentLoaded', function () {
+    const userImage = document.getElementById('userImage');
+    const dropdownMenu = document.getElementById('dropdownMenu');
+
+    // Listen for the profile image click
+    userImage.addEventListener('click', function (event) {
+        event.preventDefault(); // Prevent the default action (e.g., navigating away)
+        console.log("User image clicked!"); // Debugging log
+
+  
+    });
+
+    document.querySelector('.user').addEventListener('click', function () {
+    const dropdown = document.querySelector('.dropdown');
+    dropdown.classList.toggle('show');  // Toggle the 'show' class
+});
+    // Check if the dropdown is being triggered correctly
+    document.addEventListener('click', function (event) {
+        if (!userImage.contains(event.target) && !dropdownMenu.contains(event.target)) {
+            dropdownMenu.classList.remove('show'); // Remove 'show' class to hide dropdown
+            console.log("Dropdown hidden (click outside)"); // Debugging log
+        }
+    });
+});
+
+
+</script>
+
     
 </body>
 </html>
