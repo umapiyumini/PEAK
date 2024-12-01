@@ -1,65 +1,70 @@
 <?php
-class Staffdashboard extends Controller{
-   public function index(){
+class Staffdashboard extends Controller {
 
-    
-    $unpackedinventory = new Unpackedinventory;
-    $this->data['unpacked'] = $unpackedinventory->recreationaltable();
-    $this->data['dropdown'] = $unpackedinventory->equipmentrequestdropdown();
-   
+    public function index() {
+        // Create an instance of the Unpackedinventory model
+        $unpackedinventory = new Unpackedinventory();
+        
+        // Fetch data for the unpacked inventory and dropdown for equipment request
+        $this->data['unpacked'] = $unpackedinventory->recreationaltable();
+        $this->data['dropdown'] = $unpackedinventory->equipmentrequestdropdown();
 
-    $inventoryrequest = new InventoryRequest;
-    $this->data['request'] = $inventoryrequest->recquesttable();
+        // Create an instance of the InventoryRequest model
+        $inventoryrequest = new InventoryRequest();
+        $this->data['request'] = $inventoryrequest->recquesttable();
 
+        // Handle form submission for a new stock request
+        if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['name'], $_POST['quantityrequested'])) {
+            $equipmentName = $_POST['name'];
+            $quantityRequested = $_POST['quantityrequested'];
 
-    
+            // Call the createRequest method to insert the data
+            $success = $inventoryrequest->createRequest($equipmentName, $quantityRequested);
 
-
-    
-    
-   
-   // Stop execution to see the output
- // Handle form submission for a new stock request
- if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    $equipmentName = $_POST['name'];
-    $quantityRequested = $_POST['quantityrequested'];
-
-    // Call the createRequest method to insert the data
-    $success = $inventoryrequest->createRequest($equipmentName, $quantityRequested);
-
-    if ($success) {
-        // Optionally, show a success message or redirect
-        echo "<script type='text/javascript'>window.location.href = window.location.href;</script>";
-    } else {
-        // Show an error if something went wrong
-        echo "Failed to create stock request.";
-    }
-}
-
-
-  
-    // Handle DELETE request
-    if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['delete_requestid'])) {
-        $requestid = $_POST['delete_requestid'];
-        $success = $inventoryrequest->deleteRequest($requestid);
-
-        if ($success) {
-            // Redirect or show success message
-            echo "<script type='text/javascript'>window.location.href = window.location.href;</script>";
-        } else {
-            // Show an error if something went wrong
-            echo "Failed to delete the request.";
+            if ($success) {
+                // Reload the page if the request is successful
+                echo "<script type='text/javascript'>window.location.href = window.location.href;</script>";
+            } else {
+                echo "Failed to create stock request.";
+            }
         }
+
+        // Handle DELETE request for inventory request
+        if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['delete_requestid'])) {
+            $requestid = $_POST['delete_requestid'];
+            $success = $inventoryrequest->deleteRequest($requestid);
+
+            if ($success) {
+                echo "<script type='text/javascript'>window.location.href = window.location.href;</script>";
+            } else {
+                echo "Failed to delete the request.";
+            }
+        }
+
+        // Load the staffdashboard view with the data
+        $this->view('staff/staffdashboard', $this->data);
     }
 
 
 
 
+    
 
+    public function editEquipment() {
+        $editmodel = new Unpackedinventory();
+    
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            echo "editEquipment method triggered."; // Debug message
+            print_r($_POST); // Output form data for debugging
+            exit(); // Stop execution to see the output
+        }
+    
+        // The following code won't run until you remove the debug exit above.
+        $editmodel->updateEquipment($_POST);
+        header('Location:' . ROOT . '/staff/staffdashboard');
+    }
+    
 
-   $this->view('staff/staffdashboard', $this->data);
-      
     }
 
-
-}
+?>

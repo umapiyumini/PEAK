@@ -107,75 +107,98 @@
                 <input type="text" id="searchEquipment" placeholder="Search by name...">
             </div>
 
-            <!-- Inventory Table -->
-            <!-- Inventory Table -->
-                <table id="inventoryTable">
-                    <thead>
-                        <tr>
-                            <th>Equipment</th>
-                            <th>Available Quantity</th>
-                            <th>Edit</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <?php if (!empty($unpacked)): ?>
-                            <?php foreach ($unpacked as $item): ?>
-                                <tr>
-                                    <td><?php echo $item->name; ?></td>
-                                    <td><?php echo $item->quantity; ?></td>
-                                    <td>
-                                        <button class="edit-btn" 
-                                                data-id="<?php echo $item->equipmentid; ?>" 
-                                                data-name="<?php echo $item->name; ?>" 
-                                                data-quantity="<?php echo $item->quantity; ?>">
-                                            Edit
-                                        </button>
-                                    </td>
-                                </tr>
-                            <?php endforeach; ?>
-                        <?php else: ?>
-                            <tr>
-                                <td colspan="3">No data available</td>
-                            </tr>
-                        <?php endif; ?>
-                    </tbody>
-                </table>
+        <!-- Add these message alerts near the top of the view -->
+<?php if (isset($message)): ?>
+    <div class="alert alert-success">
+        <?php echo htmlspecialchars($message); ?>
+    </div>
+<?php endif; ?>
 
+<?php if (isset($error)): ?>
+    <div class="alert alert-danger">
+        <?php echo htmlspecialchars($error); ?>
+    </div>
+<?php endif; ?>
+
+<!-- Rest of your existing view remains the same -->
+<!-- Inventory Table -->
+<div class="inventory-table">
+    <table id="inventoryTable">
+        <thead>
+            <tr>
+                
+            
+                <th>Equipment</th>
+                <th>Available Quantity</th>
+                <th>Edit</th>
+            </tr>
+        </thead>
+        <tbody>
+            <?php if (!empty($unpacked)): ?>
+                <?php foreach ($unpacked as $item): ?>
+                    <tr>
+                    
+                        <td><?php echo $item->name; ?></td>
+                        <td><?php echo $item->quantity; ?></td>
+                        <td>
+                            <button class="edit-btn"
+                                    data-id="<?php echo $item->equipmentid; ?>"
+                                    data-name="<?php echo $item->name; ?>"
+                                    data-quantity="<?php echo $item->quantity; ?>"
+                                    onclick="openEditModal(this)">Edit</button>
+                        </td>
+                    </tr>
+                <?php endforeach; ?>
+            <?php else: ?>
+                <tr>
+                    <td colspan="3">No data available</td>
+                </tr>
+            <?php endif; ?>
+        </tbody>
+    </table>
+</div>
+
+<!-- Edit Equipment Modal -->
+<div id="editModal" class="modal">
+    <div class="modal-content">
+        <h3>Edit Equipment</h3>
+        
+        <!-- Form to edit equipment details -->
+        <form method="POST" action="<?php echo ROOT; ?>/staffdashboard/editEquipment" id="editEquipmentForm">
+
+            <!-- Hidden input for equipmentId -->
+            <input type="hidden" id="equipmentId" name="equipmentid">
+
+            <label for="equipmentName">Equipment Name:</label>
+            <input type="text" id="equipmentName" name="name" disabled>
+
+            <label for="quantity">Quantity:</label>
+            <div class="quantity-container">
+                <button type="button" id="subtractQty">-</button>
+                <input type="number" id="quantity" name="editquantity" value="0">
+                <button type="button" id="addQty">+</button>
             </div>
 
-            <!-- Edit Equipment Modal -->
-           <!-- Edit Equipment Modal -->
-                <div id="editModal" class="modal">
-                    <div class="modal-content">
-                        <h3>Edit Equipment</h3>
-                        <input type="hidden" id="equipmentId">
-                        
-                        <label for="equipmentName">Equipment Name:</label>
-                        <input type="text" id="equipmentName" disabled>
-                        
-                        <label for="quantity">Quantity:</label>
-                        <div class="quantity-container">
-                            <button id="subtractQty">-</button>
-                            <input type="number" id="quantity" value="0">
-                            <button id="addQty">+</button>
-                        </div>
-                        
-                        <label for="reason">Reason:</label>
-                        <select id="reason">
-                            <option value="broken">Broken</option>
-                            <option value="lost">Lost</option>
-                            <option value="expired">Expired</option>
-                            <option value="theft">Theft</option>
-                            <option value="safety_hazards">Safety Hazards</option>
-                            <option value="other">Other</option>
-                        </select>
+            <!-- Reason Dropdown -->
+            <label for="reason">Reason for Update:</label>
+            <select id="reason" name="reason">
+                <option value="">Select a reason...</option>
+                <option value="broken">Broken</option>
+                <option value="lost">Lost</option>
+                <option value="maintenance">Maintenance</option>
+                <option value="damaged">Damaged</option>
+                <option value="other">Other</option>
+            </select>
 
-                        <div class="button-container">
-                            <button id="submitEdit">Submit</button>
-                            <button id="closeModal">Close</button>
-                        </div>
-                    </div>
-                </div>
+            <div class="button-container">
+                <button type="submit" id="submitEdit">Submit</button>
+                <button type="button" id="closeModal">Close</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+            </div>
 
 
         <!-- Requests Table Container with Border -->

@@ -423,88 +423,83 @@ function populateEquipmentDropdown() {
 
 
 
-// --------EDIT MODAL-------------------------------
-document.addEventListener('DOMContentLoaded', function () {
-    // Access the modal and modal elements
-    const editModal = document.getElementById('editModal');
-    const closeModalBtn = document.getElementById('closeModal');
-    const submitEditBtn = document.getElementById('submitEdit');
-    const equipmentNameInput = document.getElementById('equipmentName');
-    const quantityInput = document.getElementById('quantity');
-    const reasonSelect = document.getElementById('reason');
-    
-    // Get all the edit buttons
-    const editButtons = document.querySelectorAll('.edit-btn');
-    console.log('Number of edit buttons found:', editButtons.length);  // Debugging log
-
-    // Loop through all edit buttons and add click event listeners
-    editButtons.forEach(button => {
-        button.addEventListener('click', function () {
-            console.log('Edit button clicked'); // Debugging log
-
-            // Get the equipment ID, name, and available quantity
-            const equipmentId = this.getAttribute('data-id');
-            const equipmentName = this.closest('tr').querySelector('td:first-child').textContent;
-            const availableQuantity = this.closest('tr').querySelector('td:nth-child(2)').textContent;
-
-            // Log the retrieved values
-            console.log('Equipment ID:', equipmentId);
-            console.log('Equipment Name:', equipmentName);
-            console.log('Available Quantity:', availableQuantity);
-
-            // Populate the modal with the retrieved data
-            equipmentNameInput.value = equipmentName;
-            equipmentNameInput.setAttribute('data-id', equipmentId);
-            quantityInput.value = availableQuantity;
-            reasonSelect.value = 'broken';  // Default reason value
-
-            // Open the modal
-            editModal.style.display = 'flex';
-            console.log('Modal visibility:', editModal.style.display);  // Debugging log
-        });
-    });
-
-    // Close the modal when the "Close" button is clicked
-    closeModalBtn.addEventListener('click', function () {
-        editModal.style.display = 'none';
-        console.log('Modal is closed');  // Debugging log
-    });
-
-    // Handle form submission
-    submitEditBtn.addEventListener('click', function () {
-        const equipmentId = equipmentNameInput.getAttribute('data-id');
-        const quantity = quantityInput.value;
-        const reason = reasonSelect.value;
-
-        // Validation (optional)
-        if (!quantity || quantity <= 0) {
-            alert('Please enter a valid quantity.');
-            return;
-        }
-
-        // Submit the form data (AJAX or form submission logic here)
-        console.log('Editing equipment with ID:', equipmentId);
-        console.log('New Quantity:', quantity);
-        console.log('Reason:', reason);
-
-        // Close the modal after submission
-        editModal.style.display = 'none';
-        console.log('Modal is closed after submission');
-    });
-
-    // Close the modal if clicked outside of it
-    window.addEventListener('click', function (event) {
-        if (event.target === editModal) {
-            editModal.style.display = 'none';
-            console.log('Modal is closed by clicking outside');
-        }
+// =======================EDIT MODAL================================
+// --------EDIT MODAL------------------------------- 
+// Get all the edit buttons and add event listener to each 
+document.querySelectorAll('.edit-btn').forEach(button => {
+    button.addEventListener('click', function() {
+        // Retrieve the equipment details from the data attributes
+        const equipmentId = this.dataset.id;
+        const equipmentName = this.dataset.name;
+        const quantity = this.dataset.quantity;
+        
+        // Populate the modal with the retrieved information
+        document.getElementById('equipmentId').value = equipmentId;
+        document.getElementById('equipmentName').value = equipmentName;
+        document.getElementById('quantity').value = quantity;
+        
+        // Show the modal
+        document.getElementById('editModal').style.display = 'block';
     });
 });
 
+// Event listener for the submit button
+document.getElementById('editEquipmentForm').addEventListener('submit', function(event) {
+    // Get the form data
+    const equipmentId = document.getElementById('equipmentId').value;
+    const quantity = document.getElementById('quantity').value;
+    const reason = document.getElementById('reason').value;
+    
+    // Perform form validation
+    if (!equipmentId) {
+        alert("Equipment ID is missing.");
+        event.preventDefault();
+        return;
+    }
 
-// ------------logout-------------
+    if (!quantity) {
+        alert("Please enter a quantity.");
+        event.preventDefault();
+        return;
+    }
 
-// -----------------logout---------------
+    if (!reason) {
+        alert("Please select a reason for update.");
+        event.preventDefault();
+        return;
+    }
+
+    // Form will submit normally, no need to prevent default
+});
+
+// Close the modal when clicking close button
+document.getElementById('closeModal').addEventListener('click', function() {
+    document.getElementById('editModal').style.display = 'none';
+});
+
+// Close the modal if clicked outside of it
+window.addEventListener('click', function (event) {
+    if (event.target === document.getElementById('editModal')) {
+        document.getElementById('editModal').style.display = 'none';
+        console.log('Modal is closed by clicking outside');
+    }
+});
+
+// Add quantity increment/decrement functionality
+document.getElementById('addQty').addEventListener('click', function() {
+    const quantityInput = document.getElementById('quantity');
+    quantityInput.value = parseInt(quantityInput.value || 0) + 1;
+});
+
+document.getElementById('subtractQty').addEventListener('click', function() {
+    const quantityInput = document.getElementById('quantity');
+    const currentValue = parseInt(quantityInput.value || 0);
+    quantityInput.value = Math.max(0, currentValue - 1);
+});
+
+// ============================= LOG OUT ========================================================================
+
+
 // Attach event listener for the logout button
 document.getElementById("logout").addEventListener("click", handleLogout);
 
@@ -520,4 +515,5 @@ function handleLogout() {
     }
 }
 
+// ================================================================================================================
 
