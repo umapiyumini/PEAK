@@ -1,0 +1,111 @@
+/* General styles */
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background-color: #f8f1ff;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    
+}
+
+/* Navbar styles */
+.navbar {
+    display: flex;
+    width: 90%;
+    background-color: #333;
+    padding: 10px;
+    justify-content: flex-start;
+    position: fixed; /* Keeps the navbar at the top */
+    top: 0;
+    z-index: 1000;
+    margin: 70px 0px 20px 280px;
+    
+}
+
+.navbar a {
+    color: white;
+    text-decoration: none;
+    padding: 10px 15px;
+}
+
+.navbar a:hover {
+    background-color: #575757;
+    border-radius: 5px;
+}
+
+/* Container Styles */
+.form-container {
+    background-color: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    padding: 10px 20px 10px 20px;
+    margin: 140px 0px 0px 210px; /* Adds space below the fixed navbar */
+    width: 100%;
+    max-width: 1000px;
+    text-align: center;
+}
+
+/* Text styling */
+h1 {
+    color: #000000;
+    margin: 5px 0;
+}
+
+h3 {
+    color: #777777;
+    margin-bottom: 10px;
+}
+
+/* Form styles */
+.form-group {
+    margin-bottom: 10px;
+    margin-right: 15px;
+    text-align: left;
+}
+
+label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 5px;
+    color: #000000;
+}
+
+input, textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-size: 14px;
+    outline: none;
+    transition: border 0.3s;
+}
+
+input:focus, textarea:focus {
+    border-color: #5a2e8a;
+    box-shadow: 0 0 5px rgba(90, 46, 138, 0.3);
+}
+
+textarea {
+    resize: none;
+    height: 30px;
+}
+
+/* Button styles */
+.submit-btn,.addRegNoBtn {
+    width: 30%;
+    background-color: #5a2e8a;
+    color: #ffffff;
+    border: none;
+    padding: 10px;
+    border-radius: 6px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    margin: 10px auto 0;
+    display:block;
+}
+
+.submit-btn:hover,.addRegNoBtn:hover {
+    background-color: #743dbb;
+}

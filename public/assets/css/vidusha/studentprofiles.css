@@ -1,0 +1,228 @@
+.body{
+    margin: 0;
+    padding: 0;
+
+}
+
+.profile-container {
+    width: 95%;
+    display: grid;
+    grid-template-columns: 300px 1fr;
+    gap: 2rem;
+    background: white;
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+    
+}
+
+/* Left sidebar styles */
+.profile-left {
+    background: #f8f9fa;
+    padding: 2rem;
+    text-align: center;
+}
+
+.profile-image {
+    width: 150px;
+    height: 150px;
+    margin: 0 auto 1.5rem;
+    border-radius: 50%;
+    overflow: hidden;
+    border: 5px solid white;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+}
+
+.profile-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.profile-left h2 {
+    margin-bottom: 1rem;
+    color: #333;
+}
+
+.basic-info {
+    text-align: left;
+    margin-top: 1.5rem;
+}
+
+.basic-info p {
+    margin: 0.5rem 0;
+    color: #666;
+}
+
+/* Right content styles */
+.profile-right {
+    padding: 2rem;
+    
+}
+
+.info-card {
+    background: #fff;
+    border-radius: 10px;
+    padding: 1.5rem;
+    margin-bottom: 1.5rem;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+    
+}
+
+.info-card h3 {
+    color: var(--primary-color);
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.info-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+}
+
+.info-item {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.info-item.full-width {
+    grid-column: 1 / -1;
+}
+
+.info-item label {
+    color: #666;
+    font-size: 0.9rem;
+}
+
+.info-item span {
+    color: #333;
+    font-weight: 500;
+}
+
+/* Responsive design */
+@media (max-width: 900px) {
+    .profile-container {
+        grid-template-columns: 1fr;
+    }
+    
+    .profile-left {
+        padding: 1.5rem;
+    }
+    
+    .info-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+.edit-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: flex-end;
+            margin-bottom: 1rem;
+        }
+
+        .btn {
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: 500;
+            border: none;
+            transition: all 0.3s ease;
+        }
+
+        .btn-edit {
+            background: var(--edit-color);
+            color: white;
+        }
+
+        .btn-save {
+            background: var(--success-color);
+            color: white;
+        }
+
+        .btn-cancel {
+            background: #dc3545;
+            color: white;
+        }
+
+        .info-item input, .info-item textarea {
+            width: 100%;
+            padding: 0.5rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 0.9rem;
+        }
+
+        .info-item.editing label {
+            color: #007bff;
+        }
+
+        .upload-photo {
+            margin-top: 1rem;
+            display: none;
+        }
+
+        .upload-photo.show {
+            display: block;
+        }
+
+        .edit-mode .info-item span {
+            display: none;
+        }
+
+        .view-mode .info-item input,
+        .view-mode .info-item textarea {
+            display: none;
+        }
+
+        .search-bar {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    /*margin-right: 20px;*/
+}
+
+.search-input {
+    padding: 6px 12px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 14px;
+    width: 250px;
+}
+
+.btn-search {
+    padding: 6px 10px;
+    background-color: #007BFF;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.btn-search i {
+    margin-right: 4px;
+}
+
+.btn-search:hover {
+    background-color: #0056b3;
+}
+
+.header-title {
+    display: flex;
+    justify-content: space-between;
+    margin:50px 0px 0px 0px;
+}
+
+.main-content {
+    margin-top: 80px;
+    margin-left: 210px;
+
+}

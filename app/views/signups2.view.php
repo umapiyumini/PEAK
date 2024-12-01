@@ -7,7 +7,6 @@
     <link rel="stylesheet" href="<?=ROOT?>/assets/css/uma/mainsignup.css">
 </head>
 <body>
-    
     <div class="top-border"></div>
 
     <div class="signup-container">
@@ -19,68 +18,106 @@
 
         <main>
             <div class="role-selection">
-            
-            <form action="<?=ROOT?>/login" method="post" class="signup-form">
-      
-        <div class="formlable">Registration number </div>
-        <input type="text" name="registrationnumber" required>
-        <div class="formlable">Name with Initials </div>
-        <input type="text" name="fullName"  required>
-        <div class="formlable">Date of Birth </div>
-         <input type="date" name="dob"  required>
-         <div class="formlable">NIC </div>
-        <input type="text" name="nic"  required>
-   
-        <div class="formlable">Student E-mail</div>
-    <input type="email" name="email"  required>
+                <form action="<?=ROOT?>/signups2" method="post" class="signup-form">
 
-    <div class="formlable">Address</div>
-    <input type="text" name="address"  required>
+                    <div class="formlable">Registration number </div>
+                    <input type="text" name="registrationnumber" value="<?=htmlspecialchars($_POST['registrationnumber'] ?? '')?>">
+                    <?php if(!empty($studenterrors['registrationnumber'])): ?>
+                        <div class="error-message" style="text-align:left; color: red; font-size: 12px;"><?=$studenterrors['registrationnumber']?></div>
+                    <?php endif;?>
+
+                    <div class="formlable">Name with Initials </div>
+                    <input type="text" name="name" value="<?=htmlspecialchars($_POST['name'] ?? '')?>">
+                    <?php if(!empty($errors['name'])): ?>
+                        <div class="error-message" style="text-align:left; color: red; font-size: 12px;"><?=$errors['name']?></div>
+                    <?php endif;?>
+                    
+                    <div class="formlable">Date of Birth </div>
+                    <input type="date" name="dob" value="<?=htmlspecialchars($_POST['dob'] ?? '')?>">
+                    <?php if(!empty($errors['dob'])): ?>
+                        <div class="error-message" style="text-align:left; color: red; font-size: 12px;"><?=$errors['dob']?></div>
+                    <?php endif;?>
+                    
+                    <div class="formlable">NIC </div>
+                    <input type="text" name="nic" value="<?=htmlspecialchars($_POST['nic'] ?? '')?>">
+                    <?php if(!empty($errors['nic'])): ?>
+                        <div class="error-message" style="text-align:left; color: red; font-size: 12px;"><?=$errors['nic']?></div>
+                    <?php endif;?>
     
-    <div class="formlable">Faculty </div>
-    <select required>
-       
-        <option value="business">UCSC</option>
-        <option value="science">Science</option>
-        <option value="arts">Arts</option>
-        <option value="business">Management</option>
-        <option value="business">Technology</option>
-        <option value="business">Medicine</option>
-    </select>
+                    <div class="formlable">Student E-mail</div>
+                    <input type="text" name="email" value="<?=htmlspecialchars($_POST['email'] ?? '')?>">
+                    <?php if(!empty($errors['email'])): ?>
+                        <div class="error-message" style="text-align:left; color: red; font-size: 12px;"><?=$errors['email']?></div>
+                    <?php endif;?>
 
-    <div class="formlable">Department</div>
-    <input type="text" name="department"  required>
+                    <div class="formlable">Address</div>
+                    <input type="text" name="address" value="<?=htmlspecialchars($_POST['address'] ?? '')?>">
+                    <?php if(!empty($studenterrors['address'])): ?>
+                        <div class="error-message" style="text-align:left; color: red; font-size: 12px;"><?=$studenterrors['address']?></div>
+                    <?php endif;?>
 
-    <div class="formlable">Contact Number </div>
-    <input type="text"  required>
-    
+                    <div class="formlable">Contact Number </div>
+                    <input type="text" name="contact_number" value="<?=htmlspecialchars($_POST['contact_number'] ?? '')?>">
+                    <?php if(!empty($errors['contact_number'])): ?>
+                        <div class="error-message" style="text-align:left; color: red; font-size: 12px;"><?=$errors['contact_number']?></div>
+                    <?php endif;?>
 
-   <div class="gender-selection">
-                <label class="formlable">Gender</label>
-                <div>
-                <input type="radio" id="male" name="gender" value="male" >
-                <label for="male">Male</label>
+                    <div class="gender-selection">
+                        <label class="formlable">Gender</label>
+                        <div>
+                            <input type="radio" id="male" name="gender" value="male" <?= isset($_POST['gender']) && $_POST['gender'] == 'male' ? 'checked' : '' ?>>
+                            <label for="male">Male</label>
 
-                <input type="radio" id="female" name="gender" value="female" >
-                <label for="female">Female</label>
-                </div>
-            </div>
-    
+                            <input type="radio" id="female" name="gender" value="female" <?= isset($_POST['gender']) && $_POST['gender'] == 'female' ? 'checked' : '' ?>>
+                            <label for="female">Female</label>
+                        </div>
+                    </div>
+                    <?php if(!empty($errors['gender'])): ?>
+                        <div class="error-message" style="text-align:left; color: red; font-size: 12px;"><?=$errors['gender']?></div>
+                    <?php endif;?>
 
-    <div class="formlable">Password </div>
-    <input type="password"  required>
+                    <div class="formlable">Faculty </div>
+                    <select name="faculty">
+                        <option value="" >Select Faculty</option>
+                        <option value="ucsc" <?= isset($_POST['faculty']) && $_POST['faculty'] == 'ucsc' ? 'selected' : '' ?>>UCSC</option>
+                        <option value="science" <?= isset($_POST['faculty']) && $_POST['faculty'] == 'science' ? 'selected' : '' ?>>Science</option>
+                        <option value="arts" <?= isset($_POST['faculty']) && $_POST['faculty'] == 'arts' ? 'selected' : '' ?>>Arts</option>
+                        <option value="management" <?= isset($_POST['faculty']) && $_POST['faculty'] == 'management' ? 'selected' : '' ?>>Management</option>
+                        <option value="technology" <?= isset($_POST['faculty']) && $_POST['faculty'] == 'technology' ? 'selected' : '' ?>>Technology</option>
+                        <option value="medicine" <?= isset($_POST['faculty']) && $_POST['faculty'] == 'medicine' ? 'selected' : '' ?>>Medicine</option>
+                    </select>
+                    <?php if(!empty($studenterrors['faculty'])): ?>
+                        <div class="error-message" style="text-align:left; color: red; font-size: 12px;"><?=$studenterrors['faculty']?></div>
+                    <?php endif;?>
 
-    <div class="formlable">Confirm Password </div>
-    <input type="password"  required>
+                    <div class="formlable">Department</div>
+                    <input type="text" name="department" value="<?=htmlspecialchars($_POST['department'] ?? '')?>">
+                    <?php if(!empty($studenterrors['department'])): ?>
+                        <div class="error-message" style="text-align:left; color: red; font-size: 12px;"><?=$studenterrors['department']?></div>
+                    <?php endif;?>
 
-    <div class="terms-conditions">
-        <input type="checkbox" id="terms" required>
-        <label for="terms">I have read and agree to the <a href="#">Terms</a>, <a href="#">Privacy Policy</a>, and <a href="#">Cookies Policy</a>.</label>
-    </div>
+                    <div class="formlable">Password </div>
+                    <input type="password" name="password" value="<?=htmlspecialchars($_POST['password'] ?? '')?>">
+                    <?php if(!empty($errors['password'])): ?>
+                        <div class="error-message" style="text-align:left; color: red; font-size: 12px;"><?=$errors['password']?></div>
+                    <?php endif;?>
 
-    <button type="submit" class="button">Sign Up</button>
-</form>
+                    <div class="formlable">Confirm Password </div>
+                    <input type="password" name="confirm_password" value="<?=htmlspecialchars($_POST['confirm_password'] ?? '')?>">
+                    <?php if(!empty($errors['confirm_password'])): ?>
+                        <div class="error-message" style="text-align:left; color: red; font-size: 12px;"><?=$errors['confirm_password']?></div>
+                    <?php endif;?>
 
+                    <div class="terms-conditions">
+                        <input type="checkbox" id="terms" name="terms" <?=isset($_POST['terms']) ? 'checked' : ''?>>
+                        <label for="terms">I have read and agree to the <a href="#">Terms</a>, <a href="#">Privacy Policy</a>, and <a href="#">Cookies Policy</a>.</label>
+                    </div>
+                    <?php if(!empty($errors['terms'])): ?>
+                        <div class="error-message" style="text-align:left; color: red; font-size: 12px;"><?=$errors['terms']?></div>
+                    <?php endif;?>
+
+                    <button type="submit" class="button">Sign Up</button>
+                </form>
             </div>
         </main>
     </div>

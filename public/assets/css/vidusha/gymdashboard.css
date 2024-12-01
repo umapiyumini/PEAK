@@ -1,0 +1,361 @@
+
+
+/* General styles */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f5f5f5;  
+    overflow: hidden; /* Remove global vertical scrollbars */
+}
+
+.content {
+    margin: 65px 0px 0px 170px;
+    padding: 20px;
+    background-color: #f0f0f5;
+    height: auto; /* Dynamic height */
+    overflow-y: auto;
+ /* Ensures content within this section scrolls */
+}
+
+
+
+
+header {
+    position: fixed;
+    top: 0;
+    left: 200px;
+    width: 85%;
+    z-index: 100;
+    background-color: var(--white);
+}
+
+.breadcrumb-bar a{
+    color: white;
+}
+
+.bell-icon, .profile-icon {
+    cursor: pointer;
+    justify-content: flex-end;    
+}
+
+.bell-icon {
+    background-color: transparent;
+    border: none;
+    font-size: 30px;
+    color: #7f7f7f;
+}
+.bell-icon :hover{
+    color: white;
+}
+
+.hamburger {
+    display: none;
+    font-size: 30px;
+    background: none;
+    border: none;
+    color: black;
+    cursor: pointer;
+}
+
+/* Profile Icon */
+.profile-icon {
+    position: relative;
+    display: inline-block;
+    cursor: pointer;
+}
+
+.profile-icon img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: 1px solid #ddd;
+}
+
+/* Dropdown Menu */
+.dropdown-menu {
+    position: absolute;
+    top: 50px;
+    right: 0;
+    background: #fff;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    display: none; /* Hidden by default */
+    z-index: 1000;
+    width: 200px;
+}
+
+.dropdown-menu ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.dropdown-menu ul li {
+    border-bottom: 1px solid #ddd;
+}
+
+.dropdown-menu ul li a {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    color: #333;
+    text-decoration: none;
+    transition: background 0.2s;
+}
+
+.dropdown-menu ul li a i {
+    margin-right: 10px;
+}
+
+.dropdown-menu ul li a:hover {
+    background: #f0f0f0;
+}
+
+/* Show the dropdown when toggled */
+.dropdown-menu.show {
+    display: block;
+}
+
+
+
+/* Sidebar Styles */
+.sidebar {
+    height: 100vh;
+    width: 220px;
+    background: linear-gradient(135deg, #3E034A, #59056a);
+    position: fixed;
+    left: 0;
+    top: 0;
+    padding: 20px;
+    color: white;
+    box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
+    overflow-y: auto;
+    transition: all 0.3s ease;
+}
+
+.sidebar .icon {
+    display: block;
+    margin: 0 auto 10px;
+    width:50px; /* Smaller image size */
+    border-radius: 0%;
+    
+}
+
+.sidebar ul {
+    list-style: none;
+    padding: 0;
+    margin-top: 80px;
+}
+
+.sidebar ul li {
+    margin: 20px 0;
+    position: relative;
+    display: flex;
+    align-items: center; /* Aligns icon and title in a line */
+}
+
+.sidebar ul li a {
+    text-decoration: none;
+    color: white;
+    font-size: 16px; /* Adjusted for better alignment */
+    display: flex;
+    align-items: center;
+    padding: 8px 10px;
+    border-radius: 8px;
+    width: 100%;
+    transition: background 0.3s ease, transform 0.2s ease;
+}
+
+.sidebar ul li a .icon {
+    margin-right: 10px;
+    font-size: 18px;
+}
+
+.sidebar ul li a span {
+    font-size: 16px;
+    margin-left: 8px; /* Spacing between icon and title */
+}
+
+.sidebar ul li a:hover {
+    background: rgba(255, 255, 255, 0.1);
+    transform: translateX(5px);
+}
+
+.sidebar ul li a.active {
+    background: rgba(255, 255, 255, 0.3);
+    font-weight: bold;
+}
+
+/* Dropdown menu */
+.sidebar ul li .dropdown {
+    background: rgba(255, 255, 255, 0.1);
+    margin-top: 5px;
+    padding: 5px 10px;
+    border-radius: 8px;
+    display: none;
+}
+
+.sidebar ul li.show-dropdown .dropdown {
+    display: block;
+}
+
+.ped-logo{
+    display: block;
+    margin: 0 auto 10px;
+    width:150px; 
+    border-radius: 0%;
+}
+
+/* Responsive Design */
+@media screen and (max-width: 768px) {
+    .sidebar {
+        width: 60px;
+    }
+
+    .sidebar img {
+        width: 40px;
+    }
+
+    .sidebar ul li a {
+        padding: 10px;
+        justify-content: center;
+    }
+
+    .sidebar ul li a span {
+        display: none;
+    }
+
+    .sidebar ul li a .icon {
+        margin: 0;
+    }
+}
+
+/* Content area */
+
+.content header {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px 0;
+    background-color: #dac0e1;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+.content header h1 {
+    margin-left: 60px;
+    font-size: 24px;
+    color: #7a5f87;
+}
+
+.content header .user-icon {
+    margin-right: 20px;
+    font-size: 24px;
+    color: #7a5f87;
+}
+
+.dashboard {
+    background-color: #fff;
+    padding: 0px;
+    border-radius: 8px;
+    margin-left: 20px;
+    
+}
+
+.embedded-content {
+    width: 100%;
+    height: calc(100vh - 10px); /* Adjust height as needed */
+    border: none;
+    background-color: white; /* Optional: Set a background color */
+    overflow-y: auto;
+}
+
+/* Responsive design */
+@media screen and (max-width: 768px) {
+    .sidebar {
+        width: 100px;
+    }
+
+    .sidebar img {
+        width: 50px;
+    }
+
+    .sidebar ul li .icon {
+        display: none;
+    }
+
+    .sidebar ul li a {
+        display: none;
+    }
+
+    .content {
+        margin-left: 100px;
+    }
+
+    .content header h1 {
+        margin-left: 20px;
+    }
+
+    .content header profile-icon {
+        font-size: 5em;
+    }
+
+    .dashboard {
+        margin-left: 10px;
+    }
+
+    .embedded-content {
+        height: calc(100vh - 50px);
+    }
+
+    .navbar {
+        padding: 10px;
+    }
+
+    .navbar .menu a {
+        margin: 0 5px;
+        font-size: 14px;
+    }
+
+    .navbar .profile-icon {
+        font-size: 1em;
+    }
+
+
+
+}
+
+
+
+
+/* Menu styles */
+.menu {
+    display: flex;  /* Ensure the menu links are in a row */
+    gap: 20px;  /* Space between each menu item */
+    justify-content: center;
+    margin-left: 200px;
+    
+}
+
+.menu a {
+    text-decoration: none;
+    font-size: 18px;
+    color: #000;
+    padding: 10px 15px;
+    justify-content: center;
+}
+
+.menu a.active {
+    background-color: #7a5f87;
+    color: white;
+    border-radius: 5px;
+}
+
+/* Profile icon styles */
+.profile-icon {
+    font-size: 24px;
+    cursor: pointer;
+    margin-left: 350px;
+}

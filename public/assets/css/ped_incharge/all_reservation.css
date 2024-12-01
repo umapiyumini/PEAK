@@ -1,0 +1,80 @@
+@import url(ped.css);
+
+/* all reservations ground */
+/* .reservation-container{
+    margin: 2rem ;
+} */
+.reservation {
+    background: white;
+    border-radius: 8px;
+    padding: 20px;
+    margin-bottom: 15px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  }
+  
+  .reservation.school {
+    border-left: 2rem solid var(--res-external);
+  }
+  
+  .reservation.club {
+    border-left: 2rem solid var(--res-sports);
+  }
+  
+  .reservation.individual {
+    border-left: 2rem solid var(--res-special);
+  }
+  
+  .reservation-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+  }
+  
+  .client-name {
+    font-size: 18px;
+    font-weight: bold;
+    margin: 0;
+  }
+  
+  .status {
+    padding: 6px 12px;
+    border-radius: 16px;
+    font-size: 14px;
+    background: #e8f0fe;
+    color: #1a73e8;
+  }
+  
+  .reservation-details {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 15px;
+    margin-bottom: 15px;
+  }
+  
+  .detail-item {
+    font-size: 14px;
+  }
+  
+  .detail-label {
+    color: #666;
+    margin-bottom: 4px;
+  }
+  
+  .detail-value {
+    font-weight: 500;
+  }
+  
+  .cancel-btn {
+    background: var(--danger-color);
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background 0.3s;
+  }
+  
+  .cancel-btn:hover {
+    background: #c82333;
+  }

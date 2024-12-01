@@ -4,21 +4,36 @@ class Student{
     use Model;
 
     protected $table = 'student';
-    protected $allowedColumns = [
-        'registration_number',
+    protected $allowed_columns = [
         'userid',
-        'name',
+        'registrationnumber',
         'faculty',
-        'id_start_date',
-        'id_expiry_date',
-        'date_of_birth',
-        'nic',
-        'email',
-        'gender', 
-        'contact_number',
-        'address',
-        
+        'department',
     ];
+
+    public $studenterrors = [];
+
+    public function validate($data) {
+        //check if registrationnumber is empty
+        if (empty($data['registrationnumber'])) {
+            $this->studenterrors['registrationnumber'] = 'Registration Number is required';
+        }
+
+        if (empty($data['faculty'])) {
+            $this->studenterrors['faculty'] = 'Faculty is required';
+        }
+
+        if (empty($data['department'])) {
+            $this->studenterrors['department'] = 'Department is required';
+        }
+
+        if (empty($data['address'])) {
+            $this->studenterrors['address'] = 'Address is required';
+        }
+
+        //return true if no errors
+        return empty($this->studenterrors);
+    }
     
 
 }

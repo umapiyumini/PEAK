@@ -48,12 +48,12 @@ class App
         $controller = new $this->controller;
 
         // Select the method to execute
-        if(!empty($URL[1]))
+        if(!empty($URL[2]))
         {
-            if(method_exists($controller, $URL[1]))
+            if(method_exists($controller, $URL[2]))
             {
-                $this->method = $URL[1];
-                unset($URL[1]);
+                $this->method = $URL[2];
+                unset($URL[2]);
             }
         }
 

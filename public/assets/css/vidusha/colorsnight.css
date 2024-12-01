@@ -1,0 +1,202 @@
+/* General Styles */
+/* General styles */
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background-color: #f4f7fa;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh; /* Full-page height */
+}
+
+.navbar {
+    display: flex;
+    width: 90%;
+    background-color: #333;
+    padding: 10px;
+    justify-content: flex-start;
+    position: fixed; /* Keeps the navbar at the top */
+    top: 0;
+    z-index: 1000;
+    margin: 70px 0px 20px 270px;
+    
+}
+
+.navbar a {
+    color: white;
+    text-decoration: none;
+    padding: 10px 15px;
+}
+
+.navbar a:hover {
+    background-color: #575757;
+    border-radius: 5px;
+}
+
+.container {
+    margin: 250px 0px 0px 200px;
+    padding: 20px;
+    max-width: 1080px;
+    background-color: #ffffff;
+    border-radius: 8px;
+}
+
+.colorsnight h2 {
+    text-align: center;
+    color: #000000;
+}
+
+.form-group {
+    margin-bottom: 15px;
+}
+
+label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 5px;
+    color: #000;
+}
+
+input, select {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-size: 14px;
+}
+
+input:focus, select:focus {
+    border-color: #5a2e8a;
+    box-shadow: 0 0 5px rgba(90, 46, 138, 0.3);
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+}
+
+table th, table td {
+    border: 1px solid #ccc;
+    padding: 10px;
+    text-align: left;
+}
+
+.add-btn, .submit-btn {
+    width: 30%;
+    background-color: #5a2e8a;
+    color: #fff;
+    border: none;
+    padding: 10px;
+    border-radius: 6px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    display: block;
+    margin: 10px auto 0;
+    text-align: center;
+}
+
+.add-btn:hover, .submit-btn:hover {
+    background-color: #743dbb;
+}
+
+button[type="button"] {
+    background-color: #5a2e8a;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+button[type="button"]:hover {
+    background-color: #7c6397;
+}
+
+
+/* Modal container styles */
+#studentModal {
+    display: none;
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    overflow-y: auto;
+}
+.modal-content {
+    background: white;
+    padding: 20px;
+    margin: 130px auto;
+    width: 300px;
+    border-radius: 8px;
+}
+/* Fade-in animation */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: scale(0.9); /* Slight zoom-in effect */
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+/* Close button */
+.close-btn {
+    color: #aaa;
+    float: right;
+    font-size: 24px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.close-btn:hover,
+.close-btn:focus {
+    color: #000;
+    text-decoration: none;
+}
+
+/* Form styles inside modal */
+.modal-content form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.modal-content .form-group {
+    display: flex;
+    flex-direction: column;
+}
+
+.modal-content .form-group label {
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+.modal-content .form-group input {
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 14px;
+}
+
+/* Save button styles */
+.modal-content .submit-btn {
+    background-color: #5a2e8a;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 4px;
+    align-self: flex-start;
+}
+
+.modal-content .submit-btn:hover {
+    background-color: #7c6397;
+}

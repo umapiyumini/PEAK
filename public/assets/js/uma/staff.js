@@ -422,10 +422,8 @@ function populateEquipmentDropdown() {
 // Initial population of the inventory table
 
 
-
 // =======================EDIT MODAL================================
 // --------EDIT MODAL------------------------------- 
-// Get all the edit buttons and add event listener to each 
 document.querySelectorAll('.edit-btn').forEach(button => {
     button.addEventListener('click', function() {
         // Retrieve the equipment details from the data attributes
@@ -437,7 +435,7 @@ document.querySelectorAll('.edit-btn').forEach(button => {
         document.getElementById('equipmentId').value = equipmentId;
         document.getElementById('equipmentName').value = equipmentName;
         document.getElementById('quantity').value = quantity;
-        
+
         // Show the modal
         document.getElementById('editModal').style.display = 'block';
     });
@@ -445,12 +443,10 @@ document.querySelectorAll('.edit-btn').forEach(button => {
 
 // Event listener for the submit button
 document.getElementById('editEquipmentForm').addEventListener('submit', function(event) {
-    // Get the form data
     const equipmentId = document.getElementById('equipmentId').value;
     const quantity = document.getElementById('quantity').value;
     const reason = document.getElementById('reason').value;
-    
-    // Perform form validation
+
     if (!equipmentId) {
         alert("Equipment ID is missing.");
         event.preventDefault();
@@ -468,8 +464,6 @@ document.getElementById('editEquipmentForm').addEventListener('submit', function
         event.preventDefault();
         return;
     }
-
-    // Form will submit normally, no need to prevent default
 });
 
 // Close the modal when clicking close button
@@ -481,20 +475,24 @@ document.getElementById('closeModal').addEventListener('click', function() {
 window.addEventListener('click', function (event) {
     if (event.target === document.getElementById('editModal')) {
         document.getElementById('editModal').style.display = 'none';
-        console.log('Modal is closed by clicking outside');
     }
 });
 
-// Add quantity increment/decrement functionality
-document.getElementById('addQty').addEventListener('click', function() {
-    const quantityInput = document.getElementById('quantity');
-    quantityInput.value = parseInt(quantityInput.value || 0) + 1;
-});
+// Ensure these lines are only called once, outside of any function
+document.addEventListener('DOMContentLoaded', () => {
+    const subtractButton = document.getElementById("subtractQty");
+    const addButton = document.getElementById("addQty");
+    const quantityField = document.getElementById("quantity");
 
-document.getElementById('subtractQty').addEventListener('click', function() {
-    const quantityInput = document.getElementById('quantity');
-    const currentValue = parseInt(quantityInput.value || 0);
-    quantityInput.value = Math.max(0, currentValue - 1);
+    subtractButton.addEventListener("click", function() {
+        if (quantityField.value > 0) {
+            quantityField.value = parseInt(quantityField.value) - 1;
+        }
+    });
+
+    addButton.addEventListener("click", function() {
+        quantityField.value = parseInt(quantityField.value) + 1;
+    });
 });
 
 // ============================= LOG OUT ========================================================================

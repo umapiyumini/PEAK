@@ -24,16 +24,15 @@ class Unpackedinventory  {
     }
     
 
-
     public function updateEquipment($postdata) {
-        $query = "UPDATE unpackedinventory SET quantity = :quantity
+        $query = "UPDATE unpackedinventory SET quantity=:quantity
                   WHERE equipmentid = :equipmentid";
         
         return $this->query($query, [
             'equipmentid' => $postdata['equipmentid'],
-            'quantity' => $postdata['editquantity']
+            'quantity' => $postdata['editquantity'], 
+       
         ]);
+
     }
-
-
 }

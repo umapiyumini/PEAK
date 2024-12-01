@@ -1,0 +1,108 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f9;
+    margin: 0;
+    padding: 20px;
+  }
+  
+  .container {
+    max-width: 1080px;
+    margin: auto;
+    background: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    margin:80px 0px 0px 210px;
+  }
+  
+  h1, h2 {
+    text-align: center;
+  }
+  
+  .category-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-bottom: 20px;
+  }
+  
+  .category-buttons button {
+    padding: 10px 20px;
+    font-size: 16px;
+    background-color: #5a2e8a;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .category-buttons button:hover {
+    background-color: #71588d;
+  }
+  
+  form {
+    margin-top: 20px;
+  }
+  
+  form input, form textarea, button {
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
+  
+  button {
+    background-color: #5a2e8a;
+    color: white;
+    border: none;
+    cursor: pointer;
+    width:30%;
+    
+  }
+  
+  button:hover {
+    background-color: #71588d;
+  }
+  
+  .hidden {
+    display: none;
+  }
+  
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+  }
+  
+  table th, table td {
+    padding: 12px;
+    text-align: left;
+    border: 1px solid #ddd;
+  }
+  
+  table th {
+    background-color: #f8f9fa;
+  }
+  
+  table td button {
+    background-color: red;
+    color: white;
+    border: none;
+    cursor: pointer;
+    padding: 5px 10px;
+    margin-right: 5px;
+  }
+  
+  table td button:hover {
+    background-color: #c82333;
+  }
+  
+  table td .update-btn {
+    background-color: #5a2e8a;
+  }
+  
+  table td .update-btn:hover {
+    background-color: #71588d;
+  }
+  

@@ -1,0 +1,342 @@
+@import url(ped.css);
+
+.header {
+    /* position: absolute; */
+    width: 100%;
+}
+
+.container {
+    width: 100%;
+    margin: 0 auto;
+}
+
+.tabs {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 10px;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+}
+
+.tab {
+    padding: 10px 20px;
+    background: #2B124C;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.tab.active {
+    background: #522B5B;
+}
+
+.form-section, .display-section {
+    background: white;
+    padding: 20px;
+    border-radius: 5px;
+    margin-bottom: 20px;
+    display: none;
+}
+
+.form-section.active, .display-section.active {
+    display: block;
+}
+
+/* Table styles */
+.request-table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    margin-top: 20px;
+    background: #fff;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.request-table th {
+    background: #2B124C;
+    color: white;
+    padding: 15px;
+    font-weight: 500;
+}
+
+.request-table td {
+    padding: 12px 15px;
+    border-bottom: 1px solid #eee;
+}
+
+.request-table tbody tr:hover {
+    background-color: #f8f9fa;
+}
+
+.status-badge {
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 0.85em;
+    font-weight: 500;
+}
+
+.status-pending {
+    background-color: #fff3cd;
+    color: #856404;
+}
+
+.status-approved {
+    background-color: #d4edda;
+    color: #155724;
+}
+
+.status-rejected {
+    background-color: #f8d7da;
+    color: #721c24;
+}
+
+/* Action buttons */
+.action-btn {
+    padding: 6px 12px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-right: 5px;
+    font-size: 0.9em;
+    transition: opacity 0.2s;
+}
+
+.action-btn:hover {
+    opacity: 0.9;
+}
+
+.view-btn {
+    background-color: #2B124C;
+    color: white;
+}
+
+.approve-btn {
+    background-color: #28a745;
+    color: white;
+}
+
+.reject-btn {
+    background-color: #dc3545;
+    color: white;
+}
+
+/* Modal styles */
+.modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 1000;
+}
+
+.modal-content {
+    position: relative;
+    background: #fff;
+    margin: 5% auto;
+    padding: 25px;
+    width: 70%;
+    max-width: 700px;
+    border-radius: 12px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+}
+
+.close {
+    position: absolute;
+    right: 25px;
+    top: 15px;
+    font-size: 28px;
+    cursor: pointer;
+    color: #666;
+}
+
+.close:hover {
+    color: #000;
+}
+
+.form-details {
+    margin-top: 20px;
+}
+
+.form-details .detail-row {
+    display: flex;
+    padding: 12px 0;
+    border-bottom: 1px solid #eee;
+}
+
+.form-details .detail-label {
+    width: 200px;
+    font-weight: 600;
+    color: #2B124C;
+}
+
+/* Improved Modal styles */
+.modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.6);
+    z-index: 1000;
+    overflow: auto;
+}
+
+.modal-content {
+    position: relative;
+    background: #fff;
+    margin: 5% auto;
+    padding: 30px;
+    width: 80%;
+    max-width: 600px;
+    border-radius: 12px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+    animation: fadeIn 0.3s ease-in-out;
+    /* overflow: hidden; */
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.close {
+    position: absolute;
+    right: 20px;
+    top: 20px;
+    font-size: 24px;
+    font-weight: bold;
+    color: #888;
+    cursor: pointer;
+    transition: color 0.2s ease-in-out;
+}
+
+.close:hover {
+    color: #000;
+}
+
+.modal-content h2 {
+    font-size: 24px;
+    font-weight: 600;
+    margin-bottom: 20px;
+    color: #2B124C;
+    text-align: center;
+}
+
+.form-details {
+    margin-top: 15px;
+    font-size: 14px;
+    color: #555;
+    line-height: 1.6;
+}
+
+.form-details .request-info {
+    margin-bottom: 15px;
+    padding: 10px;
+    background: #f9f9f9;
+    border-radius: 8px;
+}
+
+.form-details p {
+    margin: 8px 0;
+    font-size: 16px;
+}
+
+.form-details p strong {
+    color: #2B124C;
+}
+
+.nominations-section h3 {
+    margin-top: 20px;
+    font-size: 18px;
+    color: #2B124C;
+    font-weight: 500;
+}
+
+.nominations-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+    background: #fff;
+}
+
+.nominations-table th, .nominations-table td {
+    padding: 10px;
+    text-align: left;
+    font-size: 14px;
+    border-bottom: 1px solid #eee;
+}
+
+.nominations-table th {
+    background: #2B124C;
+    color: #fff;
+    font-weight: 600;
+}
+
+.nominations-table tbody tr:hover {
+    background: #f8f9fa;
+}
+
+.modal-actions {
+    margin-top: 20px;
+    text-align: center;
+}
+
+.modal-actions .action-btn {
+    padding: 10px 20px;
+    font-size: 14px;
+    border-radius: 5px;
+    margin: 0 5px;
+    transition: background 0.3s, color 0.3s;
+}
+
+.modal-actions .approve-btn {
+    background: #28a745;
+    color: #fff;
+}
+
+.modal-actions .reject-btn {
+    background: #dc3545;
+    color: #fff;
+}
+
+.modal-actions .approve-btn:hover {
+    background: #218838;
+}
+
+.modal-actions .reject-btn:hover {
+    background: #c82333;
+}
+
+/* Responsive Modal */
+@media (max-width: 768px) {
+    .modal-content {
+        width: 90%;
+        padding: 20px;
+    }
+
+    .modal-content h2 {
+        font-size: 20px;
+    }
+
+    .form-details p {
+        font-size: 14px;
+    }
+
+    .modal-actions .action-btn {
+        font-size: 12px;
+        padding: 8px 16px;
+    }
+}

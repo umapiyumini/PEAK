@@ -1,0 +1,158 @@
+@import url(ped.css);
+/* enhancenemnt and attendance*/
+
+
+.container {
+    width: 100%;
+    margin: 0 auto;
+    background-color: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.header {
+    margin-bottom: 30px;
+    padding-bottom: 20px;
+    border-bottom: 2px solid #eee;
+}
+
+.header h1 {
+    color: #333;
+    margin-bottom: 10px;
+}
+
+.document-list {
+    margin-bottom: 30px;
+}
+
+.document-card {
+    background-color: #fff;
+    border: 1px solid #ddd;
+    padding: 15px;
+    margin-bottom: 15px;
+    border-radius: 4px;
+    transition: box-shadow 0.3s ease;
+    width: 100%;
+}
+
+.document-card:hover {
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.document-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.document-status {
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 14px;
+}
+
+.status-pending {
+    background-color: #fff3cd;
+    color: #856404;
+}
+
+.document-details {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 15px;
+    margin-bottom: 15px;
+}
+
+.detail-item {
+    display: flex;
+    flex-direction: column;
+}
+
+.detail-label {
+    font-size: 12px;
+    color: #666;
+    margin-bottom: 4px;
+}
+
+.detail-value {
+    font-size: 14px;
+    color: #333;
+    margin-bottom: 0.5rem;
+}
+
+
+.document-actions {
+    display: flex;
+    gap: 10px;
+    justify-content: flex-end;
+}
+
+button {
+    padding: 8px 16px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background-color 0.3s ease;
+}
+
+.btn-approve {
+    background-color: var(--view-color);
+    color: white;
+}
+
+.btn-reject {
+    background-color: var(--danger-color);
+    color: white;
+}
+
+.btn-view {
+    background-color: var(--edit-color);
+    color: white;
+}
+
+.btn-forward {
+    background-color: var(--secondary-color);
+    color: white;
+}
+
+button:hover {
+    opacity: 0.9;
+}
+
+.digital-signature {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    z-index: 1000;
+}
+
+.digital-signature canvas {
+    border: 1px solid #ddd;
+    margin: 10px 0;
+}
+
+.signature-actions {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 15px;
+}
+
+.overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 999;
+}

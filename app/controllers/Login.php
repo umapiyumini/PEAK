@@ -12,7 +12,7 @@ class Login extends Controller{
             $password = $_POST['password'] ?? '';
             if ($row = $user->first(['username' => $username])) {
                 // Check if the password is correct
-                if ($password === $row->password) {
+                if (password_verify($password, $row->password)) {
                     // Check if user is active
                         // Authenticate user
                         $_SESSION['userid'] = $row->userid;
@@ -36,14 +36,14 @@ class Login extends Controller{
                             header('Location: gym/gymdashboard');
                             exit; // done
                         } else if ($row->role === 'Internal User') {
-                            header('Location: #');
+                            header('Location: student/home');
                             exit; 
                         } else if ($row->role === 'Amalgamated Club Executive') {
-                            header('Location: #');
+                            header('Location: choose1');
                             exit; 
 
                         } else if ($row->role === 'Sports Captain') {
-                            header('Location: sportscaptain/sportscaptaindashboard');
+                            header('Location: choose2');
                             exit; //done
                         } 
                         
