@@ -1,0 +1,190 @@
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+.navbar {
+    display: flex;
+    width: 100%;
+    background-color: #333;
+    padding: 10px;
+    justify-content: flex-start;
+    position: fixed; /* Keeps the navbar at the top */
+    top: 0;
+    z-index: 1000;
+    margin: 70px 0px 50px 390px;
+    
+  }
+  
+  .navbar a {
+    color: white;
+    text-decoration: none;
+    padding: 10px 15px;
+  }
+  
+  .navbar a:hover {
+    background-color: #575757;
+    border-radius: 5px;
+  }
+
+  .dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.dropbtn {
+    color: white;
+    padding: 14px 20px;
+    text-decoration: none;
+    background-color: #333;
+    border: none;
+    cursor: pointer;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: white;
+    box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
+    z-index: 1;
+    min-width: 160px;
+}
+
+.dropdown-content a {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+    text-align: left;
+}
+
+.dropdown-content a:hover {
+    background-color: #ddd;
+}
+
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f9;
+    color: #333;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    display:flex;
+    margin-top: 85px;
+}
+
+.container {
+    background-color: white;
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    margin: 30px 0px 0px 200px;
+}
+
+h1 {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+h2 {
+    margin-bottom: 10px;
+    color: #000000;
+}
+
+.form-container {
+    margin-bottom: 30px;
+}
+
+input {
+    width: calc(100% - 20px);
+    padding: 10px;
+    margin: 5px 0;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+button {
+    width: auto; /* Full-width button */
+    background-color: #5a2e8a;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 6px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    display: inline-block; /* Makes buttons appear on the same line */
+    margin-right: 5px; 
+   
+}
+
+
+button:hover {
+    background-color:  #461877;
+}
+
+.roster-container {
+    margin-top: 20px;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+}
+
+table th, table td {
+    padding: 10px;
+    text-align: center;
+    border-bottom: 1px solid #ddd;
+}
+
+table th {
+    background-color: #5a2e8a;
+    color: white;
+}
+
+table td:last-child {
+    text-align: center; /* Center-align the action buttons */
+}
+
+.btn-edit,
+.btn-delete {
+    padding: 8px 12px;
+    margin: 0 5px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    color: white;
+    font-size: 14px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.btn-edit {
+    background-color: #5a2e8a; /* Green */
+}
+
+.btn-delete {
+    background-color: #f44336; /* Red */
+}
+
+.btn-edit i,
+.btn-delete i {
+    margin-right: 5px; /* Space between icon and text */
+}
+
+.btn-edit:hover {
+    background-color: #5a2e8a;
+}
+
+.btn-delete:hover {
+    background-color: #e53935;
+}

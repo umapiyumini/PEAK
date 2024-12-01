@@ -1,0 +1,180 @@
+/* General Reset */
+* {
+    box-sizing: border-box; /* Ensures padding and borders are included in width/height */
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f9f9f9;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: 100vh;
+    overflow: hidden; /* Disable both vertical and horizontal overflow for the body */
+}
+
+.container {
+    width: 100%;
+    max-width: 1070px;
+    background-color: #ffffff;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+    max-height: calc(100vh - 40px); /* Allow scrolling inside container if needed */
+    overflow-y: auto;
+}
+
+.topic-header {
+    font-size: 32px;
+    font-weight: bold;
+    text-align: center;
+    color: #000000;
+    margin-bottom: 20px;
+}
+
+label {
+    display: block;
+    margin: 10px 0 5px;
+    font-weight: bold;
+    color: #333;
+}
+
+input, textarea {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+    font-size: 14px;
+}
+
+textarea {
+    resize: vertical; /* Allow vertical resizing */
+    min-height: 50px;
+    max-height: 300px;
+    overflow: auto; /* Scroll if needed */
+}
+
+.buttons {
+    display: flex;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+button#publish {
+    background-color: #5c2e91;
+    color: white;
+}
+
+button#save-draft {
+    background-color: #e0e0e0;
+    color: #333;
+}
+
+button:hover {
+    opacity: 0.9;
+}
+
+/* Sidebar Styles */
+.sidebar {
+    height: 100vh;
+    width: 200px;
+    background-color: #d3d3d3;
+    position: fixed;
+    left: 0;
+    top: 0;
+    padding: 20px;
+    overflow-y: auto; /* Allow sidebar scrolling if content exceeds */
+}
+
+/* Content Area */
+.content {
+    margin: 65px 0 0 200px; /* Offset to align with sidebar */
+    padding: 20px;
+    background-color: #f0f0f5;
+    overflow-y: auto; /* Enable vertical scrolling */
+    height: calc(100vh - 65px); /* Use full viewport minus header */
+}
+
+.content header {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px;
+    background-color: #dac0e1;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+/* Header Styles */
+header h1 {
+    font-size: 24px;
+    color: #333;
+}
+
+header p {
+    font-size: 14px;
+    color: #666;
+}
+
+/* Embedded Content */
+.embedded-content {
+    width: 100%;
+    height: calc(100vh - 10px); /* Fits viewport */
+    border: none;
+    background-color: white;
+    overflow: auto;
+}
+
+/* Menu */
+.menu {
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+    margin-left: 200px;
+}
+
+.menu a {
+    text-decoration: none;
+    font-size: 18px;
+    padding: 10px 15px;
+}
+
+.menu a.active {
+    background-color: #7a5f87;
+    color: white;
+    border-radius: 5px;
+}
+
+/* Responsive Design */
+@media screen and (max-width: 768px) {
+    .sidebar {
+        width: 100px;
+    }
+
+    .sidebar ul li a {
+        display: none;
+    }
+
+    .content {
+        margin-left: 100px;
+    }
+
+    .embedded-content {
+        height: calc(100vh - 50px);
+    }
+}

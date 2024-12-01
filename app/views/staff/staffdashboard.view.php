@@ -158,13 +158,16 @@
     </table>
 </div>
 
+
+
+
 <!-- Edit Equipment Modal -->
 <div id="editModal" class="modal">
     <div class="modal-content">
         <h3>Edit Equipment</h3>
         
         <!-- Form to edit equipment details -->
-        <form method="POST" action="<?php echo ROOT; ?>/staffdashboard/editEquipment" id="editEquipmentForm">
+        <form method="POST" action="staffdashboard/editEquipment" id="editEquipmentForm">
 
             <!-- Hidden input for equipmentId -->
             <input type="hidden" id="equipmentId" name="equipmentid">
@@ -200,6 +203,12 @@
 
             </div>
 
+
+
+
+
+
+            
 
         <!-- Requests Table Container with Border -->
         <div class="requests-container">

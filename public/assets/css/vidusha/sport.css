@@ -1,0 +1,279 @@
+@charset "utf-8";
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.navbar {
+    display: flex;
+    width: 100%;
+    background-color: #333;
+    padding: 10px;
+    justify-content: flex-start;
+    position: fixed; /* Keeps the navbar at the top */
+    top: 0;
+    z-index: 1000;
+    margin: 70px 0px 50px 200px;
+    
+  }
+  
+  .navbar a {
+    color: white;
+    text-decoration: none;
+    padding: 10px 15px;
+  }
+  
+  .navbar a:hover {
+    background-color: #575757;
+    border-radius: 5px;
+  }
+
+  .dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.dropbtn {
+    color: white;
+    padding: 14px 20px;
+    text-decoration: none;
+    background-color: #333;
+    border: none;
+    cursor: pointer;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: white;
+    box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
+    z-index: 1;
+    min-width: 160px;
+}
+
+.dropdown-content a {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+    text-align: left;
+}
+
+.dropdown-content a:hover {
+    background-color: #ddd;
+}
+
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+
+
+body {
+    font-family: 'Arial', sans-serif;
+    background-color:  #f1f1f1;
+}
+
+.content-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    padding:80px 30px;
+	margin: 50px 0px 0px 200px;
+	background-color: #f1f1f1;
+}
+
+.main-content {
+    width: 65%;
+	margin-bottom: 20px;
+}
+
+.main-content img {
+    width: 100%;
+    height: auto;
+    border-radius: 8px;
+	display: block;
+}
+
+.main-content .category {
+    color: #A62639;
+    font-size: 14px;
+    margin-top: 10px;
+    font-weight: bold;
+}
+
+.main-content h1 {
+    font-size: 28px;
+    margin: 20px 0;
+    color: #333;
+}
+
+.latest-news {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    padding: 20px;
+    background-color: #F9F9F9;
+    width: 30%;
+    border-left: 1px solid #ddd;
+    border-radius: 8px;
+    margin-top:70px;
+}
+
+.latest-news h2 {
+    font-size: 24px;
+    color: #000000;
+    margin-top: 30px;
+    text-align: center;
+}
+
+#newsContainer .news-item {
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    padding: 15px;
+    background-color: #fff; /* Updated to make the news stand out */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+    transition: transform 0.2s ease;
+}
+
+#newsContainer .news-item:hover {
+    transform: translateY(-5px); /* Slight lift on hover for interactivity */
+    box-shadow: 0 6px 10px rgba(0, 0, 0, 0.2);
+}
+
+.news-item h3 {
+    color: #333; 
+    font-size: 18px;
+    margin-bottom: 10px;
+    font-weight: bold;
+}
+
+.news-item p {
+    color: #555; 
+    line-height: 1.5; 
+    font-size: 16px;
+    margin-bottom: 8px;
+}
+
+.news-item .news-date {
+    font-size: 12px; 
+    color: #888;
+    font-style: italic;
+    margin-top: 10px;
+}
+
+
+
+/* Captains Section */
+.captains {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 20px; /* Adds spacing between the tiles */
+    margin-top: 20px;
+}
+
+.captains .tile2 {
+    flex: 1 1 150px; /* Ensures consistent sizing with responsiveness */
+    text-align: center;
+    padding: 15px;
+    background-color: #ffffff;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    max-width: 240px; /* Limits tile width for uniformity */
+    margin: auto;
+}
+
+.captains .tile2 img {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%; /* Circular profile pictures */
+    object-fit: cover; /* Ensures images are not stretched */
+    margin-bottom: 10px;
+    border: 3px solid #00796b; /* Adds a border around the image */
+}
+
+.captains .tile2 p {
+    font-size: 16px;
+    color: #333;
+    font-weight: bold;
+    margin-top: 10px;
+}
+
+.captains .tile2:hover {
+    transform: scale(1.05); /* Slight zoom on hover */
+    box-shadow: 0 6px 10px rgba(0, 0, 0, 0.2); /* More pronounced shadow on hover */
+    background-color: #f1f8e9; /* Subtle background color change on hover */
+}
+
+/* Responsive Design for Captains Section */
+@media (max-width: 768px) {
+    .captains {
+        justify-content: center;
+    }
+
+    .captains .tile2 {
+        flex: 1 1 100%; /* Full width on smaller screens */
+        max-width: none;
+    }
+}
+
+
+.main-content h2{
+    font-size: 24px;
+    color: #000000;
+    margin-top: 30px;
+    text-align: center;
+}
+
+
+/* Image Slider */
+.image-slider {
+    position: relative;
+    width: 100%;
+    max-width: 800px;
+    margin: 20px auto;
+    overflow: hidden;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.slides {
+    display: flex;
+    transition: transform 0.5s ease-in-out;
+}
+
+.slides img {
+    width: 100%;
+    flex-shrink: 0;
+}
+
+button.prev, button.next {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: rgba(0, 0, 0, 0.5);
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    z-index: 10;
+    border-radius: 50%;
+    font-size: 18px;
+}
+
+button.prev {
+    left: 10px;
+}
+
+button.next {
+    right: 10px;
+}
+
+button.prev:hover, button.next:hover {
+    background-color: rgba(0, 0, 0, 0.8);
+}

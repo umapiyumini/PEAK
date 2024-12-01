@@ -43,28 +43,29 @@ class Staffdashboard extends Controller {
 
         // Load the staffdashboard view with the data
         $this->view('staff/staffdashboard', $this->data);
+       
     }
 
 
+    public function editEquipment(){
+        $eqpmodel = new Unpackedinventory();
 
-
-    
-
-    public function editEquipment() {
-        $editmodel = new Unpackedinventory();
-    
-        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            echo "editEquipment method triggered."; // Debug message
-            print_r($_POST); // Output form data for debugging
-            exit(); // Stop execution to see the output
+        if ($_SERVER['REQUEST_METHOD'] === 'POST'){
+            // $equipmentid = $_POST['equipmentid'];
+            $eqpmodel->updateEquipment($_POST);
+            header('Location:' . ROOT . '/staff/staffdashboard');
         }
-    
-        // The following code won't run until you remove the debug exit above.
-        $editmodel->updateEquipment($_POST);
-        header('Location:' . ROOT . '/staff/staffdashboard');
-    }
-    
-
     }
 
-?>
+    
+
+
+            
+           
+        
+
+
+}
+    
+
+

@@ -10,6 +10,7 @@ if($_SERVER['SERVER_NAME'] == 'localhost'){
 
 
     define('ROOT','http://localhost/PEAK/public');
+    define('LINKROOT','http://localhost/PEAK');
 }else{
     // database configuration
     define('DBNAME','PEAK');

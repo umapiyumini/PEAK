@@ -1,0 +1,255 @@
+@import url(ped.css);
+
+
+
+/* .header {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    flex-wrap: wrap;
+    margin-bottom: 1rem;
+} */
+
+.sub-topic {
+    font-size: 18px;
+    color: #666;
+    margin-top: 5px;
+}
+.header .btn-add{
+    margin-left: 40rem;
+
+}
+
+
+.btn-danger {
+    background-color: var(--danger-color);
+}
+
+.btn-add {
+    background-color: #3E034A;
+   
+}
+
+
+
+.filters {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    margin-bottom: 20px;
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+.filter-group {
+    flex: 1;
+    min-width: 200px;
+}
+
+.filter-group label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+    color: #666;
+}
+
+.filter-group select,
+.filter-group input,
+.form-group input,
+.form-group select {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 14px;
+}
+
+.modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.5);
+    z-index: 1000;
+}
+
+.modal-content {
+    background-color: #fff;
+    width: 90%;
+    max-width: 600px;
+    margin: 50px auto;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.close {
+    font-size: 24px;
+    cursor: pointer;
+    color: #666;
+}
+
+.form-group {
+    margin-bottom: 15px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+    color: #666;
+}
+
+.records-table {
+    background-color: var(--white);
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    overflow-x: auto;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+th, td {
+    padding: 12px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+th {
+    background-color: var(--gray-light);
+    font-weight: bold;
+
+}
+
+tr:hover {
+    background-color: #f8f9fa;
+}
+
+.action-buttons {
+    display: flex;
+    gap: 8px;
+}
+
+
+
+
+@media (max-width: 768px) {
+    .filters {
+        flex-direction: column;
+    }
+    
+    .filter-group {
+        width: 100%;
+    }
+}
+
+.participant-input {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 10px;
+    align-items: center;
+}
+
+.participant-input input {
+    flex: 1;
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 14px;
+}
+
+.participant-input input:invalid {
+    border-color: #ff4444;
+}
+
+.participant-input input:valid {
+    border-color: #00C851;
+}
+
+.btn-remove {
+    background-color: #ff4444;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    padding: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.btn-remove:hover {
+    background-color: #CC0000;
+}
+
+#participantsContainer {
+    margin-top: 20px;
+    max-height: 200px;
+    overflow-y: auto;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+
+.tournament-details {
+    padding: 20px;
+}
+
+.details-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+    margin-bottom: 30px;
+}
+
+.detail-item {
+    display: flex;
+    flex-direction: column;
+}
+
+.detail-item label {
+    font-weight: bold;
+    color: black;
+    margin-bottom: 5px;
+}
+
+.detail-item span {
+    font-size: 1.1em;
+    color: #333;
+}
+
+.participants-section {
+    border-top: 1px solid var(--secondary-color);
+    padding-top: 20px;
+}
+
+.participants-section h3 {
+    margin-bottom: 15px;
+    color: #333;
+}
+
+.participants-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 10px;
+}
+
+.participant-card {
+    background-color: var(--gray-light);
+    padding: 10px 15px;
+    border-radius: 5px;
+    border: 1px solid var(--gray-light);
+}

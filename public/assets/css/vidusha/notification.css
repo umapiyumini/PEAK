@@ -1,0 +1,57 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    margin: 0;
+    padding: 0;
+}
+
+.notification-container {
+    width: 80%;
+    margin: 20px auto;
+    background: #ffffff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+h1 {
+    text-align: center;
+    color: #333;
+}
+
+.notification {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+}
+
+.notification:last-child {
+    border-bottom: none;
+}
+
+.notification-type {
+    font-weight: bold;
+    color: #510461;
+}
+
+.notification-message {
+    flex-grow: 1;
+    margin: 0 10px;
+}
+
+.notification-actions button {
+    margin-left: 10px;
+    padding: 5px 10px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+
+
+.notification-actions .view-details {
+    background-color: #510461;
+    color: white;
+}
