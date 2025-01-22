@@ -21,7 +21,8 @@
         }
 
         main {
-            padding: 20px;
+            margin-left:80px;
+            margin-top: 0;
         }
 
         .controls {
@@ -29,6 +30,7 @@
             display: flex;
             justify-content: flex-start;
             margin-left: 20px;
+            margin-top: 20px;
         }
 
         #search-bar {
@@ -76,13 +78,23 @@
         table tr:hover {
             background-color: #f1f1f1;
         }
+
+        h2{
+            margin: 20px;
+        }
+
     </style>
 </head>
 <body>
 
+
     <?php include 'nav.view.php'; ?>
     <main>
+   
+    <h2>Attendance List</h2>
         <div class="controls">
+        
+            
             <input type="text" id="search-bar" placeholder="Search by player name..." onkeyup="filterTable()">
         </div>
         <table id="attendance-chart">
@@ -97,21 +109,21 @@
             </thead>
             <tbody>
                 <tr>
-                    <td>John Doe</td>
+                    <td>Vidusha</td>
                     <td class="present">Present</td>
                     <td class="absent" title="Sick">Absent</td>
                     <td class="present">Present</td>
                     <td class="absent" title="Sick">Absent</td>
                 </tr>
                 <tr>
-                    <td>Jane Smith</td>
+                    <td>Sanudie</td>
                     <td class="present">Present</td>
                     <td class="present">Present</td>
                     <td class="absent" title="Sick">Absent</td>
                     <td class="present">Present</td>
                 </tr>
                 <tr>
-                    <td>Mike Johnson</td>
+                    <td>Amar</td>
                     <td class="absent" title="Sick">Absent</td>
                     <td class="absent" title="Sick">Absent</td>
                     <td class="present">Present</td>

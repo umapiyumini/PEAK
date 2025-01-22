@@ -1,0 +1,265 @@
+@import url(ped.css);
+
+.navbar {
+  display: flex;
+  width: 100%;
+  background-color: #333;
+  padding: 10px;
+  justify-content: flex-start;
+  position: fixed; /* Keeps the navbar at the top */
+  top: 0;
+  z-index: 1000;
+  /* margin: 70px 0px 50px 180px; */
+  
+}
+
+.navbar a {
+  color: white;
+  text-decoration: none;
+  padding: 10px 15px;
+}
+
+.navbar a:hover {
+  background-color: #575757;
+  border-radius: 5px;
+}
+
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.dropbtn {
+  color: white;
+  padding: 14px 20px;
+  text-decoration: none;
+  background-color: #333;
+  border: none;
+  cursor: pointer;
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: white;
+  box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
+  z-index: 1;
+  min-width: 160px;
+}
+
+.dropdown-content a {
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+  text-align: left;
+}
+
+.dropdown-content a:hover {
+  background-color: #ddd;
+}
+
+.dropdown:hover .dropdown-content {
+  display: block;
+}
+  
+  .container {
+    max-width: 1200px;
+    margin: 4rem;
+    /* margin: 120px 0px 0px 210px; */
+  }
+  
+  h1 {
+    text-align: center;
+    color: #000000;
+  }
+  
+  .tabs {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+  }
+  
+  .tab-button {
+    padding: 10px 20px;
+    margin: 0 10px;
+    border: none;
+    border-radius: 4px;
+    background: #5a2e8a;
+    color: white;
+    cursor: pointer;
+  }
+  
+  .tab-button.active {
+    background: #5a2e8a;
+  }
+  
+  .tab-content {
+    display: none;
+  }
+  
+  .tab-content.active {
+    display: block;
+  }
+  
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 20px;
+  }
+  
+  .card {
+    background: #ffffff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    cursor: pointer;
+  }
+  
+  .card:hover {
+    background: #f9f9f9;
+  }
+  
+  .add-button {
+    background: #5a2e8a;
+    color: white;
+    padding: 10px 15px;
+    margin-bottom: 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+  .add-button:hover {
+    background: #5a2e8a;
+  }
+  .card button {
+    margin: 5px;
+    padding: 8px 12px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .card button:first-of-type {
+    background-color: #5a2e8a;
+    color: white;
+  }
+  
+  .card button:last-of-type {
+    background-color: #dc3545;
+    color: white;
+  }
+  
+  .card button:hover {
+    opacity: 0.9;
+  }
+  
+  
+  /* General Modal Styling */
+.modal {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 90%;
+    max-width: 500px;
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+    padding: 20px;
+    display: none;
+    flex-direction: column;
+  }
+  
+  /* Show Modal */
+  .modal:not(.hidden) {
+    display: flex;
+  }
+  
+  /* Modal Header */
+  .modal h2 {
+    margin: 0;
+    margin-bottom: 20px;
+    font-size: 1.5rem;
+    color: #333;
+  }
+  
+  /* Modal Form Elements */
+  .modal form {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .modal form label {
+    margin-bottom: 5px;
+    font-size: 0.9rem;
+    font-weight: bold;
+  }
+  
+  .modal form input {
+    margin-bottom: 15px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+  
+  .modal form button {
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    background-color: #5a2e8a;
+    color: white;
+    font-size: 1rem;
+    cursor: pointer;
+    margin-top: 10px;
+  }
+  
+  .modal form button:hover {
+    background-color: #c2cac4;
+  }
+  
+  /* Close Button */
+  .modal .close-btn {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    color: #aaa;
+    cursor: pointer;
+  }
+  
+  .modal .close-btn:hover {
+    color: #000;
+  }
+  
+  /* Overlay for Modal Background */
+  .modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.4);
+    z-index: 999;
+    display: none;
+  }
+  
+  /* Show Overlay */
+  .modal-overlay:not(.hidden) {
+    display: block;
+  }
+  
+  
+  .modal-content {
+    background: #ffffff;
+    padding: 20px;
+    border-radius: 8px;
+    text-align: center;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  }
+  

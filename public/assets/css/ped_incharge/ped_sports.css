@@ -60,6 +60,13 @@
   gap: 10px;
 
 }
+
+.sports-container {
+  a {
+    text-align: center;
+    text-decoration: none;
+  }
+}
 .btn-male{
   background-color:var(--edit-color);
 }

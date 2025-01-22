@@ -156,10 +156,7 @@ h2 {
     <h2>Inventory Requests Status</h2>
 
     <!-- New input field for sports -->
-    <div class="input-field">
-        <label for="sports">Sports</label>
-        <input type="text" id="sports" name="sports" placeholder="Enter sports type">
-    </div>
+    
 
     <table class="inventory-table">
         <thead>

@@ -36,6 +36,7 @@
             <li><img src="<?=ROOT?>/assets/images/vidusha/entry.png" alt="request Icon" class="icon"><a href="#" onclick="loadContent('gymentry','Entry Request')">Entry Request</a></li>
             <li><img src="<?=ROOT?>/assets/images/vidusha/plans.png" alt="Plans Icon" class="icon"><a href="#" onclick="loadContent('equipments','Gym Equipments')">Gym Equipments</a></li>
             <li><img src="<?=ROOT?>/assets/images/vidusha/rules.png" alt="Rules Icon" class="icon"><a href="#"  onclick="loadContent('rules','Rules and Regulations')">Rules & Regulation</a></li>
+            <li><img src="<?=ROOT?>/assets/images/vidusha/logout.png" alt="Rules Icon" class="icon"><a href="../login"  onclick="loadContent('rules','Rules and Regulations')">Logout</a></li>
         </ul>
     </div>
 

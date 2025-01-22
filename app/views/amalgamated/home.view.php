@@ -155,7 +155,6 @@ nav a.active {
 
 /* body content styles */
 main{
-	padding-top: 80px;
 	display: flex;
   	justify-content: space-between;
   	margin: 0 30px;
@@ -256,25 +255,19 @@ main{
 }
 
 /*calendar style*/
-.content{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-	flex-direction: column;
-    padding: 30px 30px;
-	background-color: #f1f1f1;
-	background-color: white;
-    height: 100%;
-    margin-left: 200px;
-    margin-top: 10px;
-}
+
 section.content {
-  flex: 1; 
-  padding-right: 30px;
-	display: flex;
+    flex: 1; 
+    border-radius: 10px;
+    width: fit-content;
+    padding: auto;
+     display: flex;
 	flex-direction: column;
 	align-content: center;
 	justify-content: flex-start;
+    margin-left: 300px;
+
+    
 }
 
 aside.calendar {
@@ -353,13 +346,18 @@ aside.calendar {
 
 .content h1 {
   text-align: center;
-  width: 100%;
-  margin-bottom: 20px;
+  width: 100%;  
+  margin-top: 20px;
 }
 .content img{
-	width: 150px;
-	height: 170px;
-	margin-bottom: 30px;
+    width: 180px;
+	height: 150px;
+	margin-bottom: 20px;
+    margin-left:25%;
+    margin-right: 25%;
+    width: 50%;
+       
+
 }
 .year_plan {
     background-color:white;
@@ -383,6 +381,35 @@ aside.calendar {
     transform: translateY(-5px);
     box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
 }
+
+.styled-button {
+      background-color:  #7a4bb8; /* Green */
+      color: white; /* Text color */
+      padding: 12px 20px; /* Spacing */
+      border: none; /* No border */
+      border-radius: 8px; /* Rounded corners */
+      font-size: 16px; /* Font size */
+      cursor: pointer; /* Pointer on hover */
+      transition: background-color 0.3s ease, transform 0.2s ease; /* Smooth transition */
+      margin: 10px;
+      
+
+
+    }
+
+    .styled-button:hover {
+      background-color: #7a4bb8; /* Slightly darker green */
+      transform: scale(1.05); /* Slight zoom effect */
+    }
+
+    .styled-button:active {
+      background-color: #7a4bb8; /* Even darker green */
+      transform: scale(0.98); /* Slight press effect */
+    }
+
+    .styled-button a{
+        text-decoration: none;  
+    }
 
  .notice_board {
             width: 100%;
@@ -422,6 +449,9 @@ aside.calendar {
             border: 1px solid #ddd;
             border-radius: 4px;
             margin-bottom: 20px;
+            max-width: 100%;
+            
+            
         }
         .notice h2 {
             margin-top: 0;
@@ -445,6 +475,8 @@ aside.calendar {
             color: #666;
             font-size: 0.8em;
         }
+
+        
 
 .upcoming-events {
 margin-top: 40px;
@@ -643,7 +675,7 @@ grid-template-columns: 1fr;
 .submit-btn {
     width: 100%;
     padding: 10px;
-    background: #59056a;
+    background: #5a2e8a;
     color: white;
     border: none;
     border-radius: 4px;
@@ -651,7 +683,7 @@ grid-template-columns: 1fr;
 }
 
 .submit-btn:hover {
-    background: #3E034A;
+    background: #7a4bb8;
 }
 
 .today {
@@ -661,19 +693,23 @@ grid-template-columns: 1fr;
 .notice-container {
     display: flex; /* Use flexbox for layout */
     flex-direction: column; /* Allow wrapping for smaller screens */
-    max-width: 100%; /* Add space between items */
+    max-width: 200%; /* Add space between items */
     gap: 20px;
+    margin: 10px;
+    text-align: center;
+  
 }
 
 
 .notice {
-   width:100%;/* Each notice takes 50% width minus the gap */
+    max-width:100%;/* Each notice takes 50% width minus the gap */
     padding: 15px;
     border: 1px solid #ddd;
     border-radius: 8px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     text-align: left;
     background-color: #fff;
+    
 }
 
 
@@ -689,6 +725,53 @@ grid-template-columns: 1fr;
     margin: 5px 0;
     color: #666;
   }
+
+  .notice .view-btn {
+  background-color: #7a4bb8; /* Green background */
+  color: white; /* White text */
+  font-size: 14px; /* Font size */
+  font-weight: 600; /* Semi-bold text */
+  padding: 8px 16px; /* Padding inside the button */
+  border: none; /* Remove border */
+  border-radius: 4px; /* Slightly rounded corners */
+  cursor: pointer; /* Pointer cursor on hover */
+  display: inline-block; /* Ensures proper button alignment */
+  text-decoration: none; /* Remove underline if it's a link */
+  box-shadow: 0 3px 5px rgba(0, 0, 0, 0.2); /* Subtle shadow */
+  transition: background-color 0.3s ease, transform 0.2s ease; /* Smooth transition */
+  margin-top: 10px;
+  
+  
+  
+}
+
+.notice .view-btn:hover {
+  background-color: #7a4bb8; /* Change to purple on hover */
+  transform: translateY(-2px); /* Slight lift on hover */
+}
+
+.notice .view-btn:active {
+  background-color: #7a4bb8; /* Darker green for active state */
+  transform: translateY(0); /* Reset lift on active state */
+}
+
+
+.notice .daten
+{
+    font-size:  10px;
+    margin-bottom: 0;
+}
+
+.notice .contentn
+{
+    color: black;
+    margin-top: 25px;
+    margin-bottom: 20px;
+}
+
+
+
+ 
   
   </style>
 
@@ -699,7 +782,7 @@ grid-template-columns: 1fr;
 include 'nav.view.php';
 ?>
 	
- <main>
+ <main >
 	 <section class="content">
 		 <h1>Physical Education Administrative Kit</h1>
 		 <h1>University Of Colombo</h1>
@@ -708,14 +791,30 @@ include 'nav.view.php';
 		 <!--div class="year_plan"><a href="#">Year Plan</a></div-->
 		 
      <h1>Notices</h1>
+     <div >
+     <button class="styled-button" type="submit" onclick='navigateToViewAddnotice();'>ADD NOTICES</button>
+</div>
      <div class="notice-container">
-          <div class="notice">
-            <h2>Annual Sports Meet</h2>
-            <p><strong>Date:</strong> March 10, 2024</p>
-            <p><strong>Venue:</strong> Main Sports Ground</p>
-            <p><strong>Details:</strong> All departments are invited to participate. Registration closes on March 5, 2024.</p>
-          </div>
-          <div class="notice">
+    
+
+          
+            <?php if(!empty($noticeData)) : ?>
+                <?php foreach($noticeData as $notice): ?>
+                    <div class="notice">
+                        
+                        <h2><?= htmlspecialchars(is_array($notice) ? $notice['title'] : $notice->title) ?></h2>
+                        
+                        <p class="daten"><strong>Published Date:</strong><?= htmlspecialchars(is_array($notice) ? $notice['publishdate'] : $notice->publishdate) ?></p>
+                        <p class="daten"><strong>Published Time:</strong><?= htmlspecialchars(is_array($notice) ? $notice['publishtime'] : $notice->publishtime) ?></p>
+                
+                        <p class="contentn"><strong></strong><?= htmlspecialchars(is_array($notice) ? $notice['content'] : $notice->content) ?></p>
+                       
+                        <button type='submit' class='view-btn' onclick="navigateToviewNotice('<?= is_array($notice) ? $notice['noticeid'] : $notice->noticeid ?>')">view</button>
+                        <button type='submit' class='view-btn' onclick="navigateTodeleteNotice('<?= is_array($notice) ? $notice['noticeid'] : $notice->noticeid ?>')">Delete</button>
+                    </div>
+                <?php endforeach; ?>
+            <?php endif; ?>
+          <!-- <div class="notice">
             <h2>Gym Membership Renewal</h2>
             <p><strong>Deadline:</strong> February 25, 2024</p>
             <p><strong>Details:</strong> Renew your gym membership online or visit the office between 9 AM and 4 PM.</p>
@@ -732,7 +831,7 @@ include 'nav.view.php';
             <p><strong>Venue:</strong> University Auditorium</p>
             <p><strong>Details:</strong> Celebrate the achievements of our athletes. Tickets are available now!</p>
           </div>
-        </div>
+        </div> -->
       
 			 
 		 
@@ -759,12 +858,11 @@ include 'nav.view.php';
         <div class="dates" id="dates"></div>
       </div>
 		
-      <button type="submit">ADD</button>
     <div class="upcoming-events">
       <h2>Upcoming Events</h2>
       <div class="events-grid">
         <a href="#" class="event-card">
-          <h3>Fitness Challenge</h3>
+          <h3>Badminton Tournament</h3>
           <p>Date: 1st June 2024</p>
           <p>Time: 4:00 PM - 7:00 PM</p>
           <p>Venue: University Gymnasium</p>
@@ -776,7 +874,7 @@ include 'nav.view.php';
           <p>Venue: UOC ground</p>
         </a>
         <a href="#" class="event-card">
-          <h3>Leadership program</h3>
+          <h3>Ambassador Rugby Tournament</h3>
           <p>Date: 20th August 2024</p>
           <p>Time: 1:00 PM - 5:00 PM</p>
           <p>Venue: UOC ground</p>
@@ -787,137 +885,156 @@ include 'nav.view.php';
   </main>
 	
   <script>
+
+    function navigateToviewNotice(noticeId) {
+        console.log(noticeId);
+        window.location.href = "<?=ROOT?>/amalgamated/Viewnotice/" + noticeId;
+    }
+
+    function navigateTodeleteNotice(noticeId) {
+        const userconfirm = confirm("Are you sure you want to delete this notice?");
+        if(userconfirm){
+            console.log(noticeId,userconfirm);
+            window.location.href = "<?=ROOT?>/amalgamated/Removenotice/" + noticeId;
+        }
+    }
+
+    function navigateToViewAddnotice(){
+        window.location.href = "<?=ROOT?>/amalgamated/Addnotice";
+    }
     const monthYear = document.getElementById('month-year');
-const datesElement = document.getElementById('dates');
-const prev = document.getElementById('prev');
-const next = document.getElementById('next');
+    const datesElement = document.getElementById('dates');
+    const prev = document.getElementById('prev');
+    const next = document.getElementById('next');
 
-const months = [
-  'January', 'February', 'March', 'April', 'May', 'June', 'July', 
-  'August', 'September', 'October', 'November', 'December'
-];
+    const months = [
+    'January', 'February', 'March', 'April', 'May', 'June', 'July', 
+    'August', 'September', 'October', 'November', 'December'
+    ];
 
-let currentDate = new Date();
+    let currentDate = new Date();
 
-// Function to update previous and next month labels dynamically
-function updateMonthLabels() {
-  const currentMonth = currentDate.getMonth();
-  
-  // Calculate previous and next month indexes
-  const prevMonthIndex = (currentMonth - 1 + 12) % 12;
-  const nextMonthIndex = (currentMonth + 1) % 12;
+    // Function to update previous and next month labels dynamically
+    function updateMonthLabels() {
+    const currentMonth = currentDate.getMonth();
+    
+    // Calculate previous and next month indexes
+    const prevMonthIndex = (currentMonth - 1 + 12) % 12;
+    const nextMonthIndex = (currentMonth + 1) % 12;
 
-  // Update the text for previous and next months with arrow icons and no year
-   prev.innerHTML = `<i class="uil uil-arrow-left"></i> ${months[prevMonthIndex]}`;
-  next.innerHTML = `${months[nextMonthIndex]} <i class="uil uil-arrow-right"></i>`;
-}
+    // Update the text for previous and next months with arrow icons and no year
+    prev.innerHTML = `<i class="uil uil-arrow-left"></i> ${months[prevMonthIndex]}`;
+    next.innerHTML = `${months[nextMonthIndex]} <i class="uil uil-arrow-right"></i>`;
+    }
 
-// Function to render the calendar
-function renderCalendar() {
-  // Get year, month, and first day of the month
-  const year = currentDate.getFullYear();
-  const month = currentDate.getMonth();
-  const firstDay = new Date(year, month, 1).getDay() - 1;  // Adjust for Monday start
+    // Function to render the calendar
+    function renderCalendar() {
+    // Get year, month, and first day of the month
+    const year = currentDate.getFullYear();
+    const month = currentDate.getMonth();
+    const firstDay = new Date(year, month, 1).getDay() - 1;  // Adjust for Monday start
 
-  // Update the header for the current month and year
-  monthYear.textContent = `${months[month]} ${year}`;
+    // Update the header for the current month and year
+    monthYear.textContent = `${months[month]} ${year}`;
 
-  // Clear any existing dates
-  datesElement.innerHTML = '';
+    // Clear any existing dates
+    datesElement.innerHTML = '';
 
-  // Get number of days in the current month
-  const daysInMonth = new Date(year, month + 1, 0).getDate();
+    // Get number of days in the current month
+    const daysInMonth = new Date(year, month + 1, 0).getDate();
 
-  // Fill in previous month's blank spaces
-  for (let i = 0; i < (firstDay < 0 ? 6 : firstDay); i++) {
-    datesElement.innerHTML += `<div class="date"></div>`;
-  }
+    // Fill in previous month's blank spaces
+    for (let i = 0; i < (firstDay < 0 ? 6 : firstDay); i++) {
+        datesElement.innerHTML += `<div class="date"></div>`;
+    }
 
-  // Fill in dates of the current month
-  for (let i = 1; i <= daysInMonth; i++) {
-    const dateClass = i === currentDate.getDate() && 
-                      month === new Date().getMonth() && 
-                      year === new Date().getFullYear() ? 'active' : '';
-    datesElement.innerHTML += `<div class="date ${dateClass}">${i}</div>`;
-  }
+    // Fill in dates of the current month
+    for (let i = 1; i <= daysInMonth; i++) {
+        const dateClass = i === currentDate.getDate() && 
+                        month === new Date().getMonth() && 
+                        year === new Date().getFullYear() ? 'active' : '';
+        datesElement.innerHTML += `<div class="date ${dateClass}">${i}</div>`;
+    }
 
-  // Update the previous and next month labels
-  updateMonthLabels();
-}
+    // Update the previous and next month labels
+    updateMonthLabels();
 
-// Event listeners for previous and next month navigation
-prev.addEventListener('click', () => {
-  currentDate.setMonth(currentDate.getMonth() - 1);
-  renderCalendar();
-});
+    
+    }
 
-next.addEventListener('click', () => {
-  currentDate.setMonth(currentDate.getMonth() + 1);
-  renderCalendar();
-});
+    // Event listeners for previous and next month navigation
+    prev.addEventListener('click', () => {
+    currentDate.setMonth(currentDate.getMonth() - 1);
+    renderCalendar();
+    });
 
-// Initialize the calendar on page load
-renderCalendar();
+    next.addEventListener('click', () => {
+    currentDate.setMonth(currentDate.getMonth() + 1);
+    renderCalendar();
+    });
 
-//notice board
- let notices = [];
-        let editingIndex = null;
+    // Initialize the calendar on page load
+    renderCalendar();
 
-        function addOrUpdateNotice() {
-            const title = document.getElementById('noticeTitle').value;
-            const content = document.getElementById('noticeContent').value;
-            if (title && content) {
-                const notice = {
-                    title,
-                    content,
-                    date: new Date().toLocaleString()
-                };
-                if (editingIndex !== null) {
-                    notices[editingIndex] = notice;
-                    editingIndex = null;
-                } else {
-                    notices.push(notice);
+    //notice board
+    let notices = [];
+            let editingIndex = null;
+
+            function addOrUpdateNotice() {
+                const title = document.getElementById('noticeTitle').value;
+                const content = document.getElementById('noticeContent').value;
+                if (title && content) {
+                    const notice = {
+                        title,
+                        content,
+                        date: new Date().toLocaleString()
+                    };
+                    if (editingIndex !== null) {
+                        notices[editingIndex] = notice;
+                        editingIndex = null;
+                    } else {
+                        notices.push(notice);
+                    }
+                    document.getElementById('noticeTitle').value = '';
+                    document.getElementById('noticeContent').value = '';
+                    document.querySelector('.notice-form button').textContent = 'Add Notice';
+                    renderNotices();
                 }
-                document.getElementById('noticeTitle').value = '';
-                document.getElementById('noticeContent').value = '';
-                document.querySelector('.notice-form button').textContent = 'Add Notice';
+            }
+
+            function deleteNotice(index) {
+                notices.splice(index, 1);
                 renderNotices();
             }
-        }
 
-        function deleteNotice(index) {
-            notices.splice(index, 1);
+            function editNotice(index) {
+                const notice = notices[index];
+                document.getElementById('noticeTitle').value = notice.title;
+                document.getElementById('noticeContent').value = notice.content;
+                document.querySelector('.notice-form button').textContent = 'Update Notice';
+                editingIndex = index;
+            }
+
+            function renderNotices() {
+                const container = document.getElementById('noticesContainer');
+                container.innerHTML = '';
+                notices.forEach((notice, index) => {
+                    const noticeElement = document.createElement('div');
+                    noticeElement.className = 'notice';
+                    noticeElement.innerHTML = `
+                        <h2>${notice.title}</h2>
+                        <p>${notice.content}</p>
+                        <p class="notice-date">Posted on: ${notice.date}</p>
+                        <div class="notice-actions">
+                            <button onclick="editNotice(${index})">Edit</button>
+                            <button onclick="deleteNotice(${index})">Delete</button>
+                        </div>
+                    `;
+                    container.appendChild(noticeElement);
+                });
+            }
+
             renderNotices();
-        }
-
-        function editNotice(index) {
-            const notice = notices[index];
-            document.getElementById('noticeTitle').value = notice.title;
-            document.getElementById('noticeContent').value = notice.content;
-            document.querySelector('.notice-form button').textContent = 'Update Notice';
-            editingIndex = index;
-        }
-
-        function renderNotices() {
-            const container = document.getElementById('noticesContainer');
-            container.innerHTML = '';
-            notices.forEach((notice, index) => {
-                const noticeElement = document.createElement('div');
-                noticeElement.className = 'notice';
-                noticeElement.innerHTML = `
-                    <h2>${notice.title}</h2>
-                    <p>${notice.content}</p>
-                    <p class="notice-date">Posted on: ${notice.date}</p>
-                    <div class="notice-actions">
-                        <button onclick="editNotice(${index})">Edit</button>
-                        <button onclick="deleteNotice(${index})">Delete</button>
-                    </div>
-                `;
-                container.appendChild(noticeElement);
-            });
-        }
-
-        renderNotices();
 
 
 
@@ -928,4 +1045,3 @@ renderCalendar();
 	<script src="navbar.js"></script>
 </body>
 </html>
-

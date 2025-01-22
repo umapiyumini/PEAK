@@ -8,7 +8,6 @@
             $eqpdatarecreational = $eqpmodel->findAllEqpsRecreational();
             $sportdata = $sportmodel->findAllSports();
 
-
             $this->view('ped_incharge/ped_inventory',['eqpdata'=>$eqpdata, 'sportdata'=>$sportdata, 'eqpdatarecreational'=>$eqpdatarecreational]);
         }
 
@@ -36,6 +35,4 @@
             $eqpmodel->removeEquipment($equipmentid);
             header('Location:' . ROOT . '/ped_incharge/ped_inventory');
         }
-
-   
 }

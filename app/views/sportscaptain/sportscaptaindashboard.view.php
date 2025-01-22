@@ -13,7 +13,7 @@
     <header>
         <div class="header-container">
             <div class="breadcrumb-bar">
-                <span><a href="sportcaptainhome">Home</a></span> > <span>Dashboard</span> > <span id="currentPage">Ground Reservation</span>
+                <span><a href="sportcaptainhome">Home</a></span> > <span>Dashboard</span> > <span id="currentPage">Sport Profile</span>
             </div>
            
             <div class="profile-icon">
@@ -22,8 +22,8 @@
         </div>
         <div class="dropdown-menu" id="dropdownMenu">
         <ul>
-            <li><a href="#"><i class="uil uil-user"></i> My Profile</a></li>
-            <li><a href="#"><i class="uil uil-signout"></i> Log out</a></li>
+            <li><a href="studentprofiles"><i class="uil uil-user"></i> My Profile</a></li>
+            <li><a href="../login"><i class="uil uil-signout"></i> Log out</a></li>
         </ul>
     </div>
     </header>
@@ -32,11 +32,11 @@
         <img src="<?=ROOT?>/assets/images/vidusha/pedlogo.png" alt="PEAK Logo" class="ped-logo">
         <ul>
             <li>
-                <img src="<?=ROOT?>/assets/images/vidusha/forms.png" alt="Forms Icon" class="icon">
+                <img src="<?=ROOT?>/assets/images/vidusha/sport.png" alt="Sport Icon" class="icon">
                 <a href="#" onclick="loadContent('sportprofile', 'Sport Profile')">Sport Profile</a>
             </li>
             <li>
-                <img src="<?=ROOT?>/assets/images/vidusha/reservation.png" alt="Reservation Icon" class="icon">
+                <img src="<?=ROOT?>/assets/images/vidusha/event.png" alt="Reservation Icon" class="icon">
                 <a href="#" onclick="loadContent('groundreservation', 'Reservation')">Reservation</a>
             </li>
             
@@ -62,8 +62,12 @@
                 <a href="#" onclick="loadContent('gymcalendar', 'Gym Calendar')">Gym Calendar</a>
             </li>
             <li>
-                <img src="<?=ROOT?>/assets/images/vidusha/profile.png" alt="Profile Icon" class="icon">
-                <a href="#" onclick="loadContent('studentprofile', 'Student Profile')">Student Profile</a>
+                <img src="<?=ROOT?>/assets/images/vidusha/switch.png" alt="Calendar Icon" class="icon">
+                <a href="../choose2">Switch User</a>
+            </li>
+            <li>
+                <img src="<?=ROOT?>/assets/images/vidusha/logout.png" alt="Logout Icon" class="icon">
+                <a href="../login">Log out</a>    
             </li>
         </ul>
     </div>

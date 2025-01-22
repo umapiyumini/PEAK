@@ -2,191 +2,284 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Events Dashboard</title>
+    <title>Pool Booking - Student Portal</title>
     <style>
-        /* style.css */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
 
-body {
-    display: flex;
-    margin: 0;
-    font-family: Arial, sans-serif;
-    color: #333;
-}
+        body {
+            background-color: #f5f5f5;
+            padding: 20px;
+        }
 
-.sidebar {
-    width: 20%;
-    background-color: #f5f7fa;
-    padding: 20px;
-    box-sizing: border-box;
-}
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
 
-.sidebar ul {
-    list-style: none;
-    padding: 0;
-}
+        .header {
+            background-color: #2196F3;
+            color: white;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
 
-.sidebar ul li {
-    padding: 10px;
-    color: #555;
-}
+        .student-info {
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
 
-.sidebar ul li.active {
-    background-color: #d1e8ff;
-    border-radius: 5px;
-    font-weight: bold;
-    color: #333;
-}
+        .booking-section {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
 
-.sidebar .new-event {
-    background-color: #0062ff;
-    color: #fff;
-    border: none;
-    padding: 10px;
-    border-radius: 5px;
-    width: 100%;
-    cursor: pointer;
-    margin-top: 20px;
-}
+        .date-picker {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
 
-.sidebar .season-links {
-    margin-top: 20px;
-}
+        .available-day {
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            margin-bottom: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
 
-.sidebar .season-links p {
-    display: flex;
-    justify-content: space-between;
-    padding: 10px 0;
-    color: #555;
-    cursor: pointer;
-}
+        .available-day.full {
+            background-color: #f5f5f5;
+            color: #999;
+        }
 
-.main {
-    width: 100%;
-    padding: 20px;
-    box-sizing: border-box;
-    margin-left: 220px;
-    margin top: 20px;
-}
+        .capacity-indicator {
+            font-size: 14px;
+            color: #666;
+        }
 
+        .e-pass {
+            background: #4CAF50;
+            color: white;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
 
-.new-event-btn {
-    background-color: #4B0082;
-    color: #333;
-    border: none;
-    padding: 8px 16px;
-    border-radius: 20px;
-    cursor: pointer;
-    margin: 10px;
-}
-.new-event-btn:hover {
-    background-color:   #9370DB ;
-}
+        .e-pass h2 {
+            margin-bottom: 10px;
+        }
 
-.new-event-btn a {
-    text-decoration: none;
-    color: white;
-}
+        .e-pass-details {
+            background: white;
+            color: #333;
+            padding: 15px;
+            border-radius: 4px;
+            margin-top: 10px;
+        }
 
+        .qr-code {
+            background: white;
+            padding: 20px;
+            width: 150px;
+            height: 150px;
+            margin: 10px auto;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            color: #666;
+        }
 
-.search-bar {
-    margin-top: 20px;
-}
+        button {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            background-color: #2196F3;
+            color: white;
+            cursor: pointer;
+            font-size: 14px;
+        }
 
-.search-bar input {
-    width: 100%;
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 10px;
-    box-sizing: border-box;
-}
+        button:hover {
+            background-color: #1976D2;
+        }
 
-.tabs {
-    display: flex;
-    gap: 10px;
-    margin-top: 20px;
-}
+        button:disabled {
+            background-color: #ccc;
+            cursor: not-allowed;
+        }
 
-.tabs button {
-    background-color: #f0f4f8;
-    border: none;
-    padding: 8px 12px;
-    border-radius: 10px;
-    cursor: pointer;
-    color: #555;
-}
+        .my-bookings {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
 
-.tabs .active {
-    border-bottom: 2px solid #0062ff;
-    font-weight: bold;
-    color: #333;
-}
+        .booking-item {
+            padding: 15px;
+            border-bottom: 1px solid #eee;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
 
-.event-list {
-    margin-top: 20px;
-}
-
-.event-item {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 15px;
-    border-bottom: 1px solid #e0e0e0;
-}
-
-.event-item h2 {
-    margin: 0;
-    font-size: 1.1em;
-    color: #333;
-}
-
-.event-item p {
-    margin: 5px 0;
-    color: #777;
-    font-size: 0.9em;
-}
-
-.event-item .arrow {
-    color: #aaa;
-    font-size: 1.5em;
-}
-
-
+        .error-message {
+            color: #f44336;
+            font-size: 14px;
+            margin-top: 10px;
+        }
     </style>
 </head>
 <body>
-<?php include 'nav.view.php';?>
-    
-    
-    <div class="main">
+    <div class="container">
         <div class="header">
-            <h1>Events</h1>
-            <button class="new-event-btn"><a href="newevent.php">New event</a></button>
-        </div>
-
-        <div class="search-bar">
-            <input type="text" placeholder="Search events by name">
-        </div>
-
-        
-
-        <div class="event-list">
-            <div class="event-item">
-                <h2>Colors Night 2023</h2>
-                <p>3/5 teams RSVP'd</p>
-                <p>April 27, 2023, 7:00 pm - 10:00 pm</p>
+            <h1>Pool Booking Portal</h1>
+            <div class="student-info-mini">
+                <span id="studentName">John Doe</span>
+                <span id="studentId">#12345</span>
             </div>
-            <div class="event-item">
-                <h2>Spring tournament</h2>
-                <p>4/5 teams RSVP'd</p>
-                <p>May 6, 2023, 8:00 am - 5:00 pm</p>
-      </div>
-            <div class="event-item">
-                <h2>End of year banquet</h2>
-                <p>3/5 teams RSVP'd</p>
-                <p>June 2, 2023, 5:00 pm - 11:00 pm</p>
+        </div>
+
+        <div class="student-info">
+            <h2>Welcome, John Doe!</h2>
+            <p>Pool Hours: 5:00 PM - 7:00 PM daily</p>
+            <p>Daily student limit: 20 students</p>
+        </div>
+
+        <div id="activeEPass" style="display: none;" class="e-pass">
+            <h2>Your Pool E-Pass</h2>
+            <div class="e-pass-details">
+                <p><strong>Date:</strong> <span id="ePassDate">November 30, 2024</span></p>
+                <p><strong>Time:</strong> 5:00 PM - 7:00 PM</p>
+                <p><strong>Student ID:</strong> #12345</p>
+            </div>
+            <div class="qr-code">
+                [QR Code Placeholder]
+            </div>
+            <button onclick="cancelBooking()">Cancel Booking</button>
+        </div>
+
+        <div class="booking-section">
+            <h2>Available Pool Days</h2>
+            <div id="availableDays">
+                <!-- Available days will be populated here -->
+            </div>
+        </div>
+
+        <div class="my-bookings">
+            <h2>My Booking History</h2>
+            <div id="bookingHistory">
+                <!-- Booking history will be populated here -->
             </div>
         </div>
     </div>
+
+    <script>
+        // Sample data
+        let studentLimit = 20;
+        let bookings = {
+            '2024-11-30': 15,
+            '2024-12-01': 20,
+            '2024-12-02': 5
+        };
+        let myBooking = null;
+
+        // Initialize available days
+        function initializeAvailableDays() {
+            const container = document.getElementById('availableDays');
+            container.innerHTML = '';
+            
+            const today = new Date();
+            for(let i = 0; i < 7; i++) {
+                const date = new Date();
+                date.setDate(today.getDate() + i);
+                const dateString = date.toISOString().split('T')[0];
+                const currentBookings = bookings[dateString] || 0;
+                const isFull = currentBookings >= studentLimit;
+
+                const dayElement = document.createElement('div');
+                dayElement.className = available-day ${isFull ? 'full' : ''};
+                dayElement.innerHTML = `
+                    <div>
+                        <strong>${date.toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric' })}</strong>
+                        <div class="capacity-indicator">
+                            ${currentBookings}/${studentLimit} slots booked
+                        </div>
+                    </div>
+                    ${isFull ? 
+                        '<button disabled>Full</button>' : 
+                        <button onclick="bookPool('${dateString}')">Book Pool</button>
+                    }
+                `;
+                container.appendChild(dayElement);
+            }
+        }
+
+        // Book pool for a specific date
+        function bookPool(date) {
+            if (myBooking) {
+                alert('You already have an active booking!');
+                return;
+            }
+
+            // Simulate booking
+            myBooking = {
+                date: date,
+                studentId: '#12345',
+                ePassId: Math.random().toString(36).substr(2, 9)
+            };
+
+            // Update UI
+            showEPass();
+            initializeAvailableDays();
+        }
+
+        // Show E-Pass
+        function showEPass() {
+            if (!myBooking) return;
+
+            const ePassElement = document.getElementById('activeEPass');
+            document.getElementById('ePassDate').textContent = new Date(myBooking.date).toLocaleDateString('en-US', { 
+                weekday: 'long', 
+                month: 'long', 
+                day: 'numeric' 
+            });
+            ePassElement.style.display = 'block';
+        }
+
+        // Cancel booking
+        function cancelBooking() {
+            if (confirm('Are you sure you want to cancel your booking?')) {
+                myBooking = null;
+                document.getElementById('activeEPass').style.display = 'none';
+                initializeAvailableDays();
+            }
+        }
+
+        // Initialize the UI
+        initializeAvailableDays();
+        if (myBooking) showEPass();
+    </script>
 </body>
 </html>

@@ -4,7 +4,4 @@ class Event extends Controller{
 
         $this->view('amalgamated/event');    
     }
-
-   
-
 }

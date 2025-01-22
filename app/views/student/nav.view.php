@@ -31,7 +31,7 @@
         <li class="nav-item">
                 <a href="home" class="nav-link">
                 <i class="fa-solid fa-gauge"></i>
-                    Dashboard
+                   Home
                 </a>
             </li>
 
@@ -48,7 +48,7 @@
             <li class="nav-item">
                 <a href="sport" class="nav-link">
                 <i class="fa-solid fa-basketball"></i>
-                    Inventory   
+                    Sport 
                 </a>
             </li>
 
@@ -94,25 +94,23 @@
                 </div>
             </li>
 
+            
 <!-- logout -->
 
      <li class="nav-item">
-                <a href="gym" class="nav-link">
+                <a href="../login" class="nav-link">
                 <i class="fa-solid fa-right-from-bracket"></i>
                     Logout
                 </a>
             </li>
+
+
 
             
             
     
         
 
-        
-
-        
-        
-        
             
         </ul>
 

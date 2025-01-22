@@ -15,6 +15,17 @@
 
       <div class="header">
           <h1>Attendance Excuse Letters</h1>
+          <button class="bell-icon"><i class="uil uil-bell"></i></button>
+            <!-- <div class="notifications-dropdown">
+                <div class="notifications-header">
+                    <h3>Notifications</h3>
+                    <span class="clear-all">Clear All</span>
+                </div>
+                <div class="notifications-list">
+                    <ul id="notificationsList"></ul>
+                </div>
+              </div> -->
+            <button class="bell-icon"><i class="uil uil-signout"></i></button>
       </div>
     <main>
     <div class="container">

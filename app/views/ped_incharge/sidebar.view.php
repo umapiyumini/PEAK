@@ -359,7 +359,7 @@
 <body>
     <div class="sidebar collapsed">
         <div class="logo">
-            <a href="home">
+            <a href="<?=ROOT?>/ped_incharge/home">
                 <img src="<?=ROOT?>/assets/images/ped_incharge/logo.png" alt="Full Logo" class="logo-expanded">
                 <img src="<?=ROOT?>/assets/images/ped_incharge/logo_small.png" alt="Compact Logo" class="logo-collapsed">
             </a>
@@ -372,26 +372,26 @@
                     <i class="uil uil-angle-down"></i>
                 </a>
                 <div class="dropdown">
-                    <a href="ground_reservation" class="dropdown-link">Ground</a>
-                    <a href="indoor_reservation" class="dropdown-link">Indoor Stadium</a>
-                    <a href="basketball_court_reservation" class="dropdown-link">Basketball Court</a>
-                    <a href="tennis_court_reservation" class="dropdown-link">Tennis Court</a>
+                    <a href="<?=ROOT?>/ped_incharge/ground_reservation" class="dropdown-link">Ground</a>
+                    <a href="<?=ROOT?>/ped_incharge/indoor_reservation" class="dropdown-link">Indoor Stadium</a>
+                    <a href="<?=ROOT?>/ped_incharge/basketball_court_reservation" class="dropdown-link">Basketball Court</a>
+                    <a href="<?=ROOT?>/ped_incharge/tennis_court_reservation" class="dropdown-link">Tennis Court</a>
                 </div>
             </li>
             <li class="nav-item <?= $current_page == 'users' ? 'actived' : '' ?>">
-                <a href="users" class="nav-link">
+                <a href="<?=ROOT?>/ped_incharge/users" class="nav-link">
                 <i class="uil uil-user-circle"></i>
                     <span>Users</span>
                 </a>
             </li>
             <li class="nav-item <?= $current_page == 'sports' ? 'actived' : '' ?>">
-                <a href="ped_sports" class="nav-link">
+                <a href="<?=ROOT?>/ped_incharge/ped_sports" class="nav-link">
                     <i class="uil uil-basketball"></i>
                     <span>Sports</span>
                 </a>
             </li>
             <li class="nav-item <?= $current_page == 'facilities' ? 'actived' : '' ?>">
-                <a href="ped_facilities" class="nav-link">
+                <a href="<?=ROOT?>/ped_incharge/ped_facilities" class="nav-link">
                     <i class="uil uil-building"></i>
                     <span>Facilities</span>
                 </a>
@@ -403,8 +403,8 @@
                     <i class="uil uil-angle-down"></i>
                 </a>
                 <div class="dropdown">
-                    <a href="ped_inventory" class="dropdown-link">Packed Inventory</a>
-                    <a href="ped_unpackedinventory" class="dropdown-link">Unpacked Inventory</a>
+                    <a href="<?=ROOT?>/ped_incharge/ped_inventory" class="dropdown-link">Packed Inventory</a>
+                    <a href="<?=ROOT?>/ped_incharge/ped_unpackedinventory" class="dropdown-link">Unpacked Inventory</a>
                 </div>
             </li>
 
@@ -415,25 +415,25 @@
                     <i class="uil uil-angle-down"></i>
                 </a>
                 <div class="dropdown">
-                    <a href="groundindoorstaff" class="dropdown-link">Ground/Indoor Staff</a>
-                    <a href="ped_staff" class="dropdown-link">PED Staff</a>
+                    <a href="<?=ROOT?>/ped_incharge/groundindoorstaff" class="dropdown-link">Ground/Indoor Staff</a>
+                    <a href="<?=ROOT?>/ped_incharge/ped_staff" class="dropdown-link">PED Staff</a>
                 </div>
             </li>
 
             <li class="nav-item <?= $current_page == 'studentprofile' ? 'actived' : '' ?>">
-                <a href="students" class="nav-link">
+                <a href="<?=ROOT?>/ped_incharge/students" class="nav-link">
                     <i class="uil uil-user"></i>
                     <span>Student Profile</span>
                 </a>
             </li>
             <li class="nav-item <?= $current_page == 'externalcustomers' ? 'actived' : '' ?>">
-                <a href="external_customer" class="nav-link">
+                <a href="<?=ROOT?>/ped_incharge/external_customer" class="nav-link">
                     <i class="uil uil-external-link-alt"></i>
                     <span>External Customers</span>
                 </a>
             </li>
             <li class="nav-item <?= $current_page == 'pool' ? 'actived' : '' ?>">
-                <a href="pool" class="nav-link">
+                <a href="<?=ROOT?>/ped_incharge/pool" class="nav-link">
                     <i class="uil uil-swimmer"></i>
                     <span>Pool passes</span>
                 </a>
@@ -445,9 +445,9 @@
                     <i class="uil uil-angle-down"></i>
                 </a>
                 <div class="dropdown">
-                    <a href="interuni_tournaments" class="dropdown-link">Inter University</a>
-                    <a href="interfaculty_tournaments" class="dropdown-link">Inter Faculty</a>
-                    <a href="#" class="dropdown-link">Other Tournaments</a>
+                    <a href="<?=ROOT?>/ped_incharge/interuni_tournaments" class="dropdown-link">Inter University</a>
+                    <a href="<?=ROOT?>/ped_incharge/interfaculty_tournaments" class="dropdown-link">Inter Faculty</a>
+                    <a href="<?=ROOT?>/ped_incharge/#" class="dropdown-link">Other Tournaments</a>
                 </div>
             </li>
             <li class="nav-item has-dropdown <?= $current_page == 'letters' ? 'actived' : '' ?>">
@@ -457,18 +457,18 @@
                     <i class="uil uil-angle-down"></i>
                 </a>
                 <div class="dropdown">
-                    <a href="enhancement" class="dropdown-link">Enhancement</a>
-                    <a href="attendance" class="dropdown-link">Attendance Excuse</a>
+                    <a href="<?=ROOT?>/ped_incharge/enhancement" class="dropdown-link">Enhancement</a>
+                    <a href="<?=ROOT?>/ped_incharge/attendance" class="dropdown-link">Attendance Excuse</a>
                 </div>
             </li>
             <li class="nav-item <?= $current_page == 'otherforms' ? 'actived' : '' ?>">
-                <a href="otherforms" class="nav-link">
+                <a href="<?=ROOT?>/ped_incharge/otherforms" class="nav-link">
                     <i class="uil uil-file-plus-alt"></i>
                     <span>Other Forms</span>
                 </a>
             </li>
         </ul>
-        <a href="admin_profile" style="text-decoration:none;">
+        <a href="<?=ROOT?>/ped_incharge/admin_profile" style="text-decoration:none;">
         <div class="profile-section">
             <div class="profile-pic">
                 <img src="<?=ROOT?>/assets/images/ped_incharge/sujan.jpg" alt="Profile Picture">

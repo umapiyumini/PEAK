@@ -24,7 +24,6 @@ class Login extends Controller{
                         //     'userid'  // Third parameter: ID column name
                         // );
                         
-                        
                         if($row->role === 'External User') {
                             header('Location:external/externalhome');
                             exit; //done
@@ -45,7 +44,10 @@ class Login extends Controller{
                         } else if ($row->role === 'Sports Captain') {
                             header('Location: choose2');
                             exit; //done
-                        } 
+                        } else if ($row->role === 'Admin') {
+                            header('Location: ped_incharge/home');
+                            exit; //done
+                        }
                         
                         else {
                             $user->errors['username'] = "Error retrieving user role";

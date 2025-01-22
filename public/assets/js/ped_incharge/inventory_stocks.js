@@ -45,22 +45,23 @@ let packedStocks = [
 
 // DOM Elements
 const addModal = document.getElementById('addStockModal');
+const issueModal = document.getElementById('issueModal');
 const addStockForm = document.getElementById('addStockForm');
 const searchInput = document.getElementById('searchInput');
 const packedStocksTable = document.getElementById('packedStocksTable');
 
 // Initialize data from localStorage
-function initializeData() {
-    const storedData = localStorage.getItem('packedStocks');
-    if (storedData) {
-        packedStocks = JSON.parse(storedData);
-    }
-}
+// function initializeData() {
+//     const storedData = localStorage.getItem('packedStocks');
+//     if (storedData) {
+//         packedStocks = JSON.parse(storedData);
+//     }
+// }
 
-// Store data in localStorage
-function storeData() {
-    localStorage.setItem('packedStocks', JSON.stringify(packedStocks));
-}
+// // Store data in localStorage
+// function storeData() {
+//     localStorage.setItem('packedStocks', JSON.stringify(packedStocks));
+// }
 
 // Render table function
 function renderTable(data = packedStocks) {
@@ -109,31 +110,43 @@ function openAddModal() {
     addModal.style.display = 'block';
 }
 
+//open issue modal
+function openIssueModal() {
+    issueModal.style.display = 'block';
+}
+
+// Close modal functions
+
+function closeIssueModal() {
+    issueModal.style.display = 'none';
+}
+
+
 function closeModal() {
     addModal.style.display = 'none';
     addStockForm.reset();
 }
 
 // Add stock form submission
-function handleAddStock(e) {
-    e.preventDefault();
+// function handleAddStock(e) {
+//     e.preventDefault();
     
-    const newStock = {
-        id: document.getElementById('equipmentId').value,
-        name: document.getElementById('name').value,
-        sport: document.getElementById('sport').value,
-        indentNo: document.getElementById('indentNo').value,
-        description: document.getElementById('description').value,
-        unit: document.getElementById('unit').value,
-        quantity: parseInt(document.getElementById('quantity').value),
-        date: document.getElementById('date').value
-    };
+//     const newStock = {
+//         // id: document.getElementById('equipmentId').value,
+//         // name: document.getElementById('name').value,
+//         // sport: document.getElementById('sport').value,
+//         // indentNo: document.getElementById('indentNo').value,
+//         // description: document.getElementById('description').value,
+//         // unit: document.getElementById('unit').value,
+//         // quantity: parseInt(document.getElementById('quantity').value),
+//         // date: document.getElementById('date').value
+//     };
     
-    packedStocks.push(newStock);
-    storeData();
-    renderTable();
-    closeModal();
-}
+//     packedStocks.push(newStock);
+//     storeData();
+//     renderTable();
+//     closeModal();
+// }
 
 // Delete stock function
 function deleteStock(stockId) {
@@ -155,14 +168,14 @@ function viewStock(stockId) {
 
 // Event listeners
 document.addEventListener('DOMContentLoaded', () => {
-    initializeData();
-    renderTable();
+    // initializeData();
+    // renderTable();
     
     // Search input
     searchInput.addEventListener('input', handleSearch);
     
     // Add stock form
-    addStockForm.addEventListener('submit', handleAddStock);
+    // addStockForm.addEventListener('submit', handleAddStock);
     
     // Add stock button
     document.getElementById('openAddModal').addEventListener('click', openAddModal);
@@ -178,5 +191,5 @@ document.addEventListener('DOMContentLoaded', () => {
     });
     
     // Cancel button
-    document.querySelector('.btn btn-cancel').addEventListener('click', closeModal);
+    // document.querySelector('.btn btn-cancel').addEventListener('click', closeModal);
 });

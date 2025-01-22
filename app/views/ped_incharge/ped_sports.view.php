@@ -8,32 +8,42 @@
     <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.8/css/line.css">
 </head>
 <body>
-<?php $current_page = 'sports'; include 'sidebar.view.php'?>
+    <?php $current_page = 'sports'; include 'sidebar.view.php'?>
     <div class="main-content">
-        
-        
         <div class="header">
             <h1>Sports</h1>
-        </div>
-        <main>
-
-                <div class="inventory-controls">
-                    <div class="search-bar">
-                        <input type="text" id="searchInput" placeholder="Search sports...">
-                        <i class="uil uil-search"></i>
-                    </div>
+            <button class="bell-icon"><i class="uil uil-bell"></i></button>
+            <div class="notifications-dropdown">
+                <div class="notifications-header">
+                    <h3>Notifications</h3>
+                    <span class="clear-all">Clear All</span>
                 </div>
-                <div class="sports-container" id="sportsContainer">
-            <!-- Sports cards will be added here -->
+                <div class="notifications-list">
+                    <ul id="notificationsList"></ul>
+                </div>
+            </div>
+        
+            <button class="bell-icon"><i class="uil uil-signout"></i></button>
         </div>
-             
 
-<button class="add-sport" onclick="openModal()" id="addSportBtn">
-            <i class="uil uil-plus"></i>
-        </button>
-</main>
+        <main>
+            <div class="inventory-controls">
+                <div class="search-bar">
+                    <input type="text" id="searchInput" placeholder="Search sports...">
+                    <i class="uil uil-search"></i>
+                </div>
+            </div>
+            <div class="sports-container" id="sportsContainer">
+            <!-- Sports cards will be added here -->
+            </div>
+            
 
-<div class="modal" id="addSportModal">
+            <button class="add-sport" onclick="openModal()" id="addSportBtn">
+                <i class="uil uil-plus"></i>
+            </button>
+        </main>
+
+        <div class="modal" id="addSportModal">
             <div class="modal-content">
                 <div class="modal-header">
                     <h2 id="modalTitle">Add Sport</h2>
@@ -54,7 +64,6 @@
         </div>
     </div>
 	<script src="<?=ROOT?>/assets/js/ped_incharge/navbar.js"></script>
-    
 	<script src="<?=ROOT?>/assets/js/ped_incharge/sports.js"></script>
 </body>
 </html>
