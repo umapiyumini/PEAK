@@ -15,10 +15,10 @@
             <div class="header">
                 <h1>Gym Equipments</h1>
                 <div class="inventory-controls">
-                    <div class="search-bar">
+                    <!-- <div class="search-bar">
                         <input type="text" id="searchInput" placeholder="Search ...">
                         <i class="uil uil-search"></i>
-                    </div>
+                    </div> -->
                     <button class="add-product-btn" id="openAddModal">
                         <i class="uil uil-plus"></i> Add equipment
                     </button>

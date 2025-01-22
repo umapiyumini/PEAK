@@ -3,7 +3,8 @@ let sports = [
     {
         id: 1,
         name: "Hockey",
-        image: "../assets/images/ped_incharge/hockey.jpeg"
+        image: "../assets/images/ped_incharge/hockey.jpeg",
+        urlmen: "/PEAK/public/ped_incharge/hockey",
     },
     {
         id: 2,
@@ -83,8 +84,8 @@ function renderSports(sportsToRender = sports) {
                 <h3>${sport.name}</h3>
             </div>
             <div class="gender">
-                <button class="btn btn-male">Men</button>
-                <button class="btn btn-female">Women</button>
+                <a href="${sport.urlmen}" class="btn btn-male">Men</a>
+                <a href="${sport.urlwomen}" class="btn btn-female">Women</a>
             </div>
         </div>
     `).join('');

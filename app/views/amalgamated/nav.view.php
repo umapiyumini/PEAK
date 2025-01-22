@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sports Management Sidebar</title>
-    <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.8/css/line.css">
+   
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link rel="stylesheet" href="<?=ROOT?>/assets/css/amar/nav.css">
 
@@ -31,36 +31,41 @@
         <li class="nav-item">
                 <a href="home" class="nav-link">
                 <i class="fa-solid fa-gauge"></i>
-                    Dashboard
+                    Home
                 </a>
             </li>
 
 
-        <!-- AAttendance -->
-        <li class="nav-item">
+       
+
+            
+          <!--Attendance-->
+          <li class="nav-item">
+                <a href="event" class="nav-link">
+                <i class="fa-solid fa-calendar-days"></i>
+                
+                    Event
+                </a>
+            </li>
+
+            <!--Attendance-->
+             <li class="nav-item">
                 <a href="attendance" class="nav-link">
-                <i class="fa-regular fa-user"></i>
+                <i class="fa-solid fa-truck-ramp-box"></i>
                     Attendance
                 </a>
             </li>
 
-            <!-- Inventory -->
-            <li class="nav-item">
-                <a href="inventory" class="nav-link">
-                <i class="fa-solid fa-basketball"></i>
-                    Inventory
-                </a>
-            </li>
 
-
-            
+           
 
 
 
               <!-- Hostel  -->
               <li class="nav-item">
                 <a href="hostel" class="nav-link">
-                <i class="fa-solid fa-dumbbell"></i>
+                <i class="fa-solid fa-hotel"></i>
+               
                     Hostel
                 </a>
             </li>
@@ -68,35 +73,29 @@
                <!-- Colours Night  -->
                <li class="nav-item">
                 <a href="night" class="nav-link">
-                <i class="fa-solid fa-dumbbell"></i>
+                <i class="fa-solid fa-trophy"></i>  
                     Colours Night
                 </a>
             </li>
 
            
 
-            
-
-
-
-            
-<!-- forms -->
-            <li class="nav-item has-dropdown">
-                <a href="#" class="nav-link">
-                <i class="fa-brands fa-wpforms"></i>
-                    Forms
-                    <i class="arrow"></i>
+            <li class="nav-item">
+                <a href="../choose1" class="nav-link">
+                <i class="fa-solid fa-gauge"></i>
+                    Switch User
                 </a>
-                <div class="dropdown">
-                    <a href="rules" class="dropdown-link">Rules and Regulations</a>
-                    <a href="certification" class="dropdown-link">Certifications</a>
-                </div>
             </li>
+
+
+
+            
+
 
 <!-- logout -->
 
      <li class="nav-item">
-                <a href="gym" class="nav-link">
+                <a href="../login" class="nav-link">
                 <i class="fa-solid fa-right-from-bracket"></i>
                     Logout
                 </a>

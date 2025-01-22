@@ -31,6 +31,10 @@
             top: 0;
             z-index: 1000;
             box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            margin-left: 280px;
+            
+           
+           
         }
 
         .navbar h2 {
@@ -43,14 +47,15 @@
             color: white;
             text-decoration: none;
             padding: 12px 20px;
-            background-color: #00796b;
+            background-color: #5a2e8a;
             border-radius: 5px;
             font-weight: 500;
             transition: background-color 0.3s ease, transform 0.3s ease;
+            margin-right: 280px;
         }
 
         .navbar a:hover {
-            background-color: #004d40;
+            background-color: #7a4bb8;
             transform: scale(1.05);
         }
 
@@ -60,6 +65,7 @@
             flex-wrap: wrap;
             padding: 120px 40px 30px;
             background-color: #f8f8f8;
+            margin-left: 280px;
         }
 
         .main-content {
@@ -204,9 +210,11 @@
     </style>
 </head>
 <body>
+<?php include 'nav.view.php';?>
+    
     <nav class="navbar">
         <h2>Captains and Coaches</h2>
-        <a href="request" class="sports-btn">Request Sport</a>
+        <a href="request" class="sports-btn">Join</a>
     </nav>
 
     <main>
@@ -215,19 +223,19 @@
                 <h2>Captain and Vice Captain</h2>
                 <article class="captains">
                     <div class="tile2">
-                        <img src="wsdwd.png" alt="cap-men">
+                        <img src="http://localhost/PEAK/public/assets/images/amar/men_coach.jpg" alt="cap-men">
                         <p>Men's Captain</p>
                     </div>
                     <div class="tile2">
-                        <img src="wsdwd.png" alt="cap-women">
+                        <img src="http://localhost/PEAK/public/assets/images/amar/women.png" alt="cap-women">
                         <p>Women's Captain</p>
                     </div>
                     <div class="tile2">
-                        <img src="wsdwd.png" alt="vc-men">
+                        <img src="http://localhost/PEAK/public/assets/images/amar/men_coach.jpg" alt="vc-men">
                         <p>Men's Vice Captain</p>
                     </div>
                     <div class="tile2">
-                        <img src="wsdwd.png" alt="vc-women">
+                        <img src="http://localhost/PEAK/public/assets/images/amar/women.png" alt="vc-women">
                         <p>Women's Vice Captain</p>
                     </div>
                 </article>
@@ -235,20 +243,20 @@
                 <h2>Coaches</h2>
                 <article class="captains">
                     <div class="tile2">
-                        <img src="wsdwd.png" alt="cap-men">
+                        <img src="http://localhost/PEAK/public/assets/images/amar/men_coach.jpg" alt="cap-men">
                         <p>Men's Coach</p>
                     </div>
                     <div class="tile2">
-                        <img src="wsdwd.png" alt="cap-women">
+                        <img src="http://localhost/PEAK/public/assets/images/amar/women.png" alt="cap-women">
                         <p>Women's Coach</p>
                     </div>
                     <div class="tile2">
-                        <img src="wsdwd.png" alt="assistant-men">
-                        <p>Men's Assistant Coach</p>
+                        <img src="http://localhost/PEAK/public/assets/images/amar/men_coach.jpg" alt="assistant-men">
+                        <p>Men's Instructor Coach</p>
                     </div>
                     <div class="tile2">
-                        <img src="wsdwd.png" alt="assistant-women">
-                        <p>Women's Assistant Coach</p>
+                        <img src="http://localhost/PEAK/public/assets/images/amar/women.png" alt="assistant-women">
+                        <p>Women's Instructor Coach</p>
                     </div>
                 </article>
             </div>

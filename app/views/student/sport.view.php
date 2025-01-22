@@ -7,181 +7,135 @@
     <link rel="stylesheet" href="<?=ROOT?>/assets/css/amar/sport.css">
     <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.8/css/line.css">
     <style>
-        /* Base Styles */
-body {
-  font-family: Arial, sans-serif;
+        /* General Reset */
+* {
   margin: 0;
   padding: 0;
-  background-color: #f5f5f5;
-  color: #333;
+  box-sizing: border-box;
+  font-family: 'Arial', sans-serif;
 }
 
-/* Header */
-header {
-  background-color: #003366;
-  color: white;
-  padding: 10px 20px;
+body {
+  background-color: #f4f6f7;
+  color: #2c3e50;
+  line-height: 1.6;
+  font-size: 16px;
+}
+
+/* Full Layout */
+.full {
   display: flex;
-  justify-content: space-between;
-  align-items: center;
-  position: sticky;
+  height: 100vh;
+  overflow: hidden;
+}
+
+/* Left Sidebar (Navigation) */
+.left {
+  width: 250px;
+  background-color: #ffffff;
+  padding: 20px;
+  color: white;
+  position: fixed;
   top: 0;
-  z-index: 1000;
+  left: 0;
+  height: 100%;
 }
 
-.header-container {
-  display: flex;
-  align-items: center;
-  gap: 20px;
-}
 
-.breadcrumb {
-  font-size: 14px;
-}
 
-.breadcrumb a {
-  color: #ffcc00;
-  text-decoration: none;
-  margin-right: 5px;
-}
-
-.breadcrumb .breadcrumb-arrow {
-  margin: 0 5px;
-  color: #ddd;
-}
-
-.breadcrumb a.active {
-  color: #fff;
-}
-
-.bell-icon {
-  background: none;
-  border: none;
-  color: white;
-  font-size: 20px;
-  cursor: pointer;
-}
-
-.profile-icon img {
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  cursor: pointer;
-}
-
-/* Dropdown Menu */
-#dropdownMenu {
-  display: none;
-  position: absolute;
-  top: 60px;
-  right: 20px;
+/* Right Content */
+.right {
+  margin-left: 250px;
+  flex-grow: 1;
+  padding: 40px;
+  overflow-y: auto;
   background-color: #fff;
-  border: 1px solid #ddd;
-  border-radius: 5px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  z-index: 1001;
+  transition: margin-left 0.3s ease;
 }
 
-#dropdownMenu ul {
-  list-style: none;
-  margin: 0;
-  padding: 10px 0;
-}
-
-#dropdownMenu ul li {
-  padding: 10px 20px;
-}
-
-#dropdownMenu ul li a {
-  text-decoration: none;
-  color: #333;
-  font-size: 14px;
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-
-#dropdownMenu ul li a:hover {
-  background-color: #f5f5f5;
-}
-
-/* Main Content */
-.main-content {
+.right .main-content {
   padding: 20px;
 }
 
-main .header {
-  margin-bottom: 20px;
-}
-
-main .header h1 {
-  font-size: 28px;
-  color: #003366;
-}
-
+/* Inventory Controls */
 .inventory-controls {
   display: flex;
   justify-content: space-between;
-  align-items: center;
   margin-bottom: 20px;
-  margin-left: 210px;
 }
 
 .search-bar {
-  position: relative;
   display: flex;
   align-items: center;
+  background-color: #ecf0f1;
+  border-radius: 5px;
+  padding: 5px 15px;
+  width: 250px;
 }
 
 .search-bar input {
-  padding: 10px;
-  padding-right: 40px;
-  border: 1px solid #ddd;
-  border-radius: 5px;
-  width: 100%;
-  max-width: 300px;
+  border: none;
   outline: none;
+  background: transparent;
+  font-size: 1rem;
+  color: #34495e;
+  width: 100%;
+  padding: 5px 10px;
 }
 
 .search-bar i {
-  position: absolute;
-  right: 10px;
-  font-size: 20px;
-  color: #888;
-  cursor: pointer;
+  color: #34495e;
+  font-size: 1.25rem;
+  margin-left: 10px;
 }
 
-/* Sports Container */
+/* Sports Cards Container */
 .sports-container {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: 20px;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 30px;
+  margin-top: 20px;
 }
 
-/* Add Sport Button */
-.add-sport {
-  position: fixed;
-  bottom: 20px;
-  right: 20px;
-  background-color: #003366;
-  color: white;
-  border: none;
-  border-radius: 50%;
-  width: 50px;
-  height: 50px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-size: 24px;
-  cursor: pointer;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+/* Single Sport Card */
+.sport-card {
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  overflow: hidden;
 }
 
-.add-sport:hover {
-  background-color: #0055aa;
+.sport-card:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
 }
 
-/* Modal */
+.sport-link {
+  text-decoration: none;
+  display: block;
+  color: #2c3e50;
+}
+
+.sport-card img {
+  width: 70%;
+  height: 200px;
+  object-fit: cover;
+}
+
+.sport-content {
+  padding: 15px;
+  text-align: center;
+}
+
+.sport-content h3 {
+  font-size: 1.5rem;
+  color: #2c3e50;
+  margin-top: 10px;
+  font-weight: bold;
+}
+
+/* Modal for Adding Sport */
 .modal {
   display: none;
   position: fixed;
@@ -192,17 +146,14 @@ main .header h1 {
   background-color: rgba(0, 0, 0, 0.5);
   justify-content: center;
   align-items: center;
-  z-index: 1002;
 }
 
 .modal-content {
   background-color: #fff;
-  width: 100%;
-  max-width: 500px;
-  padding: 20px;
-  border-radius: 10px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-  position: relative;
+  padding: 30px;
+  border-radius: 8px;
+  width: 400px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 .modal-header {
@@ -213,122 +164,119 @@ main .header h1 {
 }
 
 .modal-header h2 {
-  font-size: 20px;
-  margin: 0;
-  color: #003366;
+  font-size: 1.75rem;
+  color: #2c3e50;
 }
 
-.modal-header .close {
-  background: none;
-  border: none;
-  font-size: 24px;
+.modal .close {
+  font-size: 1.5rem;
+  color: #2c3e50;
   cursor: pointer;
 }
 
 .form-group {
-  margin-bottom: 20px;
+  margin-bottom: 15px;
 }
 
 .form-group label {
-  display: block;
-  font-weight: bold;
+  font-size: 1rem;
+  color: #34495e;
   margin-bottom: 5px;
 }
 
 .form-group input {
   width: 100%;
   padding: 10px;
-  border: 1px solid #ddd;
+  font-size: 1rem;
+  border: 1px solid #ccc;
   border-radius: 5px;
   outline: none;
 }
 
+.form-group input:focus {
+  border-color: #1abc9c;
+}
+
 .submit-btn {
-  background-color: #003366;
-  color: white;
+  background-color: #1abc9c;
+  color: #fff;
+  padding: 12px 20px;
+  font-size: 1.1rem;
   border: none;
-  padding: 10px 20px;
   border-radius: 5px;
-  font-size: 16px;
   cursor: pointer;
+  transition: background-color 0.3s ease;
 }
 
 .submit-btn:hover {
-  background-color: #0055aa;
+  background-color: #16a085;
 }
 
-/* Sport Card */
-.sport-card {
-  background-color: #f9f9f9;
-  border-radius: 10px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  overflow: hidden;
-  transition: transform 0.3s, box-shadow 0.3s;
+/* Add Sport Button */
+.add-sport {
+  background-color: #1abc9c;
+  color: #fff;
+  padding: 12px 20px;
+  font-size: 1.5rem;
+  border: none;
+  border-radius: 50%;
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
   cursor: pointer;
-  text-align: center;
-  margin-left: 210px;
+  transition: background-color 0.3s ease;
 }
 
-.sport-card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 6px 10px rgba(0, 0, 0, 0.2);
+.add-sport:hover {
+  background-color: #16a085;
 }
 
-.sport-card img {
-  width: 100%;
-  height: 150px;
-  object-fit: cover;
-  border-bottom: 2px solid #003366;
+.add-sport i {
+  font-size: 1.5rem;
 }
 
-.sport-card .sport-content {
-  padding: 10px;
-}
-
-.sport-card .sport-content h3 {
-  font-size: 16px;
-  color: #003366;
-  margin: 0;
-}
-
-/* Ensure the anchor tag does not have default link styles */
-.sport-link {
-    display: block;
-    text-decoration: none;
-}
-
-.sport-link:hover {
-    opacity: 0.8;
-}
-
-/* Responsive Design */
+/* Mobile Responsiveness */
 @media (max-width: 768px) {
-  .search-bar input {
-      max-width: 100%;
+  .full {
+      flex-direction: column;
+  }
+
+  .left {
+      width: 100%;
+      position: relative;
+      height: auto;
+  }
+
+  .right {
+      margin-left: 0;
   }
 
   .sports-container {
-      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      grid-template-columns: 1fr;
   }
 
-  .modal-content {
-      padding: 15px;
-  }
-
-  .submit-btn {
-      width: 100%;
+  .add-sport {
+      bottom: 10px;
+      right: 10px;
   }
 }
 
     </style>
+
 </head>
 <body>
-<?php include 'nav.view.php';?>
+  <div class="full">
+    <div class="left">
+    <?php include 'nav.view.php';?>
+    </div>
+    <div class="right">
     <div class="main-content">
         <main>
             <div class="header"></div>
 
             <div class="inventory-controls">
+              <h2>Sport Blog</h2>
                 <div class="search-bar">
                     <input type="text" id="searchInput" placeholder="Search sports...">
                     <i class="uil uil-search"></i>
@@ -364,6 +312,10 @@ main .header h1 {
             </div>
         </div>
     </div>
+    </div>
+  </div>
+
+    
 
 
     <script>
@@ -377,15 +329,11 @@ const addSportBtn = document.getElementById('addSportBtn');
 
 // Sample sports data (You can replace it with your actual sports data or load it dynamically)
 let sports = [
-    { name: 'Football', imageUrl: '../../../public/assets/images/amar/hockey.jpg', link: 'swimming' },
-    { name: 'Basketball', imageUrl: '../../../public/assets/images/amar/hockey.jpg', link: 'swimming' },
-    { name: 'Tennis', imageUrl: '../../../public/assets/images/amar/hockey.jpg', link: 'swimming' },
-    { name: 'Baseball', imageUrl: '../../../public/assets/images/amar/hockey.jpg', link: 'swimming' },
-    { name: 'Baseball', imageUrl: '../../../public/assets/images/amar/hockey.jpg', link: 'swimming' },
-    { name: 'Baseball', imageUrl: '../../../public/assets/images/amar/hockey.jpg', link: 'swimming' },
-    { name: 'Baseball', imageUrl: '../../../public/assets/images/amar/hockey.jpg', link: 'swimming' },
-    { name: 'Baseball', imageUrl: '../../../public/assets/images/amar/hockey.jpg', link: 'swimming' },
-
+    { name: 'Hockey', imageUrl: 'http://localhost/PEAK/public/assets/images/amar/hockey.jpg', link: 'swimming' },
+    { name: 'VolleyBall', imageUrl: 'http://localhost/PEAK/public/assets/images/amar/volleyball.jpg', link: 'swimming' },
+    { name: 'Football', imageUrl: 'http://localhost/PEAK/public/assets/images/amar/football.jpeg', link: 'swimming' },
+    { name: 'Swimming', imageUrl: 'http://localhost/PEAK/public/assets/images/amar/swimming.jpg', link: 'swimming' },
+   
 
 
 

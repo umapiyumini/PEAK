@@ -24,6 +24,7 @@ const mockReservationDetails = {
         email: 'abc@example.com',
         participants: '25',
         requirements: 'Hockey court should be drawn',
+        proof: 'https://example.com/proof-document.pdf',
     }
 };
 
@@ -77,6 +78,14 @@ function showActionModal(card, columnTitle) {
     document.getElementById('email').textContent = details.email || 'N/A';
     document.getElementById('participants').textContent = details.participants || 'N/A';
     document.getElementById('requirements').textContent = details.requirements || 'None';
+    document.getElementById('proof').textContent = details.proof || 'None';
+
+    const proofElement = document.getElementById('proof');
+        if (details.proof) {
+            proofElement.innerHTML = `<a href="${details.proof}" target="_blank">View Proof</a>`;
+        } else {
+            proofElement.textContent = 'None';
+        }
 
     // Set up action buttons based on column
     modalActions.innerHTML = `

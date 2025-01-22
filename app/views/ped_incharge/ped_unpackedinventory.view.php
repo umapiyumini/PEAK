@@ -46,6 +46,7 @@
                     </div>
                 </div>
 
+                <div class="unpacked-team">
                 <div class="inventory-table-team in_table">
                     <div class="inventory-controls">
                         <div class="filter-bar">
@@ -77,17 +78,33 @@
                         <h3>Team Equipment</h3>
                         <thead>
                             <tr>
-                                <th>Product</th>
+                                <th>Equipment</th>
                                 <th>Sport</th>
-                                <th>Issued</th>
-                                <th>Available</th>
-                                <th>Actions</th>
+                                <th>Quantity</th>
                             </tr>
                         </thead>
                         <tbody>
                             
                         </tbody>
                     </table>
+                </div>
+                <div class="edit-reason">
+                <table id="edit-reasonTableTeam table">
+                        <h3>Updates</h3>
+                        <thead>
+                            <tr>
+                            `   <th>Date</th>
+                                <th>Equipment</th>
+                                <th>Sport</th>
+                                <th>Quantity</th>
+                                <th>Reason</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            
+                        </tbody>
+                    </table>
+                </div>
                 </div>
 
                 <div class="inventory-table-recreational in_table" style="display:none;">
@@ -126,9 +143,7 @@
                         <tr>
                             <th>Equipment</th>
                             <th>Sport</th>
-                            <th>Issued</th>
-                            <th>Available</th>
-                            <th>Actions</th>
+                            <th>Quantity</th>
                         </tr>
                     </thead>
                     <tbody></tbody>

@@ -17,9 +17,9 @@
             padding: 20px;
             background-color: white;
             border-radius: 10px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
             overflow: auto;
-            margin-left: 220px;
+            margin-left: 280px;
+            height: 100vh;
         }
 
         .modal {
@@ -185,7 +185,10 @@
         include 'nav.view.php';
     ?>
     <div class="calendar-container">
+        <h2>Request for Gym</h2>
         <div class="week-selector">
+            
+            
             <button id="prev-week">&lt; Previous Week</button>
             <span id="week-display"></span>
             <button id="next-week">Next Week &gt;</button>
@@ -271,7 +274,7 @@
             modalContent.innerHTML = `
                 <strong>Time Slot:</strong> ${time}<br>
                 <label for="student-id">Student Registration ID:</label><br>
-                <input type="text" id="student-id" name="student-id" placeholder="Enter your Registration ID" required>
+                <input type="text" id="student-id" name="student-id" placeholder="2022/IS/002" required>
                 <button id="confirm-booking">Confirm Booking</button>
             `;
 

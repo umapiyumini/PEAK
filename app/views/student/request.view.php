@@ -15,10 +15,11 @@
         }
         .form-container {
             background-color: #ffffff;
-            width: 95%;
+            width: 90%;
             padding: 30px;
             border-radius: 8px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            
+            margin-left: 280px;
         }
         h1, h3 {
             text-align: center;
@@ -33,7 +34,7 @@
             color: #555;
         }
         .form-group input, .form-group select, .form-group textarea {
-            width: 100%;
+            width: 90%;
             padding: 10px;
             margin-top: 5px;
             font-size: 14px;
@@ -46,9 +47,9 @@
             outline: none;
         }
         .submit-btn {
-            width: 100%;
+            width: 90%;
             padding: 15px;
-            background-color: #007BFF;
+            background-color: #5a2e8a;
             color: white;
             border: none;
             border-radius: 4px;
@@ -56,11 +57,12 @@
             cursor: pointer;
         }
         .submit-btn:hover {
-            background-color: #0056b3;
+            background-color: #7a4bb8;
         }
     </style>
 </head>
 <body>
+<?php include 'nav.view.php';?>
 
     <div class="form-container" id="team-form">
         <h1>Team Membership Form</h1>

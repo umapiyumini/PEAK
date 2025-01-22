@@ -34,7 +34,7 @@
                         <thead>
                             <tr>
                                 <th>Request ID</th>
-                                <th>Student Name</th>
+                                <th>Sport</th>
                                 <th>Date</th>
                                 <th>Status</th>
                                 <th><!-- Actions --></th>

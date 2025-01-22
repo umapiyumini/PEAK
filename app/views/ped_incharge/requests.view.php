@@ -11,11 +11,9 @@
     <?php $current_page = 'reservation'; include 'sidebar.view.php'?>
 
     <!-- Header and Main Content -->
-    
-    <!-- <div class="main-content"> -->
     <div class="main-content">
         <div class="header">
-        <button onclick="history.back()" class="goBackButton"><i class="uil uil-arrow-left"></i></button>
+            <button onclick="history.back()" class="goBackButton"><i class="uil uil-arrow-left"></i></button>
             <h1>Reservation Requests</h1>
             <button class="bell-icon"><i class="uil uil-bell"></i></button>
             <div class="notifications-dropdown">
@@ -211,6 +209,10 @@
                             <label>Special Requirements:</label>
                             <span id="requirements"></span>
                         </div>
+                        <div class="info-row">
+                            <label>Proof:</label>
+                            <span id="proof">None</span>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -219,7 +221,7 @@
             <!-- Action buttons will be dynamically inserted here -->
         </div>
     </div>
-<!-- </div> -->
+
 
   
 

@@ -29,7 +29,7 @@
             <div class="dropdown-menu" id="dropdownMenu">
                 <ul>
                     <li><a href="#"><i class="uil uil-user"></i> My Profile</a></li>
-                    <li><a href="#"><i class="uil uil-signout"></i> Log out</a></li>
+                    <li><a href="#"><a href="<?=ROOT?>/logout"><i class="uil uil-signout"></i></a> Log out</a></li>
                 </ul>
             </div>
         </header>

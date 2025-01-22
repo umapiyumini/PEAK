@@ -34,7 +34,9 @@ function switchInventoryType(type) {
     }
 }
 
-
+function openStockView(equipment) {
+    window.location.href = `inventory_stocks/filterStocks/${equipment.equipmentid}`;
+}
 
 function openEditModal(equipment) {
     console.log('Equipment data:', equipment);

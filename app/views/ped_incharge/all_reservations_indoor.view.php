@@ -27,7 +27,7 @@
                     <ul id="notificationsList"></ul>
                 </div>
               </div> -->
-            <button class="bell-icon"><i class="uil uil-signout"></i></button>
+            <button class="bell-icon"><a href="<?=ROOT?>/logout"><i class="uil uil-signout"></i></a></button>
         </div> 
         <main>
         <div class="search-bar">

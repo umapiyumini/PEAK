@@ -32,28 +32,26 @@ include 'nav.view.php';
      <h1>Notices</h1>
      <div class="notice-container">
           <div class="notice">
-            <h2>Annual Sports Meet</h2>
-            <p><strong>Date:</strong> March 10, 2024</p>
-            <p><strong>Venue:</strong> Main Sports Ground</p>
-            <p><strong>Details:</strong> All departments are invited to participate. Registration closes on March 5, 2024.</p>
+            <h2>Inter Faculty Freshers Tournament</h2>
+            <p><strong>Date:</strong> December 2, 2024&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<strong>Time:</strong>12.45 PM</p>
+            
+            <p><strong>Details:</strong> All faculties are invited to participate. Registration closes on December 21, 2024.</p>
           </div>
           <div class="notice">
-            <h2>Gym Membership Renewal</h2>
-            <p><strong>Deadline:</strong> February 25, 2024</p>
-            <p><strong>Details:</strong> Renew your gym membership online or visit the office between 9 AM and 4 PM.</p>
+            <h2>Inter-University Tournamaent</h2>
+            <p><strong>Date:</strong> April 4, 2024&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<strong>Time:</strong>6.21 AM</p>
+            <p><strong>Details:</strong> All Universities are invited to participate. Registration closes on May 21, 2024.</p>
+
+
           </div>
           <div class="notice">
-            <h2>Inter-Department Cricket League</h2>
-            <p><strong>Start Date:</strong> April 1, 2024</p>
-            <p><strong>Venue:</strong> University Cricket Ground</p>
-            <p><strong>Details:</strong> Teams must submit their final player list by March 20, 2024.</p>
+            <h2>SLUG</h2>
+            
+            <p><strong>Date:</strong> February 23, 2025&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<strong>Time:</strong>9.36 AM</p>
+            <p><strong>Details:</strong> All Universities are invited to participate. Registration closes on May 21, 20.</p>
+
           </div>
-          <div class="notice">
-            <h2>Colors Night 2024</h2>
-            <p><strong>Date:</strong> May 15, 2024</p>
-            <p><strong>Venue:</strong> University Auditorium</p>
-            <p><strong>Details:</strong> Celebrate the achievements of our athletes. Tickets are available now!</p>
-          </div>
+         
         </div>
       
 			 

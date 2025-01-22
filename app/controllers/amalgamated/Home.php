@@ -2,9 +2,9 @@
 class Home extends Controller{
    public function index(){
 
-        $this->view('amalgamated/home');
+        $model = new Noticeboard;
+        $noticeData = $model->findall();
+
+        $this->view('amalgamated/home' , ['noticeData' => $noticeData]);
     }
-
-   
-
 }

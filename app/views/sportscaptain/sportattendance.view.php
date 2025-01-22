@@ -22,7 +22,9 @@
     <main>
         <div class="controls">
             <input type="text" id="search-bar" placeholder="Search by player name..." onkeyup="filterTable()">
+            <button id="generate-qr" onclick="generateQR()">Generated QR Code</button>
         </div>
+        
         <table id="attendance-chart">
             <thead>
                 <tr>

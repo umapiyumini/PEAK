@@ -10,7 +10,7 @@ let staffData = [
     {
         id: 1,
         customerId: 'GS001',
-        fullName: 'John Doe',
+        fullName: 'N.D Senarathne',
         empNo: 'EMP001',
         regNo: 'REG001',
         designation: 'Ground Keeper',
@@ -23,7 +23,7 @@ let staffData = [
     {
         id: 2,
         customerId: 'GS002',
-        fullName: 'Jane Smith',
+        fullName: 'L.H Hewage',
         empNo: 'EMP002',
         regNo: 'REG002',
         designation: 'Indoor Staff',

@@ -23,7 +23,7 @@
                 </div>
             </div>
             
-            <button class="bell-icon"><i class="uil uil-signout"></i></button>
+            <button class="bell-icon"><a href="<?=ROOT?>/logout"><i class="uil uil-signout"></i></a></button>
         </div>
         <main>
 
@@ -83,6 +83,7 @@
                             <tr>
                                 <th>Product</th>
                                 <th>Sport</th>
+                                <th>Description</th>
                                 <th>Issued</th>
                                 <th>Available</th>
                                 <th>Actions</th>
@@ -94,10 +95,11 @@
                                     <tr>
                                         <td><?=$i->name?></td>
                                         <td><?=$i->sport_name?></td>
+                                        <td><?=$i->description?></td>
                                         <td><?=$i->issued_amount?></td>
-                                        <td></td>
+                                        <td><?=$i->available?></td>
                                         <td>
-                                            <button class="btn btn-view">
+                                            <button class="btn btn-view" id="openStockView" onclick="openStockView(<?= htmlspecialchars(json_encode($i), ENT_QUOTES, 'UTF-8') ?>)">
                                                 <i class="uil uil-eye"></i>
                                             </button>
                                             <button class="btn btn-update" id="openEditModal" onclick="openEditModal(<?= htmlspecialchars(json_encode($i), ENT_QUOTES, 'UTF-8') ?>)">
@@ -109,7 +111,7 @@
                                         </td>
                                     </tr>
                                 <?php endforeach;?>
-                                <?php endif;?>
+                            <?php endif;?>
                         </tbody>
                     </table>
                 </div>
@@ -147,6 +149,7 @@
                         <tr>
                             <th>Equipment</th>
                             <th>Sport</th>
+                            <th>Description</th>
                             <th>Issued</th>
                             <th>Available</th>
                             <th>Actions</th>
@@ -158,8 +161,9 @@
                                     <tr>
                                         <td><?=$i->name?></td>
                                         <td><?=$i->sport_name?></td>
+                                        <td><?=$i->description?></td>
                                         <td><?=$i->issued_amount?></td>
-                                        <td></td>
+                                        <td><?=$i->available?></td>
                                         <td>
                                             <button class="btn btn-view">
                                                 <i class="uil uil-eye"></i>
@@ -207,6 +211,10 @@
                             <option value="Recreational">Recreational</option>
                         </select>
                     </div>
+                    <div class="form-group">
+                        <label for="description">Product description:</label>
+                        <input type="text" id="description" name="description">
+                    </div>
                     
                     <div class="modal-footer">
                         <button type="button" class="btn btn-cancel">Cancel</button>
@@ -242,6 +250,10 @@
                             <option value="Team">Team</option>
                             <option value="Recreational">Recreational</option>
                         </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="editdescription">Product description:</label>
+                        <input type="text" id="editdescription" name="editdescription">
                     </div>
                     
                     <div class="modal-footer">

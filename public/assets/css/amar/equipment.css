@@ -116,3 +116,25 @@
   .footer p {
     margin-top: 10px;
   }
+
+ .td .edit-btn{
+    width: 100%;
+    padding: 12px;
+    background-color:  #6A0DAD;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    font-size: 16px;
+    cursor: pointer;
+  }
+
+  .edit-btn {
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background-color 0.3s ease;
+}
