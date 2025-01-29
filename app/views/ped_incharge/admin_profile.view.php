@@ -9,12 +9,10 @@
 	<link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.8/css/line.css">
 
     <style>
-       /* Hello Worlds */
-
         .container {
             width: 100%;
             margin: 0 auto;
-            padding: 20px;
+            padding: 21px;
         }
 
         .profile-header {
