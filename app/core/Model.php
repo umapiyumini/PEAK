@@ -143,4 +143,30 @@ Trait Model {
 
     }
 
+    public function getUserId(){
+        if(!isset($_SESSION['userid'])){
+            die("user not logged in");
+
+        }
+        return $_SESSION['userid'];
+    }
+
+
+    //FOR NOW
+    public function executeQuery($query, $data = []) {
+        $con = $this->connect();
+        $stm = $con->prepare($query);
+    
+        if ($stm->execute($data)) {
+            return true; // Query executed successfully
+        } else {
+            // Output detailed error message
+            echo "SQL Error: " . implode(", ", $stm->errorInfo());
+            return false;
+        }
+    }
+
 }
+
+//for now
+

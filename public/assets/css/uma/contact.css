@@ -312,20 +312,20 @@ body{
     overflow: hidden;
     margin-top: 0px;
     margin-left: 100px;
+    
+}
+.contactform form {
+    position: relative;
+    z-index: 2;
 }
 
-.contactform::before {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: var(--lightgrey); /* semi-transparent overlay */
-    backdrop-filter: blur(10px); /* apply blur here */
-    z-index: 1;
-    border-radius: 15px; /* match the main container's border radius */
+.contactform {
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
 }
+
+
 
 .contactform * {
     position: relative;

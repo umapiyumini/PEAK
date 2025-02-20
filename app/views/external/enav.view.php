@@ -37,7 +37,7 @@
                     </li>
 
                     <li>
-                        <a href="reservations">
+                        <a href="reservation">
                             <span class="icon"><img src="<?=ROOT?>/assets/images/uma/reserve.png"></span>
                             <span class="title">Reservations</span>
                         </a>

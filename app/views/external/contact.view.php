@@ -57,31 +57,31 @@
           loading="lazy"></iframe></div>
                     </div>
                    
-                    
-                        <div class="contactform">
-                            <form>
-                                <h2> Send Message</h2>
-                                <div class="inputbox">
-                                    <input type="text" name="" required="required">
-                                    <span>Full name</span>
-                                </div>
-                
-                                <div class="inputbox">
-                                    <input type="text" name="" required="required">
-                                    <span>Email</span>
-                                </div>
-                
-                                <div class="inputbox">
-                                    <textarea required="required"></textarea>
-                                    <span>Type Your Message</span>
-                                </div>
-                
-                                <div class="inputbox">
-                                    <input type="submit" name="" value="send">
-                                </div>
-                            </form>
-                
+                    <div class="contactform">
+                            
+                    <form action="<?= ROOT ?>/external/contact/sendMessage" method="POST">
+
+
+                    <h2>Send a Message</h2>
+                    <div class="inputbox">
+        <input type="hidden" name="userid" value="123">  <!-- Assuming 123 is the user ID -->
+    </div>
+
+    <div class="inputbox">
+        <textarea name="content" required="required"></textarea>
+        <span>Type Your Message</span>
+    </div>
+
+    <div class="inputbox">
+        <input type="submit" value="send">
+    </div>
+</form>
+
+
+
                         </div>
+</div>
+
                 
                 
                     <!-- Feedback Popup -->

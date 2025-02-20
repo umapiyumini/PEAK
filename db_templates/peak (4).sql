@@ -3,11 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
-<<<<<<< HEAD
--- Generation Time: Nov 29, 2024 at 06:39 PM
-=======
--- Generation Time: Nov 30, 2024 at 07:33 AM
->>>>>>> bca1cab9677aede17c33670c54aeda41ea784bc6
+-- Generation Time: Jan 30, 2025 at 04:03 PM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -48,7 +44,7 @@ CREATE TABLE `equipments` (
   `equipmentid` int(11) NOT NULL,
   `sport_id` int(20) NOT NULL,
   `name` varchar(255) NOT NULL,
-  `type` varchar(100) NOT NULL,
+  `type` enum('Team','Recreational','','') NOT NULL,
   `issued_amount` int(20) NOT NULL DEFAULT 0,
   `description` text DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
@@ -58,9 +54,12 @@ CREATE TABLE `equipments` (
 --
 
 INSERT INTO `equipments` (`equipmentid`, `sport_id`, `name`, `type`, `issued_amount`, `description`) VALUES
-(1, 3, 'Sticks', 'Team', 0, NULL),
-(2, 1, 'ball', 'recreational', 5, 'abc'),
-(3, 4, 'foot balls', 'recreational', 5, 'abc');
+(1, 3, 'Balls', 'Team', 0, 'practice balls'),
+(2, 1, 'ball', 'Recreational', 5, 'abc'),
+(3, 4, 'foot balls', 'Recreational', 5, 'abc'),
+(4, 2, 'gloves', 'Recreational', 15, 'abc'),
+(6, 1, 'bats', 'Team', 0, ''),
+(9, 2, 'cones', 'Team', 0, 'practice sessions');
 
 -- --------------------------------------------------------
 
@@ -71,9 +70,18 @@ INSERT INTO `equipments` (`equipmentid`, `sport_id`, `name`, `type`, `issued_amo
 CREATE TABLE `external_user` (
   `userid` int(11) NOT NULL,
   `companyid` varchar(100) DEFAULT NULL,
-  `company_name` varchar(100) NOT NULL,
-  `nic` varchar(255) NOT NULL
+  `company_name` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `external_user`
+--
+
+INSERT INTO `external_user` (`userid`, `companyid`, `company_name`) VALUES
+(27, '678', 'abc678'),
+(30, '11', 'Hello'),
+(31, 'jhsfd', 'uhdvdsig'),
+(32, 'The Bike Manufactures (pvt) ltd', 'The Bike Manufactures (pvt) ltd');
 
 -- --------------------------------------------------------
 
@@ -86,6 +94,26 @@ CREATE TABLE `ground_indoor_staff` (
   `staffid` varchar(20) NOT NULL,
   `type` enum('Ground','Indoor') NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `gymequipments`
+--
+
+CREATE TABLE `gymequipments` (
+  `gymequipmentid` int(11) NOT NULL,
+  `equipmentname` varchar(50) NOT NULL,
+  `quantity` int(11) NOT NULL,
+  `description` varchar(1000) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `gymequipments`
+--
+
+INSERT INTO `gymequipments` (`gymequipmentid`, `equipmentname`, `quantity`, `description`) VALUES
+(32, 'rowing machine', 6, 'ddfdf');
 
 -- --------------------------------------------------------
 
@@ -108,26 +136,18 @@ CREATE TABLE `inventoryedit` (
 
 CREATE TABLE `inventoryrequest` (
   `requestid` int(11) NOT NULL,
-  `equipmentid` int(11) DEFAULT NULL,
+  `equipmentid` int(11) NOT NULL,
   `quantityrequested` int(11) NOT NULL,
   `date` date NOT NULL,
-  `bywhom` varchar(255) NOT NULL
+  `bywhom` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
-<<<<<<< HEAD
 --
 -- Dumping data for table `inventoryrequest`
 --
 
 INSERT INTO `inventoryrequest` (`requestid`, `equipmentid`, `quantityrequested`, `date`, `bywhom`) VALUES
-(1, 2, 50, '2024-11-05', 'abc');
-=======
---
--- Dumping data for table `inventoryrequest`
---
-
-INSERT INTO `inventoryrequest` (`requestid`, `equipmentid`, `quantityrequested`, `date`, `bywhom`) VALUES
-(1, 2, 50, '2024-11-05', 'abc');
+(20, 4, 3, '2024-12-01', 'abc');
 
 -- --------------------------------------------------------
 
@@ -137,13 +157,21 @@ INSERT INTO `inventoryrequest` (`requestid`, `equipmentid`, `quantityrequested`,
 
 CREATE TABLE `noticeboard` (
   `noticeid` int(11) NOT NULL,
-  `title` varchar(200) NOT NULL,
-  `content` varchar(1000) NOT NULL,
-  `publishdate` date NOT NULL,
-  `publishetime` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
-  `userid` int(11) NOT NULL
+  `title` varchar(200) DEFAULT NULL,
+  `content` varchar(1000) DEFAULT NULL,
+  `publishdate` date DEFAULT NULL,
+  `publishtime` time DEFAULT NULL,
+  `userid` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
->>>>>>> bca1cab9677aede17c33670c54aeda41ea784bc6
+
+--
+-- Dumping data for table `noticeboard`
+--
+
+INSERT INTO `noticeboard` (`noticeid`, `title`, `content`, `publishdate`, `publishtime`, `userid`) VALUES
+(31, 'Freshers', 'Freshers dchgwejdcwgefjcc fcywdcywecwjycw edyctewyctwejdctwjudc edcweydctwtjucwkdcf ejdcgweudcgwudcwe cjwgdcjuwegcwuef cfejyctwgefjuctw wjcgwejucw cewjfgcwejcgw cewdgcwejuc cwecgwejcufgw cefycgwjecfyw cewytdcwtjeyc', '2024-12-01', '08:24:00', NULL),
+(34, 'freshers', 'all faculty', '2024-12-02', '08:17:00', NULL),
+(38, 'umaa', 'this is the test successful', '2024-12-02', '09:32:00', NULL);
 
 -- --------------------------------------------------------
 
@@ -208,6 +236,13 @@ CREATE TABLE `stock` (
   `date` date NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Dumping data for table `stock`
+--
+
+INSERT INTO `stock` (`stockid`, `equipmentid`, `indent_no`, `description`, `unit`, `quantity`, `issued_quantity`, `date`) VALUES
+(1, 1, '678', 'practice balls ', 6, 4, 0, '2025-01-05');
+
 -- --------------------------------------------------------
 
 --
@@ -220,6 +255,13 @@ CREATE TABLE `student` (
   `faculty` varchar(50) NOT NULL,
   `department` varchar(50) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `student`
+--
+
+INSERT INTO `student` (`userid`, `registrationnumber`, `faculty`, `department`) VALUES
+(25, '2020is074', 'ucsc', 'IS');
 
 -- --------------------------------------------------------
 
@@ -238,7 +280,8 @@ CREATE TABLE `unpackedinventory` (
 
 INSERT INTO `unpackedinventory` (`equipmentid`, `quantity`) VALUES
 (2, 2),
-(3, 2);
+(3, 2),
+(4, 8);
 
 -- --------------------------------------------------------
 
@@ -267,11 +310,16 @@ CREATE TABLE `user` (
 --
 
 INSERT INTO `user` (`userid`, `name`, `gender`, `nic`, `email`, `date_of_birth`, `contact_number`, `address`, `image`, `username`, `password`, `role`, `createdate`) VALUES
-(1, 'uma', 'Female', '22020292', 'uma@gmail.com', '2024-11-20', '0759834721', 'no 30,adress lane , colombo 5.', '', 'umazz', '123', 'Sports Captain', NULL),
-(3, 'Hamdi', 'Male', '22020748', 'hamdi@gmail.com', '2024-11-22', '0705691983', 'address', '', 'External User', 'abc', 'External User', NULL),
-(6, 'Ali Khan', 'Male', '546372819V', 'alikhan@example.com', '1985-01-10', '0773456789', '789 Lakeside Road, Galle', '', 'alikhan', 'admin789', 'Admin', NULL),
-(9, 'sanudi', 'Female', '2203324556', 'sanu@gmail.com', '2024-11-06', '0765548374', 'abc address', '', 'sanu', 'abc123', 'GroundIndoorStaff', NULL),
-(11, 'amantha', 'Male', '2203394556', 'amantha@gmail.com', '2024-11-06', '0765548374', 'abc address', '', 'amantha', 'abc1234', 'Gym Instructor', NULL);
+(20, 'a b sportscaptain', 'Male', '200255401683', 'sportscaptain@gmail.com', '0000-00-00', '0715691983', 'JNSVF', '', 'sportscaptain@gmail.com', '$2y$10$6y5dnE6iY59o0BbmxJxe5.RqTF6M3/1PlD/1uI9kxmSQl84YJYbnm', 'Sports Captain', '2024-12-02'),
+(21, 'abmaintainance', 'Male', '200255401684', 'maintenance@gmail.com', '0000-00-00', '0715691983', 'fdsb', '', 'maintenance@gmail.com', '$2y$10$cLJSRvLOUHxb.0N2ivJn1OD1b.jq3zRZZAx5DL3prNKJv1/vZHyb.', 'GroundIndoorStaff', '2024-12-02'),
+(22, 'ab gym', 'Male', '200255401685', 'gym@gmail.com', '0000-00-00', '0716835810', 'fgs', '', 'gym@gmail.com', '$2y$10$EeMhbccCjhm3LPagPagBGuz4FMXU2MpMQqdcGkYQVuMnIJFPSsr0K', 'Gym Instructor', '2024-12-02'),
+(23, 'ab amal', 'Male', '200255401686', 'amalgamated@gmail.com', '0000-00-00', '0715691983', 'anderson flats', '', 'amalgamated@gmail.com', '$2y$10$W.2L2x11n4U4KdczgxnOIOpQe1vXrPgWWV0yHxdJVp7pyv1eodrRu', 'Amalgamated Club Executive', '2024-12-02'),
+(25, 'p u piyumini', 'Male', '200255401689', 'student@gmail.com', '0000-00-00', '0112123456', 'fugaj', '', 'student@gmail.com', '$2y$10$d/mMSuQenuf5yjpaitpie.pxga0.pEDhT76dI0CFwluCpAOTcUmhW', 'Internal User', '2024-12-02'),
+(27, 'a b external', 'Male', '200255401698', 'external@gmail.com', '0000-00-00', '0716835810', 'fdab', '', 'external@gmail.com', '$2y$10$p1TRib3mRVOcqkvETvhW6O3yGRMQrhcxPPQTLRsSYXv5Ftz./a7qy', 'External User', '2024-12-02'),
+(29, 'a b admin', 'Male', '200254441680', 'admin@gmail.com', '0000-00-00', '0716835810', 'fgsd', '', 'admin@gmail.com', '$2y$10$3WEmOjTp8Qa.GdaMRlZJQe3/j0THGwD1zjyID8jXejoVlVAvCMU4m', 'Admin', '2024-12-02'),
+(30, 'Admin User', 'Male', '200224303240', 'a@gmail.com', '0000-00-00', '0787798230', 'Colombo', '', 'a@gmail.com', '$2y$10$bCXdwnvHU2HNZpzXekhCOucYd8dIOKdSfjCqAzVZcxWjqnhQOJSSe', 'Admin', '2024-12-02'),
+(31, 'Amar', 'Male', '123456789123', 'student1@gmail.com', '0000-00-00', '0112123456', 'fugajfds', '', 'student1@gmail.com', '$2y$10$6cY1B7s.dkOvtOjz6/goQOF9asud.TDhdmMJLnz76GY7Rr3R75tZa', 'External User', '2024-12-02'),
+(32, 'ab saman', 'Male', '200212323456', 'umazz20023@gmail.com', '0000-00-00', '0112123456', 'abc adress', '', 'umazz20023@gmail.com', '$2y$10$OLP6PM5aN3CBca2ZULcqpuhDR6JBoNr..iSQfaTAON.lwDGJl4hFW', 'External User', '2024-12-02');
 
 --
 -- Indexes for dumped tables
@@ -303,6 +351,12 @@ ALTER TABLE `ground_indoor_staff`
   ADD PRIMARY KEY (`userid`);
 
 --
+-- Indexes for table `gymequipments`
+--
+ALTER TABLE `gymequipments`
+  ADD PRIMARY KEY (`gymequipmentid`);
+
+--
 -- Indexes for table `inventoryedit`
 --
 ALTER TABLE `inventoryedit`
@@ -314,11 +368,9 @@ ALTER TABLE `inventoryedit`
 --
 ALTER TABLE `inventoryrequest`
   ADD PRIMARY KEY (`requestid`),
-  ADD KEY `equipmentid` (`equipmentid`);
+  ADD KEY `inventoryrequest_ibfk_1` (`equipmentid`);
 
 --
-<<<<<<< HEAD
-=======
 -- Indexes for table `noticeboard`
 --
 ALTER TABLE `noticeboard`
@@ -326,7 +378,6 @@ ALTER TABLE `noticeboard`
   ADD KEY `userid` (`userid`);
 
 --
->>>>>>> bca1cab9677aede17c33670c54aeda41ea784bc6
 -- Indexes for table `ped_incharge`
 --
 ALTER TABLE `ped_incharge`
@@ -381,7 +432,13 @@ ALTER TABLE `user`
 -- AUTO_INCREMENT for table `equipments`
 --
 ALTER TABLE `equipments`
-  MODIFY `equipmentid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `equipmentid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+
+--
+-- AUTO_INCREMENT for table `gymequipments`
+--
+ALTER TABLE `gymequipments`
+  MODIFY `gymequipmentid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=33;
 
 --
 -- AUTO_INCREMENT for table `inventoryedit`
@@ -393,18 +450,15 @@ ALTER TABLE `inventoryedit`
 -- AUTO_INCREMENT for table `inventoryrequest`
 --
 ALTER TABLE `inventoryrequest`
-  MODIFY `requestid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `requestid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
 
 --
-<<<<<<< HEAD
-=======
 -- AUTO_INCREMENT for table `noticeboard`
 --
 ALTER TABLE `noticeboard`
-  MODIFY `noticeid` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `noticeid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=41;
 
 --
->>>>>>> bca1cab9677aede17c33670c54aeda41ea784bc6
 -- AUTO_INCREMENT for table `sport`
 --
 ALTER TABLE `sport`
@@ -414,13 +468,13 @@ ALTER TABLE `sport`
 -- AUTO_INCREMENT for table `stock`
 --
 ALTER TABLE `stock`
-  MODIFY `stockid` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `stockid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `user`
 --
 ALTER TABLE `user`
-  MODIFY `userid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `userid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=33;
 
 --
 -- Constraints for dumped tables
@@ -463,15 +517,12 @@ ALTER TABLE `inventoryrequest`
   ADD CONSTRAINT `inventoryrequest_ibfk_1` FOREIGN KEY (`equipmentid`) REFERENCES `unpackedinventory` (`equipmentid`);
 
 --
-<<<<<<< HEAD
-=======
 -- Constraints for table `noticeboard`
 --
 ALTER TABLE `noticeboard`
   ADD CONSTRAINT `noticeboard_ibfk_1` FOREIGN KEY (`userid`) REFERENCES `user` (`userid`);
 
 --
->>>>>>> bca1cab9677aede17c33670c54aeda41ea784bc6
 -- Constraints for table `ped_incharge`
 --
 ALTER TABLE `ped_incharge`
