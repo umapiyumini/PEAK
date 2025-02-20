@@ -39,7 +39,9 @@ class Stocks{
 
     public function findEqpId($stockid) {
         $query = "SELECT equipmentid FROM $this->table WHERE stockid = :stockid";
-        return $this->query($query, ['stockid' => $stockid])[0]['equipmentid'];
+        $result = $this->query($query, ['stockid' => $stockid]);
+        return $result[0]->equipmentid ?? null; 
+
     }
 
 

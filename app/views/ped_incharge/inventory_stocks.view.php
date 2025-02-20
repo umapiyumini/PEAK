@@ -11,15 +11,7 @@
     <?php $current_page = 'inventory'; include 'sidebar.view.php'?>
     <div class="main-content">
        
-        <!-- <div class="notifications-dropdown">
-            <div class="notifications-header">
-                <h3>Notifications</h3>
-                <span class="clear-all">Clear All</span>
-            </div>
-            <div class="notifications-list">
-                <ul id="notificationsList"></ul>
-            </div>
-        </div> -->
+       
         
         <div class="header">
             <button onclick="history.back()" class="goBackButton"><i class="uil uil-arrow-left"></i></button>

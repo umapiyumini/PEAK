@@ -27,7 +27,7 @@
             $stock = new Stocks;
             if ($_SERVER['REQUEST_METHOD'] === 'POST'){
                 $stock->issueStockss($_POST);
-                show("here");
+                // show($_POST);
                 $eqpid = $stock->findEqpId($_POST['stockId']);
                 header('Location:' . ROOT . '/ped_incharge/inventory_stocks/filterStocks/'.$eqpid);
             }

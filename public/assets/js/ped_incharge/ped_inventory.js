@@ -186,6 +186,18 @@ function updateRequest(id, status) {
     }
 }
 
+function acceptRequest(request) {
+    if (confirm("Are you sure you want to accept this request?")) {
+        window.location.href = `inventory_requests/updateStatus/${request.requestid}/Approved`;
+    }
+}
+
+function deleteRequest(request) {
+    if (confirm("Are you sure you want to delete this request?")) {
+        window.location.href = `inventory_requests/deleteRequest/${request.requestid}`;
+    }
+}
+
 // Filter functionality
 // document.getElementById('search-requests').addEventListener('input', filterRequests);
 document.getElementById('status-filter').addEventListener('change', filterRequests);
