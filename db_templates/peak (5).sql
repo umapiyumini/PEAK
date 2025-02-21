@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jan 30, 2025 at 04:03 PM
+-- Generation Time: Feb 21, 2025 at 06:13 AM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -37,6 +37,37 @@ CREATE TABLE `amalgamatedclub` (
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `attendance`
+--
+
+CREATE TABLE `attendance` (
+  `date` date NOT NULL,
+  `regno` int(11) NOT NULL,
+  `attendance` enum('Present','Absent') NOT NULL,
+  `sport_id` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `coaches`
+--
+
+CREATE TABLE `coaches` (
+  `empid` int(11) NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `role` varchar(100) NOT NULL,
+  `email` varchar(255) NOT NULL,
+  `phone` varchar(15) NOT NULL,
+  `nic` varchar(20) NOT NULL,
+  `address` text NOT NULL,
+  `experience` int(11) NOT NULL,
+  `sport_id` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `equipments`
 --
 
@@ -64,6 +95,20 @@ INSERT INTO `equipments` (`equipmentid`, `sport_id`, `name`, `type`, `issued_amo
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `eventrecords`
+--
+
+CREATE TABLE `eventrecords` (
+  `eventid` int(11) NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `date` date NOT NULL,
+  `venue` varchar(255) NOT NULL,
+  `sport_id` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `external_user`
 --
 
@@ -82,6 +127,47 @@ INSERT INTO `external_user` (`userid`, `companyid`, `company_name`) VALUES
 (30, '11', 'Hello'),
 (31, 'jhsfd', 'uhdvdsig'),
 (32, 'The Bike Manufactures (pvt) ltd', 'The Bike Manufactures (pvt) ltd');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `feedback`
+--
+
+CREATE TABLE `feedback` (
+  `feedback_id` int(11) NOT NULL,
+  `rating` int(11) NOT NULL,
+  `content` text NOT NULL,
+  `time` time NOT NULL,
+  `date` date NOT NULL,
+  `userid` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `feedback`
+--
+
+INSERT INTO `feedback` (`feedback_id`, `rating`, `content`, `time`, `date`, `userid`) VALUES
+(1, 4, 'goood', '10:44:57', '2025-02-20', 27),
+(2, 5, 'exccellent', '10:47:38', '2025-02-20', 27);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `freshersrecords`
+--
+
+CREATE TABLE `freshersrecords` (
+  `freshersid` int(11) NOT NULL,
+  `tournament_name` varchar(255) NOT NULL,
+  `year` int(11) NOT NULL,
+  `first_place` varchar(255) DEFAULT NULL,
+  `second_place` varchar(255) DEFAULT NULL,
+  `third_place` varchar(255) DEFAULT NULL,
+  `no_of_players` int(11) DEFAULT NULL,
+  `playersregno` text DEFAULT NULL,
+  `sport_id` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -118,6 +204,40 @@ INSERT INTO `gymequipments` (`gymequipmentid`, `equipmentname`, `quantity`, `des
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `interfacultyrecords`
+--
+
+CREATE TABLE `interfacultyrecords` (
+  `interfacrecid` int(11) NOT NULL,
+  `tournament_name` varchar(255) NOT NULL,
+  `year` int(11) NOT NULL,
+  `first_place` varchar(255) DEFAULT NULL,
+  `second_place` varchar(255) DEFAULT NULL,
+  `third_place` varchar(255) DEFAULT NULL,
+  `no_of_players` int(11) DEFAULT NULL,
+  `players_regno` text DEFAULT NULL,
+  `sport_id` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `interuniversityrecords`
+--
+
+CREATE TABLE `interuniversityrecords` (
+  `interrecordid` int(11) NOT NULL,
+  `tournament_name` varchar(255) NOT NULL,
+  `year` year(4) NOT NULL,
+  `place` varchar(255) NOT NULL,
+  `venueid` int(11) DEFAULT NULL,
+  `no_of_players` int(11) NOT NULL,
+  `sport_id` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `inventoryedit`
 --
 
@@ -137,17 +257,42 @@ CREATE TABLE `inventoryedit` (
 CREATE TABLE `inventoryrequest` (
   `requestid` int(11) NOT NULL,
   `equipmentid` int(11) NOT NULL,
+  `sport_id` int(20) NOT NULL,
   `quantityrequested` int(11) NOT NULL,
   `date` date NOT NULL,
-  `bywhom` varchar(100) NOT NULL
+  `requested_by` varchar(100) NOT NULL,
+  `status` enum('pending','approved','rejected') NOT NULL DEFAULT 'pending'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `message`
+--
+
+CREATE TABLE `message` (
+  `messageid` int(11) NOT NULL,
+  `userid` int(11) DEFAULT NULL,
+  `content` text NOT NULL,
+  `date` date NOT NULL,
+  `time` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `inventoryrequest`
+-- Dumping data for table `message`
 --
 
-INSERT INTO `inventoryrequest` (`requestid`, `equipmentid`, `quantityrequested`, `date`, `bywhom`) VALUES
-(20, 4, 3, '2024-12-01', 'abc');
+INSERT INTO `message` (`messageid`, `userid`, `content`, `date`, `time`) VALUES
+(3, 21, 'fda', '2025-02-20', '2025-02-20 08:58:21'),
+(4, 21, 'fa', '2025-02-20', '2025-02-20 08:59:09'),
+(5, 21, 'afdg', '2025-02-20', '2025-02-20 09:02:08'),
+(6, 27, 'avsg', '2025-02-20', '2025-02-20 09:03:13'),
+(7, 27, 'cv', '2025-02-20', '2025-02-20 09:07:48'),
+(8, 27, 'cv', '2025-02-20', '2025-02-20 09:08:57'),
+(9, 27, 'f', '2025-02-20', '2025-02-20 09:16:56'),
+(10, 27, 'try', '2025-02-20', '2025-02-20 09:23:11'),
+(11, 27, 'try1', '2025-02-20', '2025-02-20 09:26:49'),
+(12, 27, 'gs', '2025-02-20', '2025-02-20 09:47:27');
 
 -- --------------------------------------------------------
 
@@ -188,6 +333,75 @@ CREATE TABLE `ped_incharge` (
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `players`
+--
+
+CREATE TABLE `players` (
+  `regno` int(11) NOT NULL,
+  `position` varchar(100) NOT NULL,
+  `jerseyno` int(11) NOT NULL,
+  `sport_id` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `practiceschedule`
+--
+
+CREATE TABLE `practiceschedule` (
+  `scheduleid` int(11) NOT NULL,
+  `date` date NOT NULL,
+  `time` time NOT NULL,
+  `sportid` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `recruitments`
+--
+
+CREATE TABLE `recruitments` (
+  `recruitmentid` int(11) NOT NULL,
+  `regno` varchar(20) NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `faculty` varchar(255) NOT NULL,
+  `reason` text DEFAULT NULL,
+  `sport_id` int(11) DEFAULT NULL,
+  `accept` tinyint(1) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `reservations`
+--
+
+CREATE TABLE `reservations` (
+  `reservationid` int(11) NOT NULL,
+  `facility` varchar(200) NOT NULL,
+  `event` varchar(300) NOT NULL,
+  `date` date NOT NULL,
+  `time` datetime NOT NULL,
+  `price` float NOT NULL,
+  `status` enum('pending','rejected','confirmed','') NOT NULL,
+  `userid` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `reservations`
+--
+
+INSERT INTO `reservations` (`reservationid`, `facility`, `event`, `date`, `time`, `price`, `status`, `userid`) VALUES
+(1, 'ground', 'new year', '2025-02-04', '2025-02-20 11:33:13', 3000, 'pending', 27),
+(2, 'badminton court', 'matches', '2025-02-11', '2025-02-18 12:32:14', 2000, 'pending', 21),
+(3, 'basketball court', 'matches', '2025-02-12', '2025-02-27 12:32:50', 2500, 'confirmed', 27),
+(4, 'hockey court', 'practices', '2025-02-19', '2025-02-28 13:03:30', 2500, 'confirmed', 27);
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `sport`
 --
 
@@ -205,6 +419,19 @@ INSERT INTO `sport` (`sport_id`, `sport_name`) VALUES
 (2, 'Baseball'),
 (3, 'Hockey'),
 (4, 'Football');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `sportnews`
+--
+
+CREATE TABLE `sportnews` (
+  `newsid` int(11) NOT NULL,
+  `topic` varchar(255) NOT NULL,
+  `content` text NOT NULL,
+  `sport_id` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -279,7 +506,7 @@ CREATE TABLE `unpackedinventory` (
 --
 
 INSERT INTO `unpackedinventory` (`equipmentid`, `quantity`) VALUES
-(2, 2),
+(2, 4),
 (3, 2),
 (4, 8);
 
@@ -321,6 +548,17 @@ INSERT INTO `user` (`userid`, `name`, `gender`, `nic`, `email`, `date_of_birth`,
 (31, 'Amar', 'Male', '123456789123', 'student1@gmail.com', '0000-00-00', '0112123456', 'fugajfds', '', 'student1@gmail.com', '$2y$10$6cY1B7s.dkOvtOjz6/goQOF9asud.TDhdmMJLnz76GY7Rr3R75tZa', 'External User', '2024-12-02'),
 (32, 'ab saman', 'Male', '200212323456', 'umazz20023@gmail.com', '0000-00-00', '0112123456', 'abc adress', '', 'umazz20023@gmail.com', '$2y$10$OLP6PM5aN3CBca2ZULcqpuhDR6JBoNr..iSQfaTAON.lwDGJl4hFW', 'External User', '2024-12-02');
 
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `venue`
+--
+
+CREATE TABLE `venue` (
+  `venueid` int(11) NOT NULL,
+  `name` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
 --
 -- Indexes for dumped tables
 --
@@ -332,6 +570,24 @@ ALTER TABLE `amalgamatedclub`
   ADD PRIMARY KEY (`userid`);
 
 --
+-- Indexes for table `attendance`
+--
+ALTER TABLE `attendance`
+  ADD PRIMARY KEY (`date`,`regno`),
+  ADD KEY `regno` (`regno`),
+  ADD KEY `sport_id` (`sport_id`);
+
+--
+-- Indexes for table `coaches`
+--
+ALTER TABLE `coaches`
+  ADD PRIMARY KEY (`empid`),
+  ADD UNIQUE KEY `email` (`email`),
+  ADD UNIQUE KEY `phone` (`phone`),
+  ADD UNIQUE KEY `nic` (`nic`),
+  ADD KEY `sport_id` (`sport_id`);
+
+--
 -- Indexes for table `equipments`
 --
 ALTER TABLE `equipments`
@@ -339,10 +595,31 @@ ALTER TABLE `equipments`
   ADD KEY `sportequipmentFK` (`sport_id`);
 
 --
+-- Indexes for table `eventrecords`
+--
+ALTER TABLE `eventrecords`
+  ADD PRIMARY KEY (`eventid`),
+  ADD KEY `sport_id` (`sport_id`);
+
+--
 -- Indexes for table `external_user`
 --
 ALTER TABLE `external_user`
   ADD PRIMARY KEY (`userid`);
+
+--
+-- Indexes for table `feedback`
+--
+ALTER TABLE `feedback`
+  ADD PRIMARY KEY (`feedback_id`),
+  ADD KEY `userid` (`userid`);
+
+--
+-- Indexes for table `freshersrecords`
+--
+ALTER TABLE `freshersrecords`
+  ADD PRIMARY KEY (`freshersid`),
+  ADD KEY `sport_id` (`sport_id`);
 
 --
 -- Indexes for table `ground_indoor_staff`
@@ -357,6 +634,21 @@ ALTER TABLE `gymequipments`
   ADD PRIMARY KEY (`gymequipmentid`);
 
 --
+-- Indexes for table `interfacultyrecords`
+--
+ALTER TABLE `interfacultyrecords`
+  ADD PRIMARY KEY (`interfacrecid`),
+  ADD KEY `sport_id` (`sport_id`);
+
+--
+-- Indexes for table `interuniversityrecords`
+--
+ALTER TABLE `interuniversityrecords`
+  ADD PRIMARY KEY (`interrecordid`),
+  ADD KEY `venueid` (`venueid`),
+  ADD KEY `sport_id` (`sport_id`);
+
+--
 -- Indexes for table `inventoryedit`
 --
 ALTER TABLE `inventoryedit`
@@ -368,7 +660,15 @@ ALTER TABLE `inventoryedit`
 --
 ALTER TABLE `inventoryrequest`
   ADD PRIMARY KEY (`requestid`),
-  ADD KEY `inventoryrequest_ibfk_1` (`equipmentid`);
+  ADD KEY `fk_inventoryrequest_equipment` (`equipmentid`),
+  ADD KEY `fk_inventoryrequest_sport` (`sport_id`);
+
+--
+-- Indexes for table `message`
+--
+ALTER TABLE `message`
+  ADD PRIMARY KEY (`messageid`),
+  ADD KEY `userid` (`userid`);
 
 --
 -- Indexes for table `noticeboard`
@@ -384,10 +684,45 @@ ALTER TABLE `ped_incharge`
   ADD PRIMARY KEY (`userid`);
 
 --
+-- Indexes for table `players`
+--
+ALTER TABLE `players`
+  ADD PRIMARY KEY (`regno`),
+  ADD KEY `sport_id` (`sport_id`);
+
+--
+-- Indexes for table `practiceschedule`
+--
+ALTER TABLE `practiceschedule`
+  ADD PRIMARY KEY (`scheduleid`),
+  ADD KEY `sportid` (`sportid`);
+
+--
+-- Indexes for table `recruitments`
+--
+ALTER TABLE `recruitments`
+  ADD PRIMARY KEY (`recruitmentid`),
+  ADD KEY `sport_id` (`sport_id`);
+
+--
+-- Indexes for table `reservations`
+--
+ALTER TABLE `reservations`
+  ADD PRIMARY KEY (`reservationid`),
+  ADD KEY `fk_userid` (`userid`);
+
+--
 -- Indexes for table `sport`
 --
 ALTER TABLE `sport`
   ADD PRIMARY KEY (`sport_id`);
+
+--
+-- Indexes for table `sportnews`
+--
+ALTER TABLE `sportnews`
+  ADD PRIMARY KEY (`newsid`),
+  ADD KEY `sport_id` (`sport_id`);
 
 --
 -- Indexes for table `sports_captain`
@@ -425,8 +760,21 @@ ALTER TABLE `user`
   ADD UNIQUE KEY `username` (`username`);
 
 --
+-- Indexes for table `venue`
+--
+ALTER TABLE `venue`
+  ADD PRIMARY KEY (`venueid`),
+  ADD UNIQUE KEY `name` (`name`);
+
+--
 -- AUTO_INCREMENT for dumped tables
 --
+
+--
+-- AUTO_INCREMENT for table `coaches`
+--
+ALTER TABLE `coaches`
+  MODIFY `empid` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `equipments`
@@ -435,10 +783,40 @@ ALTER TABLE `equipments`
   MODIFY `equipmentid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
+-- AUTO_INCREMENT for table `eventrecords`
+--
+ALTER TABLE `eventrecords`
+  MODIFY `eventid` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `feedback`
+--
+ALTER TABLE `feedback`
+  MODIFY `feedback_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- AUTO_INCREMENT for table `freshersrecords`
+--
+ALTER TABLE `freshersrecords`
+  MODIFY `freshersid` int(11) NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT for table `gymequipments`
 --
 ALTER TABLE `gymequipments`
   MODIFY `gymequipmentid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=33;
+
+--
+-- AUTO_INCREMENT for table `interfacultyrecords`
+--
+ALTER TABLE `interfacultyrecords`
+  MODIFY `interfacrecid` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `interuniversityrecords`
+--
+ALTER TABLE `interuniversityrecords`
+  MODIFY `interrecordid` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `inventoryedit`
@@ -450,7 +828,13 @@ ALTER TABLE `inventoryedit`
 -- AUTO_INCREMENT for table `inventoryrequest`
 --
 ALTER TABLE `inventoryrequest`
-  MODIFY `requestid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
+  MODIFY `requestid` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `message`
+--
+ALTER TABLE `message`
+  MODIFY `messageid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT for table `noticeboard`
@@ -459,10 +843,34 @@ ALTER TABLE `noticeboard`
   MODIFY `noticeid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=41;
 
 --
+-- AUTO_INCREMENT for table `practiceschedule`
+--
+ALTER TABLE `practiceschedule`
+  MODIFY `scheduleid` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `recruitments`
+--
+ALTER TABLE `recruitments`
+  MODIFY `recruitmentid` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `reservations`
+--
+ALTER TABLE `reservations`
+  MODIFY `reservationid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
+--
 -- AUTO_INCREMENT for table `sport`
 --
 ALTER TABLE `sport`
   MODIFY `sport_id` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
+--
+-- AUTO_INCREMENT for table `sportnews`
+--
+ALTER TABLE `sportnews`
+  MODIFY `newsid` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `stock`
@@ -477,6 +885,12 @@ ALTER TABLE `user`
   MODIFY `userid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=33;
 
 --
+-- AUTO_INCREMENT for table `venue`
+--
+ALTER TABLE `venue`
+  MODIFY `venueid` int(11) NOT NULL AUTO_INCREMENT;
+
+--
 -- Constraints for dumped tables
 --
 
@@ -487,10 +901,29 @@ ALTER TABLE `amalgamatedclub`
   ADD CONSTRAINT `amalgamatedclub_ibfk_1` FOREIGN KEY (`userid`) REFERENCES `user` (`userid`);
 
 --
+-- Constraints for table `attendance`
+--
+ALTER TABLE `attendance`
+  ADD CONSTRAINT `attendance_ibfk_1` FOREIGN KEY (`regno`) REFERENCES `players` (`regno`) ON DELETE CASCADE,
+  ADD CONSTRAINT `attendance_ibfk_2` FOREIGN KEY (`sport_id`) REFERENCES `sport` (`sport_id`) ON DELETE CASCADE;
+
+--
+-- Constraints for table `coaches`
+--
+ALTER TABLE `coaches`
+  ADD CONSTRAINT `coaches_ibfk_1` FOREIGN KEY (`sport_id`) REFERENCES `sport` (`sport_id`) ON DELETE CASCADE;
+
+--
 -- Constraints for table `equipments`
 --
 ALTER TABLE `equipments`
   ADD CONSTRAINT `sportequipmentFK` FOREIGN KEY (`sport_id`) REFERENCES `sport` (`sport_id`);
+
+--
+-- Constraints for table `eventrecords`
+--
+ALTER TABLE `eventrecords`
+  ADD CONSTRAINT `eventrecords_ibfk_1` FOREIGN KEY (`sport_id`) REFERENCES `sport` (`sport_id`) ON DELETE CASCADE;
 
 --
 -- Constraints for table `external_user`
@@ -499,10 +932,35 @@ ALTER TABLE `external_user`
   ADD CONSTRAINT `external_user_ibfk_1` FOREIGN KEY (`userid`) REFERENCES `user` (`userid`);
 
 --
+-- Constraints for table `feedback`
+--
+ALTER TABLE `feedback`
+  ADD CONSTRAINT `feedback_ibfk_1` FOREIGN KEY (`userid`) REFERENCES `user` (`userid`);
+
+--
+-- Constraints for table `freshersrecords`
+--
+ALTER TABLE `freshersrecords`
+  ADD CONSTRAINT `freshersrecords_ibfk_1` FOREIGN KEY (`sport_id`) REFERENCES `sport` (`sport_id`);
+
+--
 -- Constraints for table `ground_indoor_staff`
 --
 ALTER TABLE `ground_indoor_staff`
   ADD CONSTRAINT `ground_indoor_staff_ibfk_1` FOREIGN KEY (`userid`) REFERENCES `user` (`userid`);
+
+--
+-- Constraints for table `interfacultyrecords`
+--
+ALTER TABLE `interfacultyrecords`
+  ADD CONSTRAINT `interfacultyrecords_ibfk_1` FOREIGN KEY (`sport_id`) REFERENCES `sport` (`sport_id`);
+
+--
+-- Constraints for table `interuniversityrecords`
+--
+ALTER TABLE `interuniversityrecords`
+  ADD CONSTRAINT `interuniversityrecords_ibfk_1` FOREIGN KEY (`venueid`) REFERENCES `venue` (`venueid`) ON DELETE CASCADE,
+  ADD CONSTRAINT `interuniversityrecords_ibfk_2` FOREIGN KEY (`sport_id`) REFERENCES `sport` (`sport_id`) ON DELETE CASCADE;
 
 --
 -- Constraints for table `inventoryedit`
@@ -514,7 +972,14 @@ ALTER TABLE `inventoryedit`
 -- Constraints for table `inventoryrequest`
 --
 ALTER TABLE `inventoryrequest`
-  ADD CONSTRAINT `inventoryrequest_ibfk_1` FOREIGN KEY (`equipmentid`) REFERENCES `unpackedinventory` (`equipmentid`);
+  ADD CONSTRAINT `fk_inventoryrequest_equipment` FOREIGN KEY (`equipmentid`) REFERENCES `unpackedinventory` (`equipmentid`),
+  ADD CONSTRAINT `fk_inventoryrequest_sport` FOREIGN KEY (`sport_id`) REFERENCES `sport` (`sport_id`);
+
+--
+-- Constraints for table `message`
+--
+ALTER TABLE `message`
+  ADD CONSTRAINT `message_ibfk_1` FOREIGN KEY (`userid`) REFERENCES `user` (`userid`) ON DELETE CASCADE;
 
 --
 -- Constraints for table `noticeboard`
@@ -527,6 +992,36 @@ ALTER TABLE `noticeboard`
 --
 ALTER TABLE `ped_incharge`
   ADD CONSTRAINT `ped_incharge_ibfk_1` FOREIGN KEY (`userid`) REFERENCES `user` (`userid`);
+
+--
+-- Constraints for table `players`
+--
+ALTER TABLE `players`
+  ADD CONSTRAINT `players_ibfk_1` FOREIGN KEY (`sport_id`) REFERENCES `sport` (`sport_id`) ON DELETE CASCADE;
+
+--
+-- Constraints for table `practiceschedule`
+--
+ALTER TABLE `practiceschedule`
+  ADD CONSTRAINT `practiceschedule_ibfk_1` FOREIGN KEY (`sportid`) REFERENCES `sport` (`sport_id`) ON DELETE CASCADE;
+
+--
+-- Constraints for table `recruitments`
+--
+ALTER TABLE `recruitments`
+  ADD CONSTRAINT `recruitments_ibfk_1` FOREIGN KEY (`sport_id`) REFERENCES `sport` (`sport_id`);
+
+--
+-- Constraints for table `reservations`
+--
+ALTER TABLE `reservations`
+  ADD CONSTRAINT `fk_userid` FOREIGN KEY (`userid`) REFERENCES `user` (`userid`);
+
+--
+-- Constraints for table `sportnews`
+--
+ALTER TABLE `sportnews`
+  ADD CONSTRAINT `sportnews_ibfk_1` FOREIGN KEY (`sport_id`) REFERENCES `sport` (`sport_id`) ON DELETE CASCADE;
 
 --
 -- Constraints for table `sports_captain`
