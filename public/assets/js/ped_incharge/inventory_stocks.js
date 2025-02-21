@@ -111,9 +111,15 @@ function openAddModal() {
 }
 
 //open issue modal
-function openIssueModal() {
+// function openIssueModal() {
+//     issueModal.style.display = 'block';
+// }
+
+function openIssueModal(stock) {
+    document.getElementById('stockId').value = stock.stockid; // Set equipment ID
     issueModal.style.display = 'block';
 }
+
 
 // Close modal functions
 

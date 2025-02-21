@@ -55,6 +55,12 @@
     margin-bottom: 20px;
 }
 
+.card-title {
+    font-size: 20px;
+    margin-top: .5rem;
+    margin-bottom: 1rem;
+}
+
 .filter-bar {
     display: flex;
     gap: 10px;
@@ -108,6 +114,15 @@ input, select {
 
 .btn-reject:hover {
     background-color: #d32f2f;
+}
+
+.disabled-btn {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.disabled-btn:hover {
+    background-color: #e0e0e0;
 }
 
 .btn-issue {

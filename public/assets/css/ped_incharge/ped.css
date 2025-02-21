@@ -8,7 +8,6 @@
 :root {
     --primary-color:#2B124C;
     --secondary-color: black;
-    /* --secondary-color: #A87BBE; */
     --success-color: #59056a;
     --danger-color: #A50021;
     --edit-color: #4169E1;
@@ -25,7 +24,6 @@
 
 
      body {
-        /* background-color: #E2E9FF; */
         background-color: #F8F6FB;
         min-height: 100vh;
         
@@ -36,7 +34,6 @@
         display: flex;
         flex-direction: column;
         gap: 20px;
-        /* width: 100%; */
         margin: 0, auto;
         background-color: #F8F6FB;
         margin-left: 1rem;
@@ -262,7 +259,6 @@ header {
 
 .header h1 {
     font-size: 24px;
-    /* margin-bottom: 1rem; */
     flex-grow: 1;
     color:var(--header-color);
    
