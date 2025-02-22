@@ -20,7 +20,24 @@
         
             <section>
                 <div id="combined-container" class="tiles-container">
-                    <!-- Combined coaches and instructors cards will be added dynamically here -->
+                    <?php if (!empty($coaches)): ?>
+                        <?php foreach ($coaches as $coach): ?>
+                            <div class="tile">
+                                <div class="tile-header">
+                                    <h2><?php echo htmlspecialchars($coach->name);?></h2>
+                                    <p><?php echo htmlspecialchars($coach->role);?></p>
+                                </div>
+                                <div class="tile-body">
+                                    <p><strong>Email:</strong> <?php echo htmlspecialchars($coach->email);?></p>
+                                    <p><strong>Phone:</strong> <?php echo htmlspecialchars($coach->phone);?></p>
+                                    <p><strong>Address:</strong> <?php echo htmlspecialchars($coach->address);?></p>
+                                    <p><strong>Experience:</strong> <?php echo htmlspecialchars($coach->experience);?></p>
+                                </div>
+                            </div>
+                        <?php endforeach; ?>
+                    <?php else: ?>
+                        <p>No coaches found</p>
+                    <?php endif; ?>
                 </div>
             </section>
         </div>    
