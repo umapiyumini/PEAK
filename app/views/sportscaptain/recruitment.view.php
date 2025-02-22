@@ -7,7 +7,6 @@
   <link rel="stylesheet" href="<?=ROOT?>/assets/css/vidusha/recruitment.css">
 </head>
 <body>
-
   <div class="container">
     <h1>Student Recruitment Notifications</h1>
     <div id="notification-list">

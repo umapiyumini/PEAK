@@ -7,7 +7,6 @@
   <link rel="stylesheet" href="<?=ROOT?>/assets/css/vidusha/sportrecords.css">
 </head>
 <body>
-
     <div class="navbar">
     <a href="sportprofile">Home</a>
             <a href="sportattendance">Attendance</a>

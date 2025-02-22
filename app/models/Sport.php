@@ -3,13 +3,16 @@
 class Sport {
     use Model;
     protected $table = 'sport';
+    protected $allowedColumns = [
+        'sport_id',
+        'sport_name'];
 
     public function findAllSports() {
         $query = "SELECT * FROM $this->table";
         return $this->query($query);
     }
 
-	public function getSport() {  
+    public function getSport() {  
         $userId = $this->getUserId(); // Ensure this function exists or define it below
 
         if (!$userId) {
@@ -26,4 +29,5 @@ class Sport {
         return $result[0] ?? null;
     }
 
+    
 }

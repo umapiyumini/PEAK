@@ -7,7 +7,6 @@
     <link rel="stylesheet" href="<?=ROOT?>/assets/css/vidusha/hostal.css">
 </head>
 <body>
-
     <div class="navbar">
         <a href="excuse">Attendance Excuse Letter</a>
         <a href="hostal">Hostal Facilities</a>
