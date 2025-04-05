@@ -114,29 +114,16 @@ body {
     transition: all 0.3s ease;
 }
 
-.sidebar .icon  {
-    display: block;
+    /*display: block;
     margin: 0 auto 10px;
-    width:30px; /* Smaller image size */
-    border-radius: 0%;
+    width:30px; /* Smaller image size 
+    border-radius: 0%;*/
     
-}
 
-.sidebar ul {
-    list-style: none;
-    padding: 0;
-    margin-top: 10px;
-}
-
-.sidebar ul li {
-    margin: 20px 0;
-    position: relative;
-    display: flex;
-    align-items: center; /* Aligns icon and title in a line */
-}
 
 .sidebar ul li a {
     text-decoration: none;
+
     color: white;
     font-size: 16px; /* Adjusted for better alignment */
     display: flex;
@@ -152,10 +139,6 @@ body {
     font-size: 18px;
 }
 
-.sidebar ul li a span {
-    font-size: 16px;
-    margin-left: 8px; /* Spacing between icon and title */
-}
 
 .sidebar ul li a:hover {
     background: rgba(255, 255, 255, 0.1);
@@ -219,21 +202,17 @@ img .ped-logo {
     border-radius: 0; /* Optional: slight rounding for a modern look */
     background-color: rgba(255, 255, 255, 0.1); /* Optional: background highlight */
 }
+
  
-#reservationMenu {
-    position: relative; /* Keeps the dropdown relative to the parent item */
-    margin-bottom: 10px; /* Adds space below the reservation item */
+
+.sidebar ul {
+    list-style-type: none;
+    padding: 0;
 }
 
-/* Styling for the Reservation link */
-#reservationMenu a {
-    display: inline-block;
-    padding: 10px 16px;
-    text-decoration: none;
-    color: #333;
+.sidebar ul li {
+    margin: 10px 0;
 }
-
-
 
 /* Class to display the dropdown */
 .show-dropdown {

@@ -7,7 +7,6 @@
   <link rel="stylesheet" href="<?=ROOT?>/assets/css/vidusha/sportrecords.css">
 </head>
 <body>
-
     <div class="navbar">
     <a href="sportprofile">Home</a>
             <a href="sportattendance">Attendance</a>
@@ -26,6 +25,19 @@
       <h2>Played Tournaments</h2>
       <div id="tournament-list" class="grid">
         <!-- Played tournaments will load dynamically -->
+        <?php if (!empty($pastEvents)): ?>
+        <?php foreach ($pastEvents as $event): ?>
+            <div class="tournament-item">
+                <h3><?php echo htmlspecialchars($event['tournament_name']); ?></h3>
+                <p><strong>Date:</strong> <?php echo htmlspecialchars($event['year']); ?></p>
+                <p><strong>Location:</strong> <?php echo htmlspecialchars($event['place']); ?></p>
+                <!--p><strong>Number of Players:</strong> <?php echo htmlspecialchars($event['no_of_players']); ?></p-->
+            </div>
+        <?php endforeach; ?>
+    <?php else: ?>
+        <p>No past tournaments found.</p>
+    <?php endif; ?> 
+
       </div>
     </div>
     <div id="upcoming-events" class="tab-content">
