@@ -90,7 +90,7 @@ class Unpackedinventory  {
         $query = "INSERT INTO inventoryrequest (equipmentid,name,quantityrequested,date,Timeframe,requested_by,additionalnotes)
                   VALUES (
                       (SELECT equipmentid FROM equipments WHERE name = :name),
-                      :name,
+                      :SELECT sport_id FROM sport WHERE sport_id = :sport_id,
                       :quantityrequested,
                       NOW(),
                       :Timeframe,

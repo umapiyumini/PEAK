@@ -1,15 +1,15 @@
 document.addEventListener("DOMContentLoaded", () => {
-    const playedTournaments = [
-      { id: 1, name: "Inter-University Tournament", date: "2024-09-15", location: "Colombo", status: "Played" },
-      { id: 2, name: "Feshers Tournament", date: "2024-08-20", location: "Colombo", status: "Played" },
-    ];
+    // const playedTournaments = [
+     // { id: 1, name: "Inter-University Tournament", date: "2024-09-15", location: "Colombo", status: "Played" },
+      //{ id: 2, name: "Feshers Tournament", date: "2024-08-20", location: "Colombo", status: "Played" },
+    //];
   
-    const upcomingEvents = [
-      { id: 3, name: "National Hockey Championship", date: "2024-12-05", location: "Galle", status: "Upcoming" },
-      { id: 4, name: "Inter Faculty Tournament", date: "2024-11-30", location: "Jaffna", status: "Upcoming" },
-    ];
+    //const upcomingEvents = [
+      //{ id: 3, name: "National Hockey Championship", date: "2024-12-05", location: "Galle", status: "Upcoming" },
+      //{ id: 4, name: "Inter Faculty Tournament", date: "2024-11-30", location: "Jaffna", status: "Upcoming" },
+    //];
   
-    const tournamentList = document.getElementById("tournament-list");
+    //const tournamentList = document.getElementById("tournament-list");
     const eventList = document.getElementById("event-list");
     const addModal = document.getElementById("add-modal");
     const updateModal = document.getElementById("update-modal");
@@ -92,14 +92,14 @@ document.addEventListener("DOMContentLoaded", () => {
       upcomingEvents.forEach((item) => addCard(item, eventList, false));
     };
   
-    const addCard = (item, container, isPlayed) => {
+    /*const addCard = (item, container) => {
       const card = document.createElement("div");
-      card.classList.add("card");
+      card.classList.add("tournament-item");
       card.innerHTML = `
-        <h2>${item.name}</h2>
-        <p>${item.date}</p>
-        <p>${item.location}</p>
-        <button class="edit-btn">Edit</button>
+        <h2>${item.tournament_name}</h2>
+        <p>${item.year}</p>
+        <p>${item.place}</p>
+        <button class="edit-button">Edit</button>
         <button onclick="deleteItem(${item.id}, ${isPlayed})">Delete</button>
       `;
       
@@ -109,9 +109,21 @@ document.addEventListener("DOMContentLoaded", () => {
       });
   
       container.appendChild(card);
-    };
+    };*/
+
+
   
     // Initial Render
     renderCards();
+
+    const tournamentList = document.getElementById("tournament-list");
+    fetch("Sportrecords.php")
+      .then((response) => response.json())
+      .then((data) => {
+        tournamentList.innerHTML = ""; // Clear existing content
+        data.pastEvents.forEach((event) => addCard(event, tournamentList)); // Add played tournaments
+      })
+      .catch((error) => console.error("Error loading tournaments:", error));
   });
+
   

@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="<?=ROOT?>/assets/css/vidusha/team.css">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
 </head>
-<body>
+<body>      
     <div class="navbar">
     <a href="sportprofile">Home</a>
             <a href="sportattendance">Attendance</a>
@@ -16,7 +16,7 @@
             <a href="schedule">Schedule</a>
             <a href="sportrecords">Records</a>
     </div>
-    ?>
+    
 <?php if(isset($_SESSION['success'])): ?>
     <div class="alert alert-success">
         <?= $_SESSION['success']; ?>
@@ -86,9 +86,11 @@
         <div class="modal-content">
             <span class="close">&times;</span>
             <h2>Edit Player</h2>
-            <form id="edit-form">
-                
-                    <input type="hidden" id="edit-regno" name="regno" readonly>
+            <form id="edit-form" action="<?=ROOT?>/sportscaptain/Team/updateplayer" method="POST">
+                <div class = "form-group">    
+                    <label for="edit-regno">Reg No:</lable>
+                    <input type="text" id="edit-regno" name="regno" readonly>
+                </div>
                 <div class="form-group">
                     <label for="edit-position">Position:</label>
                     <input type="text" id="edit-position" name="position" required>
@@ -97,13 +99,10 @@
                     <label for="edit-jerseyno">Jersey Number:</label>
                     <input type="number" id="edit-jerseyno" name="jerseyno" required>
                 </div>
-                <button type="submit" name="submit_update">Update Player</button>
+                <button type="submit">Update Player</button>
             </form>
         </div>
-    </div>
-
-
-    
+    </div>   
 
     <script src="<?=ROOT?>/assets/js/vidusha/team.js"></script>
 </body>

@@ -56,8 +56,10 @@ class Players{
     }
 
     public function updatePlayer($regno){
+    
 
         $userId = $this->getuserId();
+
 
         try{
             $query = "UPDATE players
@@ -69,6 +71,7 @@ class Players{
             return $result;
         
         }catch(Exception $e){
+            
             return false;
         }
     }

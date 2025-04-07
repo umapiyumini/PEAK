@@ -41,6 +41,6 @@
                 </div>
             </section>
         </div>    
-    <script src="<?=ROOT?>/assets/js/vidusha/coaches.js"></script>
+    <!--script src="<?=ROOT?>/assets/js/vidusha/coaches.js"></script-->
 </body>
 </html>

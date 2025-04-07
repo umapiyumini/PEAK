@@ -1,8 +1,5 @@
-<?php foreach ($unpackedItems as $item): ?>
-    <p>Sport: <?= htmlspecialchars($item->sport_name) ?></p>
-    <p>Equipment: <?= htmlspecialchars($item->name) ?></p>
-    
-<?php endforeach; ?>
+
+
 
 
 
