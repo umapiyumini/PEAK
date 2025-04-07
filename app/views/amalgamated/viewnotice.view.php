@@ -17,7 +17,7 @@
             width: 84%;
             padding: 30px;
             border-radius: 8px;
-            margin-left: 280px;
+            margin-left: 220px;
         }
         h1 {
             text-align: center;

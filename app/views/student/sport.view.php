@@ -45,7 +45,7 @@ body {
 
 /* Right Content */
 .right {
-  margin-left: 250px;
+  margin-left: 220px;
   flex-grow: 1;
   padding: 40px;
   overflow-y: auto;

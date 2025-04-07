@@ -121,7 +121,6 @@ function showBookingModal(slot, time) {
 }
 
 
-
 // Close the modal
 closeModal.addEventListener("click", () => {
     modal.style.display = "none";

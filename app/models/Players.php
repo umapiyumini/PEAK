@@ -56,8 +56,10 @@ class Players{
     }
 
     public function updatePlayer($regno){
+    
 
         $userId = $this->getuserId();
+
 
         try{
             $query = "UPDATE players

@@ -16,7 +16,7 @@
             width: 100%%;
             padding: 30px;
             border-radius: 8px;
-            margin-left: 280px;
+            margin-left: 220px;
             height: 100vh;
         }
         h1, h3 {
@@ -64,27 +64,28 @@
 
     <div class="form-container" id="medical-form">
         <h1>Medical Request</h1>
-        <form>
+        <form method="POST" action="<?= ROOT ?>/student/Medical/">
             <div class="form-group">
                 <label for="name">Full Name</label>
-                <input type="text" id="name" placeholder="Enter Full Name">
+                <input type="text" id="name" placeholder="Enter Full Name" name="Name">
             </div>
             
             <div class="form-group">
                 <label for="registration-id">Student Registration ID</label>
-                <input type="text" id="registration-id" placeholder="Enter Registration ID">
+                <input type="text" id="registration-id" placeholder="Enter Registration ID" name="RegistrationID">
             </div>
             <div class="form-group">
                 <label for="medical-reason">Reason for Medical</label>
-                <textarea id="medical-reason" placeholder="Enter Reason for Medical" rows="4"></textarea>
+                <textarea id="medical-reason" placeholder="Enter Reason for Medical" rows="4" name="ReasonForMedical"></textarea>
             </div>
             <div class="form-group">
                 <label for="medical-duration">How long did the medical take?</label>
-                <input type="text" id="medical-duration" placeholder="Enter Duration of Medical (e.g., 1 week)">
+                <input type="text" id="medical-duration" placeholder="Enter Duration of Medical (e.g., 1 week)" name="TimePeriod">
             </div>
 
-            <button type="submit" class="submit-btn">Submit</button>
+            <button  type="submit" class="submit-btn">Submit</button>
         </form>
+        
     </div>
 
 </body>
