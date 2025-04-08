@@ -13,40 +13,36 @@
         <a href="transport">Transport</a>
         <a href="colorsnight">Colors Night</a>
     </div>
-    <div class="form-container" id="inventory-form">
+    <div class="form-container" id="attendance-form">
         <h1>Attendance Excuse Letter</h1>
         <h3>Fill the Details</h3>
-        <form>
+        <form  action="<?=ROOT?>/sportscaptain/Excuse/addexcusedata" method="POST">
             <div class="form-group">
                 <label for="faculty">Faculty</label>
-                <input type="text" id="faculty" placeholder="Enter Faculty">
-            </div>
-            <div class="form-group">
-                <label for="sport">Sport</label>
-                <input type="text" id="sport" placeholder="Enter Sport">
+                <input type="text" id="faculty" name="faculty" placeholder="Enter Faculty">
             </div>
             <div class="form-group">
                 <label for="tournament">Tournament Name</label>
-                <input type="text" id="tournament" placeholder="Enter Tournament Name">
+                <input type="text" id="tournament" name="tournament_name" placeholder="Enter Tournament Name">
             </div>
             <div class="form-group">
                 <label for="startDate">Tournament Start Date</label>
-                <input type="date" id="startDate" placeholder="Enter Tournament Start Date">
+                <input type="date" id="startDate" name="start_date" placeholder="Enter Tournament Start Date">
             </div>
             <div class="form-group">
                 <label for="endDate">Tournament End Date</label>
-                <input type="date" id="endDate" placeholder="Enter Tournament End Date">
+                <input type="date" id="endDate" name="end_date" placeholder="Enter Tournament End Date">
             </div>
             <div class="form-group">
                 <label for="regNo">Registration No:</label>
                 <div id="playerContainer">
-                        <input type="text" class="regNo" placeholder="Enter Registration No" required> 
+                        <input type="text" class="regNo" name="reg_no[]" placeholder="Enter Registration No" required> 
                 </div>
                 <button type="button" class="addRegNoBtn">Add</button>
             </div>
             <div class="form-group">
                 <label for="submitiondate">Submition Date</label>
-                <input type="date" id="subDate" placeholder="Enter Submition Date">
+                <input type="date" id="subDate" name="submit_date" placeholder="Enter Submition Date">
             </div>
             <button type="submit" class="submit-btn">Submit</button>
         </form>

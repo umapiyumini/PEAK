@@ -55,21 +55,21 @@ class Players{
     }
     }
 
-    public function updatePlayer($regno){
-    
-
-        $userId = $this->getuserId();
-
-
+    public function updatePlayer($regno, $position, $jerseyno){
+        $userId = $this->getUserId();
         try{
             $query = "UPDATE players
                     SET position = :position, jerseyno = :jerseyno
                     WHERE regno = :regno
                     AND sport_id = (SELECT sport_id FROM sports_captain WHERE userid = :userid)";
-
-            $result = $this->query($query, ['position' => $position, 'jerseyno' => $jerseyno, 'regno' => $regno, 'userid' => $userId]);
+            
+            $result = $this->query($query, [
+                'position' => $position,
+                'jerseyno' => $jerseyno,
+                'regno' => $regno,
+                'userid' => $userId
+            ]);
             return $result;
-        
         }catch(Exception $e){
             
             return false;

@@ -5,7 +5,8 @@ class Upcomingevent{
     protected $table = 'upcomingevents';
     protected $columns = ['event_name','date','time','venue','sport_id'];
 
-    public function getupcomingevents(){
+
+    public function getUpcomingevents(){
 
         $userId = $this->getUserId();
 
@@ -31,13 +32,15 @@ class Upcomingevent{
             die("User ID not found in session.");
         }
 
+        try{
+
         $query = "INSERT INTO upcomingevents(event_name,date,time,venue,sport_id)
                 VALUES(
                     :event_name,
                     :date,
                     :time,
                     :venue,
-                    (SELECT sport_id FROM sports_captain WHERE userid = :userid),
+                    (SELECT sport_id FROM sports_captain WHERE userid = :userid)
                 )";
 
         $result = $this->query($query,[
@@ -49,5 +52,9 @@ class Upcomingevent{
         ]);
 
         return $result;
+        }catch(Exception $e){
+            $_SESSION['error'] = $e->getMessage();
+            return false;
+    }
     }
 }
