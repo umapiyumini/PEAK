@@ -71,7 +71,7 @@ form {
     flex-direction: column;
 }
 
-input {
+input , select {
     width: 100%; /* Use full width of the container */
     padding: 10px;
     border: 1px solid #ccc;
@@ -81,7 +81,7 @@ input {
     transition: border 0.3s;
 }
 
-input:focus {
+input:focus, select:focus {
     border: 1px solid #5a2e8a;
     box-shadow: 0 0 5px rgba(90, 46, 138, 0.3);
 }
