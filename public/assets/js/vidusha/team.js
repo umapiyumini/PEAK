@@ -1,22 +1,18 @@
-
-
 // DOM Elements
-
 const form = document.getElementById("player-form");
 const playerRegNo = document.getElementById("player-regno");
 const playerPosition = document.getElementById("player-position");
 const playerNumber = document.getElementById("player-number");
 const rosterTable = document.getElementById("roster-table").getElementsByTagName("tbody")[0];
-const span = document.getElementsByClassName('close')[0];
-const editForm = document.getElementById("edit-form");
 const updateModal = document.getElementById("editModal");
 const closeUpdateModalButton = updateModal.querySelector(".close");
 
+// Hide modal initially
 updateModal.style.display = 'none';
+
 // Open Edit Modal when clicking the Update button
 document.addEventListener("click", function (e) {
     if (e.target.closest(".update-btn")) {
-        console.log("Update button clicked")
         const button = e.target.closest(".update-btn");
         const row = button.closest("tr");
 
@@ -41,43 +37,12 @@ closeUpdateModalButton.addEventListener("click", () => {
     updateModal.style.display = "none";
 });
 
-// Handle Edit Form Submission
-editForm.addEventListener('submit', function (e) {
-    //e.preventDefault();
-
-    const regno = document.getElementById('edit-regno').value.trim();
-    const position = document.getElementById('edit-position').value.trim();
-    const jerseyno = document.getElementById('edit-jerseyno').value.trim();
-
-    if (!regno || !position || !jerseyno) {
-        alert('Please fill in all fields');
-        return;
+// When clicking outside the modal, close it
+window.addEventListener("click", (e) => {
+    if (e.target === updateModal) {
+        updateModal.style.display = "none";
     }
-
-    fetch(`${ROOT}/sportscaptain/team/updateplayer`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-        body: new URLSearchParams({ regno, position, jerseyno })
-    })
-    .then(response => response.json())
-    .then(data => {
-
-        console.log("Response from server:", data);
-
-        if (data.success) {
-            alert("Player updated successfully!");
-            updateModal.style.display = "none";
-            location.reload(); // Reload to update the table
-        } else {
-            alert(data.message || 'Update failed');
-        }
-    })
-    .catch(error => {
-        console.error('Error:', error);
-        alert('Failed to update player');
-    });
 });
-
 
 // Function to add player to roster
 function addPlayerToRoster(regNo, position, number) {
@@ -102,36 +67,4 @@ function addPlayerToRoster(regNo, position, number) {
     `;
 }
 
-// Delete confirmation for existing delete buttons
-document.querySelectorAll('.delete-btn').forEach(button => {
-    button.addEventListener('click', function(e) {
-        if (!confirm('Are you sure you want to delete this player?')) {
-            e.preventDefault();
-        }
-    });
-});
 
-// Success/Error message auto-hide
-document.addEventListener('DOMContentLoaded', function() {
-    // Auto hide success message after 3 seconds
-    const successAlert = document.querySelector('.alert-success');
-    if (successAlert) {
-        setTimeout(() => {
-            successAlert.style.opacity = '0';
-            setTimeout(() => {
-                successAlert.style.display = 'none';
-            }, 300);
-        }, 3000);
-    }
-
-    // Auto hide error message after 5 seconds
-    const errorAlert = document.querySelector('.alert-danger');
-    if (errorAlert) {
-        setTimeout(() => {
-            errorAlert.style.opacity = '0';
-            setTimeout(() => {
-                errorAlert.style.display = 'none';
-            }, 300);
-        }, 5000);
-    }
-});

@@ -11,53 +11,51 @@ class Sportrecords extends Controller{
         return $_SESSION['userid'];
     }
 
+    private $freshersrecords;
+    private $interfacultyrecords;
+    private $interunirecords;
+    private $upcomingevents;
+
+    public function __construct() {
+        $this->freshersrecords = new Freshersrecords();
+        $this->interfacultyrecords = new Interfacultyrecords();
+        $this->interunirecords = new Interunirecords();
+        $this->upcomingevents = new Upcomingevent();
+    }
+
     public function index(){
 
-    $interuniModel = new Interunirecords();
-    $interuinrecords = $interuniModel->getIntrunirecords();
-    //$interuniid = $interuniModel->getInterunirecordsId();
+    $allRecords = [];
+
+    $freshers = $this->freshersrecords->getFreshersrecords();
+    foreach ($freshers as $record){
+        $record = (array) $record;
+        $record['category'] = 'Freshers';
+        $allRecords[] = $record;
+    }
+
+    $interfaculty = $this->interfacultyrecords->getInterfacultyrecords();
+    foreach ($interfaculty as $record){
+        $record = (array) $record;
+        $record['category'] = 'Inter Faculty';
+        $allRecords[] = $record;
+    }
+
+    $interuni = $this->interunirecords->getIntrunirecords();
+    foreach ($interuni as $record){
+        $record = (array) $record;
+        $record['category'] = 'Inter University';
+        $allRecords[] = $record;
+    }
+
+    $upcoming = $this->upcomingevents->getUpcomingevents();
+
+    $data = ['tournamentRecords' => $allRecords, 'upcomingevents' => $upcoming];
+
+    $this->view('sportscaptain/sportrecords', $data);
+    }
+
     
-    $interfacultyModel = new Interfacultyrecords();
-    $interfacrecords = $interfacultyModel->getInterfacultyrecords();
-    //$interfacid = $interfacultyModel->getInterfacultyrecordsId();
-
-    $freshersModel = new Freshersrecords();
-    $freshersrecords =$freshersModel->getFreshersrecords();
-   // $freshersid = $freshersModel->getFreshersrecordsId();
-
-    $pastEvents = array_merge($interuinrecords,$interfacrecords,$freshersrecords);
-    //$eventId = array_merge($interuniid,$interfacid,$freshersid);
-
-    $upcomingModel = new Upcomingevent();
-    $upcomingevents = $upcomingModel->getupcomingevents();
-
-    $this->view('sportscaptain/sportrecords',['pastEvents' => (array) $pastEvents],['upcomingevents' => $upcomingevents]);
-    }
-
-    public function handleRequest() {
-        if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['edit_id'])) {
-            $eventId = $_POST['edit_id'];
-
-            // Determine the event type (Interuni, Interfaculty, Freshers)
-            $interuniModel = new Interunirecords();
-            $interfacultyModel = new Interfacultyrecords();
-            $freshersModel = new Freshersrecords();
-
-            $event = $interuniModel->getTournamentById($eventId) ??
-                     $interfacultyModel->getTournamentById($eventId) ??
-                     $freshersModel->getTournamentById($eventId);
-
-            if ($event) {
-                // Load the view and pass the event data for editing
-                $this->view('sportscaptain/sportrecords', [
-                    'event' => $event
-                ]);
-            } else {
-                echo "Event not found!";
-            }
-        }
-    }
-
     public function updateEvent() {
         if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['update'])) {
             $id = $_POST['id'];

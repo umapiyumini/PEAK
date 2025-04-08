@@ -35,7 +35,8 @@ class Team extends Controller{
             try{
             $teamModel = new Players();
 
-            $result = $teamModel->addPlayer($regno, $position, $jerseyno);   
+            $result = $teamModel->addPlayer($regno, $position, $jerseyno);
+             
          
         }catch(Exception $e){
             $_SESSION['error'] = $e->getMessage();  
@@ -72,34 +73,35 @@ class Team extends Controller{
         }
     }
 
-        public function updateplayer(){
-
-            if($_SERVER['REQUEST_METHOD'] === 'POST'){
-
-                $regno = trim($_POST['regno'] ?? '');
-                $position = trim($_POST['position'] ?? '');
-                $jerseyno = trim($_POST['jersyno'] ?? '');
-
-                if(empty($regno) || empty($position) || empty($jerseyno)){
-                    $_SESSION['error'] = 'All fields are required';
-                    header('Location:' . ROOT . '/sportscaptain/team');
-                    exit();
-                }
-
-                try{
-                    $teamModel = new Players();
-                    $result = $teamModel->updatePlayer(
-                        $regno,
-                        $position,
-                        $jerseyno
-                    );
-                }catch(Exception $e){
-                    $_SESSION['error'] = $e->getMessage();
-                }
-
+    public function updateplayer(){
+        if($_SERVER['REQUEST_METHOD'] === 'POST'){
+            $regno = trim($_POST['regno'] ?? '');
+            $position = trim($_POST['position'] ?? '');
+            $jerseyno = trim($_POST['jerseyno'] ?? ''); // Fixed typo here
+            
+            if(empty($regno) || empty($position) || empty($jerseyno)){
+                $_SESSION['error'] = 'All fields are required';
                 header('Location:' . ROOT . '/sportscaptain/team');
+                exit();
             }
-        } 
+            
+            try{
+                $teamModel = new Players();
+                $result = $teamModel->updatePlayer(
+                    $regno,
+                    $position,
+                    $jerseyno
+                );
+                
+                
+            }catch(Exception $e){
+                $_SESSION['error'] = $e->getMessage();
+            }
+            
+            header('Location:' . ROOT . '/sportscaptain/team');
+            exit();
+        }
+    }
     }
 
 
