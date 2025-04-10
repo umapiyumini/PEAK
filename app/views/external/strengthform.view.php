@@ -2,7 +2,8 @@
 <html lang="en">
     <head>
         <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-1.0">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
         <link rel="stylesheet" href="<?=ROOT?>/assets/css/uma/groundform.css">
         <title>External User Dashboard</title>
     </head>
@@ -19,57 +20,25 @@
         <h1 class="title1">Strength hall Reservation</h1>
 
 
-        <div class="rules">
-                <h2>Please note </h2>
-                <ul>
-                    <li><strong>Booking Time:</strong> Full day: 08:00 - 18:00; Half day: 08:00 - 13:00 or 13:00 - 18:00</li>
-                    <li>Bookings can only be made 2 weeks in advance.</li>
-                    <li>No refunds, but switching to an available day is allowed.</li>
-                    <li>If canceled due to an internal event, another day will be provided.</li>
-                    <li>Preferred payment should be made a day before, as no refunds are issued.</li>
-                </ul>
 
 
-                
-            </div>
+        <form id="reservationForm" action="<?= ROOT ?>/external/strengthform/book" method="POST" enctype="multipart/form-data">
+    <!-- Existing form fields -->
+    <label for="subscription">Subscription:</label>
+    <select id="subscription" name="subscription" required>
+        <option value="" disabled selected>Select subscription</option>
+        <option value="annual">Annual</option>
+        <option value="6 month">6 Month</option>
+        <option value="3 month">3 Month</option>
+    </select>
 
+    <label for="price">Price:</label>
+    <input type="text" id="price" name="price" readonly>
 
-        <form id="reservationForm">
-            <!-- Dropdown for area selection -->
-            <label for="area">Select Day:</label>
-            <select id="area" name="area" required>
-                <option value="" disabled selected>Select a day</option>
-                <option value="Monday">Monday</option>
-                <option value="Wednesday">Wednesday</option>
-                <option value="Saturday">Saturday</option>
-                <option value="Sunday">Sunday</option>
-            </select>
+    
 
-            <!-- Dropdown for duration selection -->
-            <label for="duration">Duration:</label>
-            <select id="duration" name="duration" required>
-                <option value="" disabled selected>Select duration</option>
-                <option value="annual">Annual</option>
-                <option value="sixmonth">6 Month</option>
-                <option value="threemonth">3 Month</option>
-            </select>
-
-            <!-- Auto-generated price -->
-            <label for="price">Price:</label>
-            <input type="text" id="price" name="price" readonly>
-
-           <!-- Auto-generated price with discount -->
-            <label for="disprice">Total Price with Discount:</label>
-            <input type="text" id="disprice" name="disprice" readonly>
-
-            <label for="proof">Document of proof</label>
-                <input type="file"   required>
-               
-<br>
-            
-
-            <button type="submit">Next</button>
-        </form>
+    <button type="submit">Next</button>
+</form>
 
 
         <div id="reservationSummaryModal" class="modal">
@@ -99,11 +68,40 @@
 
     
 
+    <script>
+// Add an event listener to the subscription dropdown
+document.getElementById('subscription').addEventListener('change', function() {
+    // Get the selected subscription value
+    const subscription = this.value;
+
+    // Get the price input element where the price will be displayed
+    const priceElement = document.getElementById('price');
+
+    // Use Fetch API to send a POST request to the backend to get the price
+    fetch('<?= ROOT ?>/external/strengthform/getPrice', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded'
+        },
+        body: `subscription=${subscription}`
+    })
+    .then(response => response.text())  // Handle the response as plain text
+    .then(price => {
+        // Update the price input field with the returned price
+        priceElement.value = price;  // This will set the price to the input field
+    })
+    .catch(error => {
+        // Handle errors if any
+        console.error('Error fetching price:', error);
+    });
+});
+
+</script>
 
 
 
   
 
-    <script src="<?=ROOT?>/assets/js/uma/strength.js"></script>
+    
 </body>
 </html>

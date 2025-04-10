@@ -31,64 +31,79 @@
             </div>
 
 
-        <form id="reservationForm">
-            <!-- Dropdown for area selection -->
-            <label for="area">Select Area:</label>
-            <select id="area" name="area" required>
-                <option value="" disabled selected>Select an area</option>
-                <option value="badminton">Badminton</option>
-                <option value="Karate/Twaekondo">Karate/Twaekondo</option>
-                <option value="Table Tennis">Table Tennis</option>
-                <option value="Wrestling">Wrestling</option>
-                <option value="volleyball">Volleyball</option>
-            </select>
+            <form id="reservationForm">
 
-            <!-- Dropdown for reason selection -->
-            <label for="reason">Booking for: </label>
-            <select id="reason" name="reason" required>
-                <option value="" disabled selected>Select a reason</option>
-                <option value="practice">Practice</option>
-                <option value="matches">Matches/Sports Festivals</option>
-            </select>
+<!-- Booking For -->
+<label for="bookingFor">Booking For:</label>
+<select id="bookingFor" name="bookingFor" required>
+    <option value="" disabled selected>Select</option>
+    <option value="practice">Practice</option>
+    <option value="tournament">Tournament</option>
+</select>
 
-            <!-- Dropdown for duration selection -->
-            <label for="duration">Duration:</label>
-            <select id="duration" name="duration" required>
-                <option value="" disabled selected>Select duration</option>
-                <option value="fullDay">Full Day</option>
-                <option value="halfDay">Half Day</option>
-                <option value="twoHours"> 1 Hour</option>
-            </select>
+<!-- Date Picker -->
+<label for="date">Select Date:</label>
+<input type="date" id="date" name="date" required>
 
-            <!-- Auto-generated price -->
-            <label for="price">Price:</label>
-            <input type="text" id="price" name="price" readonly>
+<!-- Duration -->
+<label for="duration">Duration:</label>
+<select id="duration" name="duration" required>
+    <option value="" disabled selected>Select Duration</option>
+    <option value="twoHours">Two Hours</option>
+    <option value="halfDay">Half Day</option>
+    <option value="fullDay">Full Day</option>
+</select>
 
-           <!-- Auto-generated price with discount -->
-            <label for="disprice">Total Price with Discount:</label>
-            <input type="text" id="disprice" name="disprice" readonly>
+<!-- Time Slot Section -->
+<div id="timeSlotSection" style="display: none;">
+    <label for="timeSlot">Available Time Slots:</label>
+    <select id="timeSlot" name="timeSlot">
+        <!-- Options will be dynamically loaded -->
+    </select>
+</div>
 
-            <!-- Date selection -->
-            <label for="date">Select Date:</label>
-            <input type="date" id="date" name="date" required>
+<!-- User Type -->
+<label for="userType">User Type:</label>
+<select id="userType" name="userType" required>
+    <option value="" disabled selected>Select</option>
+    <option value="stateuniversity">State University</option>
+    <option value="registeredclub">Registered club</option>
+    <option value="governmentschool">Government School / University</option>
+    <option value="semischool">Semi Government School / University</option>
+    <option value="UOCfaculty">UOC Faculty</option>
+    <option value="other">Other</option>
+</select>
 
-            <!-- Time slots -->
-            <div id="timeSlotsContainer">
-                <label for="timeSlots">Available Time Slots:</label>
-                <div id="timeSlots"></div>
-            </div>
 
-            <!-- Reservation rules -->
-            <label for="proof">Document of proof</label>
-                <input type="file"   required>
-               
-<br>
-           
 
-            <!-- Submit button -->
-            <button type="submit">Next</button>
-        </form>
 
+<!-- Number of Participants -->
+<label for="participants">Number of Participants:</label>
+<input type="number" id="participants" name="participants" min="1" required>
+
+<!-- Extra Details -->
+<label for="extraDetails">Extra Details:</label>
+<textarea id="extraDetails" name="extraDetails" rows="3"></textarea>
+
+<!-- Proof of Identity -->
+<label for="proof">Proof of Identity:</label>
+<input type="file" id="proof" name="proof" required>
+
+<!-- Price -->
+<label for="price">Price:</label>
+<input type="text" id="price" name="price" readonly>
+
+<!-- Discounted Price -->
+<label for="discountedPrice">Discounted Price:</label>
+<input type="text" id="discountedPrice" name="discountedPrice" readonly>
+
+<!-- Payment Proof -->
+<label for="paymentProof">Payment Proof:</label>
+<input type="file" id="paymentProof" name="paymentProof" required>
+
+<!-- Submit -->
+<button type="submit">Next</button>
+</form>
 
         
     </div>
