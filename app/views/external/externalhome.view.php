@@ -113,7 +113,7 @@
 <div class="namecard">
     <h3>Quick Actions</h3>
     <div class="action-buttons">
-        <a href="reservation" >
+        <a href="pickfacility" >
             <button class="action-button">Make New Reservation</button>
         </a>
         <a href="prices" >
