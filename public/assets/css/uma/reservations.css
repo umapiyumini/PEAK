@@ -702,3 +702,36 @@ tr:nth-child(even) {
 .popup-content .close-icon:hover {
     color: var(--mediumpurple);
 }
+
+.pay-now-btn {
+    background-color:var(--mediumpurple);
+    color: white;
+    padding: 8px 14px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: bold;
+    margin-top: 10px;
+}
+
+.pay-now-btn:hover {
+    background-color:var(--darkpurple);
+}
+
+.reservation-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
+.new-reservation-icon img {
+    width: 36px;
+    height: 36px;
+    cursor: pointer;
+    transition: transform 0.2s ease;
+}
+
+.new-reservation-icon img:hover {
+    transform: scale(1.1);
+}

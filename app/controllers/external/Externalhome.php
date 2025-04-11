@@ -6,7 +6,7 @@ class Externalhome extends Controller {
         $user_id = $_SESSION['userid']; // Assuming the user is logged in
 
         // Fetch pending reservations for the user
-        $this->data['pendingRequests'] = $reservationsModel->getPendingReservations($user_id);
+        $this->data['upcoming'] = $reservationsModel->getupcomingevents($user_id);
         
         // Fetch due payments for the user
         $this->data['duePayments'] = $reservationsModel->getDuePayments($user_id);

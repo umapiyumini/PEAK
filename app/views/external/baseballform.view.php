@@ -16,7 +16,7 @@
 
         <!-- form part -->
         <div class="container1">
-        <h1 class="title1">Badminton court Reservation</h1>
+        <h1 class="title1">Baseball court Reservation</h1>
 
 
         <div class="rules">
@@ -29,83 +29,98 @@
                     <li>Preferred payment should be made a day before, as no refunds are issued.</li>
                 </ul>
             </div>
+            
 
+            <form id="reservationForm" method="post" action="<?=ROOT?>/external/baseballform">
 
-            <form id="reservationForm">
-
-<!-- Booking For -->
-<label for="bookingFor">Booking For:</label>
-<select id="bookingFor" name="bookingFor" required>
-    <option value="" disabled selected>Select</option>
-    <option value="practice">Practice</option>
-    <option value="tournament">Tournament</option>
-</select>
-
-<!-- Date Picker -->
-<label for="date">Select Date:</label>
-<input type="date" id="date" name="date" required>
-
-<!-- Duration -->
-<label for="duration">Duration:</label>
-<select id="duration" name="duration" required>
-    <option value="" disabled selected>Select Duration</option>
-    <option value="twoHours">Two Hours</option>
-    <option value="halfDay">Half Day</option>
-    <option value="fullDay">Full Day</option>
-</select>
-
-<!-- Time Slot Section -->
-<div id="timeSlotSection" style="display: none;">
-    <label for="timeSlot">Available Time Slots:</label>
-    <select id="timeSlot" name="timeSlot">
-        <!-- Options will be dynamically loaded -->
+    <!-- Booking For -->
+    <label for="bookingFor">Booking For:</label>
+    <select id="bookingFor" name="bookingFor" required>
+        <option value="" disabled selected>Select</option>
+        <option value="practice">Practice</option>
+        <option value="tournament">Tournament</option>
     </select>
-</div>
 
-<!-- User Type -->
-<label for="userType">User Type:</label>
-<select id="userType" name="userType" required>
-    <option value="" disabled selected>Select</option>
-    <option value="stateuniversity">State University</option>
-    <option value="registeredclub">Registered club</option>
-    <option value="governmentschool">Government School / University</option>
-    <option value="semischool">Semi Government School / University</option>
-    <option value="UOCfaculty">UOC Faculty</option>
-    <option value="other">Other</option>
-</select>
+    <!-- Date Picker -->
+    <label for="date">Select Date:</label>
+    <input type="date" id="date" name="date" required>
 
+    <!-- Duration -->
+    <label for="duration">Duration:</label>
+    <select id="duration" name="duration" required>
+        <option value="" disabled selected>Select Duration</option>
+        <option value="halfDay">Half Day</option>
+        <option value="fullDay">Full Day</option>
+    </select>
 
+    <!-- Half Day Time Options -->
+    <div id="halfDayOptions" style="display: none;">
+        <label>Choose Time Slot:</label>
+        <div style="display: flex; gap: 30px;">
+            <label style="display: flex; align-items: center; gap: 5px;">
+                <input type="radio" id="slot1" name="timeSlot" value="08:00 - 13:00">
+                08:00 - 13:00
+            </label>
+            <label style="display: flex; align-items: center; gap: 5px;">
+                <input type="radio" id="slot2" name="timeSlot" value="13:00 - 18:00">
+                13:00 - 18:00
+            </label>
+        </div>
+    </div>
 
+    <!-- User Type -->
+    <label for="userType">User Type:</label>
+    <select id="userType" name="userType" required>
+        <option value="" disabled selected>Select</option>
+        <option value="stateuniversity">State University</option>
+        <option value="registeredclub">Registered club</option>
+        <option value="governmentschool">Government School / University</option>
+        <option value="semischool">Semi Government School / University</option>
+        <option value="UOCfaculty">UOC Faculty</option>
+        <option value="other">Other</option>
+    </select>
 
-<!-- Number of Participants -->
-<label for="participants">Number of Participants:</label>
-<input type="number" id="participants" name="participants" min="1" required>
+     <!-- Proof of Identity -->
+     <label for="proof">Proof of Identity:</label>
+    <input type="file" id="proof" name="proof" required>
 
-<!-- Extra Details -->
-<label for="extraDetails">Extra Details:</label>
-<textarea id="extraDetails" name="extraDetails" rows="3"></textarea>
+    
+    <!-- Number of Participants -->
+    <label for="participants">Number of Participants:</label>
+    <input type="number" id="participants" name="participants" min="10" required>
 
-<!-- Proof of Identity -->
-<label for="proof">Proof of Identity:</label>
-<input type="file" id="proof" name="proof" required>
+    <!-- Extra Details -->
+    <label for="extraDetails">Extra Details:</label>
+    <textarea id="extraDetails" name="extraDetails" rows="3"></textarea>
 
-<!-- Price -->
-<label for="price">Price:</label>
-<input type="text" id="price" name="price" readonly>
+   
+    <!-- Price -->
+    <label for="price">Price:</label>
+    <input type="text" id="price" name="price" readonly>
 
-<!-- Discounted Price -->
-<label for="discountedPrice">Discounted Price:</label>
-<input type="text" id="discountedPrice" name="discountedPrice" readonly>
+    <!-- Discounted Price -->
+    <label for="discountedPrice">Discounted Price:</label>
+    <input type="text" id="discountedPrice" name="discountedPrice" readonly>
 
-<!-- Payment Proof -->
-<label for="paymentProof">Payment Proof:</label>
-<input type="file" id="paymentProof" name="paymentProof" required>
-
-<!-- Submit -->
-<button type="submit">Next</button>
+    <!-- Submit -->
+    <button type="submit">Submit Reservation</button>
 </form>
 
-        
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const durationSelect = document.getElementById('duration');
+        const halfDayOptions = document.getElementById('halfDayOptions');
+
+        durationSelect.addEventListener('change', () => {
+            if (durationSelect.value === 'halfDay') {
+                halfDayOptions.style.display = 'block';
+            } else {
+                halfDayOptions.style.display = 'none';
+            }
+        });
+    });
+</script>
+
     </div>
 
 
@@ -143,3 +158,8 @@
     <script src="<?=ROOT?>/assets/js/uma/indoor.js"></script>
 </body>
 </html>
+
+
+
+
+
