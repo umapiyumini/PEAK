@@ -54,18 +54,18 @@
                 <div class="container2">
     <!-- Pending Requests Card -->
     <div class="namecard">
-        <h3>Pending Requests</h3>
+        <h3>Upcoming Events</h3>
         <div class="request-details">
-            <?php if (!empty($pendingRequests)): ?>
-                <?php foreach ($pendingRequests as $request): ?>
+            <?php if (!empty($upcoming)): ?>
+                <?php foreach ($upcoming as $request): ?>
                     <div class="request-item">
-                        <p><strong>Facility:</strong> <?= htmlspecialchars($request->facility) ?></p>
+                        <p><strong>Facility:</strong> <?= htmlspecialchars($request->courtname) ?></p>
                         <p><strong>Booking Time:</strong> <?= htmlspecialchars($request->time) ?></p>
                         <p><strong>Price:</strong> Rs <?= number_format($request->price, 2) ?></p>
                     </div>
                 <?php endforeach; ?>
             <?php else: ?>
-                <p>No pending requests.</p>
+                <p>No upcoming events.</p>
             <?php endif; ?>
         </div>
     </div>
@@ -80,8 +80,8 @@
             <?php $totalDue = 0; ?>
             <?php foreach ($duePayments as $payment) : ?>
                 <div class="payment-item">
-                    <p><strong>Facility:</strong> <?= htmlspecialchars($payment->facility) ?></p>
-                    <p><strong>Booking Time:</strong> <?= htmlspecialchars($payment->time) ?></p>
+                    
+                    <p><strong>Facility:</strong> <?= htmlspecialchars($payment->courtname) ?></p>
                     <p><strong>Price:</strong> Rs <?= number_format((float)$payment->price, 2) ?></p>
                 </div>
                 <?php $totalDue += (float)$payment->price; ?>
