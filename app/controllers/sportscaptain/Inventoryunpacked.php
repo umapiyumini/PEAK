@@ -16,7 +16,7 @@ class Inventoryunpacked extends Controller {
         // Pass the data to the view
         $this->view('sportscaptain/inventoryunpacked', ['unpackedItems' => $unpackedItems, 
         'inventoryrequests' => $inventoryrequests]);
-    }
+    } 
 
     //edit quantity
     public function editQuantity(){
@@ -39,9 +39,13 @@ class Inventoryunpacked extends Controller {
             print_r($_POST);
             $inventoryModel = new Unpackedinventory();  
             $result=$inventoryModel->addRequest(
+                $_POST['equipmentid'],
+                $_POST['sport_id'],
+                $_POST['date'],
                 $_POST['timeframe'],
                 $_POST['name'],
-                $_POST['quantity'],
+                $_POST['quantityrequested'],
+                $_POST['requested_by'],
                 $_POST['addnotes']
             );
 

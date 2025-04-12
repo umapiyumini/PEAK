@@ -1,60 +1,52 @@
 // Function to handle approval
 function approveRequest(studentId) {
-  const messageContainer = document.getElementById('message-container');
-  const message = document.createElement('div');
-  message.className = 'message success';
-  message.textContent = `Student ID ${studentId} has been approved!`;
-  messageContainer.appendChild(message);
+  updateStatus(studentId, 'Approved');
 
-  // Auto-remove the message after 3 seconds
-  setTimeout(() => message.remove(), 3000);
+  showMessage(`Student ID ${studentId} has been approved!`, 'success');
 }
 
 // Function to handle rejection
 function rejectRequest(studentId) {
   const rejectionReason = prompt(`Please provide a rejection reason for Student ID ${studentId}:`);
-  const messageContainer = document.getElementById('message-container');
-
+  
   if (rejectionReason) {
-    const message = document.createElement('div');
-    message.className = 'message error';
-    message.textContent = `Student ID ${studentId} has been rejected. Reason: ${rejectionReason}`;
-    messageContainer.appendChild(message);
-
-    // Auto-remove the message after 3 seconds
-    setTimeout(() => message.remove(), 3000);
+    updateStatus(studentId, 'Rejected', rejectionReason);
+    showMessage(`Student ID ${studentId} has been rejected. Reason: ${rejectionReason}`, 'error');
   } else {
-    const message = document.createElement('div');
-    message.className = 'message warning';
-    message.textContent = `Rejection for Student ID ${studentId} was canceled as no reason was provided.`;
-    messageContainer.appendChild(message);
-
-    // Auto-remove the message after 3 seconds
-    setTimeout(() => message.remove(), 3000);
+    showMessage(`Rejection for Student ID ${studentId} was canceled as no reason was provided.`, 'warning');
   }
 }
 
-// Example of dynamically adding notifications
-const notificationList = document.getElementById('notification-list');
+// Function to show feedback messages
+function showMessage(text, type) {
+  const messageContainer = document.getElementById('message-container');
+  const message = document.createElement('div');
+  message.className = `message ${type}`;
+  message.textContent = text;
+  messageContainer.appendChild(message);
 
-// Add more notifications dynamically (example data)
-const students = [
-  { id: 23456, name: "Jane Smith", faculty: "Science", reason: "I was a school hockey team member" },
-  { id: 34567, name: "Alice Johnson", faculty: "Management", reason: "I was a school hockey team member" },
-];
+  // Auto-remove message after 3 seconds
+  setTimeout(() => message.remove(), 3000);
+}
 
-students.forEach((student) => {
-  const card = document.createElement('div');
-  card.className = 'notification-card';
-  card.innerHTML = `
-    <p><strong>Student ID:</strong> ${student.id}</p>
-    <p><strong>Name:</strong> ${student.name}</p>
-    <p><strong>Faculty:</strong> ${student.faculty}</p>
-    <p><strong>Reason:</strong> ${student.reason}</p>
-    <div class="action-buttons">
-      <button class="approve-btn" onclick="approveRequest(${student.id})">Approve</button>
-      <button class="reject-btn" onclick="rejectRequest(${student.id})">Reject</button>
-    </div>
-  `;
-  notificationList.appendChild(card);
-});
+// Function to send status update to the backend
+function updateStatus(studentId, action, reason = '') {
+  fetch('approve_reject.php', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      id: studentId,
+      action: action.toLowerCase(), // 'approved' or 'rejected'
+      reason: reason
+    })
+  })
+  .then(res => res.text())
+  .then(response => {
+    console.log('Server response:', response);
+    // Optionally remove the card or mark it as processed
+  })
+  .catch(err => {
+    console.error('Error updating status:', err);
+    showMessage(`Failed to update status for Student ID ${studentId}.`, 'error');
+  });
+}

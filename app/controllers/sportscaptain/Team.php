@@ -77,7 +77,7 @@ class Team extends Controller{
         if($_SERVER['REQUEST_METHOD'] === 'POST'){
             $regno = trim($_POST['regno'] ?? '');
             $position = trim($_POST['position'] ?? '');
-            $jerseyno = trim($_POST['jerseyno'] ?? ''); // Fixed typo here
+            $jerseyno = trim($_POST['jerseyno'] ?? ''); 
             
             if(empty($regno) || empty($position) || empty($jerseyno)){
                 $_SESSION['error'] = 'All fields are required';

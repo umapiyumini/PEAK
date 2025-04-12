@@ -2,7 +2,10 @@
 class Recruitment extends Controller{
    public function index(){
 
-        $this->view('sportscaptain/recruitment');
+        $recruitmentModel = new Recruitmentrequests();
+        $recritmentrequest = $recruitmentModel->getRecruitmentRequests();
+
+        $this->view('sportscaptain/recruitment', ['recritmentrequest' => $recritmentrequest]);
     }
 
    

@@ -10,8 +10,8 @@ class Staffdashboard extends Controller {
         $this->data['dropdown'] = $unpackedinventory->equipmentrequestdropdown();
 
         // Create an instance of the InventoryRequest model
-        $inventoryrequest = new InventoryRequest();
-        $this->data['request'] = $inventoryrequest->recquesttable();
+        $inventoryrequest = new Inventoryrequest();
+        $this->data['request'] = $inventoryrequest->requesttable();
 
         // Handle form submission for a new stock request
         if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['name'], $_POST['quantityrequested'])) {
