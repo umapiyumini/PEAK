@@ -27,6 +27,25 @@ class Courts {
     public function getTable() {
         return $this->table;
     }
+
+
+    public function update($id, $data) {
+        $keys = array_keys($data);
+        $set = implode(", ", array_map(fn($key) => "$key = :$key", $keys));
+        $data['courtid'] = $id;
+    
+        $query = "UPDATE $this->table SET $set WHERE courtid = :courtid";
+        return $this->query($query, $data);
+    }
+
+    
+    public function getCourtById($id) {
+        $query = "SELECT * FROM $this->table WHERE courtid = :id";
+        $result = $this->query($query, ['id' => $id]);
+        return $result ? $result[0] : null;
+    }
+    
+    
 }
 
 ?>

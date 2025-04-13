@@ -10,23 +10,41 @@ class Groundcourts {
         return $this->table;
     }
 
-    // Assuming your controller is handling this
-public function getPrice(Request $request) {
-    $event = $request->input('event');
-    $duration = $request->input('duration');
-    $courtId = 24; // Always fixed as 24
-
-    // Fetch the price from the database based on event and duration
-    $priceData = DB::table('groundcourts')
-                    ->where('courtid', $courtId)
-                    ->where('event', $event)
-                    ->where('duration', $duration)
-                    ->first();
-
-    if ($priceData) {
-        return response()->json(['status' => 'success', 'price' => $priceData->price]);
-    } else {
-        return response()->json(['status' => 'error', 'message' => 'Price not found']);
+    
+    public function getPriceByDetails($event, $duration, $description, $courtid) {
+        // Adjust the query to include courtid
+        $query = "SELECT price FROM $this->table WHERE event = :event AND duration = :duration AND description = :description AND courtid = :courtid LIMIT 1";
+        
+        // Add courtid to the parameters array
+        $params = [
+            'event' => $event, 
+            'duration' => $duration, 
+            'description' => $description, 
+            'courtid' => $courtid
+        ];
+    
+        // Assuming query() works as it did before (handles parameterized queries)
+        $result = $this->query($query, $params);
+    
+        return $result ? $result[0]->price : null;
     }
+    
+public function getPriceByEventDurationDescription($event, $duration, $description) {
+    // Query the database to get the base price based on event, duration, and description
+    // For example:
+    $query = "SELECT price FROM prices WHERE event = :event AND duration = :duration AND description = :description LIMIT 1";
+    $stmt = $this->query($query, [
+        'event' => $event,
+        'duration' => $duration,
+        'description' => $description
+    ]);
+
+    if ($stmt && count($stmt) > 0) {
+        return (float) $stmt[0]->price;  // Return the price as float
+    }
+
+    return false;  // If no price is found, return false
 }
+
+
 }
