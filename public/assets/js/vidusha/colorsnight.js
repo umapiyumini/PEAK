@@ -1,98 +1,81 @@
-let editingRow = null;
-
-// Open modal for adding/editing student
-function openModal(isEdit = false, row = null) {
-    const modal = document.getElementById('studentModal');
-    const form = document.getElementById('studentForm');
-    const todayDateField = document.getElementById('todayDate');
-
-    // Set today's date for todayDate field
+// Set today's date
+document.addEventListener("DOMContentLoaded", function () {
     const today = new Date().toISOString().split('T')[0];
-    todayDateField.value = today;
+    document.getElementById("todayDate").value = today;
+});
 
-
-    if (isEdit && row) {
-        document.getElementById('modalTitle').textContent = "Edit Student Details";
-        editingRow = row;
-
-        // Populate modal form with row data
-        document.getElementById('studentName').value = row.cells[0].textContent;
-        document.getElementById('registrationNumber').value = row.cells[1].textContent;
-        document.getElementById('interUniPerformance').value = row.cells[2].textContent;
-        document.getElementById('awards').value = row.cells[3].textContent;
-        document.getElementById('rewards').value = row.cells[4].textContent;
-        document.getElementById('meritawards').value = row.cells[5].textContent;
-        document.getElementById('details').value = row.cells[6].textContent;
-        todayDateField.value = row.cells[7].textContent; 
-    } else {
-        document.getElementById('modalTitle').textContent = "Add Student Details";
-        form.reset();
-        todayDateField.value = today;
-        editingRow = null;
-    }
-
-    modal.style.display = 'block';
-    document.getElementById('overlay').style.display = 'block'; // Show overlay
+// Open modal
+function openModal() {
+    document.getElementById("studentModal").style.display = "block";
+    document.getElementById("studentForm").reset();
+    document.getElementById("editIndex").value = "";
 }
 
 // Close modal
 function closeModal() {
-    document.getElementById('studentModal').style.display = 'none';
-    document.getElementById('overlay').style.display = 'none'; // Hide overlay
+    document.getElementById("studentModal").style.display = "none";
 }
 
-// Save student details
+// Save student to table
 function saveStudent() {
-    const name = document.getElementById('studentName').value.trim();
-    const regNo = document.getElementById('registrationNumber').value.trim();
-    const performance = document.getElementById('interUniPerformance').value.trim();
-    const awards = document.getElementById('awards').value.trim();
-    const rewards = document.getElementById('rewards').value.trim();
-    const meritAwards = document.getElementById('meritawards').value.trim();
-    const details = document.getElementById('details').value.trim();
-    
+    const name = document.getElementById("studentName").value;
+    const regNo = document.getElementById("registrationNumber").value;
+    const performance = document.getElementById("interUniPerformance").value;
+    const awards = document.getElementById("awards").value;
+    const rewards = document.getElementById("rewards").value;
+    const merit = document.getElementById("meritawards").value;
+    const details = document.getElementById("details").value;
+    const index = document.getElementById("editIndex").value;
 
-    if (!name || !regNo) {
-        alert('Please fill in the required fields: Student Name and Registration Number.');
-        return;
-    }
+    const tbody = document.getElementById("studentDetailsBody");
 
-    if (editingRow) {
-        // Update existing row
-        editingRow.cells[0].textContent = name;
-        editingRow.cells[1].textContent = regNo;
-        editingRow.cells[2].textContent = performance;
-        editingRow.cells[3].textContent = awards;
-        editingRow.cells[4].textContent = rewards;
-        editingRow.cells[5].textContent = meritAwards;
-        editingRow.cells[6].textContent = details;
-        
+    if (index) {
+        const row = tbody.children[index];
+        row.innerHTML = getRowHTML(name, regNo, performance, awards, rewards, merit, details, index);
     } else {
-        // Add a new row
-        const tableBody = document.getElementById('studentDetailsBody');
-        const row = tableBody.insertRow();
-
-        row.innerHTML = `
-            <td>${name}</td>
-            <td>${regNo}</td>
-            <td>${performance}</td>
-            <td>${awards}</td>
-            <td>${rewards}</td>
-            <td>${meritAwards}</td>
-            <td>${details}</td>
-            <td>
-                <button type="button" onclick="openModal(true, this.parentElement.parentElement)">Edit</button>
-                <button type="button" onclick="removeRow(this)">Remove</button>
-            </td>
-        `;
+        const newRow = document.createElement("tr");
+        const newIndex = tbody.children.length;
+        newRow.innerHTML = getRowHTML(name, regNo, performance, awards, rewards, merit, details, newIndex);
+        tbody.appendChild(newRow);
     }
 
     closeModal();
 }
 
-// Remove a row from the table
-function removeRow(button) {
-    if (confirm("Are you sure you want to remove this student?")) {
-        button.parentElement.parentElement.remove();
-    }
+// Create row HTML
+function getRowHTML(name, regNo, performance, awards, rewards, merit, details, index) {
+    return `
+        <td><input type="hidden" name="students[${index}][name]" value="${name}">${name}</td>
+        <td><input type="hidden" name="students[${index}][reg_no]" value="${regNo}">${regNo}</td>
+        <td><input type="hidden" name="students[${index}][performance]" value="${performance}">${performance}</td>
+        <td><input type="hidden" name="students[${index}][awards]" value="${awards}">${awards}</td>
+        <td><input type="hidden" name="students[${index}][rewards]" value="${rewards}">${rewards}</td>
+        <td><input type="hidden" name="students[${index}][merit]" value="${merit}">${merit}</td>
+        <td><input type="hidden" name="students[${index}][details]" value="${details}">${details}</td>
+        <td>
+            <button type="button" onclick="editStudent(${index})">Edit</button>
+            <button type="button" onclick="deleteStudent(this)">Delete</button>
+        </td>
+    `;
+}
+
+// Edit student
+function editStudent(index) {
+    const row = document.getElementById("studentDetailsBody").children[index];
+    document.getElementById("studentName").value = row.children[0].textContent;
+    document.getElementById("registrationNumber").value = row.children[1].textContent;
+    document.getElementById("interUniPerformance").value = row.children[2].textContent;
+    document.getElementById("awards").value = row.children[3].textContent;
+    document.getElementById("rewards").value = row.children[4].textContent;
+    document.getElementById("meritawards").value = row.children[5].textContent;
+    document.getElementById("details").value = row.children[6].textContent;
+    document.getElementById("editIndex").value = index;
+
+    openModal();
+}
+
+// Delete student row
+function deleteStudent(button) {
+    const row = button.closest("tr");
+    row.remove();
 }

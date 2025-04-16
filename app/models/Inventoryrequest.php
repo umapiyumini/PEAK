@@ -12,7 +12,7 @@ class Inventoryrequest {
                   FROM inventoryrequest i
                   JOIN equipments e ON i.equipmentid = e.equipmentid
                   JOIN sport s ON i.sport_id = s.sport_id
-                WHERE i.timeframe = 'mid year'
+                WHERE e.type = 'recreational'
                   ";
 
         return $this->query($query);

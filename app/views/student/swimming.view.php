@@ -31,11 +31,19 @@
             top: 0;
             z-index: 1000;
             box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-            margin-left: 280px;
+            margin-left: 220px;
             
            
            
         }
+
+
+        .navbar .sports-btn
+        {
+            margin-right: 220px;
+        }
+
+      
 
         .navbar h2 {
             color: #fff;
@@ -65,7 +73,7 @@
             flex-wrap: wrap;
             padding: 120px 40px 30px;
             background-color: #f8f8f8;
-            margin-left: 280px;
+            margin-left: 220px;
         }
 
         .main-content {
