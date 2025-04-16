@@ -7,7 +7,7 @@ class Inventoryrequest {
     protected $fillable = ['requestid','equipmentid','quantityrequested','date','bywhom'];
     private $errorMsg = '';
 
-    public function requesttable() {
+    public function requesttable2() {
         $query = "SELECT i.requestid, e.type, s.sport_name, e.name, i.quantityrequested, i.date, i.status
                   FROM inventoryrequest i
                   JOIN equipments e ON i.equipmentid = e.equipmentid

@@ -2,7 +2,7 @@
     class Inventory_requests extends Controller{
         public function index(){
             $reqmodel = new Inventoryrequest();
-            $reqdata = $reqmodel->requesttable();
+            $reqdata = $reqmodel->requesttable2();
             $endreqdata = $reqmodel->yearEndrequesttable();
 
             $counts = array();
