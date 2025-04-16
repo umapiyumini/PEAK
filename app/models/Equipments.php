@@ -11,7 +11,8 @@ class Equipments{
         SELECT 
             equipments.*, 
             sport.sport_name AS sport_name, 
-            COALESCE(SUM(stock.quantity * stock.unit), 0) AS available
+            COALESCE(SUM(stock.quantity * stock.unit), 0) AS available,
+            COALESCE(SUM(stock.issued_quantity * stock.unit), 0) AS issued
         FROM 
             $this->table 
         LEFT JOIN 
@@ -33,7 +34,8 @@ class Equipments{
         SELECT 
             equipments.*, 
             sport.sport_name AS sport_name, 
-            COALESCE(SUM(stock.quantity * stock.unit), 0) AS available
+            COALESCE(SUM(stock.quantity * stock.unit), 0) AS available,
+            COALESCE(SUM(stock.issued_quantity * stock.unit), 0) AS issued
         FROM 
             $this->table 
         LEFT JOIN 
@@ -81,6 +83,52 @@ class Equipments{
     public function removeEquipment($equipmentid) {
         $query = "DELETE FROM $this->table WHERE equipmentid = :equipmentid";
         return $this->query($query, ['equipmentid' => $equipmentid]);
+    }
+
+
+    public function teamtable(){
+        $query = "SELECT e.*, 
+                         (SELECT COALESCE(SUM(stock.issued_quantity * stock.unit), 0) 
+                          FROM stock
+                          WHERE stock.equipmentid = e.equipmentid) as issued_quantity, 
+                         s.sport_name, 
+                         COALESCE(ined.quantity, 0) as damaged_quantity, 
+                         COALESCE(
+                             ( 
+                                 (SELECT COALESCE(SUM(stock.issued_quantity * stock.unit), 0) 
+                                  FROM stock
+                                  WHERE stock.equipmentid = e.equipmentid) 
+                                 - COALESCE(ined.quantity, 0)
+                             ), 0) as remaining_quantity
+                  FROM $this->table e 
+                  JOIN sport s ON e.sport_id = s.sport_id
+                  LEFT JOIN inventoryedit ined ON ined.equipmentid = e.equipmentid
+                  WHERE e.type = 'team'";
+    
+        return $this->query($query);
+    }
+    
+
+    public function rectable(){
+        $query = "SELECT e.*, 
+                         (SELECT COALESCE(SUM(stock.issued_quantity * stock.unit), 0) 
+                          FROM stock
+                          WHERE stock.equipmentid = e.equipmentid) as issued_quantity, 
+                         s.sport_name, 
+                         COALESCE(ined.quantity, 0) as damaged_quantity, 
+                         COALESCE(
+                             ( 
+                                 (SELECT COALESCE(SUM(stock.issued_quantity * stock.unit), 0) 
+                                  FROM stock
+                                  WHERE stock.equipmentid = e.equipmentid) 
+                                 - COALESCE(ined.quantity, 0)
+                             ), 0) as remaining_quantity
+                  FROM $this->table e 
+                  JOIN sport s ON e.sport_id = s.sport_id
+                  LEFT JOIN inventoryedit ined ON ined.equipmentid = e.equipmentid
+                  WHERE e.type = 'recreational'";
+    
+        return $this->query($query);
     }
  
 }

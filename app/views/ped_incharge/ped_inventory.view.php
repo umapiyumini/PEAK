@@ -33,13 +33,13 @@
 
             <section class="inventory-section">
                 <div class="inventory-type">
-                    <div class="grid-item team">
-                        <a href="#">
+                    <div class="grid-item team" id="team">
+                        <a>
                             <h3>Team</h3>
                         </a>
                     </div>
-                    <div class="grid-item recreational">
-                        <a href="#">
+                    <div class="grid-item recreational" id="rec">
+                        <a>
                             <h3>Recreational</h3>
                         </a>
                     </div>
@@ -50,7 +50,7 @@
                     </div>
                 </div>
 
-                <div class="inventory-table-team in_table">
+                <div class="inventory-table-team in_table" id="in_team">
                     <div class="inventory-controls">
                         <div class="filter-bar">
                             <div class="search-bar">
@@ -96,7 +96,7 @@
                                         <td><?=$i->name?></td>
                                         <td><?=$i->sport_name?></td>
                                         <td><?=$i->description?></td>
-                                        <td><?=$i->issued_amount?></td>
+                                        <td><?=$i->issued?></td>
                                         <td><?=$i->available?></td>
                                         <td>
                                             <button class="btn btn-view" id="openStockView" onclick="openStockView(<?= htmlspecialchars(json_encode($i), ENT_QUOTES, 'UTF-8') ?>)">
@@ -116,7 +116,7 @@
                     </table>
                 </div>
 
-                <div class="inventory-table-recreational in_table" style="display:none;">
+                <div class="inventory-table-recreational in_table" id="in_rec" style="display:none;">
                     <div class="inventory-controls">
                         <div class="filter-bar">
                             <div class="search-bar">
@@ -138,7 +138,7 @@
                             </select>
                         </div>
                         <div class="buttons">
-                        <button class="add-product-btn" id="openAddModal">
+                        <button class="add-product-btn" id="openAddModal2">
                             <i class="uil uil-plus"></i> Add new product
                         </button>
                     </div>
@@ -162,7 +162,7 @@
                                         <td><?=$i->name?></td>
                                         <td><?=$i->sport_name?></td>
                                         <td><?=$i->description?></td>
-                                        <td><?=$i->issued_amount?></td>
+                                        <td><?=$i->issued?></td>
                                         <td><?=$i->available?></td>
                                         <td>
                                             <button class="btn btn-view">
@@ -188,7 +188,7 @@
         <!-- Add Product Modal -->
         <div id="addModal" class="modal">
             <div class="modal-content">
-                <span class="close">&times;</span>
+                <span class="close" id="closeAdd">&times;</span>
                 <h2>Add New Equipment</h2>
                 <form action="ped_inventory/addEquipment" method="POST" id="addProductForm">
                     <div class="form-group">
@@ -269,4 +269,36 @@
 	<script src="<?=ROOT?>/assets/js/ped_incharge/navbar.js"></script>
 </body>
 </html>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+    document.getElementById("team").addEventListener("click", function() {
+        let team = document.getElementById("in_team");
+        let rec = document.getElementById("in_rec");
+        team.style.display = "block";
+        rec.style.display = "none";
+    });
+
+    document.getElementById("rec").addEventListener("click", function() {
+        let team = document.getElementById("in_team");
+        let rec = document.getElementById("in_rec");
+        team.style.display = "none";
+        rec.style.display = "block";
+    });
+
+    document.getElementById("openAddModal").addEventListener("click", function() {
+        let addnewmodal = document.getElementById("addModal");
+        addnewmodal.style.display = "block";
+    });
+    document.getElementById("openAddModal2").addEventListener("click", function() {
+        let addnewmodal = document.getElementById("addModal");
+        addnewmodal.style.display = "block";
+    });
+
+    document.getElementById("closeAdd").addEventListener("click", function() {
+        let addnewmodal = document.getElementById("addModal");
+        addnewmodal.style.display = "none";
+    });
+});
+</script>
 

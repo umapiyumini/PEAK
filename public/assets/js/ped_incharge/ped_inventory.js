@@ -10,29 +10,43 @@ const inventoryTableRecreational = document.getElementById('inventoryTableRecrea
 // Track current active inventory type
 let currentInventoryType = 'team';
 
-// Function to switch between inventory types
-function switchInventoryType(type) {
-    const teamTable = document.querySelector('.inventory-table-team');
-    const recTable = document.querySelector('.inventory-table-recreational');
-    const teamButton = document.querySelector('.team');
-    const recButton = document.querySelector('.recreational');
+//function to switch between requests types
 
-    if (type === 'team') {
-        teamTable.style.display = 'block';
-        recTable.style.display = 'none';
-        teamButton.classList.add('active');
-        recButton.classList.remove('active');
-        currentInventoryType = 'team';
-        // renderTable(inventoryDataTeam, 'team');
-    } else {
-        teamTable.style.display = 'none';
-        recTable.style.display = 'block';
-        teamButton.classList.remove('active');
-        recButton.classList.add('active');
-        currentInventoryType = 'recreational';
-        // renderTable(inventoryDataRecreational, 'recreational');
-    }
-}
+document.getElementById("mid").addEventListener("click", function() {
+    let mid = document.getElementById("mid-section");
+    let end = document.getElementById("end-section");
+    mid.style.display = "block";
+    end.style.display = "none";
+});
+
+document.getElementById("end").addEventListener("click", function() {
+    let mid = document.getElementById("mid-section");
+    let end = document.getElementById("end-section");
+    mid.style.display = "none";
+    end.style.display = "block";
+});
+
+document.getElementById("pendingBtn").addEventListener("click", function() {
+    let reqcardlist = document.getElementById("request-card-list");
+    let historylist = document.getElementById("history-list");
+    let historybtn = document.getElementById("historyBtn");
+    let pendingbtn = document.getElementById("pendingBtn");
+    historybtn.style.opacity = 1;
+    pendingbtn.style.opacity = 0.2;
+    reqcardlist.style.display = "block";
+    historylist.style.display = "none";
+});
+
+document.getElementById("historyBtn").addEventListener("click", function() {
+    let reqcardlist = document.getElementById("request-card-list");
+    let historylist = document.getElementById("history-list");
+    let historybtn = document.getElementById("historyBtn");
+    let pendingbtn = document.getElementById("pendingBtn");
+    historybtn.style.opacity = 0.2;
+    pendingbtn.style.opacity = 1;
+    reqcardlist.style.display = "none";
+    historylist.style.display = "block";
+});
 
 function openStockView(equipment) {
     window.location.href = `inventory_stocks/filterStocks/${equipment.equipmentid}`;
@@ -59,20 +73,7 @@ function deleteEquipment(equipment) {
 
 // Event listeners
 document.addEventListener('DOMContentLoaded', () => {
-    // initializeData();
-    
-    // Set initial view
-    switchInventoryType('team');
-    
-    // Add click handlers for inventory type switching
-    document.querySelector('.team').addEventListener('click', () => switchInventoryType('team'));
-    document.querySelector('.recreational').addEventListener('click', () => switchInventoryType('recreational'));
-    
-    // Search input
-    // searchInput.addEventListener('input', handleSearch);
-    
-    // Add product form
-    // addProductForm.addEventListener('submit', handleAddProduct);
+    initializeYearEnd();
     
     // Add product button
     const openAddModalBtn = document.getElementById('openAddModal');
@@ -103,48 +104,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 });
-
-
-//   inventory requests
-  // Sample data
-  let requests = [
-    {
-        id: 'REQ001',
-        type: 'Team',
-        sport: 'BasketBall',
-        equipment: 'Basketball',
-        quantity: 5,
-        status: 'pending'
-      
-    },
-    {
-        id: 'REQ002',
-        type: 'Recreational',
-        sport: 'Table Tennis',
-        equipment: 'Table Tennis Bats',
-        quantity: 10,
-        status: 'issued'
-       
-    },
-    {
-        id: 'REQ003',
-        type: 'Team',
-        sport: 'Cricket',
-        equipment: 'Cricket Bats',
-        quantity: 8,
-        status: 'pending'
-    }
-];
-
-// Update statistics
-// function updateStats() {
-//     document.getElementById('pending-count').textContent = 
-//         requests.filter(r => r.status === 'pending').length;
-//     document.getElementById('approved-count').textContent = 
-//         requests.filter(r => r.status === 'approved').length;
-//     document.getElementById('rejected-count').textContent = 
-//         requests.filter(r => r.status === 'rejected').length;
-// }
 
 // Render requests table
 function renderRequests(filtered = requests) {
@@ -198,10 +157,8 @@ function deleteRequest(request) {
     }
 }
 
-// Filter functionality
-// document.getElementById('search-requests').addEventListener('input', filterRequests);
 document.getElementById('status-filter').addEventListener('change', filterRequests);
-// document.getElementById('request-type').addEventListener('change', filterRequests);
+
 
 function filterRequests() {
     const searchTerm = document.getElementById('search-requests').value.toLowerCase();
@@ -239,32 +196,9 @@ function loadSavedData() {
 
 
 
-// Year-end requests data
-let yearEndRequests = [
-    { id: 1, item: 'Hockey Sticks', requiredQuantity: 10, remarks: 'Need replacement for worn out sticks' },
-    { id: 2, item: 'Hockey Balls', requiredQuantity: 24, remarks: 'For practice sessions' },
-    { id: 3, item: 'Goalkeeper Kit', requiredQuantity: 2, remarks: 'Current kit is damaged' },
-    { id: 4, item: 'Training Cones', requiredQuantity: 30, remarks: 'For drills setup' }
-];
 
-// Function to render year-end table
-function renderYearEndTable() {
-    const tbody = document.getElementById('yearend-body');
-    if (!tbody) return; // Guard clause if element doesn't exist
 
-    tbody.innerHTML = '';
 
-    yearEndRequests.forEach((request, index) => {
-        const tr = document.createElement('tr');
-        tr.innerHTML = `
-            <td>${index + 1}</td>
-            <td>${request.item}</td>
-            <td>${request.requiredQuantity}</td>
-            <td>${request.remarks}</td>
-        `;
-        tbody.appendChild(tr);
-    });
-}
 
 // Function to store year-end data in localStorage
 function storeYearEndData() {
@@ -318,9 +252,3 @@ function initializeYearEnd() {
         rejectButton.addEventListener('click', handleYearEndReject);
     }
 }
-
-// Add to your DOMContentLoaded event listener
-document.addEventListener('DOMContentLoaded', () => {
-    // Initialize year-end functionality
-    initializeYearEnd();
-});

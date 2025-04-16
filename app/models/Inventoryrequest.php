@@ -17,6 +17,57 @@ class Inventoryrequest {
 
         return $this->query($query);
     }
+    public function yearEndrequesttable() {
+        $query = "SELECT i.requestid, s.sport_name, e.name, i.quantityrequested, i.date, i.status, i.addnotes
+                  FROM inventoryrequest i
+                  JOIN equipments e ON i.equipmentid = e.equipmentid
+                  JOIN sport s ON i.sport_id = s.sport_id
+                  WHERE i.timeframe = 'end year' AND i.status NOT IN ('Approved', 'Rejected')";
+    
+        return $this->query($query);
+    }
+
+    public function allYearEndRequests() {
+        $query = "SELECT i.requestid, s.sport_name, e.name, i.quantityrequested, i.date, i.status, i.addnotes
+                  FROM inventoryrequest i
+                  JOIN equipments e ON i.equipmentid = e.equipmentid
+                  JOIN sport s ON i.sport_id = s.sport_id
+                  WHERE i.timeframe = 'end year' AND i.status IN ('Approved', 'Rejected')";
+    
+        return $this->query($query);
+    }
+
+    public function getCountYearMid() {
+        $query = "SELECT COUNT(*) AS count FROM inventoryrequest WHERE timeframe = 'mid year'";
+        $result = $this->query($query);
+        return $result[0]->count ?? 0; // Return the count or 0 if not found
+    }
+
+    public function getCountYearEnd() {
+        $query = "SELECT COUNT(*) AS count FROM inventoryrequest WHERE timeframe = 'end year' AND inventoryrequest.status NOT IN ('Approved', 'Rejected')";
+        $result = $this->query($query);
+        return $result[0]->count ?? 0; // Return the count or 0 if not found
+    }
+
+    // Function to save a request (approve it)
+    public function saveRequest($sport) {
+        // Update the status of the request to 'Approved'
+        $query = "UPDATE inventoryrequest SET status = 'Approved' WHERE requestid in (SELECT requestid FROM inventoryrequest join sport on sport.sport_id = inventoryrequest.sport_id WHERE sport_name = :sport)";
+        $result = $this->query($query, ['sport' => $sport]);
+        
+        return true;
+    }
+
+    // Function to reject a request
+    public function rejectRequest($sport) {
+        // Update the status of the request to 'Rejected'
+        $query = "UPDATE inventoryrequest SET status = 'Rejected' WHERE requestid in (SELECT requestid FROM inventoryrequest join sport on sport.sport_id = inventoryrequest.sport_id WHERE sport_name = :sport)";
+        $result = $this->query($query, ['sport' => $sport]);
+        
+        return true;
+    }
+
+    
 
     // Function to change the status of a request to either approved or rejected
     public function updateStatus($requestid, $status) {
