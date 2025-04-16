@@ -34,17 +34,19 @@
          <div class="settings-panel">
             <h2>Pool Settings</h2>
             <div class="controls">
-                <div>
-                    <label>Daily Student Limit:</label>
-                    <input type="number" id="studentLimit" value="20" min="1">
-                </div>
-                <div>
-                    <label>Pool Hours:</label>
-                    <input type="time" id="startTime" value="17:00">
-                    <span>to</span>
-                    <input type="time" id="endTime" value="19:00">
-                </div>
-                <button class="btn btn-save"onclick="saveSettings()">Save Settings</button>
+                <form method="POST" action="<?=ROOT?>/ped_incharge/pool/saveSettings">
+                    <div>
+                        <label>Daily Student Limit:</label>
+                        <input type="number" id="studentLimit" name='studentLimit' min="1" max="100" value="<?=$poolSettingsList[0]->student_limit?>">
+                    </div>
+                    <div>
+                        <label>Pool Hours:</label>
+                        <input type="time" id="startTime" name='startTime' value="<?= $poolSettingsList[0]->start_time?>">
+                        <span>to</span>
+                        <input type="time" id="endTime" name="endTime" value="<?= $poolSettingsList[0]->end_time?>">
+                    </div>
+                    <button type="submit" class="btn btn-save" >Save Settings</button>
+                </form>
             </div>
         </div>
         <div class="cal-section">
@@ -62,15 +64,18 @@
         <div class="bookings-list" id="bookingsList">
             <h2>Bookings for <span id="selectedDate">November 27, 2024</span></h2>
             <div id="bookingsContainer">
-                <!-- Bookings will be inserted here -->
+                <!-- dynamically displayed using php and js -->
             </div>
         </div>
-        </div>
     </div>
+</div>
 
 
-</mian>
+</main>
             
+<script>
+    let bookings = <?= $bookings ?>;
+</script>
 
     
 	<script src="<?=ROOT?>/assets/js/ped_incharge/pool.js"></script>

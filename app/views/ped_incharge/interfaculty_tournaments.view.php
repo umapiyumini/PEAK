@@ -63,17 +63,59 @@
           <table>
             <thead>
               <tr>
-                <th>Tournament Name</th>
                 <th>Sport</th>
-                <th>Date</th>
-                <th>Places</th>
+                <th>Year</th>
+                <th>1st Place</th>
+                <th>2nd Place</th>
+                <th>3rd Place</th>
                 <th>Men/Women</th>
-                <th>Venue</th>
                 <th>Participants</th>
                 <th>Actions</th>
               </tr>
             </thead>
             <tbody id="tournamentsBody">
+            <?php if(!empty($tournamentList)):?>
+                <?php foreach ($tournamentList as $i): ?>
+                  <tr>
+                    <td><?=$i->sport_name?></td>
+                    <td><?=$i->year?></td>
+                    <td><?=$i->first_place?></td>
+                    <td><?=$i->second_place?></td>
+                    <td><?=$i->third_place?></td>
+                    <td><?php?></td><!-- men/women column is not in database yet (need to add it) -->
+                    <td><?=$i->no_of_players?></td>
+                    <td>
+                      <button 
+                        class="btn btn-edit" 
+                        onclick="openModal(this)" 
+                        data-tournamentid="<?=$i->interfacrecid?>"
+                        data-sport="<?=$i->sport_name?>"
+                        data-date="<?=$i->year?>"
+                        data-place1="<?=$i->first_place?>"
+                        data-place2="<?=$i->second_place?>"
+                        data-place3="<?=$i->third_place?>"
+                        data-participantcount="<?=$i->no_of_players?>"
+                      >
+                        Edit
+                      </button>
+                      <button class="btn btn-delete" onclick="deleteTournament(<?=$i->interfacrecid?>)">Delete</button>
+                      <button 
+                        class="btn btn-view" 
+                        onclick="viewTournament(this)"
+                        data-tournamentid="<?=$i->interfacrecid?>"
+                        data-sport="<?=$i->sport_name?>"
+                        data-date="<?=$i->year?>"
+                        data-place1="<?=$i->first_place?>"
+                        data-place2="<?=$i->second_place?>"
+                        data-place3="<?=$i->third_place?>"
+                        data-participantcount="<?=$i->no_of_players?>"
+                      >
+                        View
+                      </button>
+                    </td>
+                  </tr>
+                <?php endforeach;?>
+              <?php endif;?>
             </tbody>
           </table>
         </div>
@@ -84,100 +126,147 @@
         <div class="modal-content">
           <div class="modal-header">
             <h2 id="modalTitle">Add Tournament</h2>
-            <span class="close" onclick="closeModal()">&times;</span>
+            <span class="close" onclick="closeModal('tournamentModal')">&times;</span>
           </div>
-          <form id="tournamentForm" onsubmit="saveTournament(event)">
-            <input type="hidden" id="tournamentId">
-            <div class="form-group">
+          <form id="tournamentForm" action="<?=ROOT?>/ped_incharge/interfaculty_tournaments/saveTournament" method="POST">
+            <input type="hidden" id="tournamentId" name="tournamentId">
+            <!-- <div class="form-group">
               <label for="name">Tournament Name</label>
-              <input type="text" id="name" required>
-            </div>
+              <input type="text" id="name" name="name" required>
+            </div> -->
             <div class="form-group">
               <label for="sportInput">Sport</label>
-              <select id="sportInput" required>
-                <option value="basketball">Basketball</option>
-                <option value="soccer">Soccer</option>
-                <option value="volleyball">Volleyball</option>
+              <select name="sportInput" id="sportInput" required>
+                <option value="Basketball">Basketball</option>
+                <option value="Soccer">Soccer</option>
+                <option value="Volleyball">Volleyball</option>
+                <option value="Hockey">Hockey</option>
+                <option value="Cricket">Cricket</option>
+                <option value="Baseball">Baseball</option>
               </select>
             </div>
             <div class="form-group">
-              <label for="date">Date</label>
-              <input type="date" id="date" required>
+              <label for="date">Year</label>
+              <input type="text" name="date" id="date" required>
             </div>
             <div class="form-group">
-              <label for="place">Place</label>
-              <input type="text" id="place" required>
+              <label for="place1">1st Place</label>
+              <input type="text" name="place1" id="place1" required>
             </div>
             <div class="form-group">
-              <label for="men_women">Men/Women</label>
-              <input type="text" id="men_women" required>
+              <label for="place2">2nd Place</label>
+              <input type="text" name="place2" id="place2" required>
             </div>
             <div class="form-group">
-              <label for="venue">Venue</label>
-              <input type="text" id="venue" required>
+              <label for="place3">3rd Place</label>
+              <input type="text" name="place3" id="place3" required>
             </div>
             <div class="form-group">
               <label for="participants">Number of Participants</label>
-              <input type="number" id="participants" required min="2">
+              <input type="number" name="participants" id="participants" required min="2">
             </div>
             <div class="form-group">
               <label>Participants' Registration Numbers</label>
               <div id="participantsContainer">
-          <!-- Participant input fields will go here -->
+                <!-- Participant input fields will go here -->
               </div>
-          <button type="button" class="btn btn-add" onclick="addParticipant()">Add Participant</button>
-         </div>
+              <button type="button" class="btn btn-add" onClick="addParticipant()">Add Participant</button>
+            </div>
             <button type="submit" class="btn btn-add">Save Tournament</button>
           </form>
         </div>
       </div>
 
-     <!-- Add this HTML for the view modal structure -->
-<div id="viewTournamentModal" class="modal">
-    <div class="modal-content">
-        <div class="modal-header">
-            <h2>Tournament Details</h2>
-            <span class="close" onclick="closeViewModal()">&times;</span>
-        </div>
-        <div class="modal-body">
-            <div class="details-grid">
-                <div class="detail-item">
-                    <label>Tournament Name:</label>
-                    <span id="viewName"></span>
-                </div>
-                <div class="detail-item">
-                    <label>Sport:</label>
-                    <span id="viewSport"></span>
-                </div>
-                <div class="detail-item">
-                    <label>Date:</label>
-                    <span id="viewDate"></span>
-                </div>
-                <div class="detail-item">
-                    <label>Place:</label>
-                    <span id="viewPlace"></span>
-                </div>
-                <div class="detail-item">
-                    <label>Category:</label>
-                    <span id="viewMenWomen"></span>
-                </div>
-                <div class="detail-item">
-                    <label>Venue:</label>
-                    <span id="viewVenue"></span>
-                </div>
-            </div>
-            <div class="participants-section">
-                <h3>Participants</h3>
-                <div id="viewParticipantsList" class="participants-list"></div>
-            </div>
-        </div>
-    </div>
-</div>
+      <div id="viewTournamentModal" class="modal">
+          <div class="modal-content">
+              <div class="modal-header">
+                  <h2>Tournament Details</h2>
+                  <span class="close" onclick="closeModal('viewTournamentModal')">&times;</span>
+              </div>
+              <div class="modal-body">
+                  <div class="details-grid">
+                      <div class="detail-item">
+                          <label>Sport:</label>
+                          <input type="text" id="viewSport" readonly>
+                      </div>
+                      <div class="detail-item">
+                          <label>Year:</label>
+                          <input type="text" id="viewDate" readonly>
+                      </div>
+                      <div class="detail-item">
+                          <label>1st Place:</label>
+                          <input type="text" id="viewPlace1" readonly>
+                      </div>
+                      <div class="detail-item">
+                          <label>2nd Place:</label>
+                          <input type="text" id="viewPlace2" readonly>
+                      </div>
+                      <div class="detail-item">
+                          <label>3rd Place:</label>
+                          <input type="text" id="viewPlace3" readonly>
+                      </div>
+                  </div>
+                  <div class="participants-section">
+                      <h3>Participants</h3>
+                      <div id="viewParticipantsList" class="participants-list"></div>
+                  </div>
+              </div>
+          </div>
+      </div>
     </main>
   </div>
 
  
 
-  <script src="<?=ROOT?>/assets/js/ped_incharge/tournaments.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      initializeEventListeners();
+    });
+
+    function openModal(tournamentdata) {
+      let tournamentModal = document.getElementById("tournamentModal");
+      tournamentModal.style.display = "block";
+
+      document.getElementById("tournamentId").value = tournamentdata.dataset.tournamentid || '';
+      document.getElementById("sportInput").value = tournamentdata.dataset.sport || '';
+      document.getElementById("date").value = tournamentdata.dataset.date || '';
+      document.getElementById("place1").value = tournamentdata.dataset.place1 || '';
+      document.getElementById("place2").value = tournamentdata.dataset.place2 || '';
+      document.getElementById("place3").value = tournamentdata.dataset.place3 || '';
+      document.getElementById("participants").value = tournamentdata.dataset.participantcount || '';
+    }
+
+    function deleteTournament(interrecordid) {
+      if (confirm("Are you sure you want to delete this tournament?")) {
+        window.location.href = "<?=ROOT?>/ped_incharge/interfaculty_tournaments/deleteTournament/" + interrecordid;
+      }
+    }
+
+    function viewTournament(tournamentdata) {
+      let viewTournamentModal = document.getElementById("viewTournamentModal");
+      viewTournamentModal.style.display = "block";
+
+      document.getElementById("viewSport").value = tournamentdata.dataset.sport || '';
+      document.getElementById("viewDate").value = tournamentdata.dataset.date || '';
+      document.getElementById("viewPlace1").value = tournamentdata.dataset.place1 || '';
+      document.getElementById("viewPlace2").value = tournamentdata.dataset.place2 || '';
+      document.getElementById("viewPlace3").value = tournamentdata.dataset.place3 || '';
+      document.getElementById("viewMenWomen").value = tournamentdata.dataset.category || '';
+      document.getElementById("viewVenue").value = tournamentdata.dataset.venue || '';
+    }
+
+    function closeModal(modalId) {
+      const modal = document.getElementById(modalId);
+      modal.style.display = "none";
+    }
+
+    function initializeEventListeners() {
+      window.onclick = (event) => {
+        if(event.target.classList.contains('modal')) {
+          event.target.style.display = "none";
+        }
+      }
+    }
+  </script>
 </body>
 </html>

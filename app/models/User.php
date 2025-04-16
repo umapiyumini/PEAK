@@ -114,7 +114,30 @@ class User {
     public function getLastID() {
         $query = "SELECT userid FROM $this->table ORDER BY userid DESC LIMIT 1";
         $result = $this->query($query); // Likely returns an array of objects
-        return $result[0]->userid ?? null; // Access as an object
+        return $result[0]->userid ?? null; 
     }    
+
+    public function studentReg($data){
+        $query="INSERT INTO $this->table (name,gender,nic,email,date_of_birth,contact_number,address,username,password,role) VALUES (:name,:gender,:nic,:email,:date_of_birth,:contact_number,:address,:username,:password,:role)";
+        $params=[
+            ':name'=>$data['name'],
+            ':gender'=>$data['gender'],
+            ':nic'=>$data['nic'],
+            ':email'=>$data['email'],
+            ':date_of_birth'=>$data['dob'],
+            ':contact_number'=>$data['contact_number'],
+            ':address'=>$data['address'],
+            ':username'=>$data['email'],
+            ':password'=>password_hash($data['nic'], PASSWORD_DEFAULT),
+            ':role'=>'Internal User'
+        ];
+        return $this->query($query,$params);
+    }
+    
+    public function getUser($userid){
+        $query = "SELECT * FROM $this->table WHERE userid = :userid";
+        $params = [':userid' => $userid];
+        return $this->query($query, $params);
+    }
     
 }
