@@ -7,7 +7,7 @@ class Inventoryrequest {
     protected $fillable = ['requestid','equipmentid','quantityrequested','date','bywhom'];
     private $errorMsg = '';
 
-    public function requesttable2() {
+    public function requesttable() {
         $query = "SELECT i.requestid, e.type, s.sport_name, e.name, i.quantityrequested, i.date, i.status
                   FROM inventoryrequest i
                   JOIN equipments e ON i.equipmentid = e.equipmentid
@@ -17,6 +17,18 @@ class Inventoryrequest {
 
         return $this->query($query);
     }
+
+    public function requesttable2() {
+        $query = "SELECT i.requestid, e.type, s.sport_name, e.name, i.quantityrequested, i.date, i.status
+                  FROM inventoryrequest i
+                  JOIN equipments e ON i.equipmentid = e.equipmentid
+                  JOIN sport s ON i.sport_id = s.sport_id
+                WHERE i.timeframe = 'mid year'
+                  ";
+
+        return $this->query($query);
+    }
+    
     public function yearEndrequesttable() {
         $query = "SELECT i.requestid, s.sport_name, e.name, i.quantityrequested, i.date, i.status, i.addnotes
                   FROM inventoryrequest i
