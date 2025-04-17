@@ -380,7 +380,7 @@ document.querySelectorAll('.delete-btn').forEach(button => {
     });
 });
 
-// ============================== UPDATE JS ============================
+
 
 </script>
 
@@ -389,5 +389,3 @@ document.querySelectorAll('.delete-btn').forEach(button => {
 </body>
 </html>
 
-
-            <!-- test git comment -->

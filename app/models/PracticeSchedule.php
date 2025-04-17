@@ -8,6 +8,7 @@ class PracticeSchedule{
         'date',
         'start_time',
         'end_time',
+        'category',
         'sport_id'
     ];
 
@@ -61,13 +62,14 @@ class PracticeSchedule{
             if ($sportResult && count($sportResult) > 0) {
                 $sport_id = $sportResult[0]->sport_id;
                 
-                $query = "INSERT INTO practiceschedule (date, start_time, end_time, sport_id)
-                         VALUES (:date, :start_time, :end_time, :sport_id)";
+                $query = "INSERT INTO practiceschedule (date, start_time, end_time,category, sport_id)
+                         VALUES (:date, :start_time, :end_time,:category, :sport_id)";
                          
                 $result = $this->query($query, [
                     'date' => $_POST['date'],
                     'start_time' => $_POST['start_time'],
                     'end_time' => $_POST['end_time'],
+                    'category' => $_POST['category'],
                     'sport_id' => $sport_id
                 ]);
 
@@ -100,7 +102,7 @@ class PracticeSchedule{
         }
     }
 
-    public function editSchedule($id, $date, $start_time, $end_time){
+    public function editSchedule($id, $date, $start_time,$category, $end_time){
 
         $userId = $this->getUserId();
 
@@ -117,13 +119,14 @@ class PracticeSchedule{
                 $sport_id = $sportResult[0]->sport_id;
 
                 $query = "UPDATE practiceschedule
-                        SET date = :date, start_time = :start_time, end_time = :end_time
+                        SET date = :date, start_time = :start_time, end_time = :end_time, category = :category
                         WHERE id = :id AND sport_id = :sport_id";
                 
                 $result = $this->query($query, [
                     'date' => $date, 
                     'start_time' => $start_time,
                     'end_time' => $end_time,
+                    'category' => $category,
                     'id' => $id,
                     'sport_id' => $sport_id
                 ]);

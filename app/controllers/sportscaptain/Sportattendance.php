@@ -16,10 +16,6 @@ class Sportattendance extends Controller{
         $attendanceModel = new Attendance();
         $attendance = $attendanceModel->getatteandancebysport();
 
-        //var_dump($attendance);
-        //exit;
-
-
 
         $this->view('sportscaptain/sportattendance',['attendance' => $attendance]);
     }

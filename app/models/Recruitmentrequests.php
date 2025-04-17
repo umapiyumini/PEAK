@@ -46,5 +46,37 @@ class Recruitmentrequests{
         }
 
     }
+
+    public function approveRequest($regno){
+
+        try{
+
+            $query = "UPDATE recruitments SET status = 'approved' WHERE regno = :regno";
+            $result = $this->query($query, [
+                'regno' => $regno,
+               
+            ]);
+
+            return $result;
+        }catch(Exception $e){
+            $_SESSION['error'] = $e->getMessage();
+        }
+    }
+
+    public function rejectRequest($regno){
+
+        try{
+
+            $query = "UPDATE recruitments SET status = 'reject' WHERE regno = :regno";
+            $result = $this->query($query, [
+                'regno' => $regno,
+               
+            ]);
+
+            return $result;
+        }catch(Exception $e){
+            $_SESSION['error'] = $e->getMessage();
+        }
+    }
                 
 }

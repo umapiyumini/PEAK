@@ -1,52 +1,47 @@
-// Function to handle approval
-function approveRequest(studentId) {
-  updateStatus(studentId, 'Approved');
+function approveRequest(regno, btn) {
+  if (!confirm("Are you sure you want to approve this request?")) return;
 
-  showMessage(`Student ID ${studentId} has been approved!`, 'success');
-}
-
-// Function to handle rejection
-function rejectRequest(studentId) {
-  const rejectionReason = prompt(`Please provide a rejection reason for Student ID ${studentId}:`);
-  
-  if (rejectionReason) {
-    updateStatus(studentId, 'Rejected', rejectionReason);
-    showMessage(`Student ID ${studentId} has been rejected. Reason: ${rejectionReason}`, 'error');
-  } else {
-    showMessage(`Rejection for Student ID ${studentId} was canceled as no reason was provided.`, 'warning');
-  }
-}
-
-// Function to show feedback messages
-function showMessage(text, type) {
-  const messageContainer = document.getElementById('message-container');
-  const message = document.createElement('div');
-  message.className = `message ${type}`;
-  message.textContent = text;
-  messageContainer.appendChild(message);
-
-  // Auto-remove message after 3 seconds
-  setTimeout(() => message.remove(), 3000);
-}
-
-// Function to send status update to the backend
-function updateStatus(studentId, action, reason = '') {
-  fetch('approve_reject.php', {
+  fetch('<?=ROOT?>/sportscaptain/recruitment/approverequest', {
     method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({
-      id: studentId,
-      action: action.toLowerCase(), // 'approved' or 'rejected'
-      reason: reason
-    })
+    headers: {
+      'Content-Type': 'application/x-www-form-urlencoded',
+    },
+    body: `regno=${encodeURIComponent(regno)}`
   })
-  .then(res => res.text())
   .then(response => {
-    console.log('Server response:', response);
-    // Optionally remove the card or mark it as processed
+    if (response.ok) {
+      alert("Request approved successfully!");
+      btn.closest('.notification-card').remove();
+    } else {
+      alert("Failed to approve the request.");
+    }
   })
-  .catch(err => {
-    console.error('Error updating status:', err);
-    showMessage(`Failed to update status for Student ID ${studentId}.`, 'error');
+  .catch(error => {
+    console.error("Error approving request:", error);
+    alert("Something went wrong.");
+  });
+}
+
+function rejectRequest(regno, btn) {
+  if (!confirm("Are you sure you want to reject this request?")) return;
+
+  fetch('<?=ROOT?>/sportscaptain/recruitment/rejectrequest', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/x-www-form-urlencoded',
+    },
+    body: `regno=${encodeURIComponent(regno)}`
+  })
+  .then(response => {
+    if (response.ok) {
+      alert("Request rejected!");
+      btn.closest('.notification-card').remove();
+    } else {
+      alert("Failed to approve the request.");
+    }
+  })
+  .catch(error => {
+    console.error("Error rejecting request:", error);
+    alert("Something went wrong.");
   });
 }

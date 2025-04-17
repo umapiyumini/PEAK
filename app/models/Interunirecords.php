@@ -3,7 +3,7 @@
 class Interunirecords{
     use Model;
     protected $table = 'interuniversityrecords';
-    protected $columns = ['tournament_name','year','place','venue','no_of_players','sport_id'];
+    protected $columns = ['tournament_name','year','place','venue','no_of_players','sport_id','men_women'];
 
     public function getIntrunirecords(){
 
@@ -62,14 +62,14 @@ class Interunirecords{
             $sportId = $sportResult[0]->sport_id;
 
             $query = "INSERT INTO interuniversityrecords 
-          (tournament_name, year, place, venue, no_of_players, players_Regno, sport_id)
+          (tournament_name, date, place, venue, no_of_players, players_Regno, sport_id)
           VALUES 
-          (:tournament_name, :year, :place, :venue, :no_of_players, :players_Regno, :sport_id)";
+          (:tournament_name, :date, :place, :venue, :no_of_players, :players_Regno, :sport_id)";
                       
             
             $result = $this->query($query, [
                 'tournament_name' => $_POST['tournament_name'],
-                'year' => $_POST['year'],
+                'date' => $_POST['date'],
                 'place' => $_POST['place'],
                 'venue' => $_POST['venue'],
                 'no_of_players' => $_POST['no_of_players'],
@@ -124,13 +124,13 @@ class Interunirecords{
         try{
 
         $query = "UPDATE interuniversityrecords
-        SET tournament_name =:tournament_name, year =:year, place=:place, venue = :venue, no_of_players=:no_of_players,players_Regno = :players_Regno
+        SET tournament_name =:tournament_name, date =:date, place=:place, venue = :venue, no_of_players=:no_of_players,players_Regno = :players_Regno
         WHERE interrecordid = :id
         AND sport_id = (SELECT sport_id FROM sports_captain WHERE userid = :userid)";
 
         $result = $this->query($query, [
             'tournament_name' => $_POST['tournament_name'],
-            'year' => $_POST['year'],
+            'date' => $_POST['date'],
             'place' => $_POST['place'],
             'venue' => $_POST['venue'],
             'no_of_players' => $_POST['no_of_players'],

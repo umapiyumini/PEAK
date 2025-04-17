@@ -8,4 +8,6 @@ class StaffTodo {
         $query = "SELECT * FROM $this->table";
         return $this->query($query);
     }
+
 }
+
