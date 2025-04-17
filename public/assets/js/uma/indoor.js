@@ -4,6 +4,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const timeSlotsContainer = document.getElementById('timeSlots');
     const priceInput = document.getElementById('price');
     const discountPriceInput = document.getElementById('disprice');
+    const eventSelect = document.getElementById('bookingFor');
 
     // Restrict dates to two weeks in advance
     const today = new Date();
@@ -24,21 +25,36 @@ document.addEventListener('DOMContentLoaded', () => {
         generateTimeSlots();
     });
 
-    durationDropdown.addEventListener('change', () => {
-        let basePrice = 0;
+    // Fetch price dynamically based on event and duration
+    function fetchPrice() {
+        const event = eventSelect.value;
+        const duration = durationDropdown.value;
 
-        if (durationDropdown.value === 'fullDay') basePrice = 5000;
-        else if (durationDropdown.value === 'halfDay') basePrice = 3000;
-        else if (durationDropdown.value === 'twoHours') basePrice = 1000;
+        if (!event || !duration) return; // Ensure both fields are selected
 
-        priceInput.value = `${basePrice} LKR`; // Display base price
-        calculateDiscount(basePrice); // Calculate discount price
-
-        // Regenerate time slots if a date is already selected
-        if (dateInput.value) {
-            generateTimeSlots();
-        }
-    });
+        // Make the AJAX call to fetch price from server
+        fetch("<?=ROOT?>/external/getprice", {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+            },
+            body: `event=${event}&duration=${duration}`
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.status === 'success') {
+                const basePrice = parseFloat(data.price);
+                priceInput.value = `${basePrice} LKR`; // Display base price
+                calculateDiscount(basePrice); // Calculate discount price
+            } else {
+                priceInput.value = 'N/A';
+                discountPriceInput.value = 'N/A';
+            }
+        })
+        .catch(error => {
+            console.error('Error fetching price:', error);
+        });
+    }
 
     // Function to calculate the discounted price
     function calculateDiscount(basePrice) {
@@ -46,6 +62,10 @@ document.addEventListener('DOMContentLoaded', () => {
         const discountedPrice = basePrice - basePrice * discountRate;
         discountPriceInput.value = `${discountedPrice.toFixed(2)} LKR`; // Display discounted price
     }
+
+    // Trigger price fetch when event or duration changes
+    eventSelect.addEventListener('change', fetchPrice);
+    durationDropdown.addEventListener('change', fetchPrice);
 
     // Generate time slots based on duration and date
     function generateTimeSlots() {
@@ -161,6 +181,19 @@ document.addEventListener('DOMContentLoaded', () => {
     window.addEventListener('click', (event) => {
         if (event.target === modal) {
             modal.style.display = 'none';
+        }
+    });
+});
+
+document.addEventListener('DOMContentLoaded', () => {
+    const durationSelect = document.getElementById('duration');
+    const halfDayOptions = document.getElementById('halfDayOptions');
+
+    durationSelect.addEventListener('change', () => {
+        if (durationSelect.value === 'halfDay') {
+            halfDayOptions.style.display = 'block';
+        } else {
+            halfDayOptions.style.display = 'none';
         }
     });
 });

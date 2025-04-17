@@ -23,7 +23,7 @@
         }
         .container {
             width: 100%;
-            margin-left:280px;
+            margin-left:220px;
             background-color: white;
         }
         .card {

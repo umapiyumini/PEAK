@@ -1,91 +1,79 @@
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', function() {
     const durationSelect = document.getElementById('duration');
     const priceInput = document.getElementById('price');
-    const discountPriceInput = document.getElementById('disprice');
     const reservationForm = document.getElementById('reservationForm');
-
     const modal = document.getElementById('reservationSummaryModal');
     const closeModal = document.querySelector('.close');
     const backToFormButton = document.getElementById('backToForm');
 
     // Modal content elements
-    const summaryArea = document.getElementById('summaryArea');
     const summaryDuration = document.getElementById('summaryDuration');
     const summaryPrice = document.getElementById('summaryPrice');
     const summaryDiscountPrice = document.getElementById('summaryDiscountPrice');
     const summaryTotal = document.getElementById('summaryTotal');
 
-    // Pricing and discount configurations
-    const pricing = {
-        annual: 60000,
-        sixmonth: 35000,
-        threemonth: 20000
-    };
-
-    const discountRates = {
-        annual: 0.10,
-        sixmonth: 0.05,
-        threemonth: 0
-    };
-
     // Event listener for duration change
-    durationSelect.addEventListener('change', () => {
-        const selectedDuration = durationSelect.value;
+    durationSelect.addEventListener('change', function () {
+        const duration = this.value;
 
-        if (pricing[selectedDuration] !== undefined) {
-            const basePrice = pricing[selectedDuration];
-            const discount = basePrice * discountRates[selectedDuration];
-            const discountedPrice = basePrice - discount;
+        // Make an HTTP request to get the price for the selected duration
+        fetch(`strengthform/getPrice?duration=${duration}`)
+            .then(response => response.text())  // We are expecting plain text for debugging
+            .then(data => {
+                console.log('Response:', data); // Log the response to debug
+                const price = parseFloat(data); // Convert response to float if it's a valid number
 
-            // Update price and discount price inputs
-            priceInput.value = `Rs.${basePrice.toFixed(2)}`;
-            discountPriceInput.value = `Rs,${discountedPrice.toFixed(2)}`;
-        } else {
-            priceInput.value = '';
-            discountPriceInput.value = '';
-        }
+                if (!isNaN(price)) {
+                    const discount = price * 0.1;  // Example: 10% discount
+                    const discountedPrice = price - discount;
+
+                    // Set the price and discounted price in the form fields
+                    priceInput.value = price;
+                    document.getElementById('disprice').value = discountedPrice;
+
+                    // Also update the modal preview
+                    summaryDuration.textContent = durationSelect.options[durationSelect.selectedIndex].text;
+                    summaryPrice.textContent = `Rs.${price.toFixed(2)}`;
+                    summaryDiscountPrice.textContent = `Rs.${discountedPrice.toFixed(2)}`;
+                    summaryTotal.textContent = `Rs.${discountedPrice.toFixed(2)}`;
+                } else {
+                    alert('Price not found for selected duration.');
+                }
+            })
+            .catch(error => {
+                console.error('Error fetching price:', error);
+                alert('There was an issue fetching the price');
+            });
     });
 
     // Form submission handler
-    reservationForm.addEventListener('submit', (event) => {
+    reservationForm.addEventListener('submit', function(event) {
         event.preventDefault(); // Prevent default form submission
 
-        // Gather form details
-        const selectedDay = document.getElementById('area').value;
         const selectedDuration = durationSelect.value;
+        const price = priceInput.value;
 
-        if (!selectedDay || !selectedDuration) {
-            alert('Please select both a day and a duration before proceeding.');
+        if (!selectedDuration || !price) {
+            alert('Please select a duration before proceeding.');
             return;
         }
 
-        const basePrice = pricing[selectedDuration];
-        const discount = basePrice * discountRates[selectedDuration];
-        const discountedPrice = basePrice - discount;
-
-        // Populate modal content
-        summaryArea.textContent = selectedDay;
-        summaryDuration.textContent = durationSelect.options[durationSelect.selectedIndex].text;
-        summaryPrice.textContent = `Rs.${basePrice.toFixed(2)}`;
-        summaryDiscountPrice.textContent = `$${discount.toFixed(2)}`;
-        summaryTotal.textContent = `Rs.${discountedPrice.toFixed(2)}`;
-
-        // Show the modal
+        // Show the modal with the reservation summary
         modal.style.display = 'block';
     });
 
     // Close the modal
-    closeModal.addEventListener('click', () => {
+    closeModal.addEventListener('click', function() {
         modal.style.display = 'none';
     });
 
-    // Back to form
-    backToFormButton.addEventListener('click', () => {
+    // Back to form button
+    backToFormButton.addEventListener('click', function() {
         modal.style.display = 'none';
     });
 
-    // Close modal when clicking outside the content
-    window.addEventListener('click', (event) => {
+    // Close modal if clicked outside the content
+    window.addEventListener('click', function(event) {
         if (event.target === modal) {
             modal.style.display = 'none';
         }

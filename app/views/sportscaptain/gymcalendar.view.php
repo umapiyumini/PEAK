@@ -7,7 +7,6 @@
     <link rel="stylesheet" href="<?=ROOT?>/assets/css/vidusha/gymcalendar.css">
 </head>
 <body>
-
 <h1>Gym Weekly Booking Calendar</h1>
     <div class="calendar-container">
         <div class="week-selector">

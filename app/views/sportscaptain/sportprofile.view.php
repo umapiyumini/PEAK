@@ -21,7 +21,11 @@
 	<main>	
 		<div class="content-container">
             <section class="main-content">
-                <h1>Hockey</h1>
+            <?php if (!empty($sport) && !empty($sport->sport_name)) { ?>
+            <h1><?php echo htmlspecialchars($sport->sport_name); ?></h1>
+            <?php } else { ?>
+                <h1>Sport Not Found</h1>
+            <?php } ?>
                 <div class="image-slider">
                     <div class="slides">
                         
@@ -37,6 +41,7 @@
                 <h2>Team 2024</h2>
 				<article class="captains">
 			        <div class="tile2">
+                        
 				        <img src="<?=ROOT?>/assets/images/vidusha/mcaptain.jpeg" alt="cap-men">
 				        <p>Men's Captain</p>
 			        </div>
@@ -54,17 +59,19 @@
 
                     <!-- News Item 2 -->
                     <div class="news-item">
-                        <h3>Inter-Faculty Tournament Winners</h3>
-                        <p>The hockey team from the Faculty of Science emerged as champions in the inter-faculty hockey tournament. Their teamwork and dedication set a new benchmark for sportsmanship!</p>
-                        <p class="news-date">Published: November 18, 2024</p>
+                    <?php if (!empty($news)) { ?>
+                        <?php foreach ($news as $news){?>
+                        
+                    <h1><?php echo htmlspecialchars($news->topic); ?></h1>
+                    <p><?php echo htmlspecialchars($news->content); ?></p>
+                    <p>Published: <?php echo htmlspecialchars($news->published_date); ?></p>
+                    <?php } ?>
+                    <?php } else { ?>
+                        <h1>Sport News Not Found</h1>
+                    <?php } ?>
                     </div>
             
-                    <!-- News Item 3 -->
-                    <div class="news-item">
-                        <h3>Hockey Tournament 2024</h3>
-                        <p>Congratulations to the Hockey team for an incredible performance! They clinched the title in this year’s Hockey Tournament, showcasing immense potential and talent.</p>
-                        <p class="news-date">Published: November 15, 2024</p>
-                    </div>
+                    
                 </div>
             </aside>
         </div>
