@@ -14,57 +14,154 @@
 
   <!-- Category Selection Buttons -->
   <div class="category-buttons">
-    <button id="interUniBtn" onclick="showForm('interUni')">Inter University</button>
-    <button id="interFacultyBtn" onclick="showForm('interFaculty')">Inter Faculty</button>
-    <button id="freshersBtn" onclick="showForm('freshers')">Freshers</button>
+    <button id="interUniBtn" onclick="openAddModal('interUniAddModal')">Inter University</button>
+    <button id="interFacultyBtn" onclick="openAddModal('interFacultyAddModal')">Inter Faculty</button>
+    <button id="freshersBtn" onclick="openAddModal('freshersAddModal')">Freshers</button>
   </div>
 
-  <!-- Form Container -->
-  <div id="formContainer" class="hidden">
+  <div id="interUniAddModal" class="modal">
+    <div class="modal-content">
+      <span class="close" onclick="closeModal('interUniAddModal')">&times;</span>
     <!-- Inter University Form -->
     <form id="interUniForm" class="hidden" action="<?=ROOT?>/sportscaptain/Tournaments/addinterunirecords" method="POST">
       <h2>Inter University</h2>
       <input type="hidden" name="interunirecordid" id="interunirecordid">
-      <input type="text" placeholder="Tournament Name" name="tournament_name" required>
-      <input type="number" placeholder="Year" name="year" required>
-      <input type="text" placeholder="Place" name="place" required>
-      <input type="text" placeholder="Venue" name="venue" required>
-      <input type="number" placeholder="No of Players" name="no_of_players" required>
-      <textarea placeholder="Players Reg No" name="players_Regno" required></textarea>
+      <div class="form-group">
+        <label for="tournament_name">Tournament Name:</label>
+        <input type="text" name="tournament_name" placeholder="Tournament Name" required>
+      </div>
+      <div class="form-group">
+        <label for="date">Date:</label>
+        <input type="date" name="date" placeholder="Date" required>
+      </div>
+      <div class="form-group">
+        <label for="place">Place:</label>
+        <input type="text" name="place" placeholder="Place" required>
+      </div>
+      <div class="form-group">
+        <label for="venue">Venue:</label>
+        <input type="text" name="venue" placeholder="Venue" required>
+      </div>
+      <div class="form-group">
+        <label for="no_of_players">No of Players:</label>
+        <input type="number" name="no_of_players" placeholder="No of Players" required>
+      </div>
+      <div class="form-group">
+        <label for="players_Regno">Players Reg No:</label>
+        <textarea name="players_Regno" placeholder="Players Reg No" required></textarea>
+      </div>
+      <div class="form-group">
+        <label for="category">Category:</label>
+      <select id="men_women" name="men_women">
+        <option value="men">Men</option>
+        <option value="women">Women</option>
+      </select>
+      </div> 
       <input type="hidden" name="sport_id" value="<?= $userSportId ?>">
       <button type="submit">Add Record</button>
     </form>
+</div>
+</div>
 
+
+<div id="interFacultyAddModal" class="modal">
+    <div class="modal-content">
+      <span class="close" onclick="closeModal('interFacultyAddModal')">&times;</span>
     <!-- Inter Faculty Form -->
     <form id="interFacultyForm" class="hidden" action="<?=ROOT?>/sportscaptain/Tournaments/addinterfacultyrecords" method="POST">
       <h2>Inter Faculty</h2>
       <input type="hidden" name="interfacrecid" id="interfacrecordid">
-      <input type="text" name="tournament_name" placeholder="Tournament Name" required>
-      <input type="number" name="year" placeholder="Year" required>
-      <input type="text" name="first_place" placeholder="1st Place Faculty" required>
-      <input type="text" name="second_place" placeholder="2nd Place Faculty" required>
-      <input type="text" name="third_place" placeholder="3rd Place Faculty" required>
-      <input type="number" name="no_of_players" placeholder="No of Players" required>
-      <textarea name="players_regno" placeholder="Players Reg No" required></textarea>
+      <div class="form-group">
+        <label for="tournament_name">Tournament Name:</label>
+        <input type="text" name="tournament_name" placeholder="Tournament Name" required>
+      </div>
+      
+      <div class="form-group">
+        <label for="year">Year:</label>
+        <input type="number" name="year" placeholder="Year" required>
+      </div>
+      <div class="form-group">
+        <label for="first_place">1st Place Faculty:</label>
+        <input type="text" name="first_place" placeholder="1st Place Faculty" required>
+      </div>
+      <div class="form-group">
+        <label for="second_place">2nd Place Faculty:</label>
+        <input type="text" name="second_place" placeholder="2nd Place Faculty" required>
+      </div>
+      <div class="form-group">
+        <label for="third_place">3rd Place Faculty:</label>
+        <input type="text" name="third_place" placeholder="3rd Place Faculty" required>
+      </div>
+      <div class="form-group">
+        <label for="no_of_players">No of Players:</label>
+        <input type="number" name="no_of_players" placeholder="No of Players" required>
+      </div>
+      <div class="form-group">
+        <label for="players_regno">Players Reg No:</label>
+        <textarea name="players_regno" placeholder="Players Reg No" required></textarea>
+      </div>
+      <div class="form-group">
+      <label for="category">Category:</label>
+      <select id="men_women" name="men_women">
+        <option value="men">Men</option>
+        <option value="women">Women</option>
+      </select>
+      </div> 
       <input type="hidden" name="sport_id" value="<?= $userSportId ?>">
       <button type="submit">Add Record</button>
     </form>
+</div>
+</div>
 
+
+<div id="freshersAddModal" class="modal">
+    <div class="modal-content">
+      <span class="close" onclick="closeModal('freshersAddModal')">&times;</span>
     <!-- Freshers Form -->
     <form id="freshersForm" class="hidden" action="<?=ROOT?>/sportscaptain/Tournaments/addfreshersrecords" method="POST">
       <h2>Freshers</h2>
       <input type="hidden" name="freshersid" id="freshersrecordid">
-      <input type="text" name="tournament_name" placeholder="Tournament Name" required>
-      <input type="number" name="year" placeholder="Year" required>
-      <input type="text" name="first_place" placeholder="1st Place Faculty" required>
-      <input type="text" name="second_place" placeholder="2nd Place Faculty" required>
-      <input type="text" name="third_place" placeholder="3rd Place Faculty" required>
-      <input type="number" name="no_of_players" placeholder="No of Players" required>
-      <textarea name="playersregno" placeholder="Players Reg No" required></textarea>
+      <div class="form-group">
+        <label for="tournament_name">Tournament Name:</label>
+        <input type="text" name="tournament_name" placeholder="Tournament Name" required>
+      </div>
+      <div class="form-group">
+        <label for="year">Year:</label>
+        <input type="number" name="year" placeholder="Year" required>
+      </div>
+      <div class="form-group">
+        <label for="first_place">1st Place Faculty:</label>
+        <input type="text" name="first_place" placeholder="1st Place Faculty" required>
+      </div>
+      <div class="form-group">
+        <label for="second_place">2nd Place Faculty:</label>
+        <input type="text" name="second_place" placeholder="2nd Place Faculty" required>
+      </div>
+      <div class="form-group">
+        <label for="third_place">3rd Place Faculty:</label>
+        <input type="text" name="third_place" placeholder="3rd Place Faculty" required>
+      </div>
+      <div class="form-group">
+        <label for="no_of_players">No of Players:</label>
+        <input type="number" name="no_of_players" placeholder="No of Players" required>
+      </div>
+      <div class="form-group">
+        <label for="playersregno">Players Reg No:</label>
+        <textarea name="playersregno" placeholder="Players Reg No" required></textarea>
+      </div>
+      <div class="form-group">
+        <label for="category">Category:</label>
+      <select id="men_women" name="men_women">
+        <option value="men">Men</option>
+        <option value="women">Women</option>
+      </select>
+</div>
       <input type="hidden" name="sport_id" value="<?= $userSportId ?>">
       <button type="submit">Add Record</button>
     </form>
   </div>
+</div>
+
 
   <!-- Records Tables -->
   <div id="recordsContainer">
@@ -73,7 +170,7 @@
       <thead>
         <tr>
           <th>Tournament Name</th>
-          <th>Year</th>
+          <th>Date</th>
           <th>Place</th>
           <th>Venue</th>
           <th>No of Players</th>
@@ -86,7 +183,7 @@
           <?php foreach($data['interunirecords'] as $record): ?>
             <tr>
               <td><?= htmlspecialchars($record->tournament_name)?></td>
-              <td><?= htmlspecialchars($record->year)?></td>
+              <td><?= htmlspecialchars($record->date)?></td>
               <td><?= htmlspecialchars($record->place)?></td>
               <td><?= htmlspecialchars($record->venue)?></td>
               <td><?= htmlspecialchars($record->no_of_players)?></td>
@@ -95,7 +192,7 @@
                 <button type="button" class="edit-btn" 
                   onclick="openEditModal('interUni', '<?= $record->interrecordid ?>', 
                     '<?= htmlspecialchars($record->tournament_name) ?>', 
-                    '<?= htmlspecialchars($record->year) ?>', 
+                    '<?= htmlspecialchars($record->date) ?>', 
                     '<?= htmlspecialchars($record->place) ?>', 
                     '<?= htmlspecialchars($record->venue) ?>', 
                     '<?= htmlspecialchars($record->no_of_players) ?>', 
@@ -235,12 +332,30 @@
       <h2>Edit Inter University Record</h2>
       <form id="interUniEditForm" action="<?=ROOT?>/sportscaptain/Tournaments/editinterunirecords" method="POST">
         <input type="hidden" name="interunirecordid" id="interUniEditId">
-        <input type="text" placeholder="Tournament Name" name="tournament_name" id="interUniEditName" required>
-        <input type="number" placeholder="Year" name="year" id="interUniEditYear" required>
-        <input type="text" placeholder="Place" name="place" id="interUniEditPlace" required>
-        <input type="text" placeholder="Venue" name="venue" id="interUniEditVenue" required>
-        <input type="number" placeholder="No of Players" name="no_of_players" id="interUniEditPlayers" required>
-        <textarea placeholder="Players Reg No" name="players_Regno" id="interUniEditRegno" required></textarea>
+        <div class="form-group">
+          <label for="tournament_name">Tournament Name:</label>
+          <input type="text" name="tournament_name" placeholder="Tournament Name" id="interUniEditName" required>
+        </div>
+        <div class="form-group">
+          <label for="date">Date:</label>
+          <input type="date" name="date" placeholder="Date" id="interUniEditDate" required>
+        </div>
+        <div class="form-group">
+          <label for="place">Place:</label>
+          <input type="text" name="place" placeholder="Place" id="interUniEditPlace" required>
+        </div>
+        <div class="form-group">
+          <label for="venue">Venue:</label>
+          <input type="text" name="venue" placeholder="Venue" id="interUniEditVenue" required>
+        </div>
+        <div class="form-group">
+          <label for="no_of_players">No of Players:</label>
+          <input type="number" name="no_of_players" placeholder="No of Players" id="interUniEditPlayers" required>
+        </div>
+        <div class="form-group">
+          <label for="players_Regno">Players Reg No:</label>
+          <textarea name="players_Regno" placeholder="Players Reg No" id="interUniEditRegno" required></textarea>
+        </div>
         <button type="submit">Update Record</button>
         <button type="button" class="cancel" onclick="closeModal('interUniModal')">Cancel</button>
       </form>
@@ -253,13 +368,34 @@
       <h2>Edit Inter Faculty Record</h2>
       <form id="interFacultyEditForm" action="<?=ROOT?>/sportscaptain/Tournaments/editinterfacrecords" method="POST">
         <input type="hidden" name="interfacrecid" id="interFacultyEditId">
-        <input type="text" name="tournament_name" placeholder="Tournament Name" id="interFacultyEditName" required>
-        <input type="number" name="year" placeholder="Year" id="interFacultyEditYear" required>
+        <div class="form-group">
+          <label for="tournament_name">Tournament Name:</label>
+          <input type="text" name="tournament_name" placeholder="Tournament Name" id="interFacultyEditName" required>
+        </div>
+        <div class="form-group">
+          <label for="year">Year:</label>
+          <input type="number" name="year" placeholder="Year" id="interFacultyEditYear" required>
+        </div>
+        <div class="form-group">
+        <label for="first_place">1st Place:</label>
         <input type="text" name="first_place" placeholder="1st Place Faculty" id="interFacultyEditFirst" required>
+        </div>
+        <div class="form-group">
+        <label for="second_place">2nd Place:</label>
         <input type="text" name="second_place" placeholder="2nd Place Faculty" id="interFacultyEditSecond" required>
+        </div>
+        <div class="form-group">
+        <label for="third_place">3rd Place:</label>
         <input type="text" name="third_place" placeholder="3rd Place Faculty" id="interFacultyEditThird" required>
+        </div>
+        <div class="form-group">
+        <label for="no_of_players">No Of Players:</label>
         <input type="number" name="no_of_players" placeholder="No of Players" id="interFacultyEditPlayers" required>
+        </div>
+        <div class="form-group">
+        <label for="players_regno">Players reg no:</label>
         <textarea name="players_regno" placeholder="Players Reg No" id="interFacultyEditRegno" required></textarea>
+        </div>
         <button type="submit">Update Record</button>
         <button type="button" class="cancel" onclick="closeModal('interFacultyModal')">Cancel</button>
       </form>
@@ -272,13 +408,34 @@
       <h2>Edit Freshers Record</h2>
       <form id="freshersEditForm" action="<?=ROOT?>/sportscaptain/Tournaments/editfreshersrecords" method="POST">
         <input type="hidden" name="freshersid" id="freshersEditId">
+        <div class="form-group">
+          <label for="tournament_name">Tournament Name:</label>
         <input type="text" name="tournament_name" placeholder="Tournament Name" id="freshersEditName" required>
+        </div>
+        <div class="form-group">
+          <label for="year">Year:</label>
         <input type="number" name="year" placeholder="Year" id="freshersEditYear" required>
+        </div>
+        <div class="form-group">
+        <label for="first_place">1st Place:</label>
         <input type="text" name="first_place" placeholder="1st Place Faculty" id="freshersEditFirst" required>
+        </div>
+        <div class="form-group">
+        <label for="second_place">2nd Place:</label>
         <input type="text" name="second_place" placeholder="2nd Place Faculty" id="freshersEditSecond" required>
+        </div>
+        <div class="form-group">
+        <label for="third_place">3rd Place:</label>
         <input type="text" name="third_place" placeholder="3rd Place Faculty" id="freshersEditThird" required>
+        </div>
+        <div class="form-group">
+        <label for="no_of_players">No Of Players:</label>
         <input type="number" name="no_of_players" placeholder="No of Players" id="freshersEditPlayers" required>
+        </div>
+        <div class="form-group">
+        <label for="players_regno">Players reg no:</label>
         <textarea name="playersregno" placeholder="Players Reg No" id="freshersEditRegno" required></textarea>
+        </div>
         <button type="submit">Update Record</button>
         <button type="button" class="cancel" onclick="closeModal('freshersModal')">Cancel</button>
       </form>

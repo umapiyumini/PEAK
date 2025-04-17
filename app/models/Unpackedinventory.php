@@ -2,8 +2,8 @@
 
 class Unpackedinventory  {
     use Model;
-    protected $table = 'unpackedinventory';
-    protected $fillable = ['equipmentid','quantity','incharge', 'availability'];
+    protected $table = 'stock';
+    protected $fillable = ['stockid', 'equipmentid', 'indent_no', 'dscription', 'unit', 'quantity', 'issued_quantity', 'date'];
 
     private function getUserId() {
         if (session_status() == PHP_SESSION_NONE) {
@@ -34,13 +34,13 @@ class Unpackedinventory  {
     }
     
 
-    public function updateEquipment($postdata) {
-        $query = "UPDATE unpackedinventory SET quantity=:quantity
+    public function updateEquipment($equipmentid, $quantity) {
+        $query = "UPDATE stock SET quantity=:quantity
                   WHERE equipmentid = :equipmentid";
         
         return $this->query($query, [
-            'equipmentid' => $postdata['equipmentid'],
-            'quantity' => $postdata['editquantity'], 
+            'equipmentid' => $equipmentid,
+            'quantity' => $quantity 
        
         ]);
 
@@ -48,8 +48,6 @@ class Unpackedinventory  {
     
     public function getunpackedItemsBySport() {
        
-        
-        
         $userId = $this->getUserId();
 
         if (!$userId) {
@@ -57,58 +55,37 @@ class Unpackedinventory  {
         }
 
     
-        $query = "SELECT sport.sport_id, equipments.name,unpackedinventory.*
+        $query = "SELECT sport.sport_id, equipments.name,stock.*
                   FROM sports_captain 
                   JOIN sport ON sports_captain.sport_id = sport.sport_id
                   JOIN equipments ON equipments.sport_id = sport.sport_id
-                  JOIN unpackedinventory on unpackedinventory.equipmentid = equipments.equipmentid
+                  JOIN stock on stock.equipmentid = equipments.equipmentid
                   WHERE sports_captain.userid = :userid";
     
         // Execute query and bind the userId parameter
         return $this->query($query, ['userid' => $userId]);
     }
 
-    public function getPreviousRequests(){
+    
+    public function getStocks(){
 
-        $userId = $this->getUserId();
-        if (!$userId) {
-            die("User ID not found in session.");
-        }
+        $query = "SELECT stock.*,equipments.name FROM stock 
+                JOIN equipments ON stock.equipmentid = equipments.equipmentid";
 
-        $query = "SELECT equipments.name,inventoryrequest.* 
-                  FROM sports_captain
-                  JOIN sport ON sports_captain.sport_id = sport.sport_id
-                  JOIN equipments ON equipments.sport_id = sport.sport_id
-                  JOIN inventoryrequest ON inventoryrequest.requested_by = sports_captain.userid
-                  WHERE sports_captain.userid = :userid";
+        $result = $this->query($query);
 
-        return $this->query($query, ['userid' => $userId]);
-
+        return $result;
     }
 
-    public function updateQuantity($name,$quantity,$reason){
+    public function get_by_id($id) {
+        $query = "SELECT * FROM stock WHERE stockid = :id";
 
-        $query = "INSERT INTO inventoryedit (equipmentid, quantity, reason)
-                VALUES (
-                        (SELECT equipmentid FROM equipments WHERE name =:name),:quantity,:reason)";
-        
-        return $this->query($query,['name' => $name, 'quantity' => $quantity, 'reason' => $reason]);
-}   
+        $result = $this->query($query, ['id' => $id]);
 
-    public function addRequest(){
-        
-        $userId = $this->getUserId();
+        return $result;
 
-        $query = "INSERT INTO inventoryrequest (equipmentid,sport_id,quantityrequested,date,timeframe,requested_by,addnotes)
-                  VALUES (
-                      (SELECT equipmentid FROM equipments WHERE name = :name),
-                      (SELECT sport_id FROM sports_captain WHERE sport_id = :sport_id),
-                      :quantityrequested,
-                      NOW(),
-                      :Timeframe,
-                      (SELECT userid FROM user WHERE userid = :userid),
-                      :addnotes)";
-        return $this->query($query);
+
+
     }
 
 }

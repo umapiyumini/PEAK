@@ -64,7 +64,7 @@
                             <td><?= htmlspecialchars($item->jerseyno) ?></td>
                             <td>
                                     <button class="update-btn" data-id="<?= $item->regno ?>"><i class="fas fa-edit"></i></button>
-                                </form>
+                                
                                 <form method="POST" action="<?=ROOT?>/sportscaptain/team/deleteplayer">
                                     <input type="hidden" name="regno" value="<?= $item->regno ?>">
                                     <button type="submit" class="delete-btn" onclick="return confirm('Are you sure you want to delete this player?');"><i class="fas fa-trash"></i></button> 
@@ -88,8 +88,8 @@
             <h2>Edit Player</h2>
             <form id="edit-form" action="<?=ROOT?>/sportscaptain/Team/updateplayer" method="POST">
                 <div class = "form-group">    
-                    <label for="edit-regno">Reg No:</lable>
-                    <input type="text" id="edit-regno" name="regno" readonly>
+                    <label for="edit-regno">Reg No:</label>
+                    <input type="text" id="edit-regno" name="regno" required>
                 </div>
                 <div class="form-group">
                     <label for="edit-position">Position:</label>

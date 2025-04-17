@@ -56,6 +56,9 @@
                 <?= date('h:i A', strtotime($item->start_time)) ?> - 
                 <?= date('h:i A', strtotime($item->end_time)) ?>
               </div>
+              <div class="schedule-category">
+                <?= $item->category ?>
+              </div>
               <div class="schedule-actions">
                 <button class="edit-button" id="edit-button" data-id="<?= $item->id ?>" >Edit</button>
                 <button class="delete-button" data-id="<?= $item->id ?>">Cancel</button>
@@ -90,7 +93,14 @@
             <label for="end_time">End Time:</label>
             <input type="time" id="end_time" name="end_time" required>
           </div>
-          
+
+          <div class="form-group">
+            <lable for="category">Category:</label>
+            <select id="category" name="category" required>
+              <option value="Practice">Practice</option>
+              <option value="Match">Match</option>
+            </select>
+          </div>
           <div class="form-actions">
             <button type="submit" class="submit-button">Save Schedule</button>
           </div>
@@ -120,6 +130,13 @@
           <div class="form-group">
             <label for="edit-end_time">End Time:</label>
             <input type="time" id="edit-end_time" name="end_time" required>
+          </div>
+          <div class="form-group">
+            <lable for="category">Category:</label>
+            <select id="category" name="category" required>
+              <option value="Practice">Practice</option>
+              <option value="Match">Match</option>
+            </select>
           </div>
           <input type="hidden" id="edit-id" name="id">
           <div class="form-actions">

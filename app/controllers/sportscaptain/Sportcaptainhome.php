@@ -2,9 +2,14 @@
 class Sportcaptainhome extends Controller{
    public function index(){
 
-        $this->view('sportscaptain/sportcaptainhome');
-    }
+        $NoticeModel = new Noticeboard();
+        $notices = $NoticeModel->findall();
 
-   
+        $data = [
+            'notices' => $notices,
+        ];
+
+        $this->view('sportscaptain/sportcaptainhome', $data);
+    }
 
 }

@@ -20,7 +20,6 @@ class SportProfile extends Controller{
     $newsModel = new News();
     $news = $newsModel->getnewsbysport();
 
-    
         $this->view('sportscaptain/sportprofile',['sport'=>$sport , 'news'=>$news]);
     }
 

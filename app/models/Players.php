@@ -21,7 +21,7 @@ class Players{
     }
 
     public function addPlayer($regno, $position, $jerseyno){
-        error_log(print_r($data, true));
+        
         $userId  = $this->getUserId();
 
         $query = "INSERT INTO players (regno, position, jerseyno, sport_id)

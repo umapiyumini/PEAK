@@ -17,9 +17,12 @@
         <p><strong>Registration No:</strong><?=htmlspecialchars($request->regno)?></p>
         <p><strong>Name:</strong><?=htmlspecialchars($request->name)?></p>
         <p><strong>Faculty:</strong><?=htmlspecialchars($request->faculty)?></p>
+        <p><strong>Reason:</strong><?=htmlspecialchars($request->reason)?></p>
         <div class="action-buttons">
-          <button class="approve-btn" onclick="approveRequest(12345)">Approve</button>
-          <button class="reject-btn" onclick="rejectRequest(12345)">Reject</button>
+        <button class="approve-btn" onclick="approveRequest('<?= $request->regno ?>', this)">Approve</button>
+
+
+          <button class="reject-btn" onclick="rejectRequest('<?= $request->regno ?>', this)">Reject</button>
         </div>
       </div>
   <?php endforeach; ?>
