@@ -4,65 +4,40 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-1.0">
         <link rel="stylesheet" href="<?=ROOT?>/assets/css/vidusha/todo.css">
-        <title>Staff Dashboard</title>
+        <title>External User Dashboard</title>
     </head>
 
 
     <body>
+             
 
-        <div class="container">
-        <div class="todo-list">
-            <h2>To-Do List</h2>
-            <div id="toDoListContainer">
-  
-    <div id="taskFilter">
-        <label for="taskFilterSelect">Filter Tasks:</label>
-        <select id="taskFilterSelect">
-            <option value="all">All Tasks</option>
-            <option value="completed">Completed</option>
-            <option value="notCompleted">Not Completed</option>
-        </select>
-    </div>
+            <!-- ----------------- main content ------------------ -->
 
-    <div class="table-wrapper">
-        <table id="taskTable">
-            <thead>
-                <tr>
-                    <th>Task</th>
-                    <th>Due Date</th>
-                    <th>Complete</th>
-                    
-                    <th>Remarks</th>
-                </tr>
-            </thead>
-            <tbody>
-                
-                <?php if(!empty($task)): ?>
-                    <?php foreach($task as $item): ?>
-                        <pre><?php print_r($task); ?></pre>
-
-                    <tr>
-                    <td><?=htmlspecialchars($item->task)?></td>
-                    <td><?=htmlspecialchars($item->due_date)?></td>
-                    <td><?=htmlspecialchars($item->status)?></td>
-                    <td><?=htmlspecialchars($item->remark)?></td>
-                    </tr>
-                    <?php endforeach; ?>
-                <?php else: ?>
-                    <tr>
-                    <td colspan="4">No data available</td>
-                </tr>
-                <?php endif; ?>
-            </tbody>
-        </table>
-    </div>
+            <div class="container">
+        <!-- Reservations Section -->
+        <div class="reservations">
+            <h2>View Reservations</h2>
+            <label for="facility">Select Facility:</label>
+            <select id="facility">
+                <option value="" disabled selected>Select...</option>
+                <option value="ground">Ground</option>
+                <option value="basketball">Basketball Court</option>
+                <option value="tennis">Tennis Court</option>
+                <option value="indoor">Indoor Stadium</option>
+            </select>
+            <div id="dateNavigation">
+    <button id="prevDate"><</button>
+    <span id="currentDate"></span>
+    <button id="nextDate">></button>
 </div>
+<div id="timeSlots" class="time-slots"></div>
+
+            <div id="timeSlots" class="time-slots">
+                <!-- Time slots will populate dynamically -->
+            </div>
         </div>
 
-        
-
-
-
+    
     <script src="<?=ROOT?>/assets/js/uma/staff.js"></script>
     <script>
    document.addEventListener('DOMContentLoaded', function () {
@@ -132,7 +107,7 @@ document.querySelectorAll('.delete-btn').forEach(button => {
     });
 });
 
-
+// ============================== UPDATE JS ============================
 
 </script>
 
@@ -141,3 +116,5 @@ document.querySelectorAll('.delete-btn').forEach(button => {
 </body>
 </html>
 
+
+            <!-- test git comment -->
