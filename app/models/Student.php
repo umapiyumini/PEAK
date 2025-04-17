@@ -35,5 +35,22 @@ class Student{
         return empty($this->studenterrors);
     }
     
+    public function studentReg($data){
+        $querey ="INSERT INTO student (userid, registrationnumber, faculty, department, id_start, id_end) VALUES (:userid, :registrationnumber, :faculty, :department, :id_start, :id_end)";
+        $params = [
+            ':userid' => $data['userid'],
+            ':registrationnumber' => $data['regNumber'],
+            ':faculty' => $data['faculty'],
+            ':department' => $data['department'],
+            ':id_start' => $data['id_start'],
+            ':id_end' => $data['id_end']
+        ];
+        return $this->query($querey, $params);
+    }
 
+    public function getuserID($regno){
+        $query = "SELECT userid FROM $this->table WHERE registrationnumber = :regno";
+        $params = [':regno' => $regno];
+        return $this->query($query, $params);
+    }
 }

@@ -2,6 +2,7 @@
 
 class Unpackedinventory  {
     use Model;
+
     protected $table = 'stock';
     protected $fillable = ['stockid', 'equipmentid', 'indent_no', 'dscription', 'unit', 'quantity', 'issued_quantity', 'date'];
 

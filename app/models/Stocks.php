@@ -32,9 +32,8 @@ class Stocks{
     }
 
     public function issueStockss($details) {
-        $query = "UPDATE $this->table SET quantity = quantity - :issueQuantity WHERE stockid = :stockId";
+        $query = "UPDATE $this->table SET quantity = quantity - :issueQuantity , issued_quantity=issued_quantity+ :issueQuantity WHERE stockid = :stockId";
         return $this->query($query, ['issueQuantity' => $details['issueQuantity'], 'stockId' => $details['stockId']]);
-        
     }
 
     public function findEqpId($stockid) {

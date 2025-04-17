@@ -265,7 +265,7 @@ section.content {
 	flex-direction: column;
 	align-content: center;
 	justify-content: flex-start;
-    margin-left: 300px;
+    margin-left: 240px;
 
     
 }

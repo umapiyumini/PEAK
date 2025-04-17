@@ -65,7 +65,7 @@
         .main-content {
             flex: 1;
             padding: 20px;
-            margin-left: 280px;
+            margin-left: 220px;
             margin-top: 10px;
         }
 
@@ -136,6 +136,7 @@
             font-size: 16px;
             color: #555;
         }
+        
 
         .input-field input {
             width: 100%;
@@ -201,7 +202,7 @@
                 <td>Jan 15, 2024</td>
                 <td>
                 <select id="venue">
-        <option value="">Select hostel</option>
+        <option value="" class="j">Select hostel</option>
         <option value="Ground">Kithyakara Mens Hostel</option>
         <option value="Indoor Stadium">Havelock Womens Hostel</option>
         <option value="Basket ball court">Bullers Womens Hostel</option>

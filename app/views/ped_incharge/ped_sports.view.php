@@ -10,6 +10,7 @@
 <body>
     <?php $current_page = 'sports'; include 'sidebar.view.php'?>
     <div class="main-content">
+
         <div class="header">
             <h1>Sports</h1>
             <button class="bell-icon"><i class="uil uil-bell"></i></button>
@@ -34,9 +35,20 @@
                 </div>
             </div>
             <div class="sports-container" id="sportsContainer">
-            <!-- Sports cards will be added here -->
+                <?php foreach($sportsList as $row): ?>
+                    <div class="sport-card">
+                        <img src="" alt="" class="sport-image">
+                        <div class="sport-content">
+                            <h3><?=$row->sport_name?></h3>
+                        </div>
+                        <div class="gender">
+                            <a href="<?= $row->sport_name ?>" class="btn btn-male">Men</a>
+                            <a href="<?= $row->sport_name ?>" class="btn btn-female">Women</a>
+                        </div>
+                    </div>
+                <?php endforeach; ?>
             </div>
-            
+
 
             <button class="add-sport" onclick="openModal()" id="addSportBtn">
                 <i class="uil uil-plus"></i>
@@ -49,7 +61,7 @@
                     <h2 id="modalTitle">Add Sport</h2>
                     <button class="close">&times;</button>
                 </div>
-                <form id="addSportForm">
+                <form id="addSportForm" method="POST" >
                     <div class="form-group">
                         <label for="sportName">Sport Name</label>
                         <input type="text" id="sportName" required>
