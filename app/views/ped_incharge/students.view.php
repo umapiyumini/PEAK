@@ -35,7 +35,29 @@
                                     <th>Actions</th>   
                                 </tr>
                         </thead>
-                        <tbody></tbody>
+                        <tbody>
+                        <?php if(!empty($students)):?>
+                <?php foreach ($students as $i): ?>
+                  <tr>
+                    <td><?=$i->registrationnumber?></td>
+                    <td><?=$i->name?></td>
+                    <td><?=$i->faculty?></td>
+                    <td><?=$i->gender?></td>
+                    <td class="action-buttons">
+                        <button class="btn btn-update" onclick="openEditModal(${student.id})">
+                            <i class="uil uil-edit"></i>
+                        </button>
+                        <button class="btn btn-delete" onclick="deleteStudent(${student.id})">
+                            <i class="uil uil-trash-alt"></i>
+                        </button>
+                        <button class="btn btn-view" onclick="window.location.href='<?=ROOT?>/ped_incharge/student_profile/<?=$i->registrationnumber?>';">
+                        <i class="uil uil-eye"></i>
+                        </button>
+                    </td> 
+                </tr>
+                <?php endforeach;?>
+              <?php endif;?>
+                        </tbody>
                     </table>
                 </div>
             </div>
