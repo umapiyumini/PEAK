@@ -16,7 +16,7 @@
 
         <!-- form part -->
         <div class="container1">
-        <h1 class="title1">Indoor Reservation</h1>
+        <h1 class="title1">Badminton court Reservation</h1>
 
 
         <div class="rules">

@@ -5,66 +5,6 @@ const addStaffForm = document.getElementById('addStaffForm');
 const editStaffForm = document.getElementById('editStaffForm');
 const searchInput = document.getElementById('searchInput');
 
-// Sample initial data
-let staffData = [
-    {
-        id: 1,
-        customerId: 'GS001',
-        fullName: 'N.D Senarathne',
-        empNo: 'EMP001',
-        regNo: 'REG001',
-        designation: 'Ground Keeper',
-        dateOfAppointment: '2023-01-15',
-        nic: '891234567V',
-        dob: '1989-05-20',
-        contactNumber: '0771234567',
-        address: '123 Main St, Colombo'
-    },
-    {
-        id: 2,
-        customerId: 'GS002',
-        fullName: 'L.H Hewage',
-        empNo: 'EMP002',
-        regNo: 'REG002',
-        designation: 'Indoor Staff',
-        dateOfAppointment: '2023-02-20',
-        nic: '901234567V',
-        dob: '1990-08-15',
-        contactNumber: '0777654321',
-        address: '456 Park Ave, Kandy'
-    }
-];
-
-// Render table function
-function renderTable(data = staffData) {
-    const tbody = document.querySelector('#groundStaffTable tbody');
-    tbody.innerHTML = '';
-
-    data.forEach(staff => {
-        const tr = document.createElement('tr');
-        tr.innerHTML = `
-            <td>${staff.customerId}</td>
-            <td>${staff.fullName}</td>
-            <td>${staff.empNo}</td>
-            <td>${staff.regNo}</td>
-            <td>${staff.designation}</td>
-            <td>${staff.dateOfAppointment}</td>
-            <td>${staff.nic}</td>
-            <td>${staff.dob}</td>
-            <td>${staff.contactNumber}</td>
-            <td>${staff.address}</td>
-            <td class="action-buttons">
-                <button class="btn btn-update" onclick="openEditModal(${staff.id})">
-                    <i class="uil uil-edit"></i>
-                </button>
-                <button class="btn btn-delete" onclick="deleteStaff(${staff.id})">
-                    <i class="uil uil-trash-alt"></i>
-                </button>
-            </td>
-        `;
-        tbody.appendChild(tr);
-    });
-}
 
 // Search functionality
 function handleSearch(e) {

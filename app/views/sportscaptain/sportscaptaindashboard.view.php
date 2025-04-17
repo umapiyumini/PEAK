@@ -59,7 +59,7 @@
             
             <li>
                 <img src="<?=ROOT?>/assets/images/vidusha/calendar.png" alt="Calendar Icon" class="icon">
-                <a href="#" onclick="loadContent('gymcalendar', 'Gym Calendar')">Gym Calendar</a>
+                <a href="#" onclick="loadContent('upcoming', 'Upcoming')">Upcoming Events</a>
             </li>
             <li>
                 <img src="<?=ROOT?>/assets/images/vidusha/switch.png" alt="Calendar Icon" class="icon">

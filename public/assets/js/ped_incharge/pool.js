@@ -1,16 +1,4 @@
-  // Sample data structure for bookings
-  let bookings = {
-    '2024-11-27': [
-        { id: 1, studentId: '2022/IS/34', studentName: 'Kevin Liam', time: '17:00' },
-        { id: 2, studentId: '2020/s/321', studentName: 'Jane Smith', time: '17:00' }
-    ]
-};
 
-let settings = {
-    studentLimit: 20,
-    startTime: '17:00',
-    endTime: '19:00'
-};
 
 // Calendar generation
 function generateCalendar(year, month) {
@@ -28,12 +16,12 @@ function generateCalendar(year, month) {
         grid.appendChild(dayHeader);
     });
 
-    // Add empty cells for days before first of month
+    // Add empty cells for days before the first of the month
     for (let i = 0; i < firstDay.getDay(); i++) {
         grid.appendChild(document.createElement('div'));
     }
 
-    // Add days of month
+    // Add days of the month
     for (let day = 1; day <= lastDay.getDate(); day++) {
         const dayElement = document.createElement('div');
         dayElement.className = 'calendar-day';
@@ -63,44 +51,6 @@ function selectDate(dateString) {
     displayBookings(dateString);
 }
 
-function displayBookings(dateString) {
-    const container = document.getElementById('bookingsContainer');
-    container.innerHTML = '';
-
-    if (!bookings[dateString]) {
-        container.innerHTML = '<p>No bookings for this date</p>';
-        return;
-    }
-
-    bookings[dateString].forEach(booking => {
-        const bookingElement = document.createElement('div');
-        bookingElement.className = 'booking-item';
-        bookingElement.innerHTML = `
-            <div>
-                <strong>${booking.studentName}</strong> (ID: ${booking.studentId})
-                <span>Time: ${booking.time}</span>
-            </div>
-            <button class="btn btn-delete" onclick="cancelBooking('${dateString}', ${booking.id})">Cancel</button>
-        `;
-        container.appendChild(bookingElement);
-    });
-}
-
-function saveSettings() {
-    settings.studentLimit = document.getElementById('studentLimit').value;
-    settings.startTime = document.getElementById('startTime').value;
-    settings.endTime = document.getElementById('endTime').value;
-    alert('Settings saved successfully!');
-}
-
-function cancelBooking(dateString, bookingId) {
-    if (confirm('Are you sure you want to cancel this booking?')) {
-        bookings[dateString] = bookings[dateString].filter(b => b.id !== bookingId);
-        displayBookings(dateString);
-        generateCalendar(new Date().getFullYear(), new Date().getMonth());
-    }
-}
-
 function previousMonth() {
     const currentMonth = document.getElementById('currentMonth').textContent;
     const [month, year] = currentMonth.split(' ');
@@ -121,6 +71,43 @@ function nextMonth() {
     generateCalendar(date.getFullYear(), date.getMonth());
 }
 
+function displayBookings(dateString) {
+    const container = document.getElementById('bookingsContainer');
+    container.innerHTML = '';
+
+    // const bookingsForDate = bookings.filter(b => b.booking_date === dateString);
+    const bookingsForDate = bookings.filter(b => {
+        const bookingDate = new Date(b.booking_date).toISOString().slice(0, 10);
+        return bookingDate === dateString;
+    });
+
+    console.log(bookingsForDate);
+
+    if (!bookingsForDate || bookingsForDate.length === 0) {
+        container.innerHTML = '<p>No bookings for this date</p>';
+        return;
+    }
+
+    bookingsForDate.forEach(booking => {
+        const bookingElement = document.createElement('div');
+        bookingElement.className = 'booking-item';
+        
+        bookingElement.innerHTML = `
+            <div>
+                <strong>${booking.name}</strong> (ID: ${booking.user_id})
+                <span>Time: ${booking.booking_time}</span>
+            </div>
+            <button class="btn btn-delete" onclick="cancelBooking('${dateString}', ${booking.id})">Cancel</button>
+        `;
+        container.appendChild(bookingElement);
+    });
+}
 // Initialize calendar
-generateCalendar(new Date().getFullYear(), new Date().getMonth());
+const today = new Date();
+generateCalendar(today.getFullYear(), today.getMonth());
 selectDate('2024-11-27');
+function cancelBooking(bookingId) {
+    if (confirm('Are you sure you want to cancel this booking?')) {
+        window.location.href = `pool/cancelBooking/${bookingId}`;
+    }
+}

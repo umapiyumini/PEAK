@@ -68,11 +68,11 @@
                                     <option value="issued">Rowing</option>
                             </select>
                         </div>
-                        <div class="buttons">
+                        <!-- <div class="buttons">
                             <button class="add-product-btn" id="openAddModal">
                                 <i class="uil uil-plus"></i> Add new product
                             </button>
-                        </div>
+                        </div> -->
                     </div>
                     <table id="inventoryTableTeam">
                         <h3>Team Equipment</h3>
@@ -80,30 +80,52 @@
                             <tr>
                                 <th>Equipment</th>
                                 <th>Sport</th>
-                                <th>Quantity</th>
+                                <th>Issued</th>
+                                <th>Damaged/Lost</th>
+                                <th>Remaining</th>
                             </tr>
                         </thead>
                         <tbody>
-                            
+                            <?php if(!empty($listteam)):?>
+                                <?php foreach($listteam as $i):?>
+                                    <tr>
+                                        <td><?php echo $i->name;?></td>
+                                        <td><?php echo $i->sport_name;?></td>
+                                        <td><?php echo $i->issued_quantity;?></td>
+                                        <td><?php echo $i->damaged_quantity;?></td>
+                                        <td><?php echo $i->remaining_quantity;?></td>
+                                    </tr>
+                                <?php endforeach;?>
+                            <?php endif;?>
                         </tbody>
                     </table>
-                </div>
-                <div class="edit-reason">
-                <table id="edit-reasonTableTeam table">
-                        <h3>Updates</h3>
-                        <thead>
-                            <tr>
-                            `   <th>Date</th>
-                                <th>Equipment</th>
-                                <th>Sport</th>
-                                <th>Quantity</th>
-                                <th>Reason</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            
-                        </tbody>
-                    </table>
+                    <div class="edit-reason">
+                        <table id="edit-reasonTableTeam table">
+                            <h3>Updates</h3>
+                            <thead>
+                                <tr>
+                                    <th>Date</th>
+                                    <th>Equipment</th>
+                                    <th>Sport</th>
+                                    <th>Quantity</th>
+                                    <th>Reason</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <?php if(!empty($updatesteam)):?>
+                                    <?php foreach($updatesteam as $i):?>
+                                        <tr>
+                                            <td><?php echo $i->date ?></td>
+                                            <td><?php echo $i->name;?></td>
+                                            <td><?php echo $i->sport_name;?></td>
+                                            <td><?php echo $i->quantity;?></td>
+                                            <td><?php echo $i->reason;?></td>
+                                        </tr>
+                                    <?php endforeach;?>
+                                <?php endif;?>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
                 </div>
 
@@ -132,9 +154,9 @@
                         <!-- <button class="requests-btn" id="openRequests">
                         Requests
                         </button>  -->
-                        <button class="add-product-btn" id="openAddModal">
+                        <!-- <button class="add-product-btn" id="openAddModal">
                             <i class="uil uil-plus"></i> Add new product
-                        </button>
+                        </button> -->
                     </div>
                 </div>
                 <table id="inventoryTableRecreational">
@@ -143,11 +165,52 @@
                         <tr>
                             <th>Equipment</th>
                             <th>Sport</th>
-                            <th>Quantity</th>
+                            <th>Issued</th>
+                            <th>Damaged/Lost</th>
+                            <th>Remaining</th>
                         </tr>
                     </thead>
-                    <tbody></tbody>
+                    <tbody>
+                        <?php if(!empty($listrec)):?>
+                            <?php foreach($listrec as $i):?>
+                                <tr>
+                                    <td><?php echo $i->name;?></td>
+                                    <td><?php echo $i->sport_name;?></td>
+                                    <td><?php echo $i->issued_quantity;?></td>
+                                    <td><?php echo $i->damaged_quantity;?></td>
+                                    <td><?php echo $i->remaining_quantity;?></td>
+                                </tr>
+                            <?php endforeach;?>
+                        <?php endif;?>
+                    </tbody>
                 </table>
+                <div class="edit-reason">
+                    <table id="edit-reasonTableTeam table">
+                        <h3>Updates</h3>
+                        <thead>
+                            <tr>
+                                <th>Date</th>
+                                <th>Equipment</th>
+                                <th>Sport</th>
+                                <th>Quantity</th>
+                                <th>Reason</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php if(!empty($updatesrec)):?>
+                                <?php foreach($updatesrec as $i):?>
+                                    <tr>
+                                        <td><?php echo $i->date ?></td>
+                                        <td><?php echo $i->name;?></td>
+                                        <td><?php echo $i->sport_name;?></td>
+                                        <td><?php echo $i->quantity;?></td>
+                                        <td><?php echo $i->reason;?></td>
+                                    </tr>
+                                <?php endforeach;?>
+                            <?php endif;?>
+                        </tbody>
+                    </table>
+                </div>
             </div>
             </section>
            

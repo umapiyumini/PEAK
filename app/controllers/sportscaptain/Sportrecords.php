@@ -48,11 +48,20 @@ class Sportrecords extends Controller{
         $allRecords[] = $record;
     }
 
-    $upcoming = $this->upcomingevents->getUpcomingevents();
 
-    $data = ['tournamentRecords' => $allRecords, 'upcomingevents' => $upcoming];
+    $data = ['tournamentRecords' => $allRecords];
 
     $this->view('sportscaptain/sportrecords', $data);
+    }
+
+    public function getupcoming(){
+
+        $upcomingModel = new Upcomingevent();
+        $upcomingevents = $upcomingModel->getUpcomingevents();
+
+        $data = ['upcomingevents' => $upcomingevents];
+        $this->view('sportscaptain/sportrecords', $data);
+
     }
 
     

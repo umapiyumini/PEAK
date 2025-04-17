@@ -4,7 +4,7 @@ class Inventoryrequest {
     use Model;
 
     protected $table = 'inventoryrequest';
-    protected $fillable = ['requestid','equipmentid','quantityrequested','date','bywhom'];
+    protected $fillable = ['requestid','equipmentid','quantityrequested','timeframe','date','requested_by','status','addnotes'];
     private $errorMsg = '';
 
     public function requesttable() {
@@ -12,11 +12,74 @@ class Inventoryrequest {
                   FROM inventoryrequest i
                   JOIN equipments e ON i.equipmentid = e.equipmentid
                   JOIN sport s ON i.sport_id = s.sport_id
-                --   WHERE e.type = 'recreational'
+                WHERE e.type = 'recreational'
                   ";
 
         return $this->query($query);
     }
+
+    public function requesttable2() {
+        $query = "SELECT i.requestid, e.type, s.sport_name, e.name, i.quantityrequested, i.date, i.status
+                  FROM inventoryrequest i
+                  JOIN equipments e ON i.equipmentid = e.equipmentid
+                  JOIN sport s ON i.sport_id = s.sport_id
+                WHERE i.timeframe = 'mid year'
+                  ";
+
+        return $this->query($query);
+    }
+    
+    public function yearEndrequesttable() {
+        $query = "SELECT i.requestid, s.sport_name, e.name, i.quantityrequested, i.date, i.status, i.addnotes
+                  FROM inventoryrequest i
+                  JOIN equipments e ON i.equipmentid = e.equipmentid
+                  JOIN sport s ON i.sport_id = s.sport_id
+                  WHERE i.timeframe = 'end year' AND i.status NOT IN ('Approved', 'Rejected')";
+    
+        return $this->query($query);
+    }
+
+    public function allYearEndRequests() {
+        $query = "SELECT i.requestid, s.sport_name, e.name, i.quantityrequested, i.date, i.status, i.addnotes
+                  FROM inventoryrequest i
+                  JOIN equipments e ON i.equipmentid = e.equipmentid
+                  JOIN sport s ON i.sport_id = s.sport_id
+                  WHERE i.timeframe = 'end year' AND i.status IN ('Approved', 'Rejected')";
+    
+        return $this->query($query);
+    }
+
+    public function getCountYearMid() {
+        $query = "SELECT COUNT(*) AS count FROM inventoryrequest WHERE timeframe = 'mid year'";
+        $result = $this->query($query);
+        return $result[0]->count ?? 0; // Return the count or 0 if not found
+    }
+
+    public function getCountYearEnd() {
+        $query = "SELECT COUNT(*) AS count FROM inventoryrequest WHERE timeframe = 'end year' AND inventoryrequest.status NOT IN ('Approved', 'Rejected')";
+        $result = $this->query($query);
+        return $result[0]->count ?? 0; // Return the count or 0 if not found
+    }
+
+    // Function to save a request (approve it)
+    public function saveRequest($sport) {
+        // Update the status of the request to 'Approved'
+        $query = "UPDATE inventoryrequest SET status = 'Approved' WHERE requestid in (SELECT requestid FROM inventoryrequest join sport on sport.sport_id = inventoryrequest.sport_id WHERE sport_name = :sport)";
+        $result = $this->query($query, ['sport' => $sport]);
+        
+        return true;
+    }
+
+    // Function to reject a request
+    public function rejectRequest($sport) {
+        // Update the status of the request to 'Rejected'
+        $query = "UPDATE inventoryrequest SET status = 'Rejected' WHERE requestid in (SELECT requestid FROM inventoryrequest join sport on sport.sport_id = inventoryrequest.sport_id WHERE sport_name = :sport)";
+        $result = $this->query($query, ['sport' => $sport]);
+        
+        return true;
+    }
+
+    
 
     // Function to change the status of a request to either approved or rejected
     public function updateStatus($requestid, $status) {
@@ -89,6 +152,86 @@ class Inventoryrequest {
 
         return false;
     }
-       
+
+    public function getPreviousRequests(){
+
+        $userId = $this->getUserId();
+        if (!$userId) {
+            die("User ID not found in session.");
+        }
+
+        $query = "SELECT equipments.name, inventoryrequest.* 
+                FROM inventoryrequest
+                JOIN equipments ON inventoryrequest.equipmentid = equipments.equipmentid
+                WHERE inventoryrequest.requested_by = :userid";
+
+        return $this->query($query, ['userid' => $userId]);
+
+    }
+
+
+    public function addRequest() {
+
+        $userId = $this->getUserId();
+    
+        if (!$userId) {
+            die("User ID not found in session.");
+        }
+    
+        $query = "INSERT INTO inventoryrequest (
+                    equipmentid, 
+                    quantityrequested, 
+                    timeframe, 
+                    date, 
+                    requested_by,
+                    status, 
+                    addnotes)
+                  VALUES (
+                    (SELECT equipmentid FROM equipments WHERE name = :name),
+                    :quantityrequested,
+                    :timeframe,
+                    CURRENT_DATE,
+                    :userid,
+                    'pending',
+                    :addnotes)";
+    
+        return $this->query($query, [
+            'name' => $_POST['name'],
+            'quantityrequested' => $_POST['quantityrequested'],
+            'timeframe' => $_POST['timeframe'],
+            'userid' => $userId,
+            'addnotes' => $_POST['addnotes'],
+        ]);
+    }
+
+    public function editRequest($requestid, $equipmentid, $quantityrequested, $timeframe, $date){
+
+        $query = "UPDATE inventoryrequest SET 
+                equipmentid = (SELECT equipmentid FROM equipments WHERE name = :equipmentid),
+                quantityrequested = :quantityrequested,
+                timeframe = :timeframe,
+                date = :date
+                WHERE requestid = :requestid";
+
+        return $this->query($query, [
+            'equipmentid' => $equipmentid,
+            'quantityrequested' => $quantityrequested,
+            'timeframe' => $timeframe,
+            'date' => $date,
+            'requestid' => $requestid
+        ]);
+                
+    }
+
+    public function getAllRequests(){
+
+        $query = "SELECT inventoryrequest.*, equipments.name FROM inventoryrequest
+                JOIN equipments ON inventoryrequest.equipmentid = equipments.equipmentid
+                WHERE inventoryrequest.status = 'pending'";
+
+        $result = $this->query($query);
+        
+        return $result;
+    }
 }
 

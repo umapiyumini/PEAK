@@ -22,7 +22,8 @@
     <main>
         <div class="controls">
             <input type="text" id="search-bar" placeholder="Search by player name..." onkeyup="filterTable()">
-            <button id="generate-qr" onclick="generateQR()">Generated QR Code</button>
+            <button id="generate-qr" onclick="generateQRCode()">Generated QR Code</button>
+            <img id="qr-image" src="" alt="QR Code">
         </div>
         
         <?php if (!empty($attendance['records'])) { ?>
@@ -63,6 +64,19 @@
 <?php } ?>
 
     </main>
+    <script>
+function generateQRCode() {
+    const userId = "<?= $_SESSION['userid'] ?? 'guest' ?>";
+    const date = new Date().toISOString().slice(0, 10);
+    const qrText = `attendance|${userId}|${date}`;
+    const qrUrl = `https://chart.googleapis.com/chart?cht=qr&chs=200x200&chl=${encodeURIComponent(qrText)}`;
+    
+  
+    console.log("QR Text:", qrText);
+    console.log("QR URL:", qrUrl);
+    document.getElementById("qr-image").src = qrUrl;
+}
+</script>
     <script src="<?=ROOT?>/assets/js/vidusha/sportattendance.js"></script>
 </body>
 </html>

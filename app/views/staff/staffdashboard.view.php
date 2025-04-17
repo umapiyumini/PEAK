@@ -84,7 +84,23 @@
                 </tr>
             </thead>
             <tbody>
-                <!-- Task rows will go here -->
+                
+                <?php if(!empty($task)): ?>
+                    <?php foreach($task as $item): ?>
+                        <pre><?php print_r($task); ?></pre>
+
+                    <tr>
+                    <td><?=htmlspecialchars($item->task)?></td>
+                    <td><?=htmlspecialchars($item->due_date)?></td>
+                    <td><?=htmlspecialchars($item->status)?></td>
+                    <td><?=htmlspecialchars($item->remark)?></td>
+                    </tr>
+                    <?php endforeach; ?>
+                <?php else: ?>
+                    <tr>
+                    <td colspan="4">No data available</td>
+                </tr>
+                <?php endif; ?>
             </tbody>
         </table>
     </div>
@@ -94,14 +110,9 @@
         <!-- Inventory Management Section -->
         <div class="inventory-management">
             <h2>Inventory Management</h2>
-            <!-- Horizontal Containers for Inventory and Requests -->
-     <!-- Horizontal Containers for Inventory and Requests -->
-     <div class="containers">
-        <!-- Inventory Table Container with Border -->
-        <div class="inventory-container">
-            <h3>Inventory</h3>
-            
-            <!-- Search Bar inside Inventory Section -->
+            <div class="containers">
+                <div class="inventory-container">
+                <h3>Inventory</h3>
             <div class="search-container">
                 <label for="searchEquipment">Search Equipment:</label>
                 <input type="text" id="searchEquipment" placeholder="Search by name...">
@@ -126,16 +137,14 @@
     <table id="inventoryTable">
         <thead>
             <tr>
-                
-            
                 <th>Equipment</th>
                 <th>Available Quantity</th>
                 <th>Edit</th>
             </tr>
         </thead>
         <tbody>
-            <?php if (!empty($unpacked)): ?>
-                <?php foreach ($unpacked as $item): ?>
+            <?php if (!empty($stock)): ?>
+                <?php foreach ($stock as $item): ?>
                     <tr>
                     
                         <td><?php echo $item->name; ?></td>
@@ -226,8 +235,8 @@
                 </tr>
             </thead>
             <tbody>
-                <?php if (!empty($request)): ?>
-                    <?php foreach ($request as $item): ?>
+                <?php if (!empty($requests)): ?>
+                    <?php foreach ($requests as $item): ?>
                         <tr>
                             <td><?php echo htmlspecialchars($item->name); ?></td>
                             <td><?php echo htmlspecialchars($item->quantityrequested); ?></td>

@@ -5,6 +5,15 @@ class Upcomingevent{
     protected $table = 'upcomingevents';
     protected $columns = ['event_name','date','time','venue','sport_id'];
 
+    private function getUserId() {
+        if (session_status() == PHP_SESSION_NONE) {
+            session_start();
+        }
+        if (!isset($_SESSION['userid'])) {
+            die("User not logged in.");
+        }
+        return $_SESSION['userid'];
+    }
 
     public function getUpcomingevents(){
 
@@ -24,7 +33,7 @@ class Upcomingevent{
         return $result;
     }
 
-    public function addupcomingevent(){
+    public function addUpcomingevent(){
 
         $userId = $this->getUserId();
        
@@ -55,6 +64,53 @@ class Upcomingevent{
         }catch(Exception $e){
             $_SESSION['error'] = $e->getMessage();
             return false;
+        }
     }
-    }
+    
+
+    public function editUpcomingevent($id,$event_name, $date, $time, $venue,$userId){
+
+        try{
+
+        $query ="UPDATE upcomingevents
+                SET event_name = :event_name,
+                    date = :date,
+                    time = :time,
+                    venue = :venue
+                WHERE id = :id AND sport_id = (SELECT sport_id FROM sports_captain WHERE userid = :userid)";
+        
+        return $this->query($query,[
+            'event_name' => $event_name,
+            'date' => $date,
+            'time' => $time,
+            'venue' => $venue,
+            'id' => $id,
+            'userid' => $userId
+        ]);
+
+    }catch(Exception $e){
+        $_SESSION['error'] = $e->getMessage();
+        return false;
+    
+    }   
 }
+
+    public function deleteUpcomingevent($id){
+
+        try{
+
+            $query = "DELETE FROM upcomingevents WHERE id = :id";
+            $result = $this->query($query, ['id' => $id]);
+
+            return $result;
+
+        }catch(Exception $e){
+            $_SESSION['error'] = $e->getMessage();
+            return false;
+        }
+    }
+
+}
+    
+    
+        

@@ -37,9 +37,14 @@ class Team extends Controller{
 
             $result = $teamModel->addPlayer($regno, $position, $jerseyno);
              
+            if ($result) {
+                $_SESSION['success'] = "Player added successfully!";
+            } else {
+                $_SESSION['error'] = "Failed to add player. Please try again.";
+            }
          
         }catch(Exception $e){
-            $_SESSION['error'] = $e->getMessage();  
+            $_SESSION['error'] = 'Something went wrong while adding the player. Please try again.'; 
         }
 
         header('Location:' . ROOT . '/sportscaptain/team');
@@ -65,8 +70,14 @@ class Team extends Controller{
                 $_POST['regno']
             );
 
+            if($result){
+                $_SESSION['success'] = 'Player deleted successfully!';
+            }else{
+                $_SESSION['error'] = 'Failed to delete player. Please try again.';
+            }
+
         }catch(Exception $e){
-            $_SESSION['error'] = $e->getMessage();
+            $_SESSION['error'] = 'Something went wrong while adding the player. Please try again.';
         }
 
         header('Location:' . ROOT . '/sportscaptain/team');
@@ -77,7 +88,7 @@ class Team extends Controller{
         if($_SERVER['REQUEST_METHOD'] === 'POST'){
             $regno = trim($_POST['regno'] ?? '');
             $position = trim($_POST['position'] ?? '');
-            $jerseyno = trim($_POST['jerseyno'] ?? ''); // Fixed typo here
+            $jerseyno = trim($_POST['jerseyno'] ?? ''); 
             
             if(empty($regno) || empty($position) || empty($jerseyno)){
                 $_SESSION['error'] = 'All fields are required';
@@ -92,10 +103,16 @@ class Team extends Controller{
                     $position,
                     $jerseyno
                 );
+
+                if($result){
+                    $_SESSION['success'] = 'Player updated successfully!';
+                }else{
+                    $_SESSION['error'] = 'Failed to update player. Please try again.';
+                }
                 
                 
             }catch(Exception $e){
-                $_SESSION['error'] = $e->getMessage();
+                $_SESSION['error'] = 'Something went wrong while adding the player. Please try again.';
             }
             
             header('Location:' . ROOT . '/sportscaptain/team');

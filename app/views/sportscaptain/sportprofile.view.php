@@ -41,6 +41,7 @@
                 <h2>Team 2024</h2>
 				<article class="captains">
 			        <div class="tile2">
+                        
 				        <img src="<?=ROOT?>/assets/images/vidusha/mcaptain.jpeg" alt="cap-men">
 				        <p>Men's Captain</p>
 			        </div>

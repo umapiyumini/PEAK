@@ -7,4 +7,6 @@ function filterTable() {
         const playerName = rows[i].getElementsByTagName("td")[0]?.textContent.toLowerCase();
         rows[i].style.display = playerName.includes(searchInput) ? "" : "none";
     }
+
+    
 }

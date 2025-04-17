@@ -20,11 +20,6 @@
     </div>
     <div class="container">
     <h1>Sports Events</h1>
-    <div class="tabs">
-      <button class="tab-button active" data-tab="played-tournaments">Played Tournaments</button>
-      <button class="tab-button" data-tab="upcoming-events">Upcoming Tournaments</button>
-    </div>
-    
     <div id="played-tournaments" class="tab-content active">
       <h2>Played Tournaments</h2>
       

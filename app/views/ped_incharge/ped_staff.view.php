@@ -40,6 +40,7 @@
                     </button>
                     
 </div>
+
                     <table id="groundStaffTable">
                         <thead>
                             <tr>
@@ -56,7 +57,28 @@
                                 <th>Actions</th>
                             </tr>
                         </thead>
-                        <tbody></tbody>
+                        <tbody>
+                            <?php if(!empty($pedstaffList)): ?>
+                            <?php foreach($pedstaffList as $staff): ?>
+                                <tr>
+                                    <td><?= $staff->staff_id ?></td>
+                                    <td><?= $staff->name ?></td>
+                                    <td><?= $staff->emp_no ?></td>
+                                    <td><?= $staff->reg_no ?></td>
+                                    <td><?= $staff->designation ?></td>
+                                    <td><?= $staff->appointment_date ?></td>
+                                    <td><?= $staff->nic ?></td>
+                                    <td><?= $staff->dob ?></td>
+                                    <td><?= $staff->phone ?></td>
+                                    <td><?= $staff->address ?></td>
+                                    <td class="actions">
+                                        <button class="edit-btn" data-id="<?= $staff->staff_id ?>">Edit</button>
+                                        <button class="delete-btn" data-id="<?= $staff->staff_id ?>">Delete</button>
+                                    </td>
+                                </tr>
+                            <?php endforeach; ?>
+                            <?php endif; ?>
+                        </tbody>
                     </table>
                 </div>
 </div>
