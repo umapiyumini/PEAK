@@ -45,6 +45,19 @@ class Courts {
         return $result ? $result[0] : null;
     }
     
+    public function getSectionByCourtid($courtid) {
+        $query = "SELECT section FROM courts WHERE courtid = :courtid LIMIT 1";
+        $result = $this->query($query, ['courtid' => $courtid]);
+        return $result ? $result[0]->section : null;
+
+    }
+    
+    public function insert($data) {
+        $columns = implode(", ", array_keys($data));
+        $placeholders = ":" . implode(", :", array_keys($data));
+        $query = "INSERT INTO $this->table ($columns) VALUES ($placeholders)";
+        return $this->query($query, $data);
+    }
     
 }
 

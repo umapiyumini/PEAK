@@ -43,4 +43,26 @@ class Ped_facilities extends Controller {
         }
     }
     
+
+    public function add() {
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $name = $_POST['name'] ?? '';
+            $description = $_POST['description'] ?? '';
+            $image = $_POST['image'] ?? '';
+            $location = $_POST['location'] ?? '';
+            $section = $_POST['section'] ?? '';
+    
+            $courtsModel = new Courts();
+            $data = [
+                'name' => $name,
+                'description' => $description,
+                'image' => $image,
+                'location' => $location,
+                'section' => $section
+            ];
+            $result = $courtsModel->insert($data);
+            echo $result ? 'success' : 'error';
+        }
+    }
+    
 }

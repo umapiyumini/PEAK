@@ -41,8 +41,7 @@
     <option value="practice">Practice</option>
     
 </select>
-
-<!-- Date Picker -->
+<!-- date picker --> 
 <?php 
     $today = date('Y-m-d'); 
     $maxDate = date('Y-m-d', strtotime('+14 days')); 
@@ -51,11 +50,11 @@
 <input type="date" id="date" name="date" required 
        min="<?= $today ?>" 
        max="<?= $maxDate ?>">
-       <p id="availabilityMessage" style="color: red; display: none;"></p>
+
 
 <!-- Duration -->
 <label for="duration">Duration:</label>
-<select id="duration" name="duration" required>
+<select id="duration" name="duration" required onchange="showSlots()">
     <option value="" disabled selected>Select Duration</option>
     
     <option id="full"value="full">Full day</option>
@@ -63,23 +62,26 @@
     <option id="2 hour"value="2 hour">2 hour</option>
 </select>
 
-
-
-
-<!-- Half Day Time Options -->
-<div id="halfDayOptions" style="display: none;">
-    <label>Choose Time Slot:</label>
-    <div style="display: flex; gap: 30px;">
-        <label style="display: flex; align-items: center; gap: 5px;">
-            <input type="radio" id="slot1" name="timeSlot" value="08:00 - 13:00">
-            08:00 - 13:00
-        </label>
-        <label style="display: flex; align-items: center; gap: 5px;">
-            <input type="radio" id="slot2" name="timeSlot" value="13:00 - 18:00">
-            13:00 - 18:00
-        </label>
+<!-- Hidden slots -->
+<div id="halfDaySlots" style="display:none;">
+    <strong>Choose Time Slot:</strong>
+    <div class="slot-container">
+        <label><input type="radio" name="time_slot" value="08:00:00"> 08:00 - 13:00</label>
+        <label><input type="radio" name="time_slot" value="13:00:00"> 13:00 - 18:00</label>
     </div>
 </div>
+
+<div id="twoHourSlots" style="display:none;">
+    <strong>Choose Time Slot:</strong>
+    <div class="slot-container">
+        <label><input type="radio" name="time_slot" value="08:00:00"> 08:00 - 10:00</label>
+        <label><input type="radio" name="time_slot" value="10:00:00"> 10:00 - 12:00</label>
+        <label><input type="radio" name="time_slot" value="13:00:00"> 13:00 - 15:00</label>
+        <label><input type="radio" name="time_slot" value="15:00:00"> 15:00 - 17:00</label>
+    </div>
+</div>
+
+
 
 <!-- User Type -->
 <label for="userType">User Type:</label>
@@ -197,6 +199,18 @@ function fetchDiscountedPrice(price) {
         discountedPriceInput.value = 'Error';
     });
 }
+
+//function to show hidden time slots 
+function showSlots() {
+    const selectedDuration = document.getElementById("duration").value;
+
+    document.getElementById("halfDaySlots").style.display = (selectedDuration === "half") ? "block" : "none";
+    document.getElementById("twoHourSlots").style.display = (selectedDuration === "2 hour") ? "block" : "none";
+  }
+
+//availability checker
+
+
 
 // Event listeners
 bookingForSelect.addEventListener('change', fetchPrice);

@@ -156,8 +156,6 @@ public function checkAvailability() {
     $date = $_POST['date'];
     $section = $_POST['section'];
 
-    // Log the received values for debugging purposes
-    error_log("Received date: $date, section: $section");
 
     // Create an instance of the Reservations model
     $reservationsModel = new Reservations();

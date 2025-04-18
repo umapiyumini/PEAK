@@ -98,44 +98,40 @@ class Reservations {
             'months' => $months
         ]);
     }
-    
 
+// Model function to check if the selected date is fully booked
+// Model: Function to check if the date is fully booked
+function isDateFullyBooked($date, $section, $conn) {
+    $query = "SELECT * FROM reservations WHERE date = ? AND section = ? AND status IN ('to pay', 'paid', 'confirmed') AND duration = 'full'";
 
-    public function checkExistingReservations($date, $section) {
-        // Log the values received for debugging purposes
-        error_log("Checking availability for section: $section, date: $date");
-    
-        // Query to check existing reservations for the section and date
-        $query = "SELECT * FROM reservations WHERE section = :section AND date = :date AND status IN ('to pay', 'paid', 'confirmed')";
-    
-        // Ensure we're using 'section' instead of 'courtid'
-        $data = ['section' => $section, 'date' => $date];
-    
-        // Execute the query
-        $results = $this->query($query, $data);
-    
-        $fullDayCount = 0;
-        $halfDayCount = 0;
-        $bookedHalfSlot = '';
-    
-        if ($results) {
-            // Loop through the results to count full and half-day reservations
-            foreach ($results as $reservation) {
-                if ($reservation->duration === 'full') {
-                    $fullDayCount++;
-                } elseif ($reservation->duration === 'half') {
-                    $halfDayCount++;
-                    $bookedHalfSlot = $reservation->time;  // Assuming 'time' field represents the booked half-slot
-                }
-            }
-        }
-    
-        // Return the count of reservations for full day, half day, and any booked half slot
-        return [
-            'fullDayCount' => $fullDayCount,
-            'halfDayCount' => $halfDayCount,
-            'bookedHalfSlot' => $bookedHalfSlot
-        ];
+    if ($stmt = $conn->prepare($query)) {
+        $stmt->bind_param('ss', $date, $section);
+        $stmt->execute();
+        $result = $stmt->get_result();
+
+        // If there's a match, it means the date is fully booked
+        return $result->num_rows > 0;
     }
+
+    return false;
+}
+
+
+
+public function getBookingsForDateSection($date, $section) {
+    $query = "SELECT * FROM {$this->table} 
+              WHERE date = :date 
+              AND section = :section 
+              AND status IN ('to pay', 'paid', 'confirmed')";
+    return $this->query($query, [
+        'date' => $date,
+        'section' => $section
+    ]);
+}
+
     
-} 
+
+
+    
+    
+}  
