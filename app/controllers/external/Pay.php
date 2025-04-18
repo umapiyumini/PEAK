@@ -39,13 +39,20 @@ class Pay extends Controller {
                     ]);
     
                     // After inserting the payment, update the reservation status to 'paid'
-                    $this->updateReservationStatus($reservationId);
+                   $result= $this->updateReservationStatus($reservationId);
     
-                    // Redirect to a success page
-                    header('Location: ' . ROOT . '/external/pay?success=1');
-                    exit;
+                    if ($result) {
+                        if (session_status() === PHP_SESSION_NONE) session_start();
+                        $_SESSION['payment_success'] = true;
+                        header('Location: ' . ROOT . '/external/pay');
+                        exit;
+                    }
+                    
                 } else {
-                    echo "Error: Could not upload the payment proof.";
+                    if (session_status() === PHP_SESSION_NONE) session_start();
+                    $_SESSION['payment_success'] = true;
+                    header('Location: ' . ROOT . '/external/pay');
+                    exit;
                 }
             } else {
                 echo "Error uploading file. Code: " . $paymentProof['error'];
@@ -65,7 +72,10 @@ class Pay extends Controller {
         if ($result) {
             echo "Reservation status updated to 'paid'.";
         } else {
-            echo "Error: Could not update reservation status.";
+            if (session_status() === PHP_SESSION_NONE) session_start();
+                    $_SESSION['payment_success'] = true;
+                    header('Location: ' . ROOT . '/external/pay');
+                    exit;
         }
     }
 }

@@ -2,9 +2,16 @@
 // Your existing code follows below:
 class Strengthform extends Controller {
 
+    // public function index() {
+    //     $this->view('external/strengthform');
+    // }
+
     public function index() {
-        $this->view('external/strengthform');
+        $subscriptions = $this->getOngoingSubscriptions();
+        $this->view('external/strengthform', ['subscriptions' => $subscriptions]);
     }
+    
+ 
 
     public function getPrice() {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -22,71 +29,7 @@ class Strengthform extends Controller {
         }
     }
 
-    public function book() {
-        // Start the session if it's not already started
-        if (session_status() == PHP_SESSION_NONE) {
-            session_start();
-        }
     
-        // Get the user ID (from session)
-        $userId = $this->getUserId(); // This should check if the user is logged in
-    
-        // Get the subscription and price from POST data
-        $subscription = $_POST['subscription'];
-        $price = $_POST['price'];
-    
-        // Convert the subscription type into months (for the expiry check)
-        $months = match ($subscription) {
-            'annual' => 12,
-            '6 month' => 6,
-            '3 month' => 3,
-            default => 0,
-        };
-    
-        if ($months > 0) {
-            // Check if there is already a reservation for this user within the last year (or subscription period)
-            $reservation = new Reservations();
-            $query = "SELECT * FROM reservations WHERE userid = :userid AND subscription = :subscription AND created_at >= DATE_SUB(NOW(), INTERVAL :months MONTH)";
-            $existing = $reservation->query($query, ['userid' => $userId, 'subscription' => $subscription, 'months' => $months]);
-    
-            // Check if any existing reservation is found
-            if ($existing) {
-                // If an existing reservation is found, show an error message and don't continue with the booking
-                $_SESSION['error_message'] = "You already have an active {$subscription} subscription.";
-                // Redirect back to the form or stay on the page
-                header('Location: ' . $_SERVER['HTTP_REFERER']);
-                exit;
-            } else {
-                // If no existing reservation, continue with the booking process
-    
-                // Prepare data for inserting the reservation into the database
-                $data = [
-                    'userid' => $userId,
-                    'courtid' => 38,  // Assuming the court ID is fixed
-                    'price' => $price,
-                    'status' => 'pending',  // Set status to 'pending'
-                    'subscription' => $subscription,
-                    'created_at' => date('Y-m-d H:i:s'),  // Current timestamp
-                ];
-    
-                // Insert the new reservation
-                $reservation->insert($data);
-    
-                // Set a success message for the user
-                $_SESSION['success_message'] = "Your {$subscription} subscription has been successfully booked!";
-                // Redirect to a confirmation page or stay on the same page
-                header('Location: ' . $_SERVER['HTTP_REFERER']);
-                exit;
-            }
-        } else {
-            // If the subscription type is invalid
-            $_SESSION['error_message'] = "Invalid subscription type.";
-            header('Location: ' . $_SERVER['HTTP_REFERER']);
-            exit;
-        }
-    }
-    
-
     public function getUserId() {
         // Use correct session key
         if (!isset($_SESSION['userid'])) {
@@ -95,4 +38,134 @@ class Strengthform extends Controller {
 
         return $_SESSION['userid'];
     }
+
+
+
+
+    public function submitReservation() {
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $subscription = isset($_POST['subscription']) ? $_POST['subscription'] : '';
+            $price = isset($_POST['price']) ? $_POST['price'] : '';
+            $userid = $this->getUserId();
+    
+            if ($subscription && $userid) {
+                $subscriptionModel = new Subscription();
+    
+                // 🔍 Check if the user is allowed to make a reservation
+                $check = $subscriptionModel->isWithinTwoWeeksOfExpiry($userid);
+    
+                if (!$check['allowed']) {
+                    echo $check['message']; // ❌ Not allowed: send back a message
+                    return;
+                }
+    
+                // ✅ Allowed to make reservation
+                $data = [
+                    'userid' => $userid,
+                    'subscription' => $subscription,
+                    'paymentproof' => null,
+                    'status' => 'pending',
+                    'date_of_payment' => null,
+                ];
+    
+                $subscriptionModel->insert($data);
+                echo "Reservation successfully made. Awaiting payment.";
+            } else {
+                echo "Failed to make reservation. Missing required data.";
+            }
+        }
+    }
+    
+
+   // Controller Method to handle the Strength Form page
+public function showStrengthForm() {
+    // Fetch the ongoing subscriptions for the logged-in user
+    $subscriptions = $this->getOngoingSubscriptions();
+
+    // Pass the subscriptions data to the view
+    $this->view('external/strengthform', ['subscriptions' => $subscriptions]);
 }
+
+public function getOngoingSubscriptions() {
+    $userId = $this->getUserId();  // still fine
+
+    $subscriptionModel = new Subscription();
+    return $subscriptionModel->getOngoingByUserId($userId);
+}
+
+
+public function checkSubscriptionStatus() {
+    $userId = $_POST['userId'] ?? '';
+    $subscriptionType = $_POST['subscriptionType'] ?? '';
+
+    if (!$userId || !$subscriptionType) {
+        echo json_encode([
+            'status' => 'failed',
+            'canPay' => false,
+            'message' => 'Failed to get user or subscription details.'
+        ]);
+        exit;
+    }
+
+    $subscriptionModel = new Subscription();
+    $subscriptions = $subscriptionModel->getSubscriptionEndDateByUser($userId);
+
+    if (!$subscriptions || empty($subscriptions[0])) {
+        echo json_encode([
+            'status' => 'failed',
+            'canPay' => false,
+            'message' => 'No active subscription found for the user.'
+        ]);
+        exit;
+    }
+
+    $subscription = $subscriptions[0];
+    $endDate = new DateTime($subscription->subscription_end_date);
+    $now = new DateTime();
+
+    // Calculate days remaining or past expiry
+    $interval = $now->diff($endDate);
+    $daysLeft = (int) $interval->format('%r%a'); // +ve if in future, -ve if expired
+
+    if ($subscription->status === 'active') {
+        if ($daysLeft <= 14 && $daysLeft >= 0) {
+            echo json_encode([
+                'status' => 'active',
+                'canPay' => true,
+                'message' => "Your subscription is active, but will expire in $daysLeft days. You can pay now."
+            ]);
+        } else {
+            echo json_encode([
+                'status' => 'active',
+                'canPay' => false,
+                'message' => "You already have an active subscription. No need to pay again."
+            ]);
+        }
+    } else {
+        if ($daysLeft < 0) {
+            echo json_encode([
+                'status' => 'expired',
+                'canPay' => true,
+                'message' => "Your subscription has expired. Please renew to proceed."
+            ]);
+        } else if ($daysLeft <= 14) {
+            echo json_encode([
+                'status' => 'expiring',
+                'canPay' => true,
+                'message' => "Your subscription is expiring in $daysLeft days. You can proceed with the reservation."
+            ]);
+        } else {
+            echo json_encode([
+                'status' => 'valid',
+                'canPay' => true,
+                'message' => "Your subscription is valid. You can proceed."
+            ]);
+        }
+    }
+
+    exit;
+}
+
+}
+
+

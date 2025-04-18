@@ -8,7 +8,7 @@ Trait Database {
         return $con;
     }
 
-    // read 
+    //read 
     public function query($query, $data = []){
         $con = $this->connect();
         $stm = $con->prepare($query);
@@ -22,8 +22,12 @@ Trait Database {
         }
        return false; 
     }
-
-
+   
+    
+    
+ 
+    
+    
      // read 1 row
      public function get_row($query, $data = []){
         $con = $this->connect();
