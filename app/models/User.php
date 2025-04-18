@@ -140,4 +140,18 @@ class User {
         return $this->query($query, $params);
     }
     
+    public function changeRole($userid, $role){
+        $query = "UPDATE $this->table SET role = :role WHERE userid = :userid";
+        $params = [
+            ':role' => $role,
+            ':userid' => $userid
+        ];
+        return $this->query($query, $params);
+
+    }
+
+    public function findAllUsers() {
+        $query = "SELECT * FROM $this->table";
+        return $this->query($query);
+    }
 }

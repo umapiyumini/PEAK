@@ -195,32 +195,32 @@
             <div class="profile-image">
                 <img src="<?=ROOT?>/assets/images/ped_incharge/pro_icon.jpg" alt="Student Photo" id="studentPhoto">
             </div>
-            <h2 id="studentName">Student Name</h2>
-            <div class="basic-info">
-                <p>Registration No: <span id="studentRegNo"></span></p>
-                <p>Faculty: <span id="studentFaculty"></span></p>
-            </div>
+            <?php if (!empty($studentDetails)) : ?>
+
+                    <h2 id="studentName"><?=$studentDetails[0]->name?></h2>
+                    <div class="basic-info">
+                        <p>Registration No: <span id="studentRegNo"><?=$studentDetails[0]->registrationnumber?></span></p>
+                        <p>Faculty: <span id="studentFaculty"><?=$studentDetails[0]->faculty?></span></p>
+                        <p>Department: <span id="studentFaculty"><?=$studentDetails[0]->department?></span></p>
+                    </div>
+
+             <?php endif; ?>
         </div>
         <div class="profile-right">
-        
             <div class="info-card">
                 <h3><i class="uil uil-info-circle"></i> General Information</h3>
                 <div class="info-grid">
                     <div class="info-item">
                         <label>Registered Date:</label>
-                        <span id="studentRegDate"></span>
+                        <span id="studentRegDate"><?=$studentDetails[0]->id_start?></span>
                     </div>
                     <div class="info-item">
                         <label>ID Expiry Date:</label>
-                        <span id="studentExpireDate"></span>
-                    </div>
-                    <div class="info-item">
-                        <label>Academic Year:</label>
-                        <span id="academicYearDisplay"></span>
+                        <span id="studentExpireDate"><?=$studentDetails[0]->id_end?></span>
                     </div>
                     <div class="info-item">
                         <label>Gender:</label>
-                        <span id="studentGender"></span>
+                        <span id="studentGender"><?=$studentDetails[0]->gender?></span>
                     </div>
                 </div>
             </div>
@@ -229,34 +229,46 @@
                 <h3><i class="uil uil-user"></i> Personal Information</h3>
                 <div class="info-grid">
                     <div class="info-item">
-                        <label>studentBirthDate:</label>
-                        <span id="dobDisplay"></span>
+                        <label>Date of Birth:</label>
+                        <span id="dobDisplay"><?=$studentDetails[0]->date_of_birth ?></span>
                     </div>
                     <div class="info-item">
                         <label>NIC:</label>
-                        <span id="studentNIC"></span>
+                        <span id="studentNIC"><?=$studentDetails[0]->nic ?></span>
                     </div>
                     <div class="info-item">
                         <label>Email:</label>
-                        <span id="studentEmail"></span>
+                        <span id="studentEmail"><?=$studentDetails[0]->email ?></span>
                     </div>
                     <div class="info-item">
                         <label>Contact:</label>
-                        <span id="studentContact"></span>
+                        <span id="studentContact"><?=$studentDetails[0]->contact_number?></span>
                     </div>
                     <div class="info-item">
                         <label>Address:</label>
-                        <span id="studentAddress"></span>
+                        <span id="studentAddress"><?=$studentDetails[0]->address ?></span>
                     </div>
                 </div>
             </div>
-
+           
             <div class="info-card">
                 <h3><i class="uil uil-medal"></i> Achievements & Activities</h3>
                 <div class="info-grid">
                     <div class="info-item">
                         <label>Sports:</label>
-                        <span id="studentSports"></span>
+                        <span id="studentSports">
+                        <?php if (!empty($sports)) : ?>
+                            <?php
+                                $sportNames = array_map(function($sport) {
+                                    return $sport->sport_name;
+                                }, $sports);
+                                echo implode(', ', $sportNames);
+                            ?>
+                        <?php else : ?>
+                            No sports registered.
+                        <?php endif; ?>
+
+                        </span>
                     </div>
                     <div class="info-item full-width">
                         <label>Achievements:</label>
@@ -281,24 +293,6 @@
 	<script src="navbar.js"></script>
     <script>
 
-
-const studentData = {
-    photo: "../assets/images/ped_incharge/pro_icon.jpg",
-    name: "Ryan ",
-    regNo: "321000001",
-    faculty: "Medicine",
-    regDate: "2023-09-01",
-    expireDate: "2027-09-01",
-    academicYear: "2023",
-    gender: "Male",
-    dateOfBirth: "2000-01-01",
-    nic: "1234567890",
-    email: "john.doe@example.com",
-    contact: "0123456789",
-    address: "123 Student Street, City",
-    sports: "Football, Cricket",
-    achievements: "Cricket SLUG Champions-2024"
-};
 
 // Function to display student data in the profile
 function displayStudentProfile(data) {
