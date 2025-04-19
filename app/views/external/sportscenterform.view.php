@@ -12,7 +12,7 @@
 <?php include 'top.view.php'; ?>
 
 <div class="container1">
-<h1 class="title1">Volleyball court Reservation</h1>
+<h1 class="title1">Sportcenter Reservation</h1>
 
 <div class="rules">
     <h2>Please note </h2>
@@ -25,12 +25,12 @@
     </ul>
 </div>
 
-<form id="reservationForm" method="post" action="<?=ROOT?>/external/volleyballform/reserve" enctype="multipart/form-data">
+<form id="reservationForm" method="post" action="<?=ROOT?>/external/sportscenterform/reserve" enctype="multipart/form-data">
     <!-- Booking For -->
     <label for="bookingFor">Booking For:</label>
     <select id="bookingFor" name="bookingFor" required>
         <option value="" disabled selected>Select</option>
-        <option value="practice">Practice</option>
+        
         <option value="tournament">Tournament</option>
     </select>
 
@@ -49,7 +49,7 @@
             <option value="" disabled selected>Select Duration</option>
             <option id="halfDayOption" value="half">Half Day</option>
             <option id="fullDayOption" value="full">Full Day</option>
-            <option id="onehourOption" value="1 hour">1 hours</option>
+            
         </select>
 
     <!-- Hidden slots -->
@@ -145,7 +145,7 @@ function fetchPrice() {
     
 
     if (event && duration) {
-        fetch('<?=ROOT?>/external/volleyballform/getPrice', {
+        fetch('<?=ROOT?>/external/sportscenterform/getPrice', {
             method: 'POST',
             headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
             body: `bookingFor=${encodeURIComponent(event)}&duration=${encodeURIComponent(duration)}`
@@ -231,7 +231,7 @@ dateInput.addEventListener('change', function() {
     const selectedDate = dateInput.value;
     if (!selectedDate) return;
 
-    fetch('http://localhost/PEAK/public/external/volleyballform/checkAvailability', {
+    fetch('http://localhost/PEAK/public/external/sportscenterform/checkAvailability', {
         method: 'POST',
         headers: {'Content-Type': 'application/x-www-form-urlencoded'},
         body: `date=${encodeURIComponent(selectedDate)}`

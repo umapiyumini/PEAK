@@ -1,9 +1,9 @@
 <?php
 
-class Volleyballform extends Controller {
+class Tabletennisform extends Controller {
 
     public function index() {
-        $this->view('external/volleyballform');
+        $this->view('external/tabletennisform');
     }
 
     public function getPrice() {
@@ -11,7 +11,7 @@ class Volleyballform extends Controller {
             $event = $_POST['bookingFor'];
             $duration = $_POST['duration'];
             
-            $courtid = 20; // Use the correct courtid for badminton
+            $courtid = 19; 
             $indoorcourt = new Indoorcourts();
             $price = $indoorcourt->getPriceByDetails($event, $duration, $courtid);
             echo json_encode(['price' => $price]);
@@ -22,7 +22,7 @@ class Volleyballform extends Controller {
     public function checkAvailability() {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $date = $_POST['date'];
-            $courtid = 20; // Use the correct court ID for badminton
+            $courtid = 19; // Use the correct court ID for badminton
     
             $courtsModel = new Courts();
             $section = $courtsModel->getSectionByCourtid($courtid);
@@ -136,7 +136,7 @@ class Volleyballform extends Controller {
         if (session_status() === PHP_SESSION_NONE) session_start();
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $userid = $_SESSION['userid'];
-            $courtid = 20;
+            $courtid = 19;
             $courtsModel = new Courts();
             $section = $courtsModel->getSectionByCourtid($courtid);
 
@@ -189,34 +189,11 @@ class Volleyballform extends Controller {
 
             if ($result) {
                 $_SESSION['reservation_success'] = true;
-                header("Location: " . ROOT . "/external/volleyballform");
+                header("Location: " . ROOT . "/external/tabletennisform");
                 exit;
             } else {
                 echo "<script>alert('Reservation failed. Please try again.');</script>";
             }
         }
     }
-
-   
-    public function getDiscountedPrice() {
-        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            $usertype = $_POST['userType'];
-            $price = isset($_POST['price']) ? floatval($_POST['price']) : 0;
-    
-            $discountModel = new Discounts();
-            $discount = $discountModel->getDiscountByUserType($usertype);
-    
-            $discountedPrice = $price - ($price * $discount);
-    
-            echo json_encode([
-                'discount' => $discount,
-                'discountedPrice' => round($discountedPrice, 2)
-            ]);
-        }
-    }
-    
-    
-
-
-    
 }

@@ -24,8 +24,10 @@
                         <!-- Dynamically set the image path -->
                         <img src="<?=  $court->image ?>" alt="<?= htmlspecialchars($court->name) ?>" class="card-image">
                         <p><?= htmlspecialchars($court->description) ?></p>
-                        <a href="indoorform"><button onclick="reserveFacility('<?= htmlspecialchars($court->name) ?>')">book</button></a>
-                    </div>
+                        
+            <a href="<?= strtolower(str_replace(' ', '', $court->name)) ?>form">
+                <button onclick="reserveFacility('<?= htmlspecialchars($court->name) ?>')">Book</button>
+            </a></div>
                     <?php endforeach; ?>
                 </div>
             </div>
