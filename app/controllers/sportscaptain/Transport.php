@@ -2,7 +2,10 @@
 class Transport extends Controller{
    public function index(){
 
-        $this->view('sportscaptain/transport');
+        $transportModal = new TransportRequests();
+        $requests = $transportModal->getRequests();
+
+        $this->view('sportscaptain/transport',['requests' => $requests]);
     }
 
    public function addtransportrequest(){

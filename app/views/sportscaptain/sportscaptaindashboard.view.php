@@ -37,7 +37,7 @@
             </li>
             <li>
                 <img src="<?=ROOT?>/assets/images/vidusha/event.png" alt="Reservation Icon" class="icon">
-                <a href="#" onclick="loadContent('groundreservation', 'Reservation')">Reservation</a>
+                <a href="#" onclick="loadContent('reservation', 'Reservation')">Reservation</a>
             </li>
             
             <li>

@@ -29,23 +29,25 @@
             <thead>
                 <tr>
                     <th>Task</th>
+                    <th>Description</th>
                     <th>Due Date</th>
                     <th>Complete</th>
-                    
-                    <th>Remarks</th>
+                    <!--th>Remarks</th-->
                 </tr>
             </thead>
             <tbody>
                 
                 <?php if(!empty($task)): ?>
                     <?php foreach($task as $item): ?>
-                        <pre><?php print_r($task); ?></pre>
-
                     <tr>
-                    <td><?=htmlspecialchars($item->task)?></td>
-                    <td><?=htmlspecialchars($item->due_date)?></td>
-                    <td><?=htmlspecialchars($item->status)?></td>
-                    <td><?=htmlspecialchars($item->remark)?></td>
+                    <td><?=htmlspecialchars($item->taskname)?></td>
+                    <td><?=htmlspecialchars($item->description)?></td>
+                    <td><?=htmlspecialchars($item->deadline)?></td>
+                    <td><input type="checkbox" class="status-checkbox"
+                        data-task-id="<?= $item->id ?>"
+                        <?= $item->status === 'Completed' ? 'checked' : '' ?>>
+                    </td>
+                    <!--td><?=htmlspecialchars($item->remark)?></td-->
                     </tr>
                     <?php endforeach; ?>
                 <?php else: ?>
@@ -59,82 +61,8 @@
 </div>
         </div>
 
-        
-
-
-
-    <script src="<?=ROOT?>/assets/js/uma/staff.js"></script>
-    <script>
-   document.addEventListener('DOMContentLoaded', function () {
-    const userImage = document.getElementById('userImage');
-    const dropdownMenu = document.getElementById('dropdownMenu');
-
-    // Listen for the profile image click
-    userImage.addEventListener('click', function (event) {
-        event.preventDefault(); // Prevent the default action (e.g., navigating away)
-        console.log("User image clicked!"); // Debugging log
-
-  
-    });
-
-    document.querySelector('.user').addEventListener('click', function () {
-    const dropdown = document.querySelector('.dropdown');
-    dropdown.classList.toggle('show');  // Toggle the 'show' class
-});
-    // Check if the dropdown is being triggered correctly
-    document.addEventListener('click', function (event) {
-        if (!userImage.contains(event.target) && !dropdownMenu.contains(event.target)) {
-            dropdownMenu.classList.remove('show'); // Remove 'show' class to hide dropdown
-            console.log("Dropdown hidden (click outside)"); // Debugging log
-        }
-    });
-});
-
-
-// ====================== DELETE JS ===========================
-document.querySelectorAll('.delete-btn').forEach(button => {
-    button.addEventListener('click', function() {
-        // Get the requestid from the hidden input field
-        const requestid = this.closest('tr').querySelector('.request-id').value;
-        
-        // Confirm the delete action
-        const confirmDelete = confirm('Are you sure you want to delete this request?');
-        
-        if (confirmDelete) {
-            // Send a POST request to delete the item
-            const formData = new FormData();
-            formData.append('delete_requestid', requestid);  // Add the requestid to the form data
-
-            fetch('', {
-                method: 'POST',
-                body: formData
-            })
-            .then(response => response.text())
-            .then(data => {
-                // Alert the user about the deletion outcome (optional)
-                if (data === 'success') {
-                    alert('Successfully deleted.');
-                } else {
-                    alert('Successfully deleted.');
-                }
-
-                // Reload the page after the operation, regardless of success or failure
-                location.reload();  // Reload the page to reflect the changes
-            })
-            .catch(error => {
-                console.error('Error deleting request:', error);
-                alert('Error occurred while deleting.');
-                
-                // Reload the page in case of error as well
-                location.reload();
-            });
-        }
-    });
-});
-
-
-
-</script>
+   
+    <script src="<?=ROOT?>/assets/js/vidusha/todo.js"></script>
 
     
     

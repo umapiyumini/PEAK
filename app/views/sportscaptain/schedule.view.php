@@ -133,7 +133,7 @@
           </div>
           <div class="form-group">
             <lable for="category">Category:</label>
-            <select id="category" name="category" required>
+            <select id="edit-category" name="category" required>
               <option value="Practice">Practice</option>
               <option value="Match">Match</option>
             </select>

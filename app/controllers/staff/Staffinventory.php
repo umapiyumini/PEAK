@@ -33,12 +33,12 @@ class Staffinventory extends Controller{
                     
     }
             
-            $result = $inventoryEditModel->editQuantity(
-                $_POST['name'],
-                $_POST['date'],
-                $_POST['quantity'],
-                $_POST['reason']
-            );
+    $result = $inventoryEditModel->editQuantity(
+        $_POST['equipmentid'],
+        $_POST['date'],
+        $_POST['quantity'],
+        $_POST['reason']
+    );
 
             if ($result) {
                 echo "Success: Data updated!";
@@ -47,8 +47,48 @@ class Staffinventory extends Controller{
             }
         
 
-            header('Location:' . ROOT . '/staff/staffinvenroty');
+            header('Location:' . ROOT . '/staff/staffinventory');
         }
+    }
+
+    public function addrequest(){
+        
+        if($_SERVER['REQUEST_METHOD'] == 'POST'){
+            $requestModel = new Inventoryrequest();
+            $result = $requestModel->addRequest();
+
+            if ($result) {
+                echo "Success: Data inserted!";
+            } else {
+                echo "Error: Data not inserted!";
+            }
+       
+            } else {
+                echo "Error: Invalid request method!";
+            }
+            header('Location:' . ROOT . '/staff/staffinventory');
+        
+            exit;
+    }
+
+    public function deleterequest(){
+
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $requestModel = new Inventoryrequest();
+            $requestId = $_POST['requestid'];
+            
+            $result = $requestModel->deleteRequest($requestId);
+            
+            if ($result) {
+                echo "Success: Request deleted!";
+            } else {
+                echo "Error: Request not deleted!";
+            }
+        } else {
+            echo "Error: Invalid request method!";
+        }
+        header('Location:' . ROOT . '/staff/staffinventory');
+        exit;
     }
 
 }

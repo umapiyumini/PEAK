@@ -20,7 +20,7 @@ class HostalFacilities{
         return $_SESSION['userid'];
     }
     
-    public function insertRequesthostal(){
+    public function insertRequesthostal($facilities){
         $userId = $this->getUserId();
         if (!$userId){
             die("User ID not found in session.");
@@ -36,30 +36,22 @@ class HostalFacilities{
             
             $sportId = $sportResult[0]->sport_id;
             
-            $regno = $_POST['reg_no'] ?? null;
-            $startdate = $_POST['start_date'] ?? null;
-            $enddate = $_POST['end_date'] ?? null;
-            $priority = $_POST['priority'] ?? null;
-
-            if(empty($regno) || empty($startdate) || empty($enddate) || empty($priority)){
-                throw new Exception("All fields are required");
-            }
-            
+            foreach($facilities as $facility){
                 $query = "INSERT INTO hostal_facilities(reg_no, start_date, end_date, priority, sport_id)
                     VALUES (:reg_no, :start_date, :end_date, :priority, :sport_id)";
                 
                 $data = [
-                    'reg_no' => $regno,
-                    'start_date' => $startdate,
-                    'end_date' => $enddate,
-                    'priority' => $priority,
+                    'reg_no' => $facility['reg_no'],
+                    'start_date' => $facility['start_date'],
+                    'end_date' => $facility['end_date'],
+                    'priority' => $facility['priority'],
                     'sport_id' => $sportId
                 ];
                 
                 $result = $this->query($query, $data);
-                return $result;
+            }
+                return true;
                 
-        
             
         } catch(Exception $e){
             echo "Error: " . $e->getMessage();

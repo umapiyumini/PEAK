@@ -82,8 +82,8 @@
 
             <!-- Hidden input for equipmentId -->
             <input type="hidden" id="equipmentId" name="equipmentid">
-            <input type="hidden" id="updateid" name="editid">
-            <input type="hidden" name="date" value="<?= date('Y-m-d') ?>">
+            
+            <input type="hidden" id="updatedate" name="date" value="<?= date('Y-m-d') ?>">
 
             <label for="equipmentName">Equipment Name:</label>
             <input type="text" id="equipmentName" name="name" disabled>
@@ -146,8 +146,10 @@
                             <td><?php echo htmlspecialchars($item->quantityrequested); ?></td>
                             <td><?php echo htmlspecialchars($item->date); ?></td>
                             <td>
-                                <input type="hidden" class="request-id" value="<?php echo htmlspecialchars($item->requestid); ?>">
-                                <button class="delete-btn">Delete</button>
+                                <form action="<?=ROOT?>/staff/staffinventory/deleterequest" method="POST">
+                                <input type="hidden" name="requestid" value="<?= $item->requestid ?>">
+                                <button class="deleteBtn">Delete</button>
+                                </form>
                             </td>
                         </tr>
                     <?php endforeach; ?>
@@ -166,11 +168,11 @@
         <div class="modal-content">
         <h3>New Stock Request</h3>
 
-        <form method="POST">
+        <form action="<?=ROOT?>/staff/staffinventory/addrequest" method="POST">
             <label for="equipmentSelect">Equipment:</label>
             <select id="equipmentSelect" name="name">
-                <?php if (!empty($dropdown)): ?>
-                    <?php foreach ($dropdown as $item): ?>
+                <?php if (!empty($stock)): ?>
+                    <?php foreach ($stock as $item): ?>
                         <option value="<?php echo htmlspecialchars($item->name); ?>">
                             <?php echo htmlspecialchars($item->name); ?>
                         </option>
@@ -206,63 +208,10 @@
     </div>
     </div>
  
-    
-
-
-
-    <script src="<?=ROOT?>/assets/js/uma/staff.js"></script>
-    <script>
-   
-
-// ====================== DELETE JS ===========================
-document.querySelectorAll('.delete-btn').forEach(button => {
-    button.addEventListener('click', function() {
-        // Get the requestid from the hidden input field
-        const requestid = this.closest('tr').querySelector('.request-id').value;
-        
-        // Confirm the delete action
-        const confirmDelete = confirm('Are you sure you want to delete this request?');
-        
-        if (confirmDelete) {
-            // Send a POST request to delete the item
-            const formData = new FormData();
-            formData.append('delete_requestid', requestid);  // Add the requestid to the form data
-
-            fetch('', {
-                method: 'POST',
-                body: formData
-            })
-            .then(response => response.text())
-            .then(data => {
-                // Alert the user about the deletion outcome (optional)
-                if (data === 'success') {
-                    alert('Successfully deleted.');
-                } else {
-                    alert('Successfully deleted.');
-                }
-
-                // Reload the page after the operation, regardless of success or failure
-                location.reload();  // Reload the page to reflect the changes
-            })
-            .catch(error => {
-                console.error('Error deleting request:', error);
-                alert('Error occurred while deleting.');
-                
-                // Reload the page in case of error as well
-                location.reload();
-            });
-        }
-    });
-});
-
-// ============================== UPDATE JS ============================
-
-</script>
-
-    
-    
+    <script src="<?=ROOT?>/assets/js/vidusha/staffinventory.js"></script>
+  
 </body>
 </html>
 
 
-            <!-- test git comment -->
+           

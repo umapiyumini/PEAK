@@ -3,7 +3,7 @@
 class Interunirecords{
     use Model;
     protected $table = 'interuniversityrecords';
-    protected $columns = ['tournament_name','year','place','venue','no_of_players','sport_id','men_women'];
+    protected $columns = ['tournament_name','date','place','venue','no_of_players','sport_id','men_women'];
 
     public function getIntrunirecords(){
 
@@ -59,7 +59,7 @@ class Interunirecords{
                 throw new Exception("Sport ID not found for this user");
             }
             
-            $sportId = $sportResult[0]->sport_id;
+            //$sportId = $sportResult[0]->sport_id;
 
             $query = "INSERT INTO interuniversityrecords 
           (tournament_name, date, place, venue, no_of_players, players_Regno, sport_id)

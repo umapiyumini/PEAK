@@ -6,7 +6,7 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100vh; /* Full-page height */
+   
 }
 
 .navbar {
@@ -33,22 +33,68 @@ body {
     border-radius: 5px;
 }
 /* Container Styles */
-.container {
+/*.container {
     background-color: #ffffff;
     border-radius: 12px;
     box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
     padding: 20px;
-    margin: 140px 10px auto 220px; /* Center the container horizontally */
-    width: 90%; /* Responsive width */
+    margin: 140px 10px auto 220px; /* Center the container horizontally 
+    width: 90%; /* Responsive width 
     max-width: 1050px;
     text-align: center;
+}*/
+
+.container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin: 140px 0px 0px 210px; 
+    padding: 20px;
+    width: 80%;
+    box-sizing: border-box;
+}
+
+.form-container {
+    background-color: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    width: 48%;
+    margin: 20px;
+    padding: 10px 20px 10px 20px;
+}
+
+/* Style the request container on the right */
+.request-container {
+    width: 40%;
+    background-color: #ffffff;
+    border-radius: 12px;
+    padding: 20px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    margin: 20px;
+}
+
+/* Optional: Style for individual request items */
+.request-item {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    margin-bottom: 10px;
+    background-color: #f4f4f4;
+}
+
+/* Grid inside request list */
+#request-list.grid {
+    display: flex;
+    flex-direction: column;
 }
 
 /* Heading Styles */
-h1 {
+h1 ,h2{
     color: #000000;
     margin-top: 5px;
     margin-bottom: 20px;
+    text-align:center;
 }
 
 /* Form Group Styles */

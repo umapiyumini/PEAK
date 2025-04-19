@@ -105,11 +105,11 @@ document.addEventListener('DOMContentLoaded', () => {
     const taskTableBody = document.querySelector('#taskTable tbody');
 
     // Example Data (can be replaced with actual backend data)
-    let tasks = [
-        { id: 1, task: 'Cleaning the Pavilion', dueDate: '2024-11-25', completed: false, completionTime: null, remarks: '', reason: '' },
-        { id: 2, task: 'Drawing the Hockey Court', dueDate: '2024-11-27', completed: false, completionTime: null, remarks: '', reason: '' },
-        { id: 3, task: 'Setup for Football Match', dueDate: '2024-11-29', completed: false, completionTime: null, remarks: '', reason: '' }
-    ];
+    //let tasks = [
+        //{ id: 1, task: 'Cleaning the Pavilion', dueDate: '2024-11-25', completed: false, completionTime: null, remarks: '', reason: '' },
+       // { id: 2, task: 'Drawing the Hockey Court', dueDate: '2024-11-27', completed: false, completionTime: null, remarks: '', reason: '' },
+        //{ id: 3, task: 'Setup for Football Match', dueDate: '2024-11-29', completed: false, completionTime: null, remarks: '', reason: '' }
+   // ];
 
     // Render the Task Table
     function renderTasks() {
@@ -251,45 +251,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
 
-
-
-
-
-// --------INVENTORY MANAGEMENT --------------------------------------
-// Sample Data (You can replace this with dynamic data from your database)
-// const inventoryData = [
-//     { equipment: "Hockey Stick", quantity: 10 },
-//     { equipment: "Cricket Bat", quantity: 15 },
-//     { equipment: "Cricket Ball", quantity: 50 },
-//     { equipment: "Football", quantity: 20 },
-//     { equipment: "Tennis Racket", quantity: 8 }
-// ];
-
-// Populate the inventory table with sample data
-// function populateInventoryTable() {
-//     const tableBody = document.querySelector("#inventoryTable tbody");
-//     tableBody.innerHTML = ""; // Clear existing rows
-
-//     inventoryData.forEach(item => {
-//         const row = document.createElement("tr");
-//         row.innerHTML = `
-//             <td>${item.equipment}</td>
-//             <td>${item.quantity}</td>
-//             <td><button class="editBtn" onclick="editEquipment('${item.equipment}')">Edit</button></td>
-//         `;
-//         tableBody.appendChild(row);
-//     });
-// }
-
-// Function to filter inventory based on search input
-
-
-
-
-
-
-
-
 function searchEquipment() {
     const searchQuery = document.getElementById("searchEquipment").value.toLowerCase();
     const rows = document.querySelectorAll("#inventoryTable tbody tr");
@@ -323,6 +284,9 @@ function editEquipment(equipmentName) {
     // Show edit modal and populate fields
     document.getElementById("equipmentName").value = equipment.equipment;
     document.getElementById("quantity").value = equipment.quantity;
+    document.getElementById("equipmentId").value = equipment.equipmentid;
+    document.getElementById("updateid").value = equipment.editid;
+    document.getElementById("reason").value = equipment.reason;
 
     // Show the modal
     document.getElementById("editModal").style.display = "flex";
@@ -430,11 +394,15 @@ document.querySelectorAll('.edit-btn').forEach(button => {
         const equipmentId = this.dataset.id;
         const equipmentName = this.dataset.name;
         const quantity = this.dataset.quantity;
+        const updatedate = this.dataset.date;
+        const reason = this.dataset.reason;
         
         // Populate the modal with the retrieved information
         document.getElementById('equipmentId').value = equipmentId;
         document.getElementById('equipmentName').value = equipmentName;
         document.getElementById('quantity').value = quantity;
+        document.getElementById('date').value = updatedate;
+        document.getElementById('reason').value = reason;
 
         // Show the modal
         document.getElementById('editModal').style.display = 'block';
@@ -446,6 +414,7 @@ document.getElementById('editEquipmentForm').addEventListener('submit', function
     const equipmentId = document.getElementById('equipmentId').value;
     const quantity = document.getElementById('quantity').value;
     const reason = document.getElementById('reason').value;
+    cons
 
     if (!equipmentId) {
         alert("Equipment ID is missing.");
