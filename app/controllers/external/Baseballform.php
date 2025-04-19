@@ -1,232 +1,208 @@
 <?php
- if (session_status() === PHP_SESSION_NONE) {
-    session_start();
-}
-
 class Baseballform extends Controller {
-   
-    
 
-   // Display the baseball form
-   public function index() {
-    $this->view('external/baseballform');
-}
-
-// Handle the booking logic (form submission)
-// Handle the booking logic (form submission)
-public function book() {
-    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-        $reservation = new Reservations();
-        $discountModel = new Discounts();
-
-        // Handle file uploads
-        $proofPath = isset($_FILES['proof']) && $_FILES['proof']['error'] === UPLOAD_ERR_OK
-            ? $this->uploadFile($_FILES['proof'])
-            : null;
-
-        $paymentProofPath = isset($_FILES['paymentProof']) && $_FILES['paymentProof']['error'] === UPLOAD_ERR_OK
-            ? $this->uploadFile($_FILES['paymentProof'])
-            : null;
-
-        // Get the user ID from the session
-        $userid = $_SESSION['userid'] ?? null;
-        if (!$userid) {
-            $_SESSION['error'] = "User not logged in or session data is missing.";
-            redirect('login');
-            return;
-        }
-
-        // Fixed baseball court ID
-        $courtid = 24; 
-
-        // Get POST data
-        $event = $_POST['bookingFor'] ?? '';
-        $duration = ($_POST['duration'] === 'halfDay') ? ($_POST['timeSlot'] ?? '') : $_POST['duration'];
-        $description = !empty($_POST['extraDetails']) ? $_POST['extraDetails'] : 'no';
-        $basePrice = $_POST['price'] ?? 0;
-
-        // Validate price
-        if ($basePrice == 0) {
-            $_SESSION['error'] = "Price not found for the selected combination.";
-            redirect('external/baseballform');
-            return;
-        }
-
-        // Fetch discount based on user type
-        $userType = $_POST['userType'] ?? '';
-        $discountPercentage = $discountModel->getDiscountByUserType($userType);
-        $discountedPrice = $basePrice - ($basePrice * ($discountPercentage / 100));
-
-        // Prepare the data for insertion
-        $data = [
-            'userid' => $userid,
-            'courtid' => $courtid,
-            'section' => $_POST['section'] ?? 'A', // Or whatever default
-            'event' => $event,
-            'duration' => $_POST['duration'] ?? '',
-            'date' => $_POST['date'] ?? '',
-            'time' => $duration,
-            'status' => 'pending',
-            'usertype' => $userType,
-            'userdescription' => $description,
-            'userproof' => $proofPath,
-            'numberof_participants' => $_POST['participants'] ?? 0,
-            'extradetails' => $_POST['extraDetails'] ?? '',
-            'price' => $basePrice,
-            'discountedprice' => $discountedPrice,
-            'occupied' => 0,
-            'created_at' => date('Y-m-d H:i:s'),
-        ];
-        
-
-      
-        error_log("Reached here!");  // This log will confirm if the code is running till this point.
-        error_log("Data to be inserted: " . print_r($data, true));  // The original log you want to check.
-        
-if ($reservation->insert($data)) {
-    $_SESSION['success'] = "Baseball court booked successfully.";
-} else {
-    $_SESSION['error'] = "Failed to book the court. Please try again.";
-}
-
-// Log after the insert call
-error_log("Insert method executed.");
-
-        // Redirect to the form after processing
-        redirect('external/baseballform');
-    } else {
-        // If it's not a POST request, simply display the form
+    // Display the baseball form
+    public function index() {
         $this->view('external/baseballform');
-    }
-}
-
-    
-    private function uploadFile($file) {
-        $targetDir = "uploads/";
-        $filename = time() . '_' . basename($file['name']);
-        $targetFilePath = $targetDir . $filename;
-
-        if (move_uploaded_file($file['tmp_name'], $targetFilePath)) {
-            return $targetFilePath;
-        }
-
-        return null;
     }
 
     public function getPrice() {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            // Capture the POST data
-            $event = $_POST['event'];
+            $event = $_POST['bookingFor'];
             $duration = $_POST['duration'];
-            $description = $_POST['description'];
-    
-            // Log the received values
-            error_log("Received event: $event, duration: $duration, description: $description");
-    
-            // Now you will continue the logic of fetching the price
-            // Fetch the price from the database
+            $description = "no";
+            $courtid = 24;
             $groundcourt = new Groundcourts();
-            $price = $groundcourt->getPriceByDetails($event, $duration, $description);
+            $price = $groundcourt->getPriceByDetails($event, $duration, $description, $courtid);
+            echo json_encode(['price' => $price]);
+        }
+    }
 
+    public function checkAvailability() {
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $date = $_POST['date'];
+            $courtid = 24;
 
-            // Log the fetched price
-            error_log("Fetched price: " . $price);
-    
-            if ($price !== null) {
-                echo $price; // Send the price as the response
+            $courtsModel = new Courts();
+            $section = $courtsModel->getSectionByCourtid($courtid);
+
+            $reservationsModel = new Reservations();
+            $bookings = $reservationsModel->getBookingsForDateSection($date, $section);
+            if (!is_array($bookings)) $bookings = [];
+
+            $occupiedDurations = array_map(function($b) { return $b->duration; }, $bookings);
+            $bookedHalfSlots = [];
+            $booked2HourSlots = [];
+            foreach ($bookings as $booking) {
+                if ($booking->duration === 'half') {
+                    $bookedHalfSlots[] = $booking->time;
+                }
+                if ($booking->duration === '2 hour') {
+                    $booked2HourSlots[] = $booking->time;
+                }
+            }
+
+            $halfDayToTwoHour = [
+                '08:00:00' => ['08:00:00', '10:00:00'],
+                '13:00:00' => ['13:00:00', '15:00:00']
+            ];
+
+            $twoHourToHalfDay = [
+                '08:00:00' => '08:00:00',
+                '10:00:00' => '08:00:00',
+                '13:00:00' => '13:00:00',
+                '15:00:00' => '13:00:00',
+            ];
+
+            $disable2HourSlots = $booked2HourSlots;
+            foreach ($bookedHalfSlots as $halfSlot) {
+                if (isset($halfDayToTwoHour[$halfSlot])) {
+                    $disable2HourSlots = array_merge($disable2HourSlots, $halfDayToTwoHour[$halfSlot]);
+                }
+            }
+            $disable2HourSlots = array_unique($disable2HourSlots);
+
+            $disableHalfDaySlots = [];
+            foreach ($booked2HourSlots as $slot) {
+                if (isset($twoHourToHalfDay[$slot])) {
+                    $disableHalfDaySlots[] = $twoHourToHalfDay[$slot];
+                }
+            }
+            $disableHalfDaySlots = array_unique($disableHalfDaySlots);
+
+            $response = [
+                'full' => !(
+                    in_array('full', $occupiedDurations) ||
+                    count($bookedHalfSlots) > 0 ||
+                    count($booked2HourSlots) > 0
+                ),
+                'half' => true,
+                '2hour' => true,
+                'bookedHalfSlots' => $bookedHalfSlots,
+                'disable2HourSlots' => $disable2HourSlots,
+                'disableHalfDaySlots' => $disableHalfDaySlots,
+                'message' => ''
+            ];
+
+            if (in_array('full', $occupiedDurations)) {
+                $response['full'] = false;
+                $response['half'] = false;
+                $response['2hour'] = false;
+                $response['message'] = "Fully booked - no slots available on $date";
+            }
+
+            $morningCovered = in_array('08:00:00', $bookedHalfSlots) ||
+                              (in_array('08:00:00', $disable2HourSlots) && in_array('10:00:00', $disable2HourSlots));
+            $afternoonCovered = in_array('13:00:00', $bookedHalfSlots) ||
+                                (in_array('13:00:00', $disable2HourSlots) && in_array('15:00:00', $disable2HourSlots));
+            $bothHalfDaysBooked = $morningCovered && $afternoonCovered;
+
+            if ($bothHalfDaysBooked) {
+                $response['full'] = false;
+                $response['half'] = false;
+                if (empty($response['message'])) {
+                    $response['message'] = "Full day is not available as all time slots are booked on $date.";
+                }
+            }
+
+            if (in_array('08:00:00', $bookedHalfSlots) && in_array('13:00:00', $bookedHalfSlots) && empty($response['message'])) {
+                $response['half'] = false;
+                $response['message'] = "All half-day slots are booked on $date.";
+            }
+            elseif (count($bookedHalfSlots) === 1 && empty($response['message'])) {
+                $slot = $bookedHalfSlots[0] === "08:00:00" ? "08:00 - 13:00" : "13:00 - 18:00";
+                $response['message'] = "The $slot half-day slot is already booked on $date.";
+            }
+            elseif (count($disable2HourSlots) > 0 && empty($response['message'])) {
+                $response['message'] = "Some 2-hour slots are already booked on $date.";
+            }
+
+            $twoHourToHalfDay = [
+                '08:00:00' => '08:00:00',
+                '10:00:00' => '08:00:00',
+                '13:00:00' => '13:00:00',
+                '15:00:00' => '13:00:00',
+            ];
+
+            $disableHalfDaySlots = [];
+            foreach ($booked2HourSlots as $slot) {
+                if (isset($twoHourToHalfDay[$slot])) {
+                    $disableHalfDaySlots[] = $twoHourToHalfDay[$slot];
+                }
+            }
+            $disableHalfDaySlots = array_unique($disableHalfDaySlots);
+            $response['disableHalfDaySlots'] = $disableHalfDaySlots;
+
+            header('Content-Type: application/json');
+            echo json_encode($response);
+            exit;
+        }
+    }
+
+    public function reserve() {
+        if (session_status() === PHP_SESSION_NONE) {
+            session_start();
+        }
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $userid = $_SESSION['userid'];
+            $courtid = 24;
+            $courtsModel = new Courts();
+            $section = $courtsModel->getSectionByCourtid($courtid);
+
+            $event = $_POST['bookingFor'];
+            $duration = $_POST['duration'];
+            $date = $_POST['date'];
+            $time = ($duration === 'full') ? '08:00:00' : $_POST['time_slot'];
+            $usertype = $_POST['userType'];
+            $userdescription = $_POST['userdetail'];
+            $numberof_participants = $_POST['participants'];
+            $extradetails = $_POST['extraDetails'];
+            $price = $_POST['price'];
+            $discountedprice = $_POST['discountedPrice'];
+            $status = 'pending';
+            $occupied = 1;
+            $created_at = date('Y-m-d H:i:s');
+
+            $userproof = '';
+            if (isset($_FILES['proof']) && $_FILES['proof']['error'] === UPLOAD_ERR_OK) {
+                $uploadDir = 'C:/xampp1/htdocs/PEAK/uploads/user_proofs/';
+                $filename = uniqid() . '_' . basename($_FILES['proof']['name']);
+                $targetFile = $uploadDir . $filename;
+                if (move_uploaded_file($_FILES['proof']['tmp_name'], $targetFile)) {
+                    $userproof = $targetFile;
+                }
+            }
+
+            $data = [
+                'userid' => $userid,
+                'courtid' => $courtid,
+                'section' => $section,
+                'event' => $event,
+                'duration' => $duration,
+                'date' => $date,
+                'time' => $time,
+                'status' => $status,
+                'usertype' => $usertype,
+                'userdescription' => $userdescription,
+                'userproof' => $userproof,
+                'numberof_participants' => $numberof_participants,
+                'extradetails' => $extradetails,
+                'price' => $price,
+                'discountedprice' => $discountedprice,
+                'occupied' => $occupied,
+                'created_at' => $created_at,
+            ];
+
+            $reservationsModel = new Reservations();
+            $result = $reservationsModel->insert($data);
+
+            if ($result) {
+                $_SESSION['reservation_success'] = true;
+                header("Location: " . ROOT . "/external/baseballform");
+                exit;
             } else {
-                echo "Price not available"; // If no price found, send this message
+                echo "<script>alert('Reservation failed. Please try again.');</script>";
             }
         }
     }
-
-     
-
-
-          
-
-
-    
-    
-
-
-// Sample modified code in the checkAvailability method
-public function checkAvailability() {
-    // Capture the POST data
-    $date = $_POST['date'];
-    $section = $_POST['section'];
-
-
-    // Create an instance of the Reservations model
-    $reservationsModel = new Reservations();
-
-    // Check availability for the selected date and section
-    $reservations = $reservationsModel->checkExistingReservations($date, $section);
-
-    // Handle the response
-    if ($reservations !== null) {
-        // Handle full day bookings
-        if ($reservations['fullDayCount'] > 0) {
-            echo json_encode([
-                'fullDayCount' => 1,
-                'halfDayCount' => 0,
-                'bookedHalfSlot' => ''
-            ]);
-        } 
-        // Handle half day bookings
-        else if ($reservations['halfDayCount'] > 0) {
-            // Assuming that the time slot for the half-day booking is available
-            echo json_encode([
-                'fullDayCount' => 0,
-                'halfDayCount' => 1,
-                'bookedHalfSlot' => $reservations['bookedHalfSlot']
-            ]);
-        } else {
-            echo json_encode([
-                'fullDayCount' => 0,
-                'halfDayCount' => 0,
-                'bookedHalfSlot' => ''
-            ]);
-        }
-    } else {
-        // In case there is an issue fetching data
-        error_log("Error checking availability for date: $date, section: $section");
-        echo json_encode(['error' => 'Something went wrong while checking availability']);
-    }
-}
-
-
-public function getDiscountedPrice() {
-    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-        // Get POST data
-        $event = $_POST['event'] ?? null;
-        $duration = $_POST['duration'] ?? null;
-        $description = $_POST['description'] ?? null;
-        $usertype = $_POST['usertype'] ?? null;
-        $basePrice = $_POST['basePrice'] ?? null; // Get the price from the frontend input
-
-        if ($event && $duration && $description && $usertype && $basePrice) {
-            // Fetch the discount for the usertype
-            $discountModel = new Discounts();
-            $discount = $discountModel->getDiscountByUserType($usertype);
-
-            // Apply the discount (if any)
-            
-$discountedPrice = $basePrice * (1 - $discount);  // Multiply base price by (1 - discount)
-
-            // Send the discounted price as response
-            echo json_encode(['discountedPrice' => $discountedPrice]);
-        } else {
-            echo json_encode(['error' => 'Invalid input.']);
-        }
-    }
-}
-
-
-
-
-
-
-
-
 }
