@@ -19,25 +19,17 @@
         <main>
             <div class="inventory-section">
                 <div class="stats-container">
-                    <div class="stat-card">
-                        <h3>Pending Requests</h3>
-                        <div class="number" id="pending-count">0</div>
+                    <div class="stat-card" id="mid">
+                        <h3>Mid year Requests</h3>
+                        <div class="number" id="midyear-count"><?php echo $counts['midcount']; ?></div>
                     </div>
-                    <div class="stat-card">
-                        <h3>Approved Requests</h3>
-                        <div class="number" id="approved-count">0</div>
-                    </div>
-                    <div class="stat-card">
-                        <h3>Rejected Requests</h3>
-                        <div class="number" id="rejected-count">0</div>
-                    </div>
-                    <div class="stat-card">
+                    <div class="stat-card" id="end">
                         <h3>End year Requests</h3>
-                        <div class="number" id="endyear-count">0</div>
+                        <div class="number" id="endyear-count"><?php echo $counts['endcount']; ?></div>
                     </div>
                 </div>
 
-                <div class="requests-section">
+                <div class="requests-section" id="mid-section">
                     <h4 class="card-title">Pending Requests</h4>
 
                     <div class="filter-bar">
@@ -100,26 +92,99 @@
                         </tbody>
                     </table>
                 </div>
-                <div class="year-end-requests">
-                    <h2>Hockey</h2>
-                    <table id="yearend-table">
-                        <thead>
-                            <tr>
-                                <th>No</th>
-                                <th>Item</th>
-                                <th>Required Quantity</th>
-                                <th>Remarks</th>
-                            </tr>
-                        </thead>
-                        <tbody id="yearend-body">
-                        </tbody>
-                    </table>
-                    <button class="btn btn-save">
-                        <i class="uil uil-save"></i> Save
+                
+                
+                <?php
+                    // Group records by sport
+                    $sportGroups = array();
+                    if (!empty($endreqdata)) {
+                        foreach ($endreqdata as $item) {
+                            $sportGroups[$item->sport_name][] = $item;
+                        }
+                        ksort($sportGroups);
+                    }
+                ?>
+                    
+                    
+                <div class="year-end-requests" id="end-section">
+                    <!-- tab switching buttons within the year end requests tab -->
+                    <button class="btn btn-pending" id="pendingBtn">
+                        <i class="uil uil-clock"></i> Pending Requests
                     </button>
-                    <button class="btn btn-reject">
-                        <i class="uil uil-cross"></i> Reject
+                    <button class="btn btn-history" id="historyBtn">
+                        <i class="uil uil-history"></i> Request History
                     </button>
+
+                    <div class="request-card-list" id="request-card-list">
+                        <?php if(empty($endreqdata)):?>
+                            <div class="emptymessage" style="color:Red">No Pending Requests</div>
+                        <?php else:?>
+                            <?php foreach ($sportGroups as $sport => $requests): ?>
+                            <div class="request-card">
+                                <h1><?= htmlspecialchars($sport) ?></h1>
+
+                                <table id="yearend-table">
+                                    <thead>
+                                        <tr>
+                                            <th>No</th>
+                                            <th>Item</th>
+                                            <th>Required Quantity</th>
+                                            <th>Specifications</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="yearend-body">
+                                    <?php foreach ($requests as $i): ?>
+                                        <tr>
+                                            <td><?=$i->requestid?></td>
+                                            <td><?=$i->name?></td>
+                                            <td><?=$i->quantityrequested?></td>
+                                            <td><?=$i->specifications?></td>
+                                        </tr>
+                                    <?php endforeach;?>
+                                    </tbody>
+                                </table>
+                                <button class="btn btn-save" onClick="saveRequest(<?= htmlspecialchars(json_encode($sport), ENT_QUOTES, 'UTF-8') ?>)">
+                                    <i class="uil uil-save"></i> Save
+                                </button>
+                                <button class="btn btn-reject" onClick="rejectRequest(<?= htmlspecialchars(json_encode($sport), ENT_QUOTES, 'UTF-8') ?>)">
+                                    <i class="uil uil-cross"></i> Reject
+                                </button>
+                            </div>
+                            <?php endforeach;?>
+                        <?php endif;?>
+                    </div>
+
+                    <div class="history-list" id="history-list" style="display:none">
+                        <h1 style="margin-bottom:1rem">Processed Request History</h1>
+                        <?php if(empty($allrequests)):?>
+                            <div class="emptymessage" style="color:Red">No Processed Request History</div>
+                        <?php else:?>
+                            <table id="yearend-history-table">
+                                <thead>
+                                    <tr>
+                                        <th>No</th>
+                                        <th>Sport</th>
+                                        <th>Item</th>
+                                        <th>Required Quantity</th>
+                                        <th>Specifications</th>
+                                        <th>Status</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="yearend-history-body">
+                                    <?php foreach ($allrequests as $j): ?>
+                                        <tr>
+                                            <td><?=$j->requestid?></td>
+                                            <td><?=$j->sport_name?></td>
+                                            <td><?=$j->name?></td>
+                                            <td><?=$j->quantityrequested?></td>
+                                            <td><?=$j->specifications?></td>
+                                            <td><?=$j->status?></td>
+                                        </tr>
+                                    <?php endforeach;?>
+                                </tbody>
+                            </table>
+                        <?php endif;?>
+                    </div>
                 </div>
             </div>
         </main>
@@ -129,8 +194,16 @@
            
 
         
+<script>
+    function saveRequest(sport) {
+        confirm("Are you sure you want to save this request?") ? window.location.href = "<?=ROOT?>/ped_incharge/inventory_requests/processRequest/" + sport + "/approved" : null;
+    }
 
-    
+    function rejectRequest(sport) {
+        confirm("Are you sure you want to reject this request?") ? window.location.href = "<?=ROOT?>/ped_incharge/inventory_requests/processRequest/" + sport + "/rejected" : null;
+    }
+
+</script>
 	<script src="<?=ROOT?>/assets/js/ped_incharge/ped_inventory.js"></script>
 	<script src="<?=ROOT?>/assets/js/ped_incharge/navbar.js"></script>
 </body>

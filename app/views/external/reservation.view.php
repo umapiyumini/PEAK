@@ -13,31 +13,55 @@
         <?php include 'enav.view.php'; ?>
         <div class="main">
         <?php include 'top.view.php'; ?>
-        <section class="statusboard">
-    <div class="container1">
+
+        <!-- <div class="container1">
+    <div class="reservation-header">
         <h2>Active Reservations</h2>
+        
+    </div> -->
+
+
+
+        <section class="statusboard">
+        <div class="container1">
+    <div class="reservation-header">
+        <h2>Active Reservations</h2>
+        <a href="pickfacility" class="new-reservation-icon" title="New Reservation">
+            <img src="<?=ROOT?>/assets/images/booking.webp" alt="New Reservation">
+        </a>
+    </div>
+
         <div class="reservations-grid">
-            <?php if (!empty($reservations)) : ?>
-                <?php foreach ($reservations as $res) : ?>
-                    <div class="reservation-card">
-                        <p><strong>Facility:</strong> <?= htmlspecialchars($res->facility) ?></p>
-                        <p><strong>Reservation ID:</strong> <?= htmlspecialchars($res->reservationid) ?></p>
-                        <p><strong>Event:</strong> <?= htmlspecialchars($res->event) ?></p>
-                        <p><strong>Date:</strong> <?= htmlspecialchars($res->date) ?></p>
-                        <p><strong>Time:</strong> <?= htmlspecialchars($res->time) ?></p>
-                        <p><strong>Price:</strong> Rs.<?= htmlspecialchars($res->price) ?></p>
-                        <p><strong>Status:</strong> <span class="status <?= strtolower($res->status) ?>"><?= htmlspecialchars($res->status) ?></span></p>
-                    </div>
-                <?php endforeach; ?>
-            <?php else : ?>
-                <p>No active reservations found.</p>
-            <?php endif; ?>
-         <div class="reservation-card new-reservation">
-                <a href="pickfacility">
-                    <div class="plus-icon"><img src="<?=ROOT?>/assets/images/booking.webp"></div>
-                </a>
-                <a href="pickfacility"><p>New Reservation</p></a>
-            </div>
+        <?php foreach ($reservations as $res) : ?>
+    <div class="reservation-card">
+        <p><strong>Facility:</strong> <?= htmlspecialchars($res->courtname) ?></p>
+        <p><strong>Reservation ID:</strong> <?= htmlspecialchars($res->reservationid) ?></p>
+        <p><strong>Event:</strong> <?= htmlspecialchars($res->event) ?></p>
+        <p><strong>Date:</strong> <?= htmlspecialchars($res->date) ?></p>
+        <p><strong>Time:</strong> <?= htmlspecialchars($res->time) ?></p>
+        <p><strong>Price:</strong> Rs.<?= htmlspecialchars($res->price) ?></p>
+        <p><strong>Status:</strong> 
+            <span class="status <?= strtolower($res->status) ?>">
+                <?= htmlspecialchars($res->status) ?>
+            </span>
+        </p>
+
+        <?php if (str_replace(' ', '', strtolower($res->status)) === 'topay') : ?>
+
+            <form method="POST" action="<?= ROOT ?>/external/pay">
+                <input type="hidden" name="reservationid" value="<?= htmlspecialchars($res->reservationid) ?>">
+                <input type="hidden" name="discountedprice" value="<?= htmlspecialchars($res->discountedprice) ?>">
+                <button class="pay-now-btn" type="submit">Pay Now</button>
+            </form>
+        <?php endif; ?>
+        <a href="<?= ROOT ?>/external/<?= strtolower($res->courtname) ?>form?reservationid=<?= htmlspecialchars($res->reservationid) ?>" class="btn btn-secondary">Reschedule</a>
+    
+   
+    </div>
+    
+<?php endforeach; ?>
+
+        
         </div>
     </div>
 </section>
@@ -70,7 +94,7 @@
                     <?php foreach ($reservations as $reservation) : ?>
                         <tr>
                             <td><?= htmlspecialchars($reservation->date); ?></td>
-                            <td><?= htmlspecialchars($reservation->facility); ?></td>
+                            <td><?= htmlspecialchars($reservation->courtname); ?></td>
                             <td>Rs.<?= htmlspecialchars($reservation->price); ?></td>
                             <td><?= htmlspecialchars($reservation->status); ?></td>
                         </tr>

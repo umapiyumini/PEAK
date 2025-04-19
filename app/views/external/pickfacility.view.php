@@ -22,7 +22,7 @@
              <h2>Ground Facility</h2>
             <img src="<?=ROOT?>/assets/images/ground.jpg" alt="Ground Facility" class="card-image">
             <p>Reserve the hockey court, cricket pitch, and more.</p>
-            <a href="groundform"><button onclick="reserveFacility('Ground Facility')">Select &rarr;</button></a>
+            <a href="groundcourts"><button onclick="reserveFacility('Ground Facility')">Select &rarr;</button></a>
         </div>
 
 
@@ -30,7 +30,7 @@
             <h2>Indoor Stadium</h2>
             <img src="<?=ROOT?>/assets/images/indoor.jpg" alt="Indoor Stadium" class="card-image">
             <p>Book the Table Tennis court, badminton court, and other facilities.</p>
-            <a href="indoorform"><button onclick="reserveFacility('Indoor Stadium')">Select &rarr;</button></a>
+            <a href="indoorcourts"><button onclick="reserveFacility('Indoor Stadium')">Select &rarr;</button></a>
         </div>
 
 

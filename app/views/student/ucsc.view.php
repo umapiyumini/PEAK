@@ -18,7 +18,7 @@
             padding: 30px;
             border-radius: 8px;
             
-            margin-left: 280px;
+            margin-left: 220px;
         }
         h1, h3 {
             text-align: center;
@@ -61,34 +61,37 @@
     </style>
 </head>
 <body>
-    <?php include 'nav.view.php';?>
+
+
+<?php include 'nav.view.php';?>
+
 
     <div class="form-container" id="achievement-form">
         <h1>Enhancement Subject Request</h1>
-        <form>
+        <form method="POST" action="<?= ROOT ?>/student/Ucsc/">
             <div class="form-group">
                 <label for="name-with-initials">Name with Initials</label>
-                <input type="text" id="name-with-initials" placeholder="Enter Name with Initials" required>
+                <input type="text" id="name-with-initials" placeholder="Enter Name with Initials" required name="Name">
             </div>
             <div class="form-group">
                 <label for="index-number">Index Number</label>
-                <input type="text" id="index-number" placeholder="Enter Index Number" required>
+                <input type="text" id="index-number" placeholder="Enter Index Number" required name="IndexNumber">
             </div>
             <div class="form-group">
                 <label for="registration-number">Registration Number</label>
-                <input type="text" id="registration-number" placeholder="Enter Registration Number" required>
+                <input type="text" id="registration-number" placeholder="Enter Registration Number" required name="RegistrationNumber">
             </div>
             <div class="form-group">
                 <label for="sport-name">Name of Sport</label>
-                <input type="text" id="sport-name" placeholder="Enter Name of Sport" required>
+                <input type="text" id="sport-name" placeholder="Enter Name of Sport" required name="SportName">
             </div>
             <div class="form-group">
                 <label for="year-of-achievement">Year of Achievement</label>
-                <input type="number" id="year-of-achievement" placeholder="Enter Year of Achievement" required>
+                <input type="number" id="year-of-achievement" placeholder="Enter Year of Achievement" required name="YearOfAchievement">
             </div>
             <div class="form-group">
                 <label for="achievement-level">Achievement Level</label>
-                <select id="achievement-level" required>
+                <select id="achievement-level" required name="AchievementLevel">
                     <option value="" disabled selected>Select Achievement Level</option>
                     <option value="university">University Level</option>
                     <option value="national">National Level</option>

@@ -75,5 +75,11 @@ class Players{
             return false;
         }
     }
+    
+    public function playerByRegno($regno) {
+        $query = "SELECT * FROM $this->table WHERE regno = :regno";
+        $params = [':regno' => $regno];
+        return $this->query($query, $params);
+    }
 
 }

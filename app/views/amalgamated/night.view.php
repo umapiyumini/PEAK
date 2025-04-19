@@ -65,7 +65,7 @@
         /* Main Content Styles */
         .main-content {
             flex-grow: 1;
-            margin-left: 270px;
+            margin-left: 220px;
             padding: 30px;
             background-color: #ffffff;
             border-radius: 10px;
