@@ -140,7 +140,7 @@
         <h2>Update Quantity</h2>
         <form id="updateQuantityForm" action="<?= ROOT ?>/sportscaptain/inventoryunpacked/editquantity" method="POST">
            
-
+  
             <input type="hidden" id="updateid" name="editid">
             <input type="hidden" name="date" value="<?= date('Y-m-d') ?>">
             <div class="form-group">

@@ -169,6 +169,12 @@ Trait Model {
         }
     }
 
+    public function lastInsertId() {
+        $result = $this->query("SELECT LAST_INSERT_ID()");
+        return $result[0]->{"LAST_INSERT_ID()"};
+    }
+    
+
 }
 
 //for now

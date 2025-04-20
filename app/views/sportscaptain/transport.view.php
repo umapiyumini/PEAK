@@ -15,7 +15,7 @@
     </div>
     <!-- Transport Form -->
     <div class="container">
-        <div class="transport">
+            <div class="form-container" id="transport-form">
             <h1>Transport Request Form</h1>
             <form id="transport" action="<?=ROOT?>/sportscaptain/transport/addtransportrequest" method="POST">
                 <!-- Form Group with Labels -->
@@ -43,12 +43,29 @@
                     <label for="reason">Reason:</label>
                     <textarea id="reason" name="reason" rows="4" placeholder="Enter reason"></textarea>
                 </div>
-
+                <input type="hidden" name="status" value="Pending">
                 <button type="submit" class="submit-btn">Submit</button>
             </form>
         </div>
-    </div>
 
+        <div class="request-container">
+        <h2>Previous Requests</h2>
+        <?php if(!empty($data['requests'])): ?>
+            <?php foreach($data['requests'] as $item): ?>
+        <div id="request-list" class="grid">
+            <div class="request-item">
+                <p><strong>Reason :</strong><?=$item->reason?></p>
+                <p><strong>Date :</strong><?=$item->date?></p>
+                <p><strong>Time :</strong><?=$item->time?></p>
+                <p><strong>Location :</strong><?=$item->location?></p>
+                <p><strong>Status :<?=$item->status?></strong></p>
+            </div>
+        </div>
+        <?php endforeach; ?>
+        <?php else: ?>
+            <p>No previous requests</p>
+        <?php endif;?>
+    </div>
     
 </body>
 </html>

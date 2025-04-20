@@ -14,11 +14,13 @@ class Tournaments extends Controller {
     private $freshersrecords;
     private $interfacultyrecords;
     private $interunirecords;
+    private $otherrecords;
 
     public function __construct() {
         $this->freshersrecords = new Freshersrecords();
         $this->interfacultyrecords = new Interfacultyrecords();
         $this->interunirecords = new Interunirecords();
+        $this->otherrecords = new Othertournaments();
     }
 
     public function index() {
@@ -26,6 +28,7 @@ class Tournaments extends Controller {
             'freshersrecords' => $this->freshersrecords->getFreshersrecords(),
             'interfacultyrecords' => $this->interfacultyrecords->getInterfacultyrecords(),
             'interunirecords' => $this->interunirecords->getIntrunirecords(),
+            'otherrecords' => $this->otherrecords->getotherrecords()
         ];
 
         $this->view('sportscaptain/tournaments', $data);
@@ -252,5 +255,84 @@ class Tournaments extends Controller {
             exit();
         }
      }
+
+     public function addothertournaments(){
+
+        if($_SERVER['REQUEST_METHOD'] === 'POST'){
+
+            try{
+
+                $result = $this->otherrecords->addOtherRecords();
+                if($result){
+                    $_SESSION['success'] = 'Other tournaments record added successfully';
+                }else{
+                    $_SESSION['error'] = 'Failed to add other tournaments record';
+                }
+            }catch(Exception $e){
+                $_SESSION['error'] = $e->getMessage();
+            }
+        }
+
+        header('Location: ' . ROOT . '/sportscaptain/tournaments');
+        exit();
+     }
+
+     public function editothertournaments(){
+
+        if($_SERVER['REQUEST_METHOD'] === 'POST'){
+
+    
+            $id = $_POST['tournamentid'] ?? null;
+            if(!$id){
+                $_SESSION['error'] = 'Other tournaments ID is required';
+                header('Location: ' . ROOT . '/sportscaptain/tournaments');
+                exit();
+            }else{
+
+                try{
+                    $result = $this->otherrecords->editOtherRecords($id);
+
+                    if($result){
+                        $_SESSION['success'] = 'Other tournaments record updated successfully';
+                    }else{
+                        $_SESSION['error'] = 'Failed to update other tournaments record - no rows affected';
+                    }
+                }catch(Exception $e){
+                    $_SESSION['error'] = $e->getMessage();
+                }
+            }
+        }
+        header('Location: ' . ROOT . '/sportscaptain/tournaments');
+        exit();
+     }
+
+        public function deleteothertournaments(){
+    
+            if($_SERVER['REQUEST_METHOD'] === 'POST'){
+    
+                $id = $_POST['tournamentid'] ?? null;
+                if(!$id){
+    
+                    $_SESSION['error'] = 'Other tournaments ID is required';
+                    header('Location: ' . ROOT . '/sportscaptain/tournaments');
+                    exit();
+                }else{
+    
+                    try{
+                        $result = $this->otherrecords->deleteOtherRecords($id);
+                        if($result){
+                            $_SESSION['success'] = 'Other tournaments record deleted successfully';
+                        }else{
+                            $_SESSION['error'] = 'Failed to delete other tournaments record - no rows affected';
+                        }
+                    }catch(Exception $e){
+                        $_SESSION['error'] = $e->getMessage();
+                    }
+                }
+            }
+            header('Location: ' . ROOT . '/sportscaptain/tournaments');
+            exit();
+
+        }
 }
     

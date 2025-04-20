@@ -100,6 +100,8 @@ class Inventoryunpacked extends Controller {
         header('location: ' .ROOT . '/sportscaptain/inventoryunpacked');
         exit();
     }
+
+    
 }
 
 

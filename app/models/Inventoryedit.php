@@ -8,8 +8,7 @@ class  Inventoryedit {
 
 
 
-    public function editQuantity($name,$date,$quantity,$reason){
-
+    public function editQuantity($equipmentid, $date, $quantity, $reason) {
         $query = "INSERT INTO inventoryedit (equipmentid, date, quantity, reason)
                 VALUES (
                         (SELECT equipmentid FROM equipments WHERE name =:name),:date,:quantity,:reason)";

@@ -86,12 +86,13 @@ input:focus, select:focus {
     box-shadow: 0 0 5px rgba(90, 46, 138, 0.3);
 }
 
-button{
+button,.addRegNoBtn , .addRegNoBtn:hover{
     width: 20%; /* Fixed width for consistency */
     background-color: #5a2e8a;
     color: #ffffff;
     border: none;
     padding: 10px;
+    margin-top: 10px;
     border-radius: 6px;
     font-size: 14px;
     cursor: pointer;
@@ -130,3 +131,30 @@ td {
 .table-container {
     margin-top: 30px; /* Add space between the form and the table */
 }
+
+/* Reg No & Priority group */
+.player-entry {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 10px;
+    align-items: center;
+}
+
+.player-entry input {
+    flex: 2;
+}
+
+.player-entry select {
+    flex: 1;
+}
+
+.player-entry .removeBtn {
+    background-color: #e74c3c;
+    padding: 8px 12px;
+    font-size: 12px;
+}
+
+.player-entry .removeBtn:hover {
+    background-color: #c0392b;
+}
+

@@ -41,7 +41,14 @@
             <div class="tournament-item" data-category="<?= strtolower(str_replace(' ', '-', $record['category'])) ?>">
           <span class ="category-badge"><?= $record['category'] ?></span>
           <h3><?= $record['tournament_name']?></h3>
-          <p><strong>Year:</strong> <?= $record['year']?></p>
+          
+          <?php if (!empty($record['year'])): ?>
+            <p><strong>Year</strong> <?= $record['year'] ?></p>
+          <?php endif; ?>
+
+          <?php if (!empty($record['date'])): ?>
+            <p><strong>Date</strong> <?= $record['date'] ?></p>
+          <?php endif; ?>
 
           <?php if (!empty($record['first_place'])): ?>
             <p><strong>1st Place:</strong> <?= $record['first_place'] ?></p>

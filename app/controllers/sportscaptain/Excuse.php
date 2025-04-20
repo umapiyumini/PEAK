@@ -13,7 +13,10 @@ class Excuse extends Controller{
 
    public function index(){
 
-    $this->view('sportscaptain/excuse');
+        $excuseModel = new AttendenceExcuse();
+        $excuse = $excuseModel->getRequestBySport();
+
+        $this->view('sportscaptain/excuse',['excuse' => $excuse]);
 
         
     }
@@ -21,6 +24,8 @@ class Excuse extends Controller{
     public function addexcusedata(){
 
         if($_SERVER['REQUEST_METHOD'] === 'POST'){
+
+           
 
             try{
 

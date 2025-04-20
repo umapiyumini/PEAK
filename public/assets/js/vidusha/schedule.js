@@ -95,6 +95,7 @@ document.querySelectorAll('.edit-button').forEach(function(btn) {
     document.getElementById('edit-date').value = formattedDate;
     document.getElementById('edit-start_time').value = startTime;
     document.getElementById('edit-end_time').value = endTime;
+   
 
     // Show edit modal
     editModal.style.display = 'block';
