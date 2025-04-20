@@ -14,46 +14,8 @@ const inventoryTable = document.getElementById('studentTable');
 const searchInput = document.getElementById('searchInput');
 
 
-// Sample initial data
-let studentData = [
-    { id: 1, reg_no: '2021/IS/046', name: 'A.H Perera', faculty: 'UCSC', gender: 'Male'},
-    { id: 2, reg_no: '2021/S/046', name: 'L.M Ranasinghe', faculty: 'FOS', gender: 'Female'},
-    { id: 3, reg_no: '2021ms65', name: 'D.Y Perera', faculty: 'FMF', gender: 'Male'},
-
-];
 
 
-
-// Render table
-function renderTable(data = studentData) {
-    const tbody = document.querySelector('#studentTable tbody');
-    tbody.innerHTML = '';
-
-    data.forEach(student => {
-        const tr = document.createElement('tr');
-        tr.innerHTML = `
-            <td>${student.reg_no}</td>
-            <td>${student.name}</td>
-            <td>${student.faculty}</td>
-            <td>${student.gender}</td>
-            <td class="action-buttons">
-                <button class="btn btn-update" onclick="openEditModal(${student.id})">
-                    <i class="uil uil-edit"></i>
-                </button>
-                <button class="btn btn-delete" onclick="deleteStudent(${student.id})">
-                    <i class="uil uil-trash-alt"></i>
-                </button>
-                <button class="btn btn-view" onclick="window.location.href='student_profile';">
-                <i class="uil uil-eye"></i>
-                </button>
-            </td>
-        `;
-        tbody.appendChild(tr);
-    });
-    
-    updateStudentCounters();
-    renderTable();
-}
 
 
 // Search functionality

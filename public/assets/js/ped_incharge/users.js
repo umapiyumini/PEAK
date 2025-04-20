@@ -80,62 +80,17 @@
             }
         }
 
-        function getRoleName(roleNumber) {
+        function getRoleName(role) {
             const roles = {
-                '1': 'Administrator',
-                '2': 'Student',
+                '1': 'Admin',
+                '2': 'Internal User',
                 '3': 'Sports Captain',
-                '4': 'Club Executive',
-                '5': 'Staff Member'
+                '4': 'Amalgamated Club Executive',
+                '5': 'GroundIndoorStaff'
             };
-            return roles[roleNumber] || 'Unknown Role';
+            return roles[role] || 'Unknown Role';
         }
 
-        function displayUsers(filterRole = 'all') {
-            const tableBody = document.getElementById('userTableBody');
-            tableBody.innerHTML = '';
-
-            const filteredUsers = filterRole === 'all' 
-                ? users 
-                : users.filter(user => user.roleNumber === filterRole);
-            filteredUsers.forEach(user => {
-                const row = document.createElement('tr');
-                
-                // Determine user details based on type
-                let details, status;
-                switch(user.type) {
-                    case 'student':
-                        details = `Faculty: ${user.faculty}<br>NIC: ${user.nic}`;
-                        status = isActive(user.startDate, user.endDate) ? 'Active' : 'Inactive';
-                        break;
-                    case 'staff':
-                        details = `Emp #: ${user.employeeNumber}<br>Contact: ${user.contact}`;
-                        status = isActive(user.appointmentDate) ? 'Active' : 'Inactive';
-                        break;
-                    case 'captain':
-                        details = `Sport: ${user.sport}`;
-                        status = isActive(user.assignedDate, user.endDate) ? 'Active' : 'Inactive';
-                        break;
-                    case 'executive':
-                        details = `Designation: ${user.designation}`;
-                        status = isActive(user.assignedDate, user.endDate) ? 'Active' : 'Inactive';
-                        break;
-                }
-
-                row.innerHTML = `
-                    <td>${getRoleName(user.roleNumber)}</td>
-                    <td>${user.regNumber || user.staffId || 'N/A'}</td>
-                    <td>${user.email || user.name || 'N/A'}</td>
-                    <td>${details}</td>
-                    <td><span class="status-badge ${status.toLowerCase()}">${status}</span></td>
-                    <td>
-                        <button onclick="editUser('${user.id}')" class="btn btn-update"><i class="uil uil-edit"></i></button>
-                        <button onclick="deleteUser('${user.id}')" class="btn btn-delete"><i class="uil uil-trash-alt"></i></button>
-                    </td>
-                `;
-                tableBody.appendChild(row);
-            });
-        }
 
         function isActive(startDate, endDate = null) {
             const now = new Date();
@@ -222,61 +177,7 @@
             }
         }
 
-        // Add some additional CSS styles dynamically
-        const style = document.createElement('style');
-        style.textContent = `
-            .status-badge {
-                padding: 4px 8px;
-                border-radius: 4px;
-                font-size: 0.9em;
-            }
-            .status-badge.active {
-                background-color: #e6ffe6;
-                color: #008000;
-            }
-            .status-badge.inactive {
-                background-color: #ffe6e6;
-                color: #cc0000;
-            }
-            .edit-btn, .delete-btn {
-                padding: 4px 8px;
-                margin: 2px;
-                border: none;
-                border-radius: 4px;
-                cursor: pointer;
-            }
-            .edit-btn {
-                background-color: #4CAF50;
-                color: white;
-            }
-            .delete-btn {
-                background-color: #f44336;
-                color: white;
-            }
-            .edit-form {
-                position: fixed;
-                top: 50%;
-                left: 50%;
-                transform: translate(-50%, -50%);
-                background: white;
-                padding: 20px;
-                border-radius: 8px;
-                box-shadow: 0 0 10px rgba(0,0,0,0.1);
-                z-index: 1000;
-                max-width: 500px;
-                width: 90%;
-            }
-            .cancel-btn {
-                background: #777;
-                color: white;
-                border: none;
-                padding: 10px 20px;
-                border-radius: 4px;
-                cursor: pointer;
-                margin-left: 10px;
-            }
-        `;
-        document.head.appendChild(style);
+ 
 
         // Initialize the display if we're on the user display section
         if (document.getElementById('user-display').classList.contains('active')) {

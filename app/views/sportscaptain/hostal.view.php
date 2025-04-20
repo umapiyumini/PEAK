@@ -18,22 +18,22 @@
     <h1>Requesting Hostel Facilities</h1>
     <form id="form" action="<?=ROOT?>/sportscaptain/hostal/insertrequest" method="POST">
       
-      <div class="form-group">
-        <label for="regNo">Registration No:</label>
-        <input type="text" class="regNo" name="reg_no" placeholder="Enter Registration No" required>
-      </div>
+    <div class="form-group">
+    <label for="regNo">Registration Numbers and Priority:</label>
+    <div id="playerContainer">
+        <div class="player-entry">
+            <input type="text" class="regNo" name="reg_no[]" placeholder="Enter Registration No" required> 
+            <select class="priority" name="priority[]" required>
+                <option value="">Select Priority</option>
+                <option value="High">High</option>
+                <option value="Medium">Medium</option>
+                <option value="Low">Low</option>
+            </select>
+        </div>
+    </div>
+    <button type="button" class="addRegNoBtn">Add</button>
+</div>
 
-      <div class="form-group">
-        <label for="priority">Priority:</label>
-        <select class="priority" name="priority" required>
-          <option value="">Select Priority</option>
-          <option value="1">1 (Highest)</option>
-          <option value="2">2 (High)</option>
-          <option value="3">3 (Medium)</option>
-          <option value="4">4 (Low)</option>
-          <option value="5">5 (Lowest)</option>
-        </select>
-      </div>
 
       <div class="form-group">
         <label for="startdate">Start Date:</label>

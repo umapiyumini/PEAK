@@ -13,10 +13,11 @@
         <a href="transport">Transport</a>
         <a href="colorsnight">Colors Night</a>
     </div>
+    <div class = "container">
     <div class="form-container" id="attendance-form">
         <h1>Attendance Excuse Letter</h1>
         <h3>Fill the Details</h3>
-        <form  action="<?=ROOT?>/sportscaptain/Excuse/addexcusedata" method="POST">
+        <form  action="<?=ROOT?>/sportscaptain/excuse/addexcusedata" method="POST">
             <div class="form-group">
                 <label for="faculty">Faculty</label>
                 <input type="text" id="faculty" name="faculty" placeholder="Enter Faculty">
@@ -44,9 +45,29 @@
                 <label for="submitiondate">Submition Date</label>
                 <input type="date" id="subDate" name="submit_date" placeholder="Enter Submition Date">
             </div>
+            <input type="hidden" name="status" value="Pending">
             <button type="submit" class="submit-btn">Submit</button>
         </form>
     </div>
+
+    <div class="request-container">
+        <h2>Previous Requests</h2>
+        <?php if(!empty($data['excuse'])): ?>
+            <?php foreach($data['excuse'] as $item): ?>
+        <div id="request-list" class="grid">
+            <div class="request-item">
+                <p><strong>Faculty :</strong><?=$item->faculty?></p>
+                <p><strong>Tournament :</strong><?=$item->tournament_name?></p>
+                <p><strong>Date :</strong><?=$item->submit_date?></p>
+                <p><strong>Status :</strong><?=$item->status?></p>
+            </div>
+        </div>
+        <?php endforeach; ?>
+        <?php else: ?>
+            <p>No previous requests</p>
+        <?php endif;?>
+    </div>
+</div>         
     <script src="<?=ROOT?>/assets/js/vidusha/excuse.js"></script>
 </body>
 </html>

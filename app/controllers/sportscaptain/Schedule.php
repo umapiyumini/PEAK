@@ -83,8 +83,9 @@ class Schedule extends Controller{
             $date = $_POST['date'] ?? null;
             $start_time = $_POST['start_time'] ?? null;
             $end_time = $_POST['end_time'] ?? null;
+            $category = $_POST['category'] ?? null;
 
-            if(!$id || !$date || !$start_time || !$end_time){
+            if(!$id || !$date || !$start_time || !$end_time || !$category){
                 $_SESSION['error'] = 'All fielda are requierd';
                 header('location: ' .ROOT . '/sportscaptain/schedule');
                 exit();
@@ -97,7 +98,8 @@ class Schedule extends Controller{
                     $id,
                     $date,
                     $start_time,
-                    $end_time
+                    $end_time,
+                    $category
                 );
 
                 

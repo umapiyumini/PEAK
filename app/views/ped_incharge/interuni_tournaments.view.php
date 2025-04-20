@@ -12,7 +12,6 @@
 
   <!-- Header and Main Content -->
   <div class="main-content">
-
     <div class="container">
       <div class="header">
         <h1>Tournament Records</h1>
@@ -31,33 +30,31 @@
     </div>
     <main>
       <div class="sub-header">
-            <h2 class="sub-topic">Inter University Games</h2>
-            </div>
-        <div class="filters">
-          <div class="filter-group">
-            <label for="search">Search</label>
-            <input type="text" id="search" placeholder="Search tournaments...">
-          </div>
-          <div class="filter-group">
-            <label for="sport">Sport</label>
-            <select id="sport">
-              <option value="">All Sports</option>
-              <option value="basketball">Basketball</option>
-              <option value="soccer">Soccer</option>
-              <option value="volleyball">Volleyball</option>
-            </select>
-          </div>
-          <div class="filter-group">
-            <label for="year">Year</label>
-            <select id="year">
-              <option value="">All Years</option>
-              <option value="2024">2024</option>
-              <option value="2023">2023</option>
-              <option value="2022">2022</option>
-            </select>
-          </div>
-          <!-- <button class="btn btn-add" onclick="openModal('Add Tournament')">Add Tournament</button> -->
+        <h2 class="sub-topic">Inter University Games</h2>
+      </div>
+      <div class="filters">
+        <div class="filter-group">
+          <label for="search">Search</label>
+          <input type="text" id="search" placeholder="Search tournaments...">
         </div>
+        <div class="filter-group">
+          <label for="sport">Sport</label>
+          <select id="sport">
+            <option value="">All Sports</option>
+            <option value="basketball">Basketball</option>
+            <option value="soccer">Soccer</option>
+            <option value="volleyball">Volleyball</option>
+          </select>
+        </div>
+        <div class="filter-group">
+          <label for="year">Year</label>
+          <select id="year">
+            <option value="">All Years</option>
+            <option value="2024">2024</option>
+            <option value="2023">2023</option>
+            <option value="2022">2022</option>
+          </select>
+        </div>   
 
         <div class="records-table">
           <table>
@@ -103,6 +100,7 @@
                       <button 
                         class="btn btn-view" 
                         onclick="viewTournament(this)"
+                        data-tournamentid="<?=$i->interrecordid?>"
                         data-tournamentname="<?=$i->tournament_name?>"
                         data-sport="<?=$i->sport_name?>"
                         data-date="<?=$i->date?>"
@@ -125,7 +123,7 @@
       <div id="tournamentModal" class="modal">
         <div class="modal-content">
           <div class="modal-header">
-            <h2 id="modalTitle">Add Tournament</h2>
+            <h2 id="modalTitle">Edit Tournament</h2>
             <span class="close" onclick="closeModal('tournamentModal')">&times;</span>
           </div>
           <form id="tournamentForm" action="<?=ROOT?>/ped_incharge/interuni_tournaments/saveTournament" method="POST">
@@ -178,44 +176,44 @@
       </div>
 
       <div id="viewTournamentModal" class="modal">
-          <div class="modal-content">
-              <div class="modal-header">
-                  <h2>Tournament Details</h2>
-                  <span class="close" onclick="closeModal('viewTournamentModal')">&times;</span>
-              </div>
-              <div class="modal-body">
-                  <div class="details-grid">
-                      <div class="detail-item">
-                          <label>Tournament Name:</label>
-                          <input type="text" id="viewName" readonly>
-                      </div>
-                      <div class="detail-item">
-                          <label>Sport:</label>
-                          <input type="text" id="viewSport" readonly>
-                      </div>
-                      <div class="detail-item">
-                          <label>Date:</label>
-                          <input type="data" id="viewDate" readonly>
-                      </div>
-                      <div class="detail-item">
-                          <label>Place:</label>
-                          <input type="text" id="viewPlace" readonly>
-                      </div>
-                      <div class="detail-item">
-                          <label>Category:</label>
-                          <input type="text" id="viewMenWomen" readonly>
-                      </div>
-                      <div class="detail-item">
-                          <label>Venue:</label>
-                          <input type="text" id="viewVenue" readonly>
-                      </div>
-                  </div>
-                  <div class="participants-section">
-                      <h3>Participants</h3>
-                      <div id="viewParticipantsList" class="participants-list"></div>
-                  </div>
-              </div>
+        <div class="modal-content">
+          <div class="modal-header">
+              <h2>Tournament Details</h2>
+              <span class="close" onclick="closeModal('viewTournamentModal')">&times;</span>
           </div>
+          <div class="modal-body">
+            <div class="details-grid">
+                <div class="detail-item">
+                    <label>Tournament Name:</label>
+                    <input type="text" id="viewName" readonly>
+                </div>
+                <div class="detail-item">
+                    <label>Sport:</label>
+                    <input type="text" id="viewSport" readonly>
+                </div>
+                <div class="detail-item">
+                    <label>Date:</label>
+                    <input type="data" id="viewDate" readonly>
+                </div>
+                <div class="detail-item">
+                    <label>Place:</label>
+                    <input type="text" id="viewPlace" readonly>
+                </div>
+                <div class="detail-item">
+                    <label>Category:</label>
+                    <input type="text" id="viewMenWomen" readonly>
+                </div>
+                <div class="detail-item">
+                    <label>Venue:</label>
+                    <input type="text" id="viewVenue" readonly>
+                </div>
+            </div>
+            <div class="participants-section">
+                <h3>Participants</h3>
+                <div id="viewParticipantsList" class="participants-list"></div>
+            </div>
+          </div>
+        </div>
       </div>
     </main>
   </div>

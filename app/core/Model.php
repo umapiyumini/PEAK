@@ -24,18 +24,20 @@ Trait Model {
         $keys_not = array_keys($data_not);
         $query = "SELECT * FROM $this->table WHERE ";
         foreach($keys as $key){
-            $query .= $key . " = :".$key . "&&";
+            $query .= "$key = :$key AND ";
+
 
         }
 
         foreach($keys_not as $key){
-            $query .= $key . " != :".$key . "&&";
+            $query .= "$key != :$key AND ";
 
         }
 
-        $query = trim($query," && ");
+        $query = rtrim($query, " AND ");
 
-        $query .= "order by $this->order_column $this->order_type  limit $this->limit offset $this->offset"; 
+
+         $query .= " ORDER BY $this->order_column $this->order_type LIMIT $this->limit OFFSET $this->offset";
 
         $data = array_merge($data,$data_not);
         return $this->query($query,$data);
@@ -100,6 +102,7 @@ Trait Model {
 
     }
 
+   
     // update
     public function update($id,$data,$id_column='userid'){
 
@@ -165,6 +168,12 @@ Trait Model {
             return false;
         }
     }
+
+    public function lastInsertId() {
+        $result = $this->query("SELECT LAST_INSERT_ID()");
+        return $result[0]->{"LAST_INSERT_ID()"};
+    }
+    
 
 }
 

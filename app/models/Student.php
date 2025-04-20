@@ -53,4 +53,21 @@ class Student{
         $params = [':regno' => $regno];
         return $this->query($query, $params);
     }
+    
+    public function findAllStudents(){
+        $query = "SELECT u.userid, u.name, u.gender, u.nic, u.email, u.date_of_birth, u.contact_number, u.address, 
+        s.registrationnumber, s.faculty, s.department, s.id_start, s.id_end FROM $this->table s 
+        JOIN user u ON s.userid = u.userid";
+
+        return $this->query($query);
+    }
+
+    public function getStudentInfo($regno){
+        $query = "SELECT u.userid, u.name, u.gender, u.nic, u.email, u.date_of_birth, u.contact_number, u.address, 
+                s.registrationnumber, s.faculty, s.department, s.id_start, s.id_end FROM $this->table s 
+                JOIN user u ON s.userid = u.userid WHERE s.registrationnumber = :regno";
+
+        $params = [':regno' => $regno];
+        return $this->query($query, $params);
+    }
 }
