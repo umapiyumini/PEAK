@@ -1,75 +1,124 @@
+// DOM Elements
 const modal = document.getElementById("facilityModal");
 const modalTitle = document.getElementById("modalTitle");
-const facilityForm = document.getElementById("facilityForm");
-const closeBtn = document.querySelector(".close");
+const facilityForm = document.getElementById("reservationForm");
+
+const closeBtn = document.querySelector("#facilityModal .close");
+const addFacilityBtn = document.getElementById("addFacilityBtn");
+const editCourtidInput = document.getElementById("editCourtid");
+
+// Show Add Facility Modal
+addFacilityBtn.onclick = function() {
+    modal.style.display = "block";
+    modalTitle.textContent = "Add Facility";
+    facilityForm.reset();
+    editCourtidInput.value = "";
+};
 
 // Open Edit Modal and populate with selected court data
-function openEditModal(court) {
-    modal.style.display = "block";
-    modalTitle.textContent = "Edit Facility";
-    document.getElementById("editCourtid").value = court.courtid;
-    document.getElementById("facilityName").value = court.name;
-    document.getElementById("facilityDescription").value = court.description;
-    document.getElementById("facilityImage").value = court.image;
-}
-
-// Close modal when clicking the close button or outside the modal
-closeBtn.onclick = () => {
-    modal.style.display = "none";
-};
-window.onclick = (e) => {
-    if (e.target === modal) {
-        modal.style.display = "none";
-    }
-};
-
-// Fetch facility details for editing by courtid
 function fetchFacility(courtid) {
-    const formData = new URLSearchParams();
-    formData.append("courtid", courtid);
-
-    fetch("/ped_facilities/getFacility", {
+    fetch("/PEAK/public/ped_incharge/ped_facilities/getFacility", {
         method: "POST",
         headers: { "Content-Type": "application/x-www-form-urlencoded" },
-        body: formData.toString()
+        body: new URLSearchParams({ courtid })
     })
     .then(response => response.json())
     .then(data => {
-        console.log(data);  // Check what data is returned
         if (data && !data.error) {
-            openEditModal(data); // Open modal and pass the data
+            openEditModal(data);
         } else {
             alert("Facility not found.");
         }
-    });
+    })
+    .catch(() => alert("Error fetching facility details."));
 }
 
-// Handle form submission (update court)
-facilityForm.onsubmit = async (e) => {
-    e.preventDefault();
+function openEditModal(court) {
+    modal.style.display = "block";
+    modalTitle.textContent = "Edit Facility";
+    editCourtidInput.value = court.courtid || "";
+    document.getElementById("facilityName").value = court.name || "";
+    document.getElementById("facilityDescription").value = court.description || "";
+    document.getElementById("facilitylocation").value = court.location || "";
+    document.getElementById("facilitysection").value = court.section || "";
+    document.getElementById("currentImage").src = court.image || "";
 
-    const courtid = document.getElementById("editCourtid").value;
-    const name = document.getElementById("facilityName").value;
-    const description = document.getElementById("facilityDescription").value;
-    const image = document.getElementById("facilityImage").value;
+    // Show current image if you want
+    if (document.getElementById("currentImage")) {
+        document.getElementById("currentImage").src = court.image || "";
+    }
+}
 
-    const formData = new URLSearchParams();
-    formData.append("courtid", courtid);
-    formData.append("name", name);
-    formData.append("description", description);
-    formData.append("image", image);
 
-    const response = await fetch("/ped_facilities/update", {
+function deleteFacility(courtid) {
+    if (!confirm("Are you sure you want to delete this facility?")) return;
+
+    fetch("/PEAK/public/ped_incharge/ped_facilities/delete", {
         method: "POST",
         headers: { "Content-Type": "application/x-www-form-urlencoded" },
-        body: formData.toString()
-    });
+        body: new URLSearchParams({ courtid })
+    })
+    .then(response => response.text())
+    .then(result => {
+        if (result.trim() === "success") {
+            // Option 1: Reload the page
+            window.location.reload();
 
-    const result = await response.text();
-    if (result === "success") {
-        alert("Facility updated!");
-        location.reload();  // Reload the page to reflect the changes
-    } else {
-        alert("Failed to update facility.");
-    }
+            // Option 2: Remove the card from the DOM (uncomment if you want instant update)
+            // document.querySelector(`.facility-card[data-id='${courtid}']`).remove();
+        } else {
+            alert("Error deleting facility: " + result);
+        }
+    })
+    .catch(() => alert("Error deleting facility."));
+}
+
+// Close Modal (button or clicking outside)
+closeBtn.onclick = closeModal;
+window.onclick = function(event) {
+    if (event.target === modal) closeModal();
 };
+function closeModal() {
+    modal.style.display = "none";
+}
+
+// Handle Add/Edit Facility Form Submission
+facilityForm.onsubmit = function(e) {
+    e.preventDefault();
+    const formData = new FormData(facilityForm);
+    const courtid = editCourtidInput.value;
+    let url, successMsg;
+
+    if (courtid) {
+        formData.append("courtid", courtid);
+        url = "/PEAK/public/ped_incharge/ped_facilities/update";
+
+        successMsg = "Facility updated!";
+    } else {
+         url = "/PEAK/public/ped_incharge/ped_facilities/add";
+
+        successMsg = "Facility added!";
+    }
+
+    fetch(url, {
+        method: "POST",
+        body: formData
+    })
+    .then(response => response.text())
+    .then(result => {
+        if (result.trim() === "success") {
+            window.location.href = "/PEAK/public/ped_incharge/ped_facilities";
+        } else {
+            alert("Error saving facility: " + result);
+        }
+    })
+    .catch(() => alert("Error saving facility."));
+};
+
+
+
+
+
+
+// Example usage for editing:
+// fetchFacility(123); // Call this when you want to edit facility with courtid 123

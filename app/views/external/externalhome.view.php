@@ -14,13 +14,14 @@
         <div class="main">
         <?php include 'top.view.php'; ?>
                 <div class="container1">
-                 <div class="namecard">
-                    <h1 class="titlecard">Welcome John!</h1>
-                    <img src="<?=ROOT?>/assets/images/user1.jpg" class="propic">
-                    <p class="aboutcard">Company ABC Pvt Ltd</p>
-                   
-                    </p>
-                    </div>
+                <div class="namecard">
+                    <h1 class="titlecard">Welcome <?= htmlspecialchars($user->name) ?>!</h1>
+                    <img src="<?= !empty($user->image) 
+                        ? '/PEAK/uploads/profile_pictures/' . htmlspecialchars($user->image) 
+                        : '/PEAK/assets/images/user1.jpg' ?>" class="propic" alt="Profile Picture">
+                    <p class="aboutcard"><?= htmlspecialchars($company_name) ?></p>
+                </div>
+
                 
                  <div class="popularreservations">
                     <h2 class="sectiontitle">Top Reservation Picks</h2>

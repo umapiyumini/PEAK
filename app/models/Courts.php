@@ -58,6 +58,12 @@ class Courts {
         $query = "INSERT INTO $this->table ($columns) VALUES ($placeholders)";
         return $this->query($query, $data);
     }
+
+    public function delete($courtid) {
+        $query = "DELETE FROM $this->table WHERE courtid = :courtid";
+        return $this->query($query, ['courtid' => $courtid]);
+    }
+    
     
 }
 
