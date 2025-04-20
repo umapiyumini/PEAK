@@ -20,5 +20,29 @@ class Reservation extends Controller {
 
         $this->view('external/reservation', $this->data); 
     }
+
+    public function cancelReservation() {
+        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+            $reservationid = $_POST['reservationid'] ?? null;
+            $userid = $_SESSION['userid'] ?? null;
+    
+            if ($reservationid && $userid) {
+                $reservationsModel = new Reservations();
+                // Optional: Check if reservation belongs to this user
+                $reservation = $reservationsModel->findById($reservationid);
+                if ($reservation && $reservation->userid == $userid) {
+                    $reservationsModel->delete($reservationid);
+                    // Optionally, log the cancellation reason
+                    // Redirect or show success message
+                    header("Location: " . ROOT . "/external/reservation?cancel=success");
+                    exit;
+                }
+            }
+            // If failed
+            header("Location: " . ROOT . "/external/reservation?cancel=fail");
+            exit;
+        }
+    }
+    
 }
 ?>

@@ -47,4 +47,10 @@ public function getPriceByEventDurationDescription($event, $duration, $descripti
 }
 
 
+public function getAllGroundRates() {
+    $query = "SELECT * FROM $this->table ORDER BY description, event, duration";
+    return $this->query($query);
+}
+
+
 }

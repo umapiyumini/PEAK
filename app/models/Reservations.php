@@ -57,7 +57,7 @@ class Reservations {
             FROM {$this->table} r 
             JOIN courts c ON r.courtid = c.courtid 
             WHERE r.userid = :userid 
-              AND r.status = 'Paid' 
+              AND r.status = 'confirmed' 
               AND r.courtid != '38'
               AND STR_TO_DATE(CONCAT(r.date, ' ', r.time), '%Y-%m-%d %H:%i:%s') > NOW()
         ";
@@ -71,7 +71,7 @@ class Reservations {
         FROM {$this->table} r
         JOIN courts c ON r.courtid = c.courtid
         WHERE r.userid = :userid
-        AND r.status = 'accepted'";
+        AND r.status = 'To pay'";
         return $this->query($query, ['userid' => $userid]); 
     }
 
@@ -131,6 +131,16 @@ public function getBookingsForDateSection($date, $section) {
 
     
 
+public function delete($reservationid) {
+    $query = "DELETE FROM {$this->table} WHERE reservationid = :reservationid";
+    return $this->query($query, ['reservationid' => $reservationid]);
+}
+
+public function findById($reservationid) {
+    $query = "SELECT * FROM {$this->table} WHERE reservationid = :reservationid LIMIT 1";
+    $result = $this->query($query, ['reservationid' => $reservationid]);
+    return $result ? $result[0] : null;
+}
 
     
     
