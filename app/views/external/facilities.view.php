@@ -31,7 +31,10 @@
             <h3><?= htmlspecialchars($court->name) ?></h3>
             <p><?= htmlspecialchars($court->description) ?></p>
             <!-- Assuming you don't have prices in your database, you can adjust this as needed -->
-            <a href="groundform"> <button class="reserve-button">Book Now</button></a>
+            
+            <a href="<?= strtolower(str_replace(' ', '', $court->name)) ?>form">
+                <button class="reserve-button" onclick="reserveFacility('<?= htmlspecialchars($court->name) ?>')">Book</button>
+            </a>
         </div>
     <?php endforeach; ?>
 </div>

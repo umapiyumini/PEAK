@@ -1,3 +1,23 @@
+<?php
+if (session_status() == PHP_SESSION_NONE) session_start();
+require_once __DIR__ . '/../../models/User.php'; // Adjust path as needed
+
+$profile_img = "/PEAK/assets/images/user1.jpg"; // default
+
+if (isset($_SESSION['userid'])) {
+    $userid = $_SESSION['userid'];
+    $userModel = new User();
+    $user_data = $userModel->getUser($userid);
+    $user = (!empty($user_data)) ? $user_data[0] : null;
+
+    if ($user && !empty($user->image)) {
+        $profile_img = "/PEAK/uploads/profile_pictures/" . htmlspecialchars($user->image);
+    }
+}
+?>
+
+
+
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -19,7 +39,9 @@
                 
 
                 <div class="user">
-                    <a href="profile"><img src="<?=ROOT?>/assets/images/user1.jpg"></a>
+                <a href="profile">
+                <img src="<?= $profile_img ?>" alt="Profile Picture">
+    </a>
                 </div>
             </div>
                 
