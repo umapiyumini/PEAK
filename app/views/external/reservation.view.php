@@ -55,7 +55,10 @@
             </form>
         <?php endif; ?>
         <a href="<?= ROOT ?>/external/<?= strtolower($res->courtname) ?>form?reservationid=<?= htmlspecialchars($res->reservationid) ?>" class="btn btn-secondary">Reschedule</a>
-    
+        <br>
+        <a href="javascript:void(0);" onclick="openCancelPopup('<?= htmlspecialchars($res->reservationid) ?>', '<?= htmlspecialchars($_SESSION['username'] ?? '') ?>')" class="cancel-link">
+        Cancel
+        </a>
    
     </div>
     
@@ -112,25 +115,20 @@
                 </section>
 
                 <div id="cancel-popup" class="popup">
-    <div class="popup-content">
-        <span class="close-icon" onclick="closePopup()">&times;</span>
-        <h3>Cancel Reservation</h3>
-        <form id="cancel-form">
-            <p><strong>Reservation ID:</strong></p>
-            <input type="text" id="reservation-id" name="reservation-id" readonly>
+  <div class="popup-content">
+    <span class="close-icon" onclick="closePopup()">&times;</span>
+    <h3>Cancel Reservation</h3>
+    <p>Are you sure you want to cancel this reservation?</p>
+    <form id="cancel-form" method="POST" action="<?= ROOT ?>/external/reservation/cancelReservation">
+      <input type="hidden" id="reservation-id" name="reservationid">
+      <div class="popup-buttons">
+        <button type="submit" class="confirm-btn">Yes, Cancel</button>
+        <button type="button" class="cancel-btn" onclick="closePopup()">No</button>
+      </div>
+    </form>
+  </div>
+</div>
 
-            <p><strong>Full Name:</strong></p>
-            <input type="text" id="full-name" name="full-name" readonly>
-
-            <p><strong>Reason for Cancellation:</strong></p>
-            <textarea id="cancellation-reason" name="cancellation-reason" placeholder="Enter reason..." required></textarea>
-
-            <div class="popup-buttons">
-               
-                <button type="submit" class="confirm-btn">Confirm Cancellation</button>
-            </div>
-        </form>
-    </div>
 </div>
 
                
@@ -165,14 +163,11 @@ document.getElementById("file-upload").addEventListener("change", function() {
 });
 
 //------------------------------ pop up
-function openCancelPopup(reservationId, fullName) {
-    // Autofill Reservation ID and Full Name
+function openCancelPopup(reservationId) {
     document.getElementById("reservation-id").value = reservationId;
-    document.getElementById("full-name").value = fullName;
-
-    // Show Popup
     document.getElementById("cancel-popup").style.display = "block";
 }
+
 
 function closePopup() {
     // Hide Popup
