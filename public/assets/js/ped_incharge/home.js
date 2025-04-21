@@ -96,10 +96,7 @@ renderCalendar();
             }
         }
 
-        function deleteNotice(index) {
-            notices.splice(index, 1);
-            renderNotices();
-        }
+        
 
         function editNotice(index) {
             const notice = notices[index];
@@ -126,6 +123,33 @@ renderCalendar();
                 `;
                 container.appendChild(noticeElement);
             });
+        }
+
+        function editModal(data) {
+          document.getElementById('noticeid').value = data.dataset.noticeid;
+          document.getElementById('title').value = data.dataset.title;
+          document.getElementById('content').value = data.dataset.content;
+          document.getElementById('publishdate').value = data.dataset.publishdate;
+          document.getElementById('publishtime').value = data.dataset.publishtime;
+          document.getElementById('visibility').value = data.dataset.visibility;
+
+          document.getElementById('editModal').style.display = 'block';
+        }
+
+        function closeModal(id) {
+          document.getElementById(id).style.display = 'none';
+        }
+
+        function deleteNotice(index) {
+            if (confirm('Are you sure you want to delete this notice?')) {
+              window.location.href = `home/deleteNotice/${index}`;
+            }
+        }
+
+        window.onclick = function(event) {
+          if (event.target.classList.contains('modal')) {
+            event.target.style.display = 'none';
+          }
         }
 
         renderNotices();
