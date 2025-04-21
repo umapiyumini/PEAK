@@ -6,7 +6,7 @@ class External_User{
     protected $table = 'external_user';
     protected $allowed_columns = [
         'userid',
-        'companyid',
+        
         'company_name'
     ];
 

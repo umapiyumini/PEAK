@@ -14,81 +14,87 @@
         <div class="main">
         <?php include 'top.view.php'; ?>
                 <div class="container1">
-                 <div class="namecard">
-                    <h1 class="titlecard">Welcome John!</h1>
-                    <img src="<?=ROOT?>/assets/images/user1.jpg" class="propic">
-                    <p class="aboutcard">Company ABC Pvt Ltd</p>
-                   
-                    </p>
-                    </div>
-                
-                 <div class="popularreservations">
-                    <h2 class="sectiontitle">Top Reservation Picks</h2>
-                    <div class="imagecontainer">
-                        <div class="imageitem">
-                            <img src="<?=ROOT?>/assets/images/ground.jpg" alt="Ground" class="reservationimage">
-                            <p class="price">Baseball ground</p>
-                            <p class="price">Rs 10,000 / hour</p>
-                        </div>
-                        <div class="imageitem">
-                            <img src="<?=ROOT?>/assets/images/indoor.jpg" alt="Stadium" class="reservationimage">
-                            <p class="price">Badminton Court</p>
-                            <p class="price">Rs 15,000 / hour</p>
-                        </div>
-                        <div class="imageitem">
-                            <img src="<?=ROOT?>/assets/images/tennis.jpg" alt="Tennis Court" class="reservationimage">
-                            <p class="price">Tennis Court</p>
-                            <p class="price">Rs 5,000 / hour</p>
-                        </div>
-                        <div class="imageitem">
-                            <img src="<?=ROOT?>/assets/images/basketball.jpg" alt="Basketball Court" class="reservationimage">
-                            <p class="price">Basketball Court</p>
-                            <p class="price">Rs 7,000 / hour</p>
-                        </div>
-                    </div>
+                <div class="namecard">
+                    <h1 class="titlecard">Welcome <?= htmlspecialchars($user->name) ?>!</h1>
+                    <img src="<?= !empty($user->image) 
+                        ? '/PEAK/uploads/profile_pictures/' . htmlspecialchars($user->image) 
+                        : '/PEAK/assets/images/user1.jpg' ?>" class="propic" alt="Profile Picture">
+                    <p class="aboutcard"><?= htmlspecialchars($company_name) ?></p>
                 </div>
+
+                
+                <div class="popularreservations">
+    <h2 class="sectiontitle">Top Reservation Picks</h2>
+    <div class="imagecontainer">
+        <?php if (!empty($topCourts)): ?>
+            <?php foreach ($topCourts as $court): ?>
+                <div class="imageitem">
+                    <img 
+                        src="<?= htmlspecialchars($court->image) ?>" 
+                        alt="<?= htmlspecialchars($court->name) ?>" 
+                        class="reservationimage"
+                    >
+                    <p class="price"><?= htmlspecialchars($court->name) ?></p>
+                    <?php if (isset($court->price)): ?>
+                        <p class="price">Rs <?= number_format($court->price, 0) ?> / hour</p>
+                    <?php endif; ?>
+                </div>
+            <?php endforeach; ?>
+        <?php else: ?>
+            <p>No courts available.</p>
+        <?php endif; ?>
+    </div>
+</div>
 
             </div>
 
                 <!-- Second row of cards -->
-<div class="container2">
+                <div class="container2">
     <!-- Pending Requests Card -->
     <div class="namecard">
-        <h3>Pending Requests</h3>
+        <h3>Upcoming Events</h3>
         <div class="request-details">
-            <div class="request-item">
-                <p><strong>Facility:</strong> Tennis Court</p>
-                <p><strong>Booking Time:</strong> 10:00 AM - 12:00 PM</p>
-                <p><strong>Price:</strong> Rs 5,000</p>
-            </div>
-           
+            <?php if (!empty($upcoming)): ?>
+                <?php foreach ($upcoming as $request): ?>
+                    <div class="request-item">
+                        <p><strong>Facility:</strong> <?= htmlspecialchars($request->courtname) ?></p>
+                        <p><strong>Date:</strong>   <?= htmlspecialchars($request->date) ?></p>
+                        <p><strong>Booking Time:</strong> <?= htmlspecialchars($request->time) ?></p>
+                        
+                    </div>
+                <?php endforeach; ?>
+            <?php else: ?>
+                <p>No upcoming events.</p>
+            <?php endif; ?>
         </div>
     </div>
+
+
 
     <!-- Payments Due Card -->
     <div class="namecard">
     <h3>Payments Due</h3>
     <div class="payment-details">
-        <div class="payment-item">
-            <p><strong>Facility:</strong> Tennis Court</p>
-            <p><strong>Booking Time:</strong> 10:00 AM - 12:00 PM</p>
-            <p><strong>Price:</strong> Rs 5,000</p>
-        </div>
-        <div class="payment-item">
-            <p><strong>Facility:</strong> Basketball Court</p>
-            <p><strong>Booking Time:</strong> 2:00 PM - 4:00 PM</p>
-            <p><strong>Price:</strong> Rs 8,000</p>
-        </div>
-        <div class="payment-item">
-            <p><strong>Facility:</strong> Indoor Stadium</p>
-            <p><strong>Booking Time:</strong> 5:00 PM - 7:00 PM</p>
-            <p><strong>Price:</strong> Rs 10,000</p>
-        </div>
-    </div>
-    <div class="total-payment">
-        <h4>Total Due: Rs 30,000</h4> <!-- Replace with dynamic total -->
+        <?php if (!empty($duePayments) && is_array($duePayments)) : ?>
+            <?php $totalDue = 0; ?>
+            <?php foreach ($duePayments as $payment) : ?>
+                <div class="payment-item">
+                    
+                    <p><strong>Facility:</strong> <?= htmlspecialchars($payment->courtname) ?></p>
+                    <p><strong>Price:</strong> Rs <?= number_format((float)$payment->price, 2) ?></p>
+                </div>
+                <?php $totalDue += (float)$payment->price; ?>
+            <?php endforeach; ?>
+            <div class="total-payment">
+                <h4>Total Due: Rs <?= number_format($totalDue, 2) ?></h4>
+            </div>
+        <?php else : ?>
+            <p>No pending payments.</p>
+        <?php endif; ?>
     </div>
 </div>
+
+
 
     <!-- Quick Action Cards -->
     <!-- <div class="namecard">
@@ -106,7 +112,7 @@
 <div class="namecard">
     <h3>Quick Actions</h3>
     <div class="action-buttons">
-        <a href="reservations" >
+        <a href="pickfacility" >
             <button class="action-button">Make New Reservation</button>
         </a>
         <a href="prices" >

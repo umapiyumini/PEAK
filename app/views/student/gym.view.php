@@ -18,7 +18,7 @@
             background-color: white;
             border-radius: 10px;
             overflow: auto;
-            margin-left: 280px;
+            margin-left: 220px;
             height: 100vh;
         }
 

@@ -19,7 +19,7 @@
             padding: 30px;
             border-radius: 8px;
             
-            margin-left: 280px;
+            margin-left: 220px;
         }
         h1, h3 {
             text-align: center;
@@ -67,10 +67,7 @@
     <div class="form-container" id="team-form">
         <h1>Team Membership Form</h1>
         <form>
-            <div class="form-group">
-                <label for="name">Full Name</label>
-                <input type="text" id="name" placeholder="Enter Full Name">
-            </div>
+           
             <div class="form-group">
                 <label for="student-name">Student Name</label>
                 <input type="text" id="student-name" placeholder="Enter Student Name">

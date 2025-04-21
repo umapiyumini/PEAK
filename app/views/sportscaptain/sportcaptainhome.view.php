@@ -11,7 +11,6 @@
 
 </head>
 <body>
-
 	<header>
         <div class="header-container">
             <div class="logo">
@@ -49,29 +48,18 @@
 		 
      <h1>Notices</h1>
      <div class="notice-container">
+     <?php if (!empty($data['notices'])): ?>
+      <?php foreach($data['notices'] as $notice): ?> 
           <div class="notice">
-            <h2>Annual Sports Meet</h2>
-            <p><strong>Date:</strong> March 10, 2024</p>
-            <p><strong>Venue:</strong> Main Sports Ground</p>
-            <p><strong>Details:</strong> All departments are invited to participate. Registration closes on March 5, 2024.</p>
-          </div>
-          <div class="notice">
-            <h2>Gym Membership Renewal</h2>
-            <p><strong>Deadline:</strong> February 25, 2024</p>
-            <p><strong>Details:</strong> Renew your gym membership online or visit the office between 9 AM and 4 PM.</p>
-          </div>
-          <div class="notice">
-            <h2>Inter-Department Cricket League</h2>
-            <p><strong>Start Date:</strong> April 1, 2024</p>
-            <p><strong>Venue:</strong> University Cricket Ground</p>
-            <p><strong>Details:</strong> Teams must submit their final player list by March 20, 2024.</p>
-          </div>
-          <div class="notice">
-            <h2>Colors Night 2024</h2>
-            <p><strong>Date:</strong> May 15, 2024</p>
-            <p><strong>Venue:</strong> University Auditorium</p>
-            <p><strong>Details:</strong> Celebrate the achievements of our athletes. Tickets are available now!</p>
-          </div>
+            <h2><?= $notice->title?></h2>
+            <p><strong><?= $notice->content?></p>
+      </div>
+            <?php endforeach; ?>
+            <?php else: ?>
+              <p>No notices available.</p>
+            <?php endif; ?>
+          
+
         </div>
       
 			 

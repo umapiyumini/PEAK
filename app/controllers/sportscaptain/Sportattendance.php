@@ -1,8 +1,23 @@
 <?php
 class Sportattendance extends Controller{
-   public function index(){
+   
+    private function getUserId() {
+        if (session_status() == PHP_SESSION_NONE) {
+            session_start();
+        }
+        if (!isset($_SESSION['userid'])) {
+            die("User not logged in.");
+        }
+        return $_SESSION['userid'];
+    }
 
-        $this->view('sportscaptain/sportattendance');
+    public function index(){
+
+        $attendanceModel = new Attendance();
+        $attendance = $attendanceModel->getatteandancebysport();
+
+
+        $this->view('sportscaptain/sportattendance',['attendance' => $attendance]);
     }
 
    

@@ -9,6 +9,7 @@ class StaffTodo {
         return $this->query($query);
     }
 
+
     public function addTask($data) {
         $query = "INSERT INTO $this->table (taskname, date, deadline, description, assignedto) VALUES (:taskname, :date, :deadline, :description, :assignedto)";
         $params = [
@@ -30,5 +31,6 @@ class StaffTodo {
         ];
         return $this->query($query, $params);
     }
+
 }
 

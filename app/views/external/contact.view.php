@@ -57,52 +57,59 @@
           loading="lazy"></iframe></div>
                     </div>
                    
-                    
-                        <div class="contactform">
-                            <form>
-                                <h2> Send Message</h2>
-                                <div class="inputbox">
-                                    <input type="text" name="" required="required">
-                                    <span>Full name</span>
-                                </div>
-                
-                                <div class="inputbox">
-                                    <input type="text" name="" required="required">
-                                    <span>Email</span>
-                                </div>
-                
-                                <div class="inputbox">
-                                    <textarea required="required"></textarea>
-                                    <span>Type Your Message</span>
-                                </div>
-                
-                                <div class="inputbox">
-                                    <input type="submit" name="" value="send">
-                                </div>
-                            </form>
-                
+                    <div class="contactform">
+                            
+                    <form action="<?= ROOT ?>/external/contact/sendMessage" method="POST">
+
+
+                    <h2>Send a Message</h2>
+                    <div class="inputbox">
+        <input type="hidden" name="userid" value="123">  <!-- Assuming 123 is the user ID -->
+    </div>
+
+    <div class="inputbox">
+        <textarea name="content" required="required"></textarea>
+        <span>Type Your Message</span>
+    </div>
+
+    <div class="inputbox">
+        <input type="submit" value="send">
+    </div>
+</form>
+
+
+
                         </div>
+</div>
+
                 
-                
-                    <!-- Feedback Popup -->
-            <div id="feedbackModal" class="fwrapper" style="display: none;">
-                <h3>Leave us your feedback here! Thank you for your time</h3>
-                <form action="#">
-                    <div class="rating">
-                        <input type="number" name="rating" hidden> <!-- Hidden rating field -->
-                        <span class="star">&#9734;</span> 
-                        <span class="star">&#9734;</span> 
-                        <span class="star">&#9734;</span> 
-                        <span class="star">&#9734;</span> 
-                        <span class="star">&#9734;</span> 
-                    </div>
-                    <textarea name="opinion" cols="30" rows="5" placeholder="Your Comment..."></textarea>
-                    <div class="btn-group">
-                        <button type="submit" class="fbtn submit">Submit</button>
-                        <button type="button" class="fbtn cancel" id="closeFeedbackModal">Cancel</button>
-                    </div>
-                </form>
-            </div>
+               <!-- Feedback Popup -->
+                <!--  -->
+<!-- Feedback Popup -->
+<!-- Feedback Popup -->
+<div id="feedbackModal" class="fwrapper" style="display: none;">
+    <h3>Leave us your feedback here! Thank you for your time</h3>
+    <form id="feedbackForm" action="<?= ROOT ?>/external/contact/sendFeedback"" method="POST"> <!-- Ensure the form has an ID -->
+        <div class="rating">
+            <input type="number" name="rating" hidden id="rating">
+            <span class="star" data-value="1">&#9734;</span>
+            <span class="star" data-value="2">&#9734;</span>
+            <span class="star" data-value="3">&#9734;</span>
+            <span class="star" data-value="4">&#9734;</span>
+            <span class="star" data-value="5">&#9734;</span>
+        </div>
+        <textarea name="content" cols="30" rows="5" placeholder="Your Comment..."></textarea>
+        <div class="btn-group">
+            <button type="submit" class="fbtn submit">Submit</button>
+            <button type="button" class="fbtn cancel" id="closeFeedbackModal">Cancel</button>
+        </div>
+    </form>
+        <!-- Add this inside your feedbackModal div, after the form -->
+    <div id="feedbackThankYou" style="display:none; text-align:center; margin-top:20px;">
+        <h3>Thank you for your feedback!</h3>
+    </div>
+
+</div>
 
                                 
                     
@@ -115,6 +122,7 @@
     </body>
     <script>
     // JavaScript to handle feedback form popup and rating functionality
+// JavaScript to handle feedback form popup and rating functionality
 const feedbackBtn = document.getElementById('feedbackBtn');
 const feedbackModal = document.getElementById('feedbackModal');
 const closeFeedbackModal = document.getElementById('closeFeedbackModal');
@@ -122,6 +130,7 @@ const submitBtn = document.querySelector('.fbtn.submit'); // Select the submit b
 
 const allStar = document.querySelectorAll('.rating .star');
 const ratingInput = document.querySelector('input[name="rating"]'); // Hidden input for rating
+const feedbackForm = document.getElementById('feedbackForm'); // Get the form element
 
 // Open the feedback modal when clicking the feedback button
 feedbackBtn.addEventListener('click', function(e) {
@@ -136,32 +145,62 @@ closeFeedbackModal.addEventListener('click', function() {
     document.body.style.overflow = ''; // Enable scrolling back on the page
 });
 
-// Close the feedback modal when clicking the submit button
-submitBtn.addEventListener('click', function(e) {
-    e.preventDefault(); // Prevent form submission (so the page doesn't reload)
-    feedbackModal.style.display = 'none'; // Hide the modal
-    document.body.style.overflow = ''; // Enable scrolling back on the page
-    // You can add form submission logic here, if needed.
-});
+// Close the feedback modal and submit the form when clicking the submit button
+// Replace your feedbackForm submit event with this:
 
-// Handle star rating
-allStar.forEach((item, idx) => {
-    item.addEventListener('click', function() {
-        // Update the stars
-        allStar.forEach((star, i) => {
-            if (i <= idx) {
-                star.innerHTML = '&#9733;'; // Filled star
-            } else {
-                star.innerHTML = '&#9734;'; // Empty star
-            }
-        });
+feedbackForm.addEventListener('submit', function(e) {
+    e.preventDefault();
 
-        // Set the rating value in the hidden input
-        ratingInput.value = idx + 1; // Rating is 1-indexed (1 to 5)
+    // Check if rating is provided before submitting
+    if (!ratingInput.value) {
+        alert('Please select a rating.');
+        return;
+    }
+
+    // Prepare form data
+    const formData = new FormData(feedbackForm);
+
+    // Send AJAX request
+    fetch(feedbackForm.action, {
+        method: 'POST',
+        body: formData,
+        credentials: 'same-origin'
+    })
+    .then(response => response.text())
+    .then(data => {
+        // Hide the form
+        feedbackForm.style.display = 'none';
+        // Show thank you message
+        document.getElementById('feedbackThankYou').style.display = 'block';
+
+        // Optionally, close the modal after a delay
+        setTimeout(() => {
+            feedbackModal.style.display = 'none';
+            document.body.style.overflow = '';
+            // Reset form for next use
+            feedbackForm.reset();
+            feedbackForm.style.display = 'block';
+            document.getElementById('feedbackThankYou').style.display = 'none';
+            // Reset stars color
+            document.querySelectorAll('.star').forEach(s => s.style.color = 'gray');
+        }, 2000);
+    })
+    .catch(error => {
+        alert('Error submitting feedback. Please try again.');
+        console.error(error);
     });
 });
 
-
+// Set rating when star is clicked
+document.querySelectorAll('.star').forEach(star => {
+    star.addEventListener('click', function() {
+        let rating = this.getAttribute('data-value');
+        ratingInput.value = rating; // Set the rating value to the hidden input
+        document.querySelectorAll('.star').forEach(s => {
+            s.style.color = s.getAttribute('data-value') <= rating ? 'gold' : 'gray';
+        });
+    });
+});
 
 
     </script>

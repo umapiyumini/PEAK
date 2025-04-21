@@ -44,7 +44,7 @@ body {
     margin-top: 20px;
   }
   
-  form input, form textarea, button {
+  form input, form textarea, button, select {
     width: 100%;
     padding: 10px;
     margin: 10px 0;
@@ -105,4 +105,103 @@ body {
   table td .update-btn:hover {
     background-color: #71588d;
   }
+
+  table td .edit-btn {
+    background-color: rgb(17, 167, 37);
+    color: white;
+    border: none;
+    cursor: pointer;
+    padding: 5px 10px;
+    margin-right: 5px;
+  }
   
+  .modal {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1000; /* Sit on top */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgba(0, 0, 0, 0.4); /* Black background with opacity */
+}
+
+/* Modal content styles */
+.modal-content {
+    background-color: #ffffff;
+    margin: 10% auto; /* Center the modal */
+    padding: 20px;
+    border-radius: 10px;
+    width: 40%; /* Adjust as needed */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    animation: fadeIn 0.3s ease-in-out;
+}
+
+/* Close button */
+.close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.close:hover,
+.close:focus {
+    color: #000;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+/* Modal heading */
+.modal-content h2 {
+    margin-top: 0;
+    color: #5a2e8a;
+    text-align: center;
+}
+
+/* Form styles */
+.form-group {
+    margin-bottom: 15px;
+    text-align: left;
+}
+
+label {
+    font-weight: bold;
+    color: #5a2e8a;
+    display: block;
+    margin-bottom: 5px;
+}
+
+input, textarea ,select{
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-size: 14px;
+    resize: none; /* Prevent resizing for textareas */
+}
+
+input:focus, textarea:focus {
+    border-color: #5a2e8a;
+    box-shadow: 0 0 5px rgba(90, 46, 138, 0.3);
+    outline: none;
+}
+
+/* Submit button */
+.submit-btn, .update-btn {
+    background-color: #5a2e8a;
+    color: #ffffff;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 16px;
+    width: 100%;
+    transition: background-color 0.3s ease;
+}
+
+.submit-btn:hover, .update-btn:hover {
+    background-color: #743dbb;
+}

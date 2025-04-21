@@ -1,105 +1,102 @@
-let currentRecord = null;
+// Open Add Modal
+function openAddModal(modalId) {
+  // Hide all modals
+  document.querySelectorAll('.modal').forEach(modal => {
+    modal.style.display = 'none';
+    const form = modal.querySelector('form');
+    if (form) form.classList.add('hidden');
+  });
 
-function showCategoryForm(category) {
-  document.getElementById('formContainer').style.display = 'block';
-
-  // Hide all forms initially
-  document.getElementById('interUniForm').classList.add('hidden');
-  document.getElementById('interFacultyForm').classList.add('hidden');
-  document.getElementById('freshersForm').classList.add('hidden');
-
-  // Show the relevant form based on the selected category
-  if (category === 'interUni') {
-    document.getElementById('interUniForm').classList.remove('hidden');
-  } else if (category === 'interFaculty') {
-    document.getElementById('interFacultyForm').classList.remove('hidden');
-  } else if (category === 'freshers') {
-    document.getElementById('freshersForm').classList.remove('hidden');
+  // Show the selected modal
+  const modal = document.getElementById(modalId);
+  if (modal) {
+    modal.style.display = 'block';
+    const form = modal.querySelector('form');
+    if (form) form.classList.remove('hidden');
   }
 }
 
-function handleFormSubmit(event, category) {
-  event.preventDefault();
-  const form = event.target;
-  const data = Array.from(form.elements).reduce((acc, element) => {
-    if (element.tagName === 'INPUT' || element.tagName === 'TEXTAREA') {
-      acc[element.placeholder] = element.value;
+// Close Modal
+function closeModal(modalId) {
+  const modal = document.getElementById(modalId);
+  if (modal) {
+    modal.style.display = 'none';
+    const form = modal.querySelector('form');
+    if (form) form.classList.add('hidden');
+  }
+}
+
+// Close modal when clicking outside the content
+window.onclick = function(event) {
+  document.querySelectorAll('.modal').forEach(modal => {
+    if (event.target === modal) {
+      modal.style.display = 'none';
+      const form = modal.querySelector('form');
+      if (form) form.classList.add('hidden');
     }
-    return acc;
-  }, {});
+  });
+}
 
-  if (currentRecord) {
-    updateRecord(data, category);
-  } else {
-    addRecordToTable(data, category);
+// Open Edit Modal with correct parameter handling for each tournament type
+function openEditModal(type, id, name, yearOrDate, placeOrFirst, venueOrSecond, thirdOrPlayers, noOfPlayers, regNo) {
+  if (type === 'interUni') {
+    document.getElementById('interUniModal').style.display = 'block';
+    document.getElementById('interUniEditId').value = id;
+    document.getElementById('interUniEditName').value = name;
+    document.getElementById('interUniEditDate').value = yearOrDate;
+    document.getElementById('interUniEditPlace').value = placeOrFirst;
+    document.getElementById('interUniEditVenue').value = venueOrSecond;
+    document.getElementById('interUniEditPlayers').value = thirdOrPlayers; // This is no_of_players for interUni
+    document.getElementById('interUniEditRegno').value = noOfPlayers; // This is players_Regno for interUni
+  } else if (type === 'interFaculty') {
+    document.getElementById('interFacultyModal').style.display = 'block';
+    document.getElementById('interFacultyEditId').value = id;
+    document.getElementById('interFacultyEditName').value = name;
+    document.getElementById('interFacultyEditYear').value = yearOrDate;
+    document.getElementById('interFacultyEditFirst').value = placeOrFirst;
+    document.getElementById('interFacultyEditSecond').value = venueOrSecond;
+    document.getElementById('interFacultyEditThird').value = thirdOrPlayers; // This is third_place
+    document.getElementById('interFacultyEditPlayers').value = noOfPlayers; // This is no_of_players
+    document.getElementById('interFacultyEditRegno').value = regNo; // This is players_regno
+  } else if (type === 'freshers') {
+    document.getElementById('freshersModal').style.display = 'block';
+    document.getElementById('freshersEditId').value = id;
+    document.getElementById('freshersEditName').value = name;
+    document.getElementById('freshersEditYear').value = yearOrDate;
+    document.getElementById('freshersEditFirst').value = placeOrFirst;
+    document.getElementById('freshersEditSecond').value = venueOrSecond;
+    document.getElementById('freshersEditThird').value = thirdOrPlayers; // This is third_place
+    document.getElementById('freshersEditPlayers').value = noOfPlayers; // This is no_of_players
+    document.getElementById('freshersEditRegno').value = regNo; // This is playersregno
+  } else if (type === 'others') {
+    document.getElementById('othersModal').style.display = 'block';
+    document.getElementById('tournamentEditId').value = id;
+    document.getElementById('otherEditName').value = name;
+    document.getElementById('otherEditDate').value = yearOrDate;
+    document.getElementById('otherEditPlace').value = placeOrFirst;
+    document.getElementById('otherEditVenue').value = venueOrSecond;
+    document.getElementById('otherEditRegno').value = thirdOrPlayers; // This is player_regno for others
   }
-
-  form.reset();
-  currentRecord = null; // Reset the current record after submitting
 }
 
-function addRecordToTable(data, category) {
-  const list = document.getElementById(category + 'List');
-
-  // Create a table row
-  const row = document.createElement('tr');
-
-  // Add table data for each field
-  row.innerHTML = `
-    <td>${data['Tournament Name']}</td>
-    <td>${data['Year']}</td>
-    <td>${data['Place'] || data['1st Place Faculty']}</td>
-    <td>${data['Venue'] || data['2nd Place Faculty']}</td>
-    <td>${data['No of Players']}</td>
-    <td>${data['Players Reg No'].replace(/\n/g, ', ')}</td>
-    <td>
-      <button class="update-btn" onclick="editRecord(this)">Update</button>
-      <button onclick="deleteRecord(this)">Delete</button>
-    </td>
-  `;
-
-  list.appendChild(row);
-}
-
-function editRecord(button) {
-  const row = button.closest('tr');
-  const cells = row.getElementsByTagName('td');
-
-  // Determine the category
-  const category = row.closest('table').id.replace('Table', '').toLowerCase();
-  const form = document.getElementById(category + 'Form');
-  const inputs = form.elements;
-
-  // Populate the form with the existing record's data
-  inputs[0].value = cells[0].innerText; // Tournament Name
-  inputs[1].value = cells[1].innerText; // Year
-  inputs[2].value = cells[2].innerText; // Place / 1st Place Faculty
-  inputs[3].value = cells[3].innerText; // Venue / 2nd Place Faculty
-  inputs[4].value = cells[4].innerText; // No of Players
-  inputs[5].value = cells[5].innerText.replace(/, /g, '\n'); // Players Reg No (multi-line)
-
-  // Set the current record to be updated
-  currentRecord = row;
-}
-
-function deleteRecord(button) {
-  const row = button.closest('tr');
-  row.remove();
-}
-
-function updateRecord(data, category) {
-  const row = currentRecord;
-  const cells = row.getElementsByTagName('td');
-
-  // Update the table row with the new data
-  cells[0].innerText = data['Tournament Name'];
-  cells[1].innerText = data['Year'];
-  cells[2].innerText = data['Place'] || data['1st Place Faculty'];
-  cells[3].innerText = data['Venue'] || data['2nd Place Faculty'];
-  cells[4].innerText = data['No of Players'];
-  cells[5].innerText = data['Players Reg No'].replace(/\n/g, ', ');
-
-  // Reset the form after updating the record
-  document.getElementById(category + 'Form').reset();
-  currentRecord = null; // Clear the reference to the current record
-}
+// Fix the edit button onclick handler for other records
+document.addEventListener('DOMContentLoaded', function() {
+  // Find all edit buttons for other records and attach event listeners
+  const otherEditButtons = document.querySelectorAll('#otherList .edit-btn');
+  otherEditButtons.forEach(button => {
+    button.onclick = function() {
+      const params = this.getAttribute('onclick')
+        .replace('openEditModal(', '')
+        .replace(')', '')
+        .split(',')
+        .map(param => param.trim().replace(/^'|'$/g, ''));
+      
+      // Change the type from 'interUni' to 'others'
+      params[0] = 'others';
+      openEditModal(...params);
+      
+      // Prevent the original onclick from firing
+      return false;
+    };
+  });
+});
