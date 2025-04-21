@@ -21,7 +21,7 @@
                 <ul>
                     <li><a href="home" class="active">Home</a></li>
                     <li><a href="ground_reservation">Dashboard</a></li>
-                    <li><a href="#" >About</a></li>
+                    <!-- <li><a href="#" >About</a></li> -->
                 </ul>
             </nav>
 			<button class="bell-icon">
@@ -47,7 +47,7 @@
 		 <img src="<?=ROOT?>/assets/images/ped_incharge/ped_logo.jpg" alt="uni logo">
 		 <div class="year_plan"><a href="#">Year Plan</a></div>
 		 
-			 <div class="notice_board">
+			 <!-- <div class="notice_board">
 				  <h1>Notices</h1>
        		<div class="notice-form">
             <input type="text" id="noticeTitle" placeholder="Notice Title">
@@ -55,7 +55,54 @@
             <button onclick="addOrUpdateNotice()">Add Notice</button>
         </div>
         <div id="noticesContainer"></div>
+    </div> -->
+  <div class="notice_board">
+    <div class="notice-form">
+        <form method="POST" action="<?=ROOT?>/ped_incharge/home/addnotice">
+            <input type="text" name="title" placeholder="Title" value="<?= htmlspecialchars($_POST['title'] ?? '') ?>"><br>
+            <?php if (isset($errors['title'])) echo '<p class="error">'.$errors['title'].'</p>'; ?>
+
+            <textarea name="content" placeholder="Content"><?= htmlspecialchars($_POST['content'] ?? '') ?></textarea><br>
+            <?php if (isset($errors['content'])) echo '<p class="error">'.$errors['content'].'</p>'; ?>
+
+            <select name="visibility">
+                <option value="">-- Select Visibility --</option>
+                <option value="students" <?= (($_POST['visibility'] ?? '') == 'students') ? 'selected' : '' ?>>All Students</option>
+                <option value="captains" <?= (($_POST['visibility'] ?? '') == 'captains') ? 'selected' : '' ?>>Only Sports Captains</option>
+                <option value="amalgamated club" <?= (($_POST['visibility'] ?? '') == 'amalgamated club') ? 'selected' : '' ?>>Amalgamated Club</option>
+            </select><br>
+            <?php if (isset($errors['visibility'])) echo '<p class="error">'.$errors['visibility'].'</p>'; ?>
+
+
+            <button type="submit">Publish Notice</button>
+        </form>
     </div>
+</div>
+
+  
+    <?php foreach ($notices as $i): ?>
+      <div class="notice">
+          <h2><?= htmlspecialchars($i->title) ?></h2>
+          <p><?= nl2br(htmlspecialchars($i->content)) ?></p>
+          <p class="notice-date"><small>Published: <?= $i->publishdate ?> at <?= $i->publishtime ?></small></p>
+          <p class="notice-visibility"><small>Visibility: <?= strtoupper($i->visibility) ?></small></p>
+          <div class="notice-actions">
+            <button 
+              onclick="editModal(this)"
+              data-noticeid="<?=$i->noticeid?>"
+              data-title="<?=$i->title?>"
+              data-content="<?=$i->content?>"
+              data-publishdate="<?=$i->publishdate?>"
+              data-publishtime="<?=$i->publishtime?>"
+              data-visibility="<?=$i->visibility?>"
+            >
+              Edit
+            </button>
+            <button onClick="deleteNotice(<?=$i->noticeid?>)">Delete</button>
+          </div>
+      </div>
+      
+    <?php endforeach; ?>
 			 
 		 
 	 </section>
@@ -113,6 +160,44 @@
     </div>
     </aside>
   </main>
+
+  <!-- edit notices modal -->
+<div id="editModal" class="modal" style="display:none">
+  <div class="modal-content">
+    <span class="close-modal" onclick="closeModal('editModal')">&times;</span>
+    <h2 class="modal-header">Edit Notice</h2>
+    <form method="POST" action="<?=ROOT?>/ped_incharge/home/editnotice">
+      <input type="hidden" name="noticeid" id="noticeid">
+
+      <div class="form-group">
+        <label for="title">Title</label>
+        <input type="text" name="title" id="title">
+      </div>
+
+      <div class="form-group">
+        <label for="content">Content</label>
+        <textarea name="content" id="content"></textarea>
+      </div>
+
+      <input type="hidden" name="publishdate" id="publishdate">
+      <input type="hidden" name="publishtime" id="publishtime">
+
+      <div class="form-group">
+        <label for="visibility">Visibility</label>
+        <select name="visibility" id="visibility">
+          <option value="">-- Select Visibility --</option>
+          <option value="students">All Students</option>
+          <option value="captains">Only Sports Captains</option>
+          <option value="amalgamated club">Only Amalgamated Club</option>
+        </select>
+      </div>
+
+      <button type="submit" class="submit-btn">Update Notice</button>
+    </form>
+  </div>
+</div>
+
+
 	<footer class="footer">
     <div class="footer-container">
 		<div class="footer-column">
