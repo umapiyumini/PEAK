@@ -4,6 +4,7 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-1.0">
         <link rel="stylesheet" href="<?=ROOT?>/assets/css/uma/facility.css">
+        
         <title>External User Dashboard</title>
     </head>
 
@@ -32,8 +33,9 @@
             <p><?= htmlspecialchars($court->description) ?></p>
             <!-- Assuming you don't have prices in your database, you can adjust this as needed -->
             
-            <a href="<?= ROOT ?>/external/<?= strtolower(str_replace(' ', '', $res->courtname)) ?>form?reservationid=<?= htmlspecialchars($res->reservationid) ?>" class="btn btn-secondary">Reschedule</a>
-
+            <a href="<?= strtolower(str_replace(' ', '', $court->name)) ?>form">
+                <button onclick="reserveFacility('<?= htmlspecialchars($court->name) ?>')">Book</button>
+            </a>
         </div>
     <?php endforeach; ?>
 </div>

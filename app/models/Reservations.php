@@ -185,6 +185,7 @@ public function findById($reservationid) {
         return $this->query($query, $params);
     }
     
+
     public function rejectReservation($reservation) {
         $query = "UPDATE {$this->table} SET status = 'rejected' WHERE reservationid = :reservationid";
         $params = [
@@ -243,3 +244,47 @@ public function findById($reservationid) {
 
     
 }
+
+  
+public function getFutureReservationsByUser($userid) {
+    $query = "
+        SELECT r.*, c.name AS courtname, c.location
+        FROM {$this->table} r
+        JOIN courts c ON r.courtid = c.courtid
+        WHERE r.userid = :userid
+          AND r.courtid != '38'
+          AND STR_TO_DATE(CONCAT(r.date, ' ', r.time), '%Y-%m-%d %H:%i:%s') > NOW()
+          AND r.status IN ('To pay', 'Confirmed', 'Paid', 'pending') -- Add other active statuses if needed
+        ORDER BY r.date, r.time
+    ";
+    return $this->query($query, ['userid' => $userid]);
+}
+
+// All reservations for this user
+public function getAllReservationsByUser($userid) {
+    $query = "
+        SELECT r.*, c.name AS courtname, c.location
+        FROM {$this->table} r
+        JOIN courts c ON r.courtid = c.courtid
+        WHERE r.userid = :userid
+          AND r.courtid != '38'
+        ORDER BY r.date DESC, r.time DESC
+    ";
+    return $this->query($query, ['userid' => $userid]);
+}
+
+
+
+public function update($reservationid, $data) {
+    $set = [];
+    foreach ($data as $key => $value) {
+        $set[] = "$key = :$key";
+    }
+    $setStr = implode(', ', $set);
+    $query = "UPDATE {$this->table} SET $setStr WHERE reservationid = :reservationid";
+    $data['reservationid'] = $reservationid;
+    return $this->query($query, $data);
+}
+
+}  
+
