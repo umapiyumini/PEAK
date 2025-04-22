@@ -2,7 +2,7 @@
 
 class MedicalRequest{
     use Model;
-    protected $errors;
+    public $errors;
     protected $table = 'medicalrequests';
 
     protected $allowedColumns = [
@@ -10,8 +10,8 @@ class MedicalRequest{
         'Name',
         'RegistrationID',
         'ReasonForMedical',
-        'TimePeriod'
-        
+        'TimePeriod',
+        'userid',
     ];
 
     public function validate($data){

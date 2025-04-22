@@ -65,15 +65,7 @@
                 </a>
             </li>
 
-              <!-- pool  -->
-              <li class="nav-item">
-                <a href="gym" class="nav-link">
-                <i class="fa-solid fa-dumbbell"></i>
-                    Gym
-                </a>
-            </li>
-
-           
+             
 
             
 
@@ -89,7 +81,6 @@
                 </a>
                 <div class="dropdown">
                     <a href="medical" class="dropdown-link">Medical</a>
-                    <a href="enhancement" class="dropdown-link">Enhancement Letter</a>
                     <a href="certification" class="dropdown-link">Certifications</a>
                 </div>
             </li>

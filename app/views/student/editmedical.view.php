@@ -1,9 +1,10 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Add Medical Request</title>
+    <title>Edit Medical Request</title>
     <style>
         * {
             margin: 0;
@@ -57,7 +58,7 @@
             color: #333;
         }
         
-        input[type="text"],
+        input[type="text"],input[type="number"],
         textarea {
             width: 100%;
             padding: 12px;
@@ -103,9 +104,7 @@
         .form-container {
             padding: 20px;
         }
-
-        .errors
-        {
+        .errors{
             color: red;
         }
     </style>
@@ -120,7 +119,12 @@
         <div class="card">
             <div class="form-container" id="medical-form">
                 <h1>Medical Request</h1>
-                <form method="POST" action="<?= ROOT ?>/student/Medical/">
+                <form method="POST" action="<?= ROOT ?>/student/Medical/edit">
+                    <div class="form-group">
+                        <label for="name">Request Id</label>
+                        <input type="number" id="RequestId" placeholder="" name="RequestId" value="<?= $data['RequestId'] ?>" readonly>
+                    </div>
+
                     <div class="form-group">
                         <label for="name">Full Name</label>
                         <!-- error start -->
@@ -166,8 +170,8 @@
                     
                     <div class="form-group">
                         <label for="medical-duration">How long did the medical take?</label>
-                        <!-- error -->
-                        <p class="errors">
+                         <!-- error Starts -->
+                         <p class="errors">
                             <?php 
                             if(!empty($errors['TimePeriod']))
                             {

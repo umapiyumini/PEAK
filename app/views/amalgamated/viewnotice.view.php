@@ -98,7 +98,7 @@
                 <input type="time" name='publishtime' id="publish-time" value="<?= htmlspecialchars($notice->publishtime) ?>" readonly>
             </div>
             <button type='submit' class='save-btn' id='save-btn' style='display: none;'>Save</button>
-            <button class="submit-btn" id='update-btn'>Update</button>
+            <button class="submit-btn" id='update-btn'>Edit</button>
         </form>
     </div>
     <script>

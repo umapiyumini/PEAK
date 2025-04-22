@@ -123,59 +123,25 @@
                 <form method="POST" action="<?= ROOT ?>/student/Medical/">
                     <div class="form-group">
                         <label for="name">Full Name</label>
-                        <!-- error start -->
-                        <p class="errors"><?php
-                            if (!empty($errors['Name'])) {
-                                echo $errors['Name'];
-                            }
-                        ?>
-                        </p>
-                        <!-- error end  -->
+                        
                         <input type="text" id="name" placeholder="Enter Full Name" name="Name">
                     </div>
                     
                     <div class="form-group">
                         <label for="registration-id">Student Registration ID</label>
-                        <!-- error start -->
-                        <p class="errors">
-                            <?php 
-                            if(!empty($errors['RegistrationID']))
-                            {
-                                echo $errors['RegistrationID'];
-                            }
-                            ?>
-                        </p>
-                        <!-- error end  -->
+                       
                         <input type="text" id="registration-id" placeholder="Enter Registration ID" name="RegistrationID">
                     </div>
                     
                     <div class="form-group">
                         <label for="medical-reason">Reason for Medical</label>
-                        <!-- error -->
-                        <p class="errors">
-                            <?php 
-                            if(!empty($errors['ReasonForMedical']))
-                            {
-                                echo $errors['ReasonForMedical'];
-                            }
-                            ?>
-                        </p>
-                        <!-- error end  -->
+                       
                         <textarea id="medical-reason" placeholder="Enter Reason for Medical" rows="4" name="ReasonForMedical"></textarea>
                     </div>
                     
                     <div class="form-group">
                         <label for="medical-duration">How long did the medical take?</label>
-                        <!-- error -->
-                        <p class="errors">
-                            <?php 
-                            if(!empty($errors['TimePeriod']))
-                            {
-                                echo $errors['TimePeriod'];
-                            }
-                            ?>
-                        </p>
-                        <!-- error end  -->
+                       
                         <input type="text" id="medical-duration" placeholder="Enter Duration of Medical (e.g., 1 week)" name="TimePeriod">
                     </div>
 

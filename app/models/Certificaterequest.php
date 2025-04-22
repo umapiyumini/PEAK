@@ -3,18 +3,16 @@
 class Certificaterequest{
     use Model;
     protected $errors;
-    protected $table = 'requestcertificates';
+    protected $table = 'certificaterequest';
 
     protected $allowedColumns = [
-        'ID',
+        'RequestID',
         'Name',
-        'Gender',
-        'StudentRegistrationNumber',
-        'ContactNumber',
-        'WhatsAppNumber',
-        'EmailAddress',
-        'YearOfStudy',
-        'YearOfFinalExamCompletion'
+        'RegistrationNumber',
+        'Year',
+        'Sport',
+        'UserID',
+        
         
     ];
 
@@ -25,16 +23,16 @@ class Certificaterequest{
             $this->errors['Name'] = 'Name is required';
         }
 
-        if(empty($data['RegistrationID'])){
-            $this->errors['RegistrationID'] = 'Registration ID is required';
+        if(empty($data['RegistrationNumber'])){
+            $this->errors['RegistrationNumber'] = 'RegistrationNumber is required';
         }
 
-        if(empty($data['HaveYouPlayedBefore'])){
-            $this->errors['HaveYouPlayedBefore'] = 'HaveYouPlayedBefore is required';
+        if(empty($data['Year'])){
+            $this->errors['Year'] = 'Year is required';
         }
 
-        if(empty($data['ReasonForJoining'])){
-            $this->errors['ReasonForJoining'] = 'ReasonForJoining is required';
+        if(empty($data['Sport'])){
+            $this->errors['Sport'] = 'Sport is required';
         }
 
         //var_dump($this->errors);
