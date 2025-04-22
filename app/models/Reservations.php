@@ -142,6 +142,54 @@ public function findById($reservationid) {
     return $result ? $result[0] : null;
 }
 
-    
-    
-}  
+
+
+    public function getAllPendingReservations($type = 'all') {
+        $now = new DateTime();
+        $oneweekago = clone $now;
+        $oneweekago->modify('-7 days');
+        $oneweekago = $oneweekago->format('Y-m-d H:i:s');
+        
+        if ($type == 'new') {
+            $query = "SELECT *,courts.name AS courtname, user.name AS username FROM {$this->table} 
+            JOIN user ON user.userid= $this->table.userid
+            JOIN courts ON courts.courtid= $this->table.courtid
+            WHERE status = 'pending' AND created_at <= :oneweekago";
+            return $this->query($query, ['oneweekago' => $oneweekago]);
+        }
+        elseif ($type == 'old') {
+            $query = "SELECT * ,courts.name AS courtname, user.name AS username FROM {$this->table} 
+            JOIN user ON user.userid= $this->table.userid
+            JOIN courts ON courts.courtid= $this->table.courtid
+            WHERE status = 'pending' AND created_at > :oneweekago";
+            return $this->query($query, ['oneweekago' => $oneweekago]);
+        }
+        else {
+            $query = "SELECT * FROM {$this->table} WHERE status = 'pending'";
+            return $this->query($query);
+        }
+    }
+
+    public function acceptReservation($reservationid) {
+        $query = "UPDATE {$this->table} SET status = 'To pay' WHERE reservationid = :reservationid";
+        return $this->query($query, ['reservationid' => $reservationid]);
+    }
+
+    public function getAllTopayReservations(){
+        $query = "SELECT * ,courts.name AS courtname, user.name AS username FROM {$this->table} 
+        JOIN user ON user.userid= $this->table.userid
+        JOIN courts ON courts.courtid= $this->table.courtid
+        WHERE status = 'To pay'";
+        return $this->query($query);
+    }
+
+    public function getAllPaidReservations(){
+        $query = "SELECT * ,courts.name AS courtname, user.name AS username FROM {$this->table} 
+        JOIN user ON user.userid= $this->table.userid
+        JOIN courts ON courts.courtid= $this->table.courtid
+        JOIN payments ON payments.reservationid = $this->table.reservationid
+        WHERE status = 'paid'";
+        return $this->query($query);
+    }
+
+}

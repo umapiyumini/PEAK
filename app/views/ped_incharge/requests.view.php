@@ -32,140 +32,113 @@
         <main>
         
         <div class="events-requests">
-            <!-- <div class="view-options">
-                <button class="view-option" id="tableBtn" onclick="showTable()">Table</button>
-                <button class="view-option active" id="boardBtn" onclick="showBoard()">Board</button>
-            </div> -->
             <div class="search-bar">
                 <input type="text" id="searchInput" placeholder="Search...">
                 <i class="uil uil-search"></i>
             </div>
-            <!-- <button class="sort-btn"><i class="uil uil-filter"></i></button> -->
         </div>
+ <main>
+  <div id="board" class="board">
+    
+    <!-- New Column -->
+    <div class="column new" id="newColumn">
+      <h2><span class="dot new"></span> New <span class="count"></span></h2>
+      <?php if(!empty($newPendingReservations)): ?>
+        <?php foreach($newPendingReservations as $i): ?>
+          <div class="card sports" onclick="viewCard(this)" data-id="<?= $i->reservationid ?>">
+            <p class="facility"><?= $i->courtname ?></p>
+            <p class="facility"><?= $i->location?></p>
+            <p class="reservation-id">ID: <?= $i->reservationid ?></p>
+            <p class="event"><?= $i->event ?></p>
+            <p class="event"><?= $i->event ?></p>
+            <p class="date"><?= $i->date ?></p>
+            <p class="time"><?= $i->time ?></p>
+          </div>
+        <?php endforeach; ?>
+      <?php else: ?>
+        <p style="padding: 10px;">No new pending requests.</p>
+      <?php endif; ?>
+    </div>
 
+    <!-- Awaiting Column -->
+    <div class="column awaiting" id="awaitingColumn" onmouseup="dropCard('awaitingColumn')">
+      <h2><span class="dot awaiting"></span> Awaiting <span class="count"></span></h2>
+      <?php if(!empty($oldPendingReservations)): ?>
+        <?php foreach($oldPendingReservations as $i): ?>
+          <div class="card sports" onclick="viewCard(this)" data-id="<?= $i->reservationid ?>" data-courtname="<?= $i->courtname ?>" data-location="<?= $i->location ?>" data-event="<?= $i->event ?>" data-date="<?= $i->date ?>" data-time="<?= $i->time ?>" data-numberof_participants="<?= $i->numberof_participants ?>" data-extradetails="<?= $i->extradetails ?>" data-userdescription="<?= $i->userdescription ?>" data-userproof="<?= $i->userproof ?>" data-name="<?= $i->name ?>" data-contact_number="<?= $i->contact_number ?>" data-email="<?= $i->email ?>">
+            <p class="facility"><?= $i->courtname ?></p>
+            <p class="facility"><?= $i->location ?></p>
+            <p class="reservation-id">ID: <?= $i->reservationid ?></p>
+            <p class="event"><?= $i->event ?></p>
+            <p class="date"><?= $i->date ?></p>
+            <p class="time"><?= $i->time ?></p>
+          </div>
+        <?php endforeach; ?>
+      <?php else: ?>
+        <p style="padding: 10px;">No pending requests.</p>
+      <?php endif; ?>
+    </div>
 
-    <div id="board" class="board">
-        <!-- New Column -->
-        <div class="column new" id="newColumn" onmouseup="dropCard('newColumn')" style="background-color: #FFF;">
-            <h2><span class="dot new"></span> New <span class="count">2</span></h2>
-            <div class="card sports" onclick="pickUpCard(event)" data-id="205176503">
-                <p class="facility">Cricket Pitch</p>
-                <p class="reservation-id">ID: 01</p>
-                <p class="event">Matchr</p>
-                <p class="date">12.04.25</p>
-                <p class="time">15:00 - 19:00</p>
-            </div>
+    <!-- Topay -->
+    <div class="column topay" id="topayColumn" onmouseup="dropCard('acceptedColumn')">
+      <h2><span class="dot done"></span> To Pay <span class="count"></span></h2>
+      <?php if(!empty($topayReservations)): ?>
+        <?php foreach($topayReservations as $i): ?>
+          <div class="card sports" onclick="viewCard(this)" data-id="<?= $i->reservationid ?>" data-courtname="<?= $i->courtname ?>" data-location="<?= $i->location ?>" data-event="<?= $i->event ?>" data-date="<?= $i->date ?>" data-time="<?= $i->time ?>" data-numberof_participants="<?= $i->numberof_participants ?>" data-extradetails="<?= $i->extradetails ?>" data-userdescription="<?= $i->userdescription ?>" data-userproof="<?= $i->userproof ?>" data-name="<?= $i->name ?>" data-contact_number="<?= $i->contact_number ?>" data-email="<?= $i->email ?>">
+            <p class="facility"><?= $i->courtname ?></p>
+            <p class="facility"><?= $i->location ?></p>
+            <p class="reservation-id">ID: <?= $i->reservationid ?></p>
+            <p class="event"><?= $i->event ?></p>
+            <p class="date"><?= $i->date ?></p>
+            <p class="time"><?= $i->time ?></p>
+          </div>
+        <?php endforeach; ?>
+      <?php else: ?>
+        <p style="padding: 10px;">No To-pay requests.</p>
+      <?php endif; ?>
+    </div>
 
-            <div class="card external" onclick="pickUpCard(event)" data-id="205176503">
-                <p class="facility">Rugby Court</p>
-                <p class="reservation-id">ID: 02</p>
-                <p class="event">New Year</p>
-                <p class="date">12.04.25</p>
-                <p class="time">15:00 - 19:00</p>
-            </div>
-        </div>
+    <!-- Paid -->
+    <div class="column paid" id="acceptedColumn" onmouseup="dropCard('acceptedColumn')">
+      <h2><span class="dot done"></span> Paid <span class="count"></span></h2>
+      <?php if(!empty($paidReservations)): ?>
+        <?php foreach($paidReservations as $i): ?>
+          <div class="card sports" onclick="viewCard(this)" data-id="<?= $i->reservationid ?>" data-courtname="<?= $i->courtname ?>" data-location="<?= $i->location ?>" data-event="<?= $i->event ?>" data-date="<?= $i->date ?>" data-time="<?= $i->time ?>" data-numberof_participants="<?= $i->numberof_participants ?>" data-extradetails="<?= $i->extradetails ?>" data-userdescription="<?= $i->userdescription ?>" data-payment_proof="<?= $i->payment_proof ?>" data-name="<?= $i->name ?>" data-contact_number="<?= $i->contact_number ?>" data-email="<?= $i->email ?>">
+            <p class="facility"><?= $i->courtname ?></p>
+            <p class="facility"><?= $i->location ?></p>
+            <p class="reservation-id">ID: <?= $i->reservationid ?></p>
+            <p class="event"><?= $i->event ?></p>
+            <p class="date"><?= $i->date ?></p>
+            <p class="time"><?= $i->time ?></p>
+          </div>
+        <?php endforeach; ?>
+      <?php else: ?>
+        <p style="padding: 10px;">No Paid Reservations.</p>
+      <?php endif; ?>
+    </div>
 
-        <!-- In Progress Column -->
-        <div class="column progress" id="newColumn" onmouseup="dropcard('newColumn')" style="background-color: #FFF;">
-            <h2><span class="dot in-progress"></span> In Progress <span class="count">11</span></h2>
-            <div class="card external" onclick="pickUpCard(event)" data-id="205176503">
-                <p class="facility">Full Ground</p>
-                <p class="reservation-id">ID: 03</p>
-                <p class="event">Athletic Heats</p>
-                <p class="date">12.04.25</p>
-                <p class="time">15:00 - 19:00</p>
-            </div>
-        </div>
-        <!-- awaiting column -->
-        <div class="column awaiting" id="newColumn" onmouseup="dropCard('newColumn')" style="background-color: #FFF;">
-            <h2><span class="dot awaiting"></span> Awaiting<span class="count">11</span></h2>
-            <div class="card sports" onclick="pickUpCard(event)" data-id="205176503">
-                <p class="facility">Hockey Court</p>
-                <p class="reservation-id">ID: 04</p>
-                <p class="event">Match</p>
-                <p class="date">12.04.25</p>
-                <p class="time">15:00 - 19:00</p>
-            </div>
+    <!-- Accepted Column -->
+    <div class="column done" id="acceptedColumn" onmouseup="dropCard('acceptedColumn')">
+      <h2><span class="dot done"></span> confirmed <span class="count"></span></h2>
+      <!-- cards here... -->
+    </div>
 
-            <div class="card sports" onclick="pickUpCard(event)" data-id="205176503">
-                <p class="facility">Full Ground</p>
-                <p class="reservation-id">ID: 05</p>
-                <p class="event">New Year</p>
-                <p class="date">12.04.25</p>
-                <p class="time">15:00 - 19:00</p>
-            </div>
+    <!-- Cancelled Column -->
+    <div class="column cancelled" id="cancelledColumn" onmouseup="dropCard('cancelledColumn')">
+      <h2><span class="dot cancelled"></span> Cancelled <span class="count"></span></h2>
+      <!-- cards here... -->
+    </div>
 
-            <div class="card external" onclick="pickUpCard(event)" data-id="205176503">
-                <p class="facility">Elle court</p>
-                <p class="reservation-id">ID: 06</p>
-                <p class="event">Practice Match</p>
-                <p class="date">12.04.25</p>
-                <p class="time">15:00 - 19:00</p>
-            </div>
+    <!-- Rejected Column -->
+    <div class="column rejected" id="rejectedColumn" onmouseup="dropCard('rejectedColumn')">
+      <h2><span class="dot rejected"></span> Rejected <span class="count"></span></h2>
+      <!-- cards here... -->
+    </div>
 
-            <div class="card external" onclick="pickUpCard(event)" data-id="205176503">
-                <p class="facility">Full Ground</p>
-                <p class="reservation-id">ID: 06</p>
-                <p class="event">New Year</p>
-                <p class="date">16.04.25</p>
-                <p class="time">15:00 - 19:00</p>
-            </div>
-
-            <div class="card sports" onclick="pickUpCard(event)" data-id="205176503">
-                <p class="facility">Rugby Court</p>
-                <p class="reservation-id">ID: 06</p>
-                <p class="event">Practices</p>
-                <p class="date">12.04.25</p>
-                <p class="time">15:00 - 19:00</p>
-            </div>
-            <!-- Add more cards as needed -->
-        </div>
-
-        <div class="column done" id="newColumn" onmouseup="dropCard('newColumn')" style="background-color: #FFF;">
-            <h2><span class="dot done"></span>Accepted<span class="count">11</span></h2>
-            <div class="card sports" onclick="pickUpCard(event)" data-id="205176503">
-                <p class="facility">Elle Court</p>
-                <p class="reservation-id">ID: 10</p>
-                <p class="event">Practices</p>
-                <p class="date">12.04.25</p>
-                <p class="time">15:00 - 19:00</p>
-            </div>
-            <!-- Add more cards as needed -->
-        </div>
-
-        <!-- cancelled column -->
-        <div class="column cancelled" id="newColumn" onmouseup="dropCard('newColumn')" style="background-color: #FFF;">
-            <h2><span class="dot cancelled"></span> Cancelled <span class="count">11</span></h2>
-            <div class="card sports" onclick="pickUpCard(event)" data-id="205176503">
-                <p class="facility">Cricket Pitch</p>
-                <p class="reservation-id">ID: 11</p>
-                <p class="event">Practice Match</p>
-                <p class="date">12.04.25</p>
-                <p class="time">15:00 - 19:00</p>
-            </div>
-            <!-- Add more cards as needed -->
-        </div>
-
-        <!-- rejected column -->
-        <div class="column rejected" style="background-color: #FFF;">
-            <h2><span class="dot rejected"></span> Rejected <span class="count">11</span></h2>
-            <div class="card external" onclick="pickUpCard(event)" data-id="205176503">
-                <p class="facility">Hockey Court</p>
-                <p class="reservation-id">ID: 12</p>
-                <p class="event">Match</p>
-                <p class="date">12.04.25</p>
-                <p class="time">15:00 - 19:00</p>
-            </div>
-            <!-- Add more cards as needed -->
-        </div>
-
-
+  </div>
 </main>
 </div>
 
-<div id="table" class="table" style="display:none;">
-    <?php include 'requests_table.php'?>
-</div>
 
    
     <!-- reservation details modal -->
@@ -179,7 +152,32 @@
             <div class="details-grid">
                 <div class="basic-info">
                     <h3>Basic Information</h3>
-                    <div id="requestInfo"></div>
+                    <div id="requestInfo">
+                    <div class="info-row">
+                            <label>Court:</label>
+                            <span id="court"></span>
+                        </div>
+                        <div class="info-row">
+                            <label>Location:</label>
+                            <span id="location"></span>
+                        </div>
+                        <div class="info-row">
+                            <label>Reservation ID:</label>
+                            <span id="reservationID"></span>
+                        </div>
+                        <div class="info-row">
+                            <label>Event:</label>
+                            <span id="event"></span>
+                        </div>
+                        <div class="info-row">
+                            <label>Date:</label>
+                            <span id="date"><span>
+                        </div>
+                        <div class="info-row">
+                            <label>Time:</label>
+                            <span id="time"><span>
+                        </div>
+                    </div>
                 </div>
                 <div class="additional-info">
                     <h3>Additional Information</h3>
@@ -211,14 +209,15 @@
                         </div>
                         <div class="info-row">
                             <label>Proof:</label>
-                            <span id="proof">None</span>
+                            <span><a href="<?=LINKROOT?>/" id="proof">Click To View</a></span>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
         <div id="modalActions" class="modal-footer">
-            <!-- Action buttons will be dynamically inserted here -->
+        <button class="accept-btn" onclick="acceptRequest()">Accept</button>
+        <button class="reject-btn" onclick="rejectRequest()">Reject</button>
         </div>
     </div>
 
