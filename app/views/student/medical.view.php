@@ -201,6 +201,7 @@
                             </tr>
                         </thead>
                         <tbody id="tableBody">
+                        <?php if(!empty($medicalRequests)):?>
                             <?php foreach($medicalRequests as $medicalRequest): ?>
                             <tr>
                                 <td><?= $medicalRequest->RequestID ?></td>
@@ -217,6 +218,11 @@
                                     </td>
                             </tr>
                             <?php endforeach; ?>
+                            <?php else:?>
+                            <tr>
+            <td colspan="4" style="text-align: center;">No medical requests to show</td>
+        </tr>
+    <?php endif; ?> 
                         </tbody>
                     </table>
                 </div>

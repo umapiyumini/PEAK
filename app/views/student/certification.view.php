@@ -217,7 +217,11 @@
                                         </td>
                                     </tr>
                                 <?php endforeach; ?>
-                            <?php endif;?>
+                            <?php else:?>
+                            <tr>
+            <td colspan="4" style="text-align: center;">No Certificate requests to show</td>
+        </tr>
+    <?php endif; ?>
                         </tbody>
                     </table>
                 </div>

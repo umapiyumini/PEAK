@@ -1,5 +1,5 @@
 <?php
-    $membershipRequests = $data['membershipdata'];
+    $membershipRequests = $data['teamdata'];
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -177,7 +177,6 @@
                         <?php if(!empty($membershipRequests)):?>
                             <?php foreach($membershipRequests as $membership): ?>
                                 <tr>
-                                    <td><?= $membership->request_id ?></td>
                                     <td><?= $membership->faculty ?></td>
                                     <td><?= $membership->year_of_study ?></td>
                                     <td><?= $membership->contact_number ?></td>
@@ -191,6 +190,8 @@
                                                 '<?= $membership->contact_number ?>',
                                                 '<?= htmlspecialchars($membership->university_email, ENT_QUOTES) ?>'
                                             )">View</button>
+                                            <?php $RequestId = $membership->RequestID ?>
+                                            <button class="action-btn edit-btn" onclick="window.location.href='<?= ROOT ?>/student/Editmedical?RequestId=<?= $RequestId ?>'">Edit</button>
                                         <button class="action-btn delete-btn" onclick="confirmDelete(<?= $membership->request_id ?>)">Delete</button>
                                     </td>
                                 </tr>

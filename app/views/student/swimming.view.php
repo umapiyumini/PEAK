@@ -222,7 +222,7 @@
     
     <nav class="navbar">
         <h2>Captains and Coaches</h2>
-        <a href="request" class="sports-btn">Join</a>
+        <a href="membership" class="sports-btn">Join</a>
     </nav>
 
     <main>
