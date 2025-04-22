@@ -45,18 +45,17 @@
       <h2><span class="dot new"></span> New <span class="count"></span></h2>
       <?php if(!empty($newPendingReservations)): ?>
         <?php foreach($newPendingReservations as $i): ?>
-          <div class="card sports" onclick="viewCard(this)" data-id="<?= $i->reservationid ?>">
+          <div class="card sports" onclick="viewCard(this)" data-id="<?= $i->reservationid ?>" data-courtname="<?= $i->courtname ?>" data-location="<?= $i->location ?>" data-event="<?= $i->event ?>" data-date="<?= $i->date ?>" data-time="<?= $i->time ?>" data-numberof_participants="<?= $i->numberof_participants ?>" data-extradetails="<?= $i->extradetails ?>" data-userdescription="<?= $i->userdescription ?>" data-userproof="<?= $i->userproof ?>" data-name="<?= $i->name ?>" data-contact_number="<?= $i->contact_number ?>" data-email="<?= $i->email ?>" data-cardtype="awaiting">
             <p class="facility"><?= $i->courtname ?></p>
-            <p class="facility"><?= $i->location?></p>
+            <p class="facility"><?= $i->location ?></p>
             <p class="reservation-id">ID: <?= $i->reservationid ?></p>
-            <p class="event"><?= $i->event ?></p>
             <p class="event"><?= $i->event ?></p>
             <p class="date"><?= $i->date ?></p>
             <p class="time"><?= $i->time ?></p>
           </div>
         <?php endforeach; ?>
       <?php else: ?>
-        <p style="padding: 10px;">No new pending requests.</p>
+        <p style="padding: 10px;">No New pending requests.</p>
       <?php endif; ?>
     </div>
 
@@ -65,7 +64,7 @@
       <h2><span class="dot awaiting"></span> Awaiting <span class="count"></span></h2>
       <?php if(!empty($oldPendingReservations)): ?>
         <?php foreach($oldPendingReservations as $i): ?>
-          <div class="card sports" onclick="viewCard(this)" data-id="<?= $i->reservationid ?>" data-courtname="<?= $i->courtname ?>" data-location="<?= $i->location ?>" data-event="<?= $i->event ?>" data-date="<?= $i->date ?>" data-time="<?= $i->time ?>" data-numberof_participants="<?= $i->numberof_participants ?>" data-extradetails="<?= $i->extradetails ?>" data-userdescription="<?= $i->userdescription ?>" data-userproof="<?= $i->userproof ?>" data-name="<?= $i->name ?>" data-contact_number="<?= $i->contact_number ?>" data-email="<?= $i->email ?>">
+          <div class="card sports" onclick="viewCard(this)" data-id="<?= $i->reservationid ?>" data-courtname="<?= $i->courtname ?>" data-location="<?= $i->location ?>" data-event="<?= $i->event ?>" data-date="<?= $i->date ?>" data-time="<?= $i->time ?>" data-numberof_participants="<?= $i->numberof_participants ?>" data-extradetails="<?= $i->extradetails ?>" data-userdescription="<?= $i->userdescription ?>" data-userproof="<?= $i->userproof ?>" data-name="<?= $i->name ?>" data-contact_number="<?= $i->contact_number ?>" data-email="<?= $i->email ?>" data-cardtype="awaiting">
             <p class="facility"><?= $i->courtname ?></p>
             <p class="facility"><?= $i->location ?></p>
             <p class="reservation-id">ID: <?= $i->reservationid ?></p>
@@ -84,7 +83,7 @@
       <h2><span class="dot done"></span> To Pay <span class="count"></span></h2>
       <?php if(!empty($topayReservations)): ?>
         <?php foreach($topayReservations as $i): ?>
-          <div class="card sports" onclick="viewCard(this)" data-id="<?= $i->reservationid ?>" data-courtname="<?= $i->courtname ?>" data-location="<?= $i->location ?>" data-event="<?= $i->event ?>" data-date="<?= $i->date ?>" data-time="<?= $i->time ?>" data-numberof_participants="<?= $i->numberof_participants ?>" data-extradetails="<?= $i->extradetails ?>" data-userdescription="<?= $i->userdescription ?>" data-userproof="<?= $i->userproof ?>" data-name="<?= $i->name ?>" data-contact_number="<?= $i->contact_number ?>" data-email="<?= $i->email ?>">
+          <div class="card sports" onclick="viewCard(this)" data-id="<?= $i->reservationid ?>" data-courtname="<?= $i->courtname ?>" data-location="<?= $i->location ?>" data-event="<?= $i->event ?>" data-date="<?= $i->date ?>" data-time="<?= $i->time ?>" data-numberof_participants="<?= $i->numberof_participants ?>" data-extradetails="<?= $i->extradetails ?>" data-userdescription="<?= $i->userdescription ?>" data-userproof="<?= $i->userproof ?>" data-name="<?= $i->name ?>" data-contact_number="<?= $i->contact_number ?>" data-email="<?= $i->email ?>" data-cardtype="topay">
             <p class="facility"><?= $i->courtname ?></p>
             <p class="facility"><?= $i->location ?></p>
             <p class="reservation-id">ID: <?= $i->reservationid ?></p>
@@ -103,7 +102,7 @@
       <h2><span class="dot done"></span> Paid <span class="count"></span></h2>
       <?php if(!empty($paidReservations)): ?>
         <?php foreach($paidReservations as $i): ?>
-          <div class="card sports" onclick="viewCard(this)" data-id="<?= $i->reservationid ?>" data-courtname="<?= $i->courtname ?>" data-location="<?= $i->location ?>" data-event="<?= $i->event ?>" data-date="<?= $i->date ?>" data-time="<?= $i->time ?>" data-numberof_participants="<?= $i->numberof_participants ?>" data-extradetails="<?= $i->extradetails ?>" data-userdescription="<?= $i->userdescription ?>" data-payment_proof="<?= $i->payment_proof ?>" data-name="<?= $i->name ?>" data-contact_number="<?= $i->contact_number ?>" data-email="<?= $i->email ?>">
+          <div class="card sports" onclick="viewCard(this)" data-id="<?= $i->reservationid ?>" data-courtname="<?= $i->courtname ?>" data-location="<?= $i->location ?>" data-event="<?= $i->event ?>" data-date="<?= $i->date ?>" data-time="<?= $i->time ?>" data-numberof_participants="<?= $i->numberof_participants ?>" data-extradetails="<?= $i->extradetails ?>" data-userdescription="<?= $i->userdescription ?>" data-payment_proof="<?= $i->payment_proof ?>" data-name="<?= $i->name ?>" data-contact_number="<?= $i->contact_number ?>" data-email="<?= $i->email ?>" data-cardtype="paid">
             <p class="facility"><?= $i->courtname ?></p>
             <p class="facility"><?= $i->location ?></p>
             <p class="reservation-id">ID: <?= $i->reservationid ?></p>
@@ -120,7 +119,20 @@
     <!-- Accepted Column -->
     <div class="column done" id="acceptedColumn" onmouseup="dropCard('acceptedColumn')">
       <h2><span class="dot done"></span> confirmed <span class="count"></span></h2>
-      <!-- cards here... -->
+      <?php if(!empty($confirmedReservations)): ?>
+        <?php foreach($confirmedReservations as $i): ?>
+          <div class="card sports" onclick="viewCard(this)" data-id="<?= $i->reservationid ?>" data-courtname="<?= $i->courtname ?>" data-location="<?= $i->location ?>" data-event="<?= $i->event ?>" data-date="<?= $i->date ?>" data-time="<?= $i->time ?>" data-numberof_participants="<?= $i->numberof_participants ?>" data-extradetails="<?= $i->extradetails ?>" data-userdescription="<?= $i->userdescription ?>" data-payment_proof="<?= $i->payment_proof ?>" data-name="<?= $i->name ?>" data-contact_number="<?= $i->contact_number ?>" data-email="<?= $i->email ?>" data-cardtype="paid">
+            <p class="facility"><?= $i->courtname ?></p>
+            <p class="facility"><?= $i->location ?></p>
+            <p class="reservation-id">ID: <?= $i->reservationid ?></p>
+            <p class="event"><?= $i->event ?></p>
+            <p class="date"><?= $i->date ?></p>
+            <p class="time"><?= $i->time ?></p>
+          </div>
+        <?php endforeach; ?>
+      <?php else: ?>
+        <p style="padding: 10px;">No Paid Reservations.</p>
+      <?php endif; ?>
     </div>
 
     <!-- Cancelled Column -->
@@ -132,7 +144,20 @@
     <!-- Rejected Column -->
     <div class="column rejected" id="rejectedColumn" onmouseup="dropCard('rejectedColumn')">
       <h2><span class="dot rejected"></span> Rejected <span class="count"></span></h2>
-      <!-- cards here... -->
+      <?php if(!empty($rejectedReservations)): ?>
+        <?php foreach($rejectedReservations as $i): ?>
+          <div class="card sports" onclick="viewCard(this)" data-id="<?= $i->reservationid ?>" data-courtname="<?= $i->courtname ?>" data-location="<?= $i->location ?>" data-event="<?= $i->event ?>" data-date="<?= $i->date ?>" data-time="<?= $i->time ?>" data-numberof_participants="<?= $i->numberof_participants ?>" data-extradetails="<?= $i->extradetails ?>" data-userdescription="<?= $i->userdescription ?>" data-payment_proof="<?= $i->payment_proof ?>" data-name="<?= $i->name ?>" data-contact_number="<?= $i->contact_number ?>" data-email="<?= $i->email ?>" data-cardtype="paid">
+            <p class="facility"><?= $i->courtname ?></p>
+            <p class="facility"><?= $i->location ?></p>
+            <p class="reservation-id">ID: <?= $i->reservationid ?></p>
+            <p class="event"><?= $i->event ?></p>
+            <p class="date"><?= $i->date ?></p>
+            <p class="time"><?= $i->time ?></p>
+          </div>
+        <?php endforeach; ?>
+      <?php else: ?>
+        <p style="padding: 10px;">No Paid Reservations.</p>
+      <?php endif; ?>
     </div>
 
   </div>
@@ -144,7 +169,7 @@
     <!-- reservation details modal -->
 <div id="actionModal" class="modal">
     <div class="modal-content">
-        <span class="close">&times;</span>
+        <span class="close" onclick="closeModal()">&times;</span>
         <div class="modal-header">
             <h2>Reservation Details</h2>
         </div>
@@ -216,7 +241,7 @@
             </div>
         </div>
         <div id="modalActions" class="modal-footer">
-        <button class="accept-btn" onclick="acceptRequest()">Accept</button>
+        <button class="accept-btn" onclick="acceptRequest()" id="acceptbtn">Accept</button>
         <button class="reject-btn" onclick="rejectRequest()">Reject</button>
         </div>
     </div>

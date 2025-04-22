@@ -154,14 +154,14 @@ public function findById($reservationid) {
             $query = "SELECT *,courts.name AS courtname, user.name AS username FROM {$this->table} 
             JOIN user ON user.userid= $this->table.userid
             JOIN courts ON courts.courtid= $this->table.courtid
-            WHERE status = 'pending' AND created_at <= :oneweekago";
+            WHERE status = 'pending' AND created_at <= :oneweekago AND location='ground'";
             return $this->query($query, ['oneweekago' => $oneweekago]);
         }
         elseif ($type == 'old') {
             $query = "SELECT * ,courts.name AS courtname, user.name AS username FROM {$this->table} 
             JOIN user ON user.userid= $this->table.userid
             JOIN courts ON courts.courtid= $this->table.courtid
-            WHERE status = 'pending' AND created_at > :oneweekago";
+            WHERE status = 'pending' AND created_at > :oneweekago AND location='ground'";
             return $this->query($query, ['oneweekago' => $oneweekago]);
         }
         else {
@@ -170,16 +170,34 @@ public function findById($reservationid) {
         }
     }
 
-    public function acceptReservation($reservationid) {
-        $query = "UPDATE {$this->table} SET status = 'To pay' WHERE reservationid = :reservationid";
-        return $this->query($query, ['reservationid' => $reservationid]);
+    public function acceptReservation($reservation) {
+
+        if($reservation->status == 'pending'){
+            $query = "UPDATE {$this->table} SET status = 'To pay' WHERE reservationid = :reservationid";
+        }
+        elseif($reservation->status == 'paid'){
+            $query = "UPDATE {$this->table} SET status = 'confirmed' WHERE reservationid = :reservationid";
+        }
+
+        $params = [
+            'reservationid' => $reservation->reservationid
+        ];
+        return $this->query($query, $params);
+    }
+    
+    public function rejectReservation($reservation) {
+        $query = "UPDATE {$this->table} SET status = 'rejected' WHERE reservationid = :reservationid";
+        $params = [
+            'reservationid' => $reservation->reservationid
+        ];
+        return $this->query($query, $params);
     }
 
     public function getAllTopayReservations(){
         $query = "SELECT * ,courts.name AS courtname, user.name AS username FROM {$this->table} 
         JOIN user ON user.userid= $this->table.userid
         JOIN courts ON courts.courtid= $this->table.courtid
-        WHERE status = 'To pay'";
+        WHERE status = 'To pay' AND location='ground'";
         return $this->query($query);
     }
 
@@ -188,8 +206,40 @@ public function findById($reservationid) {
         JOIN user ON user.userid= $this->table.userid
         JOIN courts ON courts.courtid= $this->table.courtid
         JOIN payments ON payments.reservationid = $this->table.reservationid
-        WHERE status = 'paid'";
+        WHERE status = 'paid' AND location='ground'";
         return $this->query($query);
     }
 
+    public function getAllConfirmedReservations(){
+        $query = "SELECT * ,courts.name AS courtname, user.name AS username FROM {$this->table} 
+        JOIN user ON user.userid= $this->table.userid
+        JOIN courts ON courts.courtid= $this->table.courtid
+        WHERE status = 'confirmed' AND location='ground'";
+        return $this->query($query);
+    }
+
+    public function getAllRejectedReservations(){
+        $query = "SELECT * ,courts.name AS courtname, user.name AS username FROM {$this->table} 
+        JOIN user ON user.userid= $this->table.userid
+        JOIN courts ON courts.courtid= $this->table.courtid
+        WHERE status = 'rejected' AND location='ground'";
+        return $this->query($query);
+    }
+
+    public function getAllReservationsGround(){
+        $query = "SELECT * ,courts.name AS courtname, user.name AS username FROM {$this->table} 
+        JOIN user ON user.userid= $this->table.userid
+        JOIN courts ON courts.courtid= $this->table.courtid
+        JOIN payments ON payments.reservationid = $this->table.reservationid
+        WHERE location='ground'
+        ORDER BY $this->table.created_at DESC";
+        return $this->query($query);
+    }
+
+    public function getReservations() {
+        $query = "SELECT * FROM {$this->table} JOIN courts ON courts.courtid = {$this->table}.courtid WHERE location='ground'";
+        return $this->query($query);
+    }
+
+    
 }

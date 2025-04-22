@@ -16,7 +16,13 @@ function viewCard(carddetails) {
     document.getElementById("requirements").innerHTML = carddetails.dataset.extradetails;
     document.getElementById("proof").href = document.getElementById("proof").href + (carddetails.dataset.userproof || carddetails.dataset.payment_proof);
 
-    
+    if(carddetails.dataset.cardtype == "topay") {
+        document.getElementById("acceptbtn").style.display = 'none';
+    } else {
+        document.getElementById("acceptbtn").style.display = 'block';
+        document.getElementById("acceptbtn").innerHTML = carddetails.dataset.cardtype == "new" || carddetails.dataset.cardtype == "awaiting" ? "Accept" : "Confirm";
+    }
+
 }
 
 function closeModal() {
@@ -33,4 +39,8 @@ window.onclick = function (event) {
 
 function acceptRequest(){
     window.location.href = "requests/accept/" + document.getElementById("reservationID").innerHTML;
+}
+
+function rejectRequest(){
+    window.location.href = "requests/reject/" + document.getElementById("reservationID").innerHTML;
 }

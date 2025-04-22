@@ -116,7 +116,7 @@
         
         .time-slots-header {
             display: grid;
-            grid-template-columns: 100px repeat(4, 1fr);
+            grid-template-columns: 100px repeat(5, 1fr);
             gap: 10px;
             margin-bottom: 15px;
             font-weight: bold;
@@ -128,7 +128,7 @@
         
         .time-slot {
             display: grid;
-            grid-template-columns: 100px repeat(4, 1fr);
+            grid-template-columns: 100px repeat(5, 1fr);
             gap: 10px;
             margin-bottom: 10px;
             text-align: center;
@@ -151,7 +151,7 @@
             transform: scale(1.03);
         }
         
-        .available {
+        .paid {
             background-color: #e8f5e9;
             color: #2e7d32;
             border: 1px solid #c8e6c9;
@@ -177,7 +177,7 @@
 
         @media (max-width: 768px) {
             .time-slots-header, .time-slot {
-                grid-template-columns: 80px repeat(4, 1fr);
+                grid-template-columns: 80px repeat(5, 1fr);
                 font-size: 14px;
             }
             
@@ -199,155 +199,95 @@
     <!-- Header and Main Content -->
 
     <div class="main-content">
-
         <div class="header">
             <h1>Ground reservations</h1>
             <button class="bell-icon"><i class="uil uil-bell"></i></button>
-            <!-- <div class="notifications-dropdown">
-                <div class="notifications-header">
-                    <h3>Notifications</h3>
-                    <span class="clear-all">Clear All</span>
-                </div>
-                <div class="notifications-list">
-                    <ul id="notificationsList"></ul>
-                </div>
-              </div> -->
+
             <button class="bell-icon"><i class="uil uil-signout"></i></button>
         </div>
 
-    <div class="container">
+        <div class="container">
         <div class="date-selector">
-            <input type="date" id="reservation-date" onchange="checkAvailability()">
+            <input type="date" id="reservation-date" value="<?= isset($selectedDate) ? $selectedDate : date('Y-m-d') ?>" onchange="changeDate()">
         </div>
 
-        <div class="color-manual">
-            <h3>Booking Legend</h3>
-            <div class="color-indicators">
-                <div class="color-item">
-                    <div class="color-box internal"></div>
-                    <span>Internal Bookings</span>
-                </div>
-                <div class="color-item">
-                    <div class="color-box external"></div>
-                    <span>External Bookings</span>
-                </div>
-                <div class="color-item">
-                    <div class="color-box special"></div>
-                    <span>Special Bookings</span>
+            <div class="color-manual">
+                <h3>Booking Legend</h3>
+                <div class="color-indicators">
+                    <div class="color-item">
+                        <div class="color-box internal"></div>
+                        <span>Internal Bookings</span>
+                    </div>
+                    <div class="color-item">
+                        <div class="color-box external"></div>
+                        <span>External Bookings</span>
+                    </div>
+                    <div class="color-item">
+                        <div class="color-box special"></div>
+                        <span>Special Bookings</span>
+                    </div>
                 </div>
             </div>
-        </div>
 
-        <div class="action-buttons">
-            <button class="button" onclick="window.location.href='requests';">Requests</button>
-            <button class="button" onclick="window.location.href='all_reservations_ground';">All reservations</button>
-        </div>
+            <div class="action-buttons">
+                <button class="button" onclick="window.location.href='requests';">Requests</button>
+                <button class="button" onclick="window.location.href='all_reservations_ground';">All reservations</button>
+            </div>
 
-        <div class="time-slots-container">
-            <h2 id="availability-date">Ground Availability</h2>
-            <p id="no-date-selected">Please select a date to view availability</p>
-            
-            <div id="time-slots" style="display: none;">
-                <div class="time-slots-header">
-                    <div>Time</div>
-                    <div>Section A</div>
-                    <div>Section B</div>
-                    <div>Section C</div>
-                    <div>Section D</div>
-                </div>
+            <div class="time-slots-container" id="time-slots">
+                <h2 id="availability-date">Ground Availability</h2>
+
+                <?php if (!empty($structured)): ?>
+                    <div class="time-slots-header">
+                        <div>Time</div>
+                        <?php foreach ($allSections as $section): ?>
+                            <div>Section <?= $section ?></div>
+                        <?php endforeach; ?>
+                    </div>
                 
-                <div class="time-slots-content" id="slots-container">
-                    <!-- Time slots will be populated here via JavaScript -->
-                </div>
+                    <div class="time-slots-content" id="slots-container">
+                        <?php foreach ($allTimeSlots as $time): ?>
+                            <div class="time-slot">
+                                <div class="time-label"><?= $time ?></div>
+                                <?php foreach ($allSections as $section): 
+                                    $data = $structured[$time][$section] ?? ['status' => 'available', 'bookedBy' => null];
+                                    $statusClass = $data['status'];
+                                    if ($data['status'] === 'To pay') {
+                                        $label = 'To Pay';
+                                    } elseif ($data['status'] === 'paid') {
+                                        $label = 'Paid';
+                                    } elseif ($data['status'] === 'confirmed') {
+                                        $label = "Booked by " . $data['bookedBy'];
+                                    } else {
+                                        $label = 'Available';
+                                    }
+                                ?>
+                                    <div class="section <?= strtolower($label) ?>">
+                                        <?= htmlspecialchars($label) ?>
+                                    </div>
+                                <?php endforeach; ?>
+                            </div>
+                        <?php endforeach; ?>
+                    </div>
+                <?php else: ?>
+                    <p id="no-date-selected">No bookings found. All slots are available.</p>
+                <?php endif; ?>
             </div>
         </div>
     </div>
 
+
     <script>
-        // Sample data - Replace with your actual data structure
-        const bookingData = {
-            "2025-04-21": {
-                "09:00-10:00": {
-                    "Section A": { status: "booked-internal", bookedBy: "Sports Team A" },
-                    "Section B": { status: "available" },
-                    "Section C": { status: "booked-external", bookedBy: "XYZ Organization" },
-                    "Section D": { status: "available" }
-                },
-                "10:00-11:00": {
-                    "Section A": { status: "booked-special", bookedBy: "Annual Tournament" },
-                    "Section B": { status: "booked-internal", bookedBy: "Sports Team B" },
-                    "Section C": { status: "available" },
-                    "Section D": { status: "available" }
-                },
-                "11:00-12:00": {
-                    "Section A": { status: "available" },
-                    "Section B": { status: "available" },
-                    "Section C": { status: "booked-external", bookedBy: "ABC Company" },
-                    "Section D": { status: "booked-internal", bookedBy: "Faculty Meeting" }
-                },
-                "12:00-13:00": {
-                    "Section A": { status: "available" },
-                    "Section B": { status: "booked-external", bookedBy: "Local Club" },
-                    "Section C": { status: "available" },
-                    "Section D": { status: "booked-special", bookedBy: "Maintenance" }
-                },
-                "13:00-14:00": {
-                    "Section A": { status: "booked-internal", bookedBy: "Department Event" },
-                    "Section B": { status: "available" },
-                    "Section C": { status: "available" },
-                    "Section D": { status: "available" }
-                },
-                "14:00-15:00": {
-                    "Section A": { status: "available" },
-                    "Section B": { status: "available" },
-                    "Section C": { status: "booked-internal", bookedBy: "Sports Team C" },
-                    "Section D": { status: "booked-external", bookedBy: "External Vendor" }
-                },
-                "15:00-16:00": {
-                    "Section A": { status: "booked-special", bookedBy: "Special Event" },
-                    "Section B": { status: "booked-special", bookedBy: "Special Event" },
-                    "Section C": { status: "booked-special", bookedBy: "Special Event" },
-                    "Section D": { status: "booked-special", bookedBy: "Special Event" }
-                },
-                "16:00-17:00": {
-                    "Section A": { status: "available" },
-                    "Section B": { status: "available" },
-                    "Section C": { status: "available" },
-                    "Section D": { status: "available" }
-                }
-            },
-            // Add more dates as needed
-            "2025-04-22": {
-                "09:00-10:00": {
-                    "Section A": { status: "available" },
-                    "Section B": { status: "available" },
-                    "Section C": { status: "available" },
-                    "Section D": { status: "available" }
-                },
-                "10:00-11:00": {
-                    "Section A": { status: "booked-external", bookedBy: "Local School" },
-                    "Section B": { status: "booked-external", bookedBy: "Local School" },
-                    "Section C": { status: "available" },
-                    "Section D": { status: "available" }
-                }
-                // Add more time slots for this date
-            }
-        };
+        // Function to change the date and reload the page with the selected date
+        function changeDate() {
+            const dateInput = document.getElementById('reservation-date').value;
+            window.location.href = window.location.pathname + '?date=' + dateInput;
+        }
 
-        // Set today's date as default
-        document.addEventListener('DOMContentLoaded', function() {
-            const today = new Date();
-            const formattedDate = today.toISOString().split('T')[0];
-            document.getElementById('reservation-date').value = formattedDate;
-            checkAvailability();
-        });
-
-        function checkAvailability() {
+        // Format date for display
+        function updateDisplayDate() {
             const dateInput = document.getElementById('reservation-date').value;
             const availabilityDate = document.getElementById('availability-date');
-            const noDateSelected = document.getElementById('no-date-selected');
-            const timeSlots = document.getElementById('time-slots');
-            const slotsContainer = document.getElementById('slots-container');
             
             // Format date for display
             const displayDate = new Date(dateInput).toLocaleDateString('en-US', { 
@@ -358,68 +298,20 @@
             });
             
             availabilityDate.textContent = `Ground Availability for ${displayDate}`;
-            
-            if (bookingData[dateInput]) {
-                noDateSelected.style.display = 'none';
-                timeSlots.style.display = 'block';
-                
-                // Clear previous slots
-                slotsContainer.innerHTML = '';
-                
-                // Generate time slots
-                for (const timeSlot in bookingData[dateInput]) {
-                    const sections = bookingData[dateInput][timeSlot];
-                    
-                    const slotDiv = document.createElement('div');
-                    slotDiv.className = 'time-slot';
-                    
-                    const timeDiv = document.createElement('div');
-                    timeDiv.className = 'time-label';
-                    timeDiv.textContent = timeSlot;
-                    slotDiv.appendChild(timeDiv);
-                    
-                    // Add sections
-                    for (const section in sections) {
-                        const sectionDiv = document.createElement('div');
-                        sectionDiv.className = `section ${sections[section].status}`;
-                        
-                        let sectionText = section;
-                        if (sections[section].status !== 'available') {
-                            sectionText += `<br>(${sections[section].bookedBy})`;
-                        } else {
-                            sectionText += '<br>(Available)';
-                        }
-                        
-                        sectionDiv.innerHTML = sectionText;
-                        sectionDiv.addEventListener('click', function() {
-                            if (sections[section].status === 'available') {
-                                alert(`Book ${section} for ${timeSlot} on ${displayDate}?`);
-                            } else {
-                                alert(`${section} is already booked by ${sections[section].bookedBy} for ${timeSlot}`);
-                            }
-                        });
-                        
-                        slotDiv.appendChild(sectionDiv);
-                    }
-                    
-                    slotsContainer.appendChild(slotDiv);
-                }
-            } else {
-                noDateSelected.textContent = "No bookings data available for this date. All slots are available.";
-                noDateSelected.style.display = 'block';
-                timeSlots.style.display = 'none';
+        }
+
+        // When the page loads, update the display date
+        document.addEventListener('DOMContentLoaded', function() {
+            // Only set it to today if it's empty
+            if (!document.getElementById('reservation-date').value) {
+                const today = new Date();
+                const formattedDate = today.toISOString().split('T')[0];
+                document.getElementById('reservation-date').value = formattedDate;
             }
-        }
-
-        function viewReservationRequests() {
-            alert("Viewing pending reservation requests");
-            // Implement navigation to reservation requests page
-        }
-
-        function viewAllRequests() {
-            alert("Viewing all requests");
-            // Implement navigation to all requests page
-        }
+            
+            // Always update the display date
+            updateDisplayDate();
+        });
     </script>
 
         <script src="<?=ROOT?>/assets/js/ped_incharge/home.js"></script>
