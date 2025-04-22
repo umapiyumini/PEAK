@@ -11,6 +11,7 @@ class Noticeboard{
         'content',
         'publishdate',
         'publishtime',
+        'visibility',
         'userid'
     ];
 
@@ -50,5 +51,12 @@ class Noticeboard{
         ];
         $result = $this->query($query,$param);
         return $result[0];
+    }
+
+    public function findStudentNotices(){
+        $query= "SELECT * FROM $this->table WHERE visibility='students'";
+        $result = $this->query($query);
+        return $result;
+
     }
 }
