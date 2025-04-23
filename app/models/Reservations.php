@@ -172,17 +172,26 @@ public function findById($reservationid) {
 
     public function acceptReservation($reservation) {
 
+        $query = "";
+        
         if($reservation->status == 'pending'){
             $query = "UPDATE {$this->table} SET status = 'To pay' WHERE reservationid = :reservationid";
         }
         elseif($reservation->status == 'paid'){
             $query = "UPDATE {$this->table} SET status = 'confirmed' WHERE reservationid = :reservationid";
         }
-
-        $params = [
-            'reservationid' => $reservation->reservationid
-        ];
-        return $this->query($query, $params);
+        else {
+            return false; 
+        }
+        
+        if (!empty($query)) {
+            $params = [
+                'reservationid' => $reservation->reservationid
+            ];
+            return $this->query($query, $params);
+        }
+        
+        return false; 
     }
     
     public function rejectReservation($reservation) {
@@ -237,9 +246,101 @@ public function findById($reservationid) {
     }
 
     public function getReservations() {
-        $query = "SELECT * FROM {$this->table} JOIN courts ON courts.courtid = {$this->table}.courtid WHERE location='ground'";
+        $query = "SELECT * ,courts.name AS courtname, user.name AS username FROM {$this->table} 
+        JOIN user ON user.userid= $this->table.userid
+        JOIN courts ON courts.courtid= $this->table.courtid
+        WHERE location='ground'";
         return $this->query($query);
     }
+
+    public function getAllPaidTopayConfirmedReservations(){
+        $query = "SELECT * ,courts.name AS courtname, user.name AS username, reservations.time AS startTime FROM {$this->table} 
+        JOIN user ON user.userid= $this->table.userid
+        JOIN courts ON courts.courtid= $this->table.courtid
+        WHERE status IN ('confirmed', 'To pay', 'paid')";
+        return $this ->query($query);
+    }
+    
+    public function rejectConflictingReservations() {
+        // Get all pending reservations
+        $query = "SELECT * FROM {$this->table} WHERE status = 'pending'";
+        $pendingReservations = $this->query($query);
+        
+        if (empty($pendingReservations)) {
+            return 0; // No pending reservations to check
+        }
+        
+
+        $activeQuery = "SELECT * FROM {$this->table} WHERE status IN ('confirmed', 'To pay', 'paid')";
+        $activeReservations = $this->query($activeQuery);
+        
+        $rejectedCount = 0;
+        
+        foreach ($pendingReservations as $pending) {
+            foreach ($activeReservations as $active) {
+
+                if ($pending->date == $active->date && 
+                    $pending->courtid == $active->courtid && 
+                    $this->isTimeOverlapping($pending, $active)) {
+                    
+                    // Reject the pending reservation
+                    $rejectQuery = "UPDATE {$this->table} SET status = 'rejected' WHERE reservationid = :reservationid";
+                    $this->query($rejectQuery, ['reservationid' => $pending->reservationid]);
+                    
+                    $rejectedCount++;
+                    break; // No need to check other active reservations for this pending one
+                }
+            }
+        }
+        
+        return $rejectedCount;
+    }
+
+
+    public function isTimeOverlapping($res1, $res2) {
+
+        $res1Start = strtotime($res1->time);
+        $res1End = strtotime($this->calculateEndTime($res1->time, $res1->duration));
+        
+        $res2Start = strtotime($res2->time);
+        $res2End = strtotime($this->calculateEndTime($res2->time, $res2->duration));
+        
+
+        return ($res1Start < $res2End && $res1End > $res2Start);
+    }
+
+    public function calculateEndTime($startTime, $duration) {
+        $start = strtotime($startTime);
+        switch ($duration) {
+            case '2 hour':
+                return date('H:i:s', $start + 2 * 3600);
+            case 'half':
+                return date('H:i:s', $start + 4 * 3600);
+            case 'full':
+                return date('H:i:s', $start + 9 * 3600); 
+            default:
+                return date('H:i:s', $start + 2 * 3600); 
+        }
+    }
+
+    public function checkForConflicts($reservation) {
+        $activeReservations = $this->query("SELECT * FROM {$this->table} 
+            WHERE status IN ('confirmed', 'To pay', 'paid')
+            AND courtid = :courtid
+            AND date = :date", [
+            'courtid' => $reservation->courtid,
+            'date' => $reservation->date
+        ]);
+
+        foreach ($activeReservations as $active) {
+            if ($this->isTimeOverlapping($reservation, $active)) {
+                return true;
+            }
+        }
+
+        return false;
+}
+
 
     
 }

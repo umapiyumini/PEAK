@@ -374,8 +374,6 @@
                 <div class="dropdown">
                     <a href="<?=ROOT?>/ped_incharge/ground_reservation" class="dropdown-link">Ground</a>
                     <a href="<?=ROOT?>/ped_incharge/indoor_reservation" class="dropdown-link">Indoor Stadium</a>
-                    <a href="<?=ROOT?>/ped_incharge/basketball_court_reservation" class="dropdown-link">Basketball Court</a>
-                    <a href="<?=ROOT?>/ped_incharge/tennis_court_reservation" class="dropdown-link">Tennis Court</a>
                 </div>
             </li>
             <li class="nav-item <?= $current_page == 'users' ? 'actived' : '' ?>">
