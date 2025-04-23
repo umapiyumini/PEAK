@@ -26,50 +26,54 @@
             <img id="qr-image" src="" alt="QR Code">
         </div>
         
-        
-            <div class="card-body">
-        <?php if (empty($playerData)): ?>
-            <div class="alert alert-info">No attendance records found.</div>
-        <?php else: ?>
-            <table class="table table-bordered">
-                <thead>
-                    <tr>
-                        <th>Player Name</th>
-                        <?php foreach ($dates as $date): ?>
-                            <th><?= date('M d', strtotime($date)) ?></th>
-                        <?php endforeach; ?>
-                    </tr>
-                </thead>
-                <tbody>
-                    <?php foreach ($playerData as $player): ?>
-                        <tr>
-                            <td><?= $player['name'] ?></td>
-                            <?php foreach ($dates as $date): ?>
-                                <?php if (isset($player['dates'][$date])): ?>
-                                    <?php if ($player['dates'][$date] == 'Present'): ?>
-                                        <td class="bg-success text-white">Present</td>
-                                    <?php elseif ($player['dates'][$date] == 'Absent'): ?>
-                                        <td class="bg-danger text-white absent-cell" 
-                                            data-bs-toggle="modal" 
-                                            data-bs-target="#absenceReasonModal"
-                                            data-player="<?= $player['name'] ?>"
-                                            data-date="<?= $date ?>">
-                                            Absent
-                                        </td>
-                                    <?php else: ?>
-                                        <td class="bg-secondary text-white">-</td>
-                                    <?php endif; ?>
-                                <?php else: ?>
-                                    <td class="bg-secondary text-white">-</td>
-                                <?php endif; ?>
-                            <?php endforeach; ?>
-                        </tr>
-                    <?php endforeach; ?>
-                </tbody>
-            </table>
-        <?php endif; ?>
-    </div>
+        <?php if (!empty($attendance['records'])) { ?>
+    <table id="attendance-chart">
+        <thead>
+            <tr>
+                <th>Player Name</th>
+                <?php foreach ($attendance['dates'] as $date) { ?>
+                    <th><?php echo htmlspecialchars($date); ?></th>
+                <?php } ?>  
+            </tr>
+        </thead>
+        <tbody>
+        <?php
+        $groupedAttendance = [];
+
+        foreach ($attendance['records'] as $record) {
+            $groupedAttendance[$record->name][$record->date] = $record->attendance;
+        }
+
+        foreach ($groupedAttendance as $playerName => $playerAttendance) { ?>
+            <tr>
+                <td><?php echo htmlspecialchars($playerName); ?></td>
+                
+                <?php foreach ($attendance['dates'] as $date) { 
+                    $status = $playerAttendance[$date] ?? 'Absent'; 
+                    $class = ($status === 'Present') ? 'present' : 'absent';
+                ?>
+                    <td class="<?php echo $class; ?>"><?php echo htmlspecialchars($status); ?></td>
+
+                <?php } ?>
+            </tr>
+        <?php } ?>
+        </tbody>
+    </table>
+<?php } else { ?>
+    <p>No attendance records found.</p>
+<?php } ?>
     </main>
+
+    <!-- Absent Reason Modal -->
+<div id="absentReasonModal" class="modal" style="display:none;">
+  <div class="modal-content">
+    <span class="close">&times;</span>
+    <h2>Enter Absent Reason</h2>
+    <textarea id="absentReason" rows="4" cols="50" placeholder="Enter reason here..."></textarea>
+    <button id="submitReason">Submit</button>
+  </div>
+</div>
+
     <script>
 function generateQRCode() {
     const userId = "<?= $_SESSION['userid'] ?? 'guest' ?>";
