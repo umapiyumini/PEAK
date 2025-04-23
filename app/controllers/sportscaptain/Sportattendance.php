@@ -11,31 +11,31 @@ class Sportattendance extends Controller{
         return $_SESSION['userid'];
     }
 
-    public function index() {
+    public function index(){
+
+        $attendanceModel = new Attendance();
+        $attendance = $attendanceModel->getatteandancebysport();
+
+
+        $this->view('sportscaptain/sportattendance',['attendance' => $attendance]);
+    }
+
+   public function markattendnace(){
+
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $userId = $this->getUserId();
+            if (!$userId) {
+                die("User ID not found in session.");
+            }
+
+            $sportId = $_POST['sport_id'];
+            $date = $_POST['date'];
+            $attendance = $_POST['attendance'];
+            $regno = $_POST['regno'];
 
             $attendanceModel = new Attendance();
-            $data = $attendanceModel->getatteandancebysport();
-            $dates = $data['dates'];
-            $records = $data['records'];
-            
-            // Organize data by player
-            $playerData = [];
-            foreach ($records as $record) {
-                $name = $record->name;
-                $date = $record->date;
-                $status = $record->attendance;
-                
-                if (!isset($playerData[$name])) {
-                    $playerData[$name] = ['name' => $name, 'dates' => []];
-                }
-                $playerData[$name]['dates'][$date] = $status;
-            }
-            
-            $this->view('sportscaptain/sportattendance', [
-                'dates' => $dates,
-                'playerData' => $playerData  // Note: changed from 'attendance' to 'playerData'
-            ]);
+            $attendanceModel->insertAttendance($userId, $sportId, $date, $attendance, $regno);
         }
-    
+   }
 
 }

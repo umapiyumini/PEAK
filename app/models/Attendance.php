@@ -7,7 +7,7 @@ class Attendance{
         'date',
         'regno',
         'attendance',
-        'spor_id'
+        'sport_id'
     ];
 
               public function getatteandancebysport() {
@@ -53,6 +53,29 @@ class Attendance{
         
                 return ['dates' => $dateList, 'records' => $attendanceRecords];
             }
+
+        public function insertAttendance(){
+
+            $userId = $this->getUserId();
+            if (!$userId) {
+                die("User ID not found in session.");
+            }
+
+            
+            $query = "INSERT INTO attendance (date, regno, attendance, sport_id) 
+            VALUES (:date, :regno, :attendance, (SELECT sport_id FROM player WHERE userid = :userid))";
+            
+            $result = $this->query($query,[
+                'date' => $_POST['date'],
+                'regno' => $_POST['regno'],
+                'attendance' => $_POST['attendance'],
+                'userid' => $userId
+            ]);
+
+            return true;
+
+            
+        }
         }  
     
 
