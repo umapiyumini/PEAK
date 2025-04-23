@@ -20,6 +20,8 @@ class Reservations {
     
     // Get all reservations by user id
     public function getReservationsByUser($userid) {
+
+        
         $query = 
         
         "SELECT r.*, c.name AS courtname, c.location
@@ -79,5 +81,153 @@ class Reservations {
             'months' => $months
         ]);
     }
+
+    public function addReservation(){
+
+        $userId = $this->getUserId();
     
+        if (!$userId) {
+            die("User ID not found in session.");
+        }
+    
+        try{
+            $query = "INSERT INTO {$this->table}(userid, courtid, event, duration, date, time, status, numberof_participants)
+                    VALUES (
+                        :userid,
+                        :courtid,
+                        :event,
+                        :duration,
+                        :date,
+                        :time,
+                        :status,
+                        :numberof_participants
+                    )";
+    
+            $result = $this->query($query, [
+                'userid' => $userId,
+                'courtid' => $_POST['courtid'],
+                'event' => $_POST['event'],
+                'duration' => $_POST['duration'],
+                'date' => $_POST['date'],
+                'time' => $_POST['time'],
+                'status' => $_POST['status'],
+                'numberof_participants' => $_POST['numberof_participants']
+            ]);
+    
+            return $result;
+    
+        } catch(Exception $e){
+            $_SESSION['error'] = $e->getMessage();
+            return false;
+        }
+    }
+
+    public function getTimeSlots($date, $courtId) {
+        $query = "SELECT time FROM {$this->table} WHERE date = :date AND courtid = :courtId";
+        $result = $this->query($query, ['date' => $date, 'courtId' => $courtId]);
+    
+        if (!$result || !is_array($result)) {
+            return []; // Return empty array if query fails
+        }
+    
+        $reservedTimes = array_column($result, 'time');
+        return $reservedTimes;
+    }
+    
+
+    public function getAllReservedTimeSlots($courtId) {
+        // Get all reservations for this court in the future
+        $query = "SELECT date, time FROM {$this->table} 
+                 WHERE courtid = :courtId 
+                 AND date >= CURDATE() 
+                 AND status != 'cancelled'";
+        
+        $results = $this->query($query, ['courtId' => $courtId]);
+        
+        // Format the results as a structured array for JavaScript
+        $reservedSlots = [];
+        
+        // Check if results is valid before looping
+        if ($results && is_array($results)) {
+            foreach ($results as $result) {
+                if (!isset($reservedSlots[$result->date])) {
+                    $reservedSlots[$result->date] = [];
+                }
+                // Store the start time
+                $reservedSlots[$result->date][] = $result->time;
+            }
+        }
+        
+        
+        return $reservedSlots;
+    }
+
+    public function getReservations(){
+
+        $userId = $this->getUserId();
+
+        if (!$userId) {
+            die("User ID not found in session.");
+        }
+
+        $query = "SELECT reservations.*,courts.name FROM reservations
+                    JOIN courts ON reservations.courtid = courts.courtid 
+                    WHERE reservations.userid = :userid";
+        $result = $this->query($query, ['userid' => $userId]);
+        return $result;
+    }
+
+    public function editReservation($reservationId, $data) {
+        $userId = $this->getUserId();
+    
+        if (!$userId) {
+            die("User ID not found in session.");
+        }
+    
+        $query = "UPDATE reservations SET 
+                    event = :event, 
+                    date = :date,
+                    duration = :duration, 
+                    time = :time, 
+                    numberof_participants = :numberof_participants 
+                  WHERE reservationid = :reservationId";
+    
+        return $this->query($query, [
+            'event' => $data['event'],
+            'date' => $data['date'],
+            'duration' => $data['duration'],
+            'time' => $data['time'],
+            'numberof_participants' => $data['numberof_participants'],
+            'reservationId' => $reservationId
+        ]);
+    }
+
+    public function deleteReservation($reservationId) {
+
+        $userId = $this->getUserId();
+    
+        if (!$userId) {
+            return false;
+        }
+        
+        // Add user ID to ensure users can only delete their own reservations
+        $query = "DELETE FROM {$this->table} WHERE reservationid = :reservationid AND userid = :userid";
+        
+        return $this->query($query, [
+            'reservationid' => $reservationId,
+            'userid' => $userId
+        ]);
+    }
+
+    public function getReservationsByCourtLocation($location) {
+        $query = "SELECT reservations.*, courts.name, courts.location
+                  FROM reservations
+                  JOIN courts  ON reservations.courtid = courts.courtid
+                  WHERE courts.location = :location";
+    
+        return $this->query($query, ['location' => $location]);
+    }
+
+    
+       
 }

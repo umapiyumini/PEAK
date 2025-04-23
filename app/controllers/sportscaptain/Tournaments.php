@@ -15,12 +15,17 @@ class Tournaments extends Controller {
     private $interfacultyrecords;
     private $interunirecords;
     private $otherrecords;
+    private $interuniplayers;
+    
 
     public function __construct() {
         $this->freshersrecords = new Freshersrecords();
         $this->interfacultyrecords = new Interfacultyrecords();
         $this->interunirecords = new Interunirecords();
         $this->otherrecords = new Othertournaments();
+        $this->interuniplayers = new Interuniplayers();
+        //$this->interfacultyplayers = new Interfacultyplayers();
+        //$this->freshersplayers = new Freshersplayers();
     }
 
     public function index() {
@@ -334,5 +339,45 @@ class Tournaments extends Controller {
             exit();
 
         }
+
+        public function getPlayers() {
+            $type = $this->input->get('type');
+            $id = $this->input->get('id');
+            
+            switch ($type) {
+                case 'interUni':
+                    $result = $this->getinteruniplayers($id);
+                    break;
+                case 'interFaculty':
+                    $result = $this->getinterfacultyplayers($id);
+                    break;
+                case 'freshers':
+                    $result = $this->getfreshersplayers($id);
+                    break;
+                default:
+                    $result = false;
+            }
+            
+            if ($result) {
+                echo json_encode($result);
+            } else {
+                echo json_encode([]);
+            }
+        }
+        
+        public function getinteruniplayers($tournamentId) {
+            $result = $this->interuniplayers->getParticipantsByTournamentId($tournamentId);
+            return $result ? $result : false;
+        }
+        
+       // public function getinterfacultyplayers($tournamentId) {
+           // $result = $this->interfacultyrecords->getParticipantsByTournamentId($tournamentId);
+            //return $result ? $result : false;
+       // }
+        
+        //public function getfreshersplayers($tournamentId) {
+            //$result = $this->freshersrecords->getParticipantsByTournamentId($tournamentId);
+            //return $result ? $result : false;
+       // }
 }
     

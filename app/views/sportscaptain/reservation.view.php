@@ -2,338 +2,520 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="<?=ROOT?>/assets/css/vidusha/rese.css">
   <title>Sports Facility Reservation</title>
+  <link rel="stylesheet" href="<?=ROOT?>/assets/css/vidusha/rese.css">
 </head>
 <body>
-  <div class="header">
-    <h1>Sports Facility Reservation</h1>
-  </div>
 
-  <div class="tabs">
-    <button class="tab active" onclick="showTab('new-reservation')">New Reservation</button>
-    <button class="tab" onclick="showTab('previous-reservations')">Previous Reservations</button>
-  </div>
+<div class="header">
+  <h1>Sports Facility Reservation</h1>
+</div>
 
-  <div id="new-reservation-tab">
-    <div class="container">
-      <!-- Left side: New Reservation Form -->
-      <div class="section">
-        <h2>Make a Reservation</h2>
-        <form id="reservation-form">
+<div class="tabs">
+  <button class="tab active" onclick="showTab('new-reservation')">New Reservation</button>
+  <button class="tab" onclick="showTab('previous-reservations')">Previous Reservations</button>
+</div>
+
+<!-- New Reservation Tab -->
+<div id="new-reservation-tab">
+  <div class="container">
+    <div class="section">
+      <h2>Make a Reservation</h2>
+      <form id="reservation-form" action="<?=ROOT?>/sportscaptain/reservation/addreservation" method="POST">
+        <input type="hidden" name="courtid" value="<?= htmlspecialchars($courtname->courtid) ?>">
+
+        <div>
+          <label for="facility">Facility:</label>
+          <input type="text" id="facility" name="name" value="<?= htmlspecialchars($courtname->name) ?>" readonly>
+        </div>
+
+        <div>
+          <label for="bookingFor">Booking For:</label>
+          <select id="bookingFor" name="event" required>
+            <option value="" disabled selected>Select</option>
+            <option value="practice">Practice</option>
+            <option value="tournament">Tournament</option>
+          </select>
+        </div>
+
+        <div>
+          <label for="date">Date:</label>
+          <input type="date" id="date" name="date" min="<?= date('Y-m-d') ?>" onchange="updateTimeSlots()">
+        </div>
+
+        <div>
+          <label for="duration">Duration:</label>
+          <select id="duration" name="duration" onchange="updateTimeSlots()" required>
+            <option value="" disabled selected>Select Duration</option>
+            <option value="half">Half Day</option>
+            <option value="full">Full Day</option>
+            <option value="2 hour">2 Hours</option>
+          </select>
+        </div>
+
+        <!-- Full Day Option -->
+        <div id="fullDayOptions" style="display: none;">
+          <label>Choose Time Slot:</label>
           <div>
-            <label for="facility">Select Facility Area:</label>
-            <select id="facility" onchange="updateTimeSlots()">
-              <option value="">Select a facility...</option>
-              <option value="indoor-court">Indoor Basketball Court</option>
-              <option value="outdoor-field">Outdoor Football Field</option>
-              <option value="swimming-pool">Swimming Pool</option>
-              <option value="tennis-court">Tennis Court</option>
-              <option value="gym">Gymnasium</option>
-            </select>
+            <label><input type="radio" name="time" value="08:00"> 08:00 - 18:00</label>
           </div>
-          
+        </div>
+
+        <!-- Half Day Options -->
+        <div id="halfDayOptions" style="display: none;">
+          <label>Choose Time Slot:</label>
           <div>
-            <label for="date">Date:</label>
-            <input type="date" id="date" onchange="updateTimeSlots()">
+            <label><input type="radio" name="time" value="08:00"> 08:00 - 13:00</label>
+            <label><input type="radio" name="time" value="13:00"> 13:00 - 18:00</label>
           </div>
-          
-          <div>
-            <label>Available Time Slots:</label>
-            <div class="time-slots" id="time-slots">
-              <!-- Time slots will be populated dynamically -->
-              <div class="time-slot available" onclick="selectTimeSlot(this)">8:00 - 9:00</div>
-              <div class="time-slot available" onclick="selectTimeSlot(this)">9:00 - 10:00</div>
-              <div class="time-slot unavailable">10:00 - 11:00</div>
-              <div class="time-slot available" onclick="selectTimeSlot(this)">11:00 - 12:00</div>
-              <div class="time-slot available" onclick="selectTimeSlot(this)">12:00 - 13:00</div>
-              <div class="time-slot unavailable">13:00 - 14:00</div>
-              <div class="time-slot available" onclick="selectTimeSlot(this)">14:00 - 15:00</div>
-              <div class="time-slot available" onclick="selectTimeSlot(this)">15:00 - 16:00</div>
-              <div class="time-slot available" onclick="selectTimeSlot(this)">16:00 - 17:00</div>
-            </div>
-          </div>
-          
-          <div>
-            <label for="participants">Number of Participants:</label>
-            <input type="number" id="participants" min="1" max="50">
-          </div>
-          
-          <div>
-            <label for="reason">Reason for Reservation:</label>
-            <textarea id="reason" rows="3" placeholder="Team practice, tournament preparation, etc."></textarea>
-          </div>
-          
-          <button type="submit">Submit Reservation</button>
-        </form>
+        </div>
+
+        <!-- Two Hour Options -->
+        <div id="twoHoursOptions" style="display: none;">
+          <label>Choose Time Slot:</label>
+          <div id="two-hour-slots"></div>
+        </div>
+
+        <div>
+          <label for="participants">Number of Participants:</label>
+          <input type="number" id="participants" name="numberof_participants" min="1" max="50" required>
+        </div>
+
+        <input type="hidden" name="status" value="pending">
+
+        <button type="submit">Submit Reservation</button>
+      </form>
+    </div>
+
+    <!-- Availability Checker -->
+    <div class="section">
+      <h2>Check Availability</h2>
+      <div>
+        <label for="facility-check">Facility:</label>
+        <input type="text" id="facility-check" value="<?= htmlspecialchars($courtname->name) ?>" readonly>
       </div>
-      
-      <!-- Right side: Facility Status -->
-      <div class="section">
-      <div id="facility-status" class="tab-content">
-            <h2>Facility Availability</h2>
-            <div class="form-group">
-                <label for="facility-check">Select Facility</label>
-                <select id="facility-check">
-                    <option value="">All Facilities</option>
-                    <option value="basketball1">Basketball Court 1</option>
-                    <option value="basketball2">Basketball Court 2</option>
-                    <option value="soccer1">Soccer Field Main</option>
-                    <option value="soccer2">Soccer Field Practice</option>
-                    <option value="volleyball">Volleyball Court</option>
-                    <option value="tennis1">Tennis Court 1</option>
-                    <option value="tennis2">Tennis Court 2</option>
-                    <option value="swimming">Swimming Pool</option>
-                </select>
-            </div>
+      <div>
+        <label for="date-check">Date:</label>
+        <input type="date" id="date-check" min="<?= date('Y-m-d') ?>">
+      </div>
+      <button onclick="checkAvailability()">Check Availability</button>
+      <div id="availability-results"></div>
+    </div>
+  </div>
+</div>
 
-            <div class="form-group">
-                <label for="date-check">Date</label>
-                <input type="date" id="date-check">
-            </div>
-
-            <button type="button" onclick="checkAvailability()">Check Availability</button>
-
-            <div id="availability-results" style="margin-top: 20px;">
-                <div class="reservation-card">
-                    <h3>Basketball Court 1</h3>
-                    <p><strong>Date:</strong> April 22, 2025</p>
-                    <p><strong>Available Slots:</strong></p>
-                    <ul>
-                        <li>8:00 AM - 10:00 AM</li>
-                        <li>10:00 AM - 12:00 PM</li>
-                        <li>2:00 PM - 4:00 PM</li>
-                        <li><span style="color: #dc2626;">4:00 PM - 6:00 PM (Reserved)</span></li>
-                        <li>6:00 PM - 8:00 PM</li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-        
-        <h3>Today's Schedule</h3>
-        <div class="reservation-list">
-          <div class="reservation-item">
-            <div class="reservation-header">
-              <span class="reservation-date">Outdoor Field</span>
-              <span class="reservation-status status-upcoming">Reserved</span>
-            </div>
-            <div class="reservation-details">
-              <div>
-                <div class="detail-label">Time</div>
-                <div>10:00 - 11:00</div>
+<!-- Previous Reservations Tab -->
+<div id="previous-reservations-tab" style="display: none;">
+  <div class="container">
+    <div class="section">
+      <h2>Your Previous Reservations</h2>
+      <div class="reservation-list">
+        <?php if (!empty($data['allreservations'])): ?>
+          <?php foreach ($data['allreservations'] as $item): ?>
+            <div class="reservation-item">
+              <div class="reservation-header">
+                <span class="reservation-date"><?= htmlspecialchars($item->date); ?></span>
+                <span class="reservation-status status-<?= strtolower($item->status); ?>"><?= htmlspecialchars($item->status); ?></span>
               </div>
-              <div>
-                <div class="detail-label">Team</div>
-                <div>Football Team A</div>
+              <div class="reservation-details">
+                <div>Facility: <?= htmlspecialchars($item->name); ?></div>
+                <div>Time: <?= htmlspecialchars($item->time); ?></div>
+                <div>Participants: <?= htmlspecialchars($item->numberof_participants); ?></div>
+                <div>Reason: <?= htmlspecialchars($item->event); ?></div>
+                <button class="edit-button" id="edit-btn" onclick="editReservation(<?= htmlspecialchars($item->reservationid); ?>)">Edit</button>
+                <button class="delete-button" id="delete-btn" onclick="deleteReservation(<?= htmlspecialchars($item->reservationid); ?>)">Cancel</button>
               </div>
             </div>
-          </div>
-          
-          <div class="reservation-item">
-            <div class="reservation-header">
-              <span class="reservation-date">Tennis Court</span>
-              <span class="reservation-status status-upcoming">Reserved</span>
-            </div>
-            <div class="reservation-details">
-              <div>
-                <div class="detail-label">Time</div>
-                <div>13:00 - 14:00</div>
-              </div>
-              <div>
-                <div class="detail-label">Team</div>
-                <div>Tennis Club</div>
-              </div>
-            </div>
-          </div>
-        </div>
+          <?php endforeach; ?>
+        <?php else: ?>
+          <p>No previous reservations found.</p>
+        <?php endif; ?>
       </div>
     </div>
   </div>
+  <!-- Edit Reservation Modal -->
+<div id="editReservationModal" class="modal">
+  <div class="modal-content">
+    <span class="close" onclick="closeEditModal()">&times;</span>
+    <h2>Edit Reservation</h2>
+    <form id="edit-reservation-form" action="<?=ROOT?>/sportscaptain/reservation/editreservation" method="POST">
+      <input type="hidden" name="reservationid" id="edit-reservationid" value="<?= $reservationId ?>">
+      <input type="hidden" name="courtid" id="edit-courtid">
 
-  <div id="previous-reservations-tab" style="display: none;">
-    <div class="container">
-      <div class="section" style="width: 100%;">
-        <h2>Your Previous Reservations</h2>
-        
-        <div class="reservation-list">
-          <div class="reservation-item">
-            <div class="reservation-header">
-              <span class="reservation-date">April 15, 2025</span>
-              <span class="reservation-status status-completed">Completed</span>
-            </div>
-            <div class="reservation-details">
-              <div>
-                <div class="detail-label">Facility</div>
-                <div>Indoor Basketball Court</div>
-              </div>
-              <div>
-                <div class="detail-label">Time</div>
-                <div>14:00 - 16:00</div>
-              </div>
-              <div>
-                <div class="detail-label">Participants</div>
-                <div>15 players</div>
-              </div>
-              <div>
-                <div class="detail-label">Reason</div>
-                <div>Basketball team practice</div>
-              </div>
-            </div>
-          </div>
-          
-          <div class="reservation-item">
-            <div class="reservation-header">
-              <span class="reservation-date">April 10, 2025</span>
-              <span class="reservation-status status-completed">Completed</span>
-            </div>
-            <div class="reservation-details">
-              <div>
-                <div class="detail-label">Facility</div>
-                <div>Outdoor Football Field</div>
-              </div>
-              <div>
-                <div class="detail-label">Time</div>
-                <div>9:00 - 11:00</div>
-              </div>
-              <div>
-                <div class="detail-label">Participants</div>
-                <div>22 players</div>
-              </div>
-              <div>
-                <div class="detail-label">Reason</div>
-                <div>Football match preparation</div>
-              </div>
-            </div>
-          </div>
-          
-          <div class="reservation-item">
-            <div class="reservation-header">
-              <span class="reservation-date">April 5, 2025</span>
-              <span class="reservation-status status-completed">Completed</span>
-            </div>
-            <div class="reservation-details">
-              <div>
-                <div class="detail-label">Facility</div>
-                <div>Swimming Pool</div>
-              </div>
-              <div>
-                <div class="detail-label">Time</div>
-                <div>15:00 - 17:00</div>
-              </div>
-              <div>
-                <div class="detail-label">Participants</div>
-                <div>12 swimmers</div>
-              </div>
-              <div>
-                <div class="detail-label">Reason</div>
-                <div>Swimming team training</div>
-              </div>
-            </div>
-          </div>
+      <div>
+        <label for="edit-facility">Facility:</label>
+        <input type="text" id="edit-facility" name="name" readonly>
+      </div>
+
+      <div>
+        <label for="edit-bookingFor">Booking For:</label>
+        <select id="edit-bookingFor" name="event" required>
+          <option value="practice">Practice</option>
+          <option value="tournament">Tournament</option>
+        </select>
+      </div>
+
+      <div>
+        <label for="edit-date">Date:</label>
+        <input type="date" id="edit-date" name="date" min="<?= date('Y-m-d') ?>" onchange="updateEditTimeSlots()" required>
+      </div>
+
+      <div>
+        <label for="edit-duration">Duration:</label>
+        <select id="edit-duration" name="duration" onchange="updateEditTimeSlots()" required>
+          <option value="half">Half Day</option>
+          <option value="full">Full Day</option>
+          <option value="2 hour">2 Hours</option>
+        </select>
+      </div>
+
+      <!-- Full Day Option -->
+      <div id="edit-fullDayOptions" style="display: none;">
+        <label>Choose Time Slot:</label>
+        <div>
+          <label><input type="radio" name="time" value="08:00"> 08:00 - 18:00</label>
         </div>
       </div>
-    </div>
-  </div>
 
-  <script>
-    // Function to show selected tab
-    function showTab(tabId) {
-      if (tabId === 'new-reservation') {
-        document.getElementById('new-reservation-tab').style.display = 'block';
-        document.getElementById('previous-reservations-tab').style.display = 'none';
-        document.querySelectorAll('.tab')[0].classList.add('active');
-        document.querySelectorAll('.tab')[1].classList.remove('active');
-      } else {
-        document.getElementById('new-reservation-tab').style.display = 'none';
-        document.getElementById('previous-reservations-tab').style.display = 'block';
-        document.querySelectorAll('.tab')[0].classList.remove('active');
-        document.querySelectorAll('.tab')[1].classList.add('active');
-      }
+      <!-- Half Day Options -->
+      <div id="edit-halfDayOptions" style="display: none;">
+        <label>Choose Time Slot:</label>
+        <div>
+          <label><input type="radio" name="time" value="08:00"> 08:00 - 13:00</label>
+          <label><input type="radio" name="time" value="13:00"> 13:00 - 18:00</label>
+        </div>
+      </div>
+
+      <!-- Two Hour Options -->
+      <div id="edit-twoHoursOptions" style="display: none;">
+        <label>Choose Time Slot:</label>
+        <div id="edit-two-hour-slots"></div>
+      </div>
+
+      <div>
+        <label for="edit-participants">Number of Participants:</label>
+        <input type="number" id="edit-participants" name="numberof_participants" min="1" max="50" required>
+      </div>
+
+      <input type="hidden" name="status" value="pending">
+
+      <div class="form-buttons">
+        <button type="button" onclick="closeEditModal()">Cancel</button>
+        <button type="submit">Update Reservation</button>
+      </div>
+    </form>
+  </div>
+</div>
+</div>
+
+<script>
+  const reservedTimeSlots = <?= $reservedTimeSlots ?>;
+
+  const allSlots = {
+    "2 hour": [
+      { value: "08:00", display: "08:00 - 10:00" },
+      { value: "10:00", display: "10:00 - 12:00" },
+      { value: "12:00", display: "12:00 - 14:00" },
+      { value: "14:00", display: "14:00 - 16:00" },
+      { value: "16:00", display: "16:00 - 18:00" }
+    ]
+  };
+
+  function showTab(tabId) {
+    document.getElementById('new-reservation-tab').style.display = (tabId === 'new-reservation') ? 'block' : 'none';
+    document.getElementById('previous-reservations-tab').style.display = (tabId === 'previous-reservations') ? 'block' : 'none';
+
+    document.querySelectorAll('.tab').forEach(tab => tab.classList.remove('active'));
+    document.querySelector(`.tab[onclick*="${tabId}"]`).classList.add('active');
+  }
+
+  function updateTimeSlots() {
+  const date = document.getElementById("date").value;
+  const duration = document.getElementById("duration").value;
+
+  document.getElementById("fullDayOptions").style.display = "none";
+  document.getElementById("halfDayOptions").style.display = "none";
+  document.getElementById("twoHoursOptions").style.display = "none";
+
+  if (!date || !duration) return;
+
+  const reserved = reservedTimeSlots[date] || [];
+
+  if (duration === "full") {
+    document.getElementById("fullDayOptions").style.display = reserved.includes("08:00") ? "none" : "block";
+    // If available, pre-select the radio button
+    if (!reserved.includes("08:00")) {
+      document.querySelector('#fullDayOptions input[type="radio"]').checked = true;
     }
+  } else if (duration === "half") {
+    document.getElementById("halfDayOptions").style.display = "block";
+    const radioButtons = document.querySelectorAll("#halfDayOptions input");
     
-    // Function to select time slot
-    function selectTimeSlot(element) {
-      // Remove selection from all time slots
-      document.querySelectorAll('.time-slot').forEach(slot => {
-        if (!slot.classList.contains('unavailable')) {
-          slot.classList.remove('selected');
-        }
-      });
-      
-      // Add selection to clicked element
-      if (!element.classList.contains('unavailable')) {
-        element.classList.add('selected');
+    radioButtons.forEach(input => {
+      input.disabled = reserved.includes(input.value);
+      // Uncheck disabled options
+      if (reserved.includes(input.value)) {
+        input.checked = false;
       }
-    }
-    
-    // Function to update time slots based on facility and date
-    function updateTimeSlots() {
-      const facility = document.getElementById('facility').value;
-      const date = document.getElementById('date').value;
-      
-      if (facility && date) {
-        // In a real application, you would fetch available time slots from server
-        console.log(`Updating time slots for ${facility} on ${date}`);
-        // Simulate different availability for different facilities
-        if (facility === 'indoor-court') {
-          document.querySelectorAll('.time-slot')[2].classList.remove('unavailable');
-          document.querySelectorAll('.time-slot')[2].classList.add('available');
-          document.querySelectorAll('.time-slot')[5].classList.add('unavailable');
-          document.querySelectorAll('.time-slot')[5].classList.remove('available');
-        } else if (facility === 'outdoor-field') {
-          document.querySelectorAll('.time-slot')[5].classList.remove('unavailable');
-          document.querySelectorAll('.time-slot')[5].classList.add('available');
-          document.querySelectorAll('.time-slot')[2].classList.add('unavailable');
-          document.querySelectorAll('.time-slot')[2].classList.remove('available');
-        }
-      }
-    }
-    
-    // Function to update facility status
-    function updateFacilityStatus() {
-      const date = document.getElementById('status-date').value;
-      if (date) {
-        // In a real application, you would fetch facility status from server
-        console.log(`Updating facility status for ${date}`);
-      }
-    }
-    
-    // Form submission
-    document.getElementById('reservation-form').addEventListener('submit', function(e) {
-      e.preventDefault();
-      
-      const facility = document.getElementById('facility').value;
-      const date = document.getElementById('date').value;
-      const participants = document.getElementById('participants').value;
-      const reason = document.getElementById('reason').value;
-      
-      // Check if a time slot is selected
-      const selectedTimeSlot = document.querySelector('.time-slot.selected');
-      
-      if (!facility || !date || !participants || !reason || !selectedTimeSlot) {
-        alert('Please fill in all fields and select a time slot.');
-        return;
-      }
-      
-      // In a real application, you would send this data to the server
-      alert(`Reservation submitted successfully!\n\nFacility: ${facility}\nDate: ${date}\nTime: ${selectedTimeSlot.textContent}\nParticipants: ${participants}\nReason: ${reason}`);
-      
-      // Reset form
-      this.reset();
-      document.querySelectorAll('.time-slot').forEach(slot => {
-        slot.classList.remove('selected');
-      });
     });
     
-    // Initialize the page
-    document.addEventListener('DOMContentLoaded', function() {
-      // Set default date to today
-      const today = new Date();
-      const dateStr = today.toISOString().split('T')[0];
-      document.getElementById('date').value = dateStr;
-      document.getElementById('status-date').value = dateStr;
+    // Auto-select first available option
+    const firstAvailable = Array.from(radioButtons).find(input => !input.disabled);
+    if (firstAvailable) {
+      firstAvailable.checked = true;
+    }
+  } else if (duration === "2 hour") {
+    const container = document.getElementById("two-hour-slots");
+    container.innerHTML = "";
+    document.getElementById("twoHoursOptions").style.display = "block";
+
+    let hasAvailable = false;
+    let firstAdded = null;
+    
+    allSlots["2 hour"].forEach(slot => {
+      if (!reserved.includes(slot.value)) {
+        const label = document.createElement('label');
+        const input = document.createElement('input');
+        input.type = 'radio';
+        input.name = 'time';
+        input.value = slot.value;
+        input.required = true;
+        
+        label.appendChild(input);
+        label.appendChild(document.createTextNode(' ' + slot.display));
+        container.appendChild(label);
+        container.appendChild(document.createElement('br'));
+        
+        if (!firstAdded) firstAdded = input;
+        hasAvailable = true;
+      }
     });
-  </script>
+
+    if (!hasAvailable) {
+      container.innerHTML = "<p>No available slots for selected date.</p>";
+    } else if (firstAdded) {
+      // Auto-select first available option
+      firstAdded.checked = true;
+    }
+  }
+}
+
+
+function checkAvailability() {
+  const date = document.getElementById("date-check").value;
+  const resultsDiv = document.getElementById("availability-results");
+  const courtName = document.getElementById("facility-check").value;
+
+  if (!date) {
+    resultsDiv.innerHTML = "<p>Please select a date.</p>";
+    return;
+  }
+
+  // Format date for display
+  const formattedDate = new Date(date).toLocaleDateString();
+  
+  // Get reserved slots
+  const reserved = reservedTimeSlots[date] || [];
+  
+  // Define all possible time slots
+  const allTimeSlots = {
+    "2 hours": ["08:00 - 10:00", "10:00 - 12:00", "12:00 - 14:00", "14:00 - 16:00", "16:00 - 18:00"],
+    "Half Day": ["Morning (08:00 - 13:00)", "Afternoon (13:00 - 18:00)"],
+    "Full Day": ["Full Day (08:00 - 18:00)"]
+  };
+  
+  // Start building HTML
+  let html = `<h3>${courtName} - ${formattedDate}</h3>`;
+  
+  // Check if any slots are reserved
+  if (reserved.length === 0) {
+    html += "<p>All time slots are available!</p>";
+  } else {
+    html += "<p>Available time slots:</p>";
+  }
+  
+  // Add available 2-hour slots
+  html += "<p><strong>2-Hour Slots:</strong></p><ul>";
+  for (let slot of allTimeSlots["2 hours"]) {
+    const startTime = slot.split(" - ")[0];
+    if (!reserved.includes(startTime)) {
+      html += `<li>${slot}</li>`;
+    }
+  }
+  html += "</ul>";
+  
+  // Add available half-day slots
+  html += "<p><strong>Half-Day Slots:</strong></p><ul>";
+  if (!reserved.includes("08:00")) {
+    html += "<li>Morning (08:00 - 13:00)</li>";
+  }
+  if (!reserved.includes("13:00")) {
+    html += "<li>Afternoon (13:00 - 18:00)</li>";
+  }
+  html += "</ul>";
+  
+  // Add available full-day slot
+  html += "<p><strong>Full-Day Slot:</strong></p><ul>";
+  if (!reserved.includes("08:00")) {
+    html += "<li>Full Day (08:00 - 18:00)</li>";
+  } else {
+    html += "<li>Not available</li>";
+  }
+  html += "</ul>";
+  
+  resultsDiv.innerHTML = html;
+}
+
+function editReservation(reservationId) {
+  // Find the reservation data from the PHP-rendered JSON
+  const reservations = JSON.parse('<?php echo json_encode($data["allreservations"] ?? []); ?>');
+  const reservation = reservations.find(r => r.reservationid == reservationId);
+
+  if (!reservation) {
+    alert("Reservation data not found.");
+    return;
+  }
+
+  // Set form fields
+  document.getElementById("edit-reservationid").value = reservation.reservationid;
+  document.getElementById("edit-courtid").value = reservation.courtid;
+  document.getElementById("edit-facility").value = reservation.name;
+  document.getElementById("edit-bookingFor").value = reservation.event;
+  document.getElementById("edit-date").value = reservation.date;
+  document.getElementById("edit-duration").value = reservation.duration;
+  document.getElementById("edit-participants").value = reservation.numberof_participants;
+
+  // Show relevant time options based on duration
+  updateEditTimeSlots();
+
+  // Set the appropriate time radio button (with a small delay to ensure slots are rendered)
+  setTimeout(() => {
+    const timeRadios = document.querySelectorAll('#editReservationModal input[name="time"]');
+    timeRadios.forEach(radio => {
+      if (radio.value === reservation.time) {
+        radio.checked = true;
+      }
+    });
+  }, 100);
+
+  // Show the modal
+  document.getElementById("editReservationModal").style.display = "block";
+}
+
+function closeEditModal() {
+  document.getElementById("editReservationModal").style.display = "none";
+}
+
+function updateEditTimeSlots() {
+  const date = document.getElementById("edit-date").value;
+  const duration = document.getElementById("edit-duration").value;
+  
+  // Hide all time slot options first
+  document.getElementById("edit-fullDayOptions").style.display = "none";
+  document.getElementById("edit-halfDayOptions").style.display = "none";
+  document.getElementById("edit-twoHoursOptions").style.display = "none";
+  
+  if (!date || !duration) return;
+  
+  // Get reserved slots for the selected date
+  // Exclude the current reservation's time slot from reserved slots
+  const reservationId = document.getElementById("edit-reservationid").value;
+  const reservations = JSON.parse('<?php echo json_encode($data["allreservations"] ?? []); ?>');
+  const currentReservation = reservations.find(r => r.reservationid == reservationId);
+  
+  let reserved = reservedTimeSlots[date] || [];
+  
+  // If editing an existing reservation for the same date, don't consider its own time as reserved
+  if (currentReservation && currentReservation.date === date) {
+    reserved = reserved.filter(time => time !== currentReservation.time);
+  }
+  
+  if (duration === "full") {
+    document.getElementById("edit-fullDayOptions").style.display = "block";
+    // Disable if already reserved
+    const fullDayInput = document.querySelector('#edit-fullDayOptions input[type="radio"]');
+    fullDayInput.disabled = reserved.includes("08:00");
+    if (!fullDayInput.disabled) {
+      fullDayInput.checked = true;
+    }
+  } 
+  else if (duration === "half") {
+    document.getElementById("edit-halfDayOptions").style.display = "block";
+    const radioButtons = document.querySelectorAll("#edit-halfDayOptions input");
+    
+    radioButtons.forEach(input => {
+      input.disabled = reserved.includes(input.value);
+      if (input.disabled) {
+        input.checked = false;
+      }
+    });
+    
+    // Auto-select first available option
+    const firstAvailable = Array.from(radioButtons).find(input => !input.disabled);
+    if (firstAvailable) {
+      firstAvailable.checked = true;
+    }
+  } 
+  else if (duration === "2 hour") {
+    const container = document.getElementById("edit-two-hour-slots");
+    container.innerHTML = "";
+    document.getElementById("edit-twoHoursOptions").style.display = "block";
+    
+    let hasAvailable = false;
+    let firstAdded = null;
+    
+    allSlots["2 hour"].forEach(slot => {
+      if (!reserved.includes(slot.value)) {
+        const label = document.createElement('label');
+        const input = document.createElement('input');
+        input.type = 'radio';
+        input.name = 'time';
+        input.value = slot.value;
+        input.required = true;
+        
+        label.appendChild(input);
+        label.appendChild(document.createTextNode(' ' + slot.display));
+        container.appendChild(label);
+        container.appendChild(document.createElement('br'));
+        
+        if (!firstAdded) firstAdded = input;
+        hasAvailable = true;
+      }
+    });
+    
+    if (!hasAvailable) {
+      container.innerHTML = "<p>No available slots for selected date.</p>";
+    } else if (firstAdded) {
+      firstAdded.checked = true;
+    }
+  }
+}
+// Define ROOT for JavaScript use
+const ROOT = "<?=ROOT?>";
+
+function deleteReservation(reservationId) {
+  // Show confirmation dialog
+  if (confirm("Are you sure you want to cancel this reservation? This action cannot be undone.")) {
+    // Show loading indicator (optional)
+    const loadingDiv = document.createElement('div');
+    loadingDiv.className = 'loading-overlay';
+    loadingDiv.innerHTML = '<div class="spinner"></div><p>Cancelling reservation...</p>';
+    document.body.appendChild(loadingDiv);
+    
+    // Redirect to the delete endpoint
+    window.location.href = `${ROOT}/sportscaptain/reservation/deletereservation/${reservationId}`;
+  }
+}
+
+
+
+
+function closeModal() {
+  document.querySelectorAll('.modal').forEach(modal => modal.classList.add('hidden'));
+  document.querySelector('.modal-overlay').classList.add('hidden');
+}
+
+</script>
+
 </body>
 </html>

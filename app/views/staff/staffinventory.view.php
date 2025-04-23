@@ -4,7 +4,7 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-1.0">
         <link rel="stylesheet" href="<?=ROOT?>/assets/css/vidusha/todo.css">
-        <title>External User Dashboard</title>
+        <title>Staff Dashboard</title>
     </head>
 
 
@@ -55,7 +55,7 @@
                         <td><?php echo $item->issued_quantity; ?></td>
                         <td>
                             <button class="edit-btn"
-                            data-id="<?= $item->stocktid ?>" 
+                            data-id="<?= $item->stockid ?>" 
                                 data-name="<?= htmlspecialchars($item->name) ?>"
                                 data-quantity="<?= $item->issued_quantity ?>"
                                 onclick="openEditModal(this)">Edit</button>
@@ -79,7 +79,7 @@
         
         <!-- Form to edit equipment details -->
         <form method="POST" action="<?=ROOT?>/staff/staffinventory/editEquipment" id="editEquipmentForm">
-
+            
             <!-- Hidden input for equipmentId -->
             <input type="hidden" id="equipmentId" name="equipmentid">
             
@@ -114,14 +114,7 @@
     </div>
 </div>
 
-            </div>
-
-
-
-
-
-
-            
+            </div>      
 
         <!-- Requests Table Container with Border -->
         <div class="requests-container">
@@ -146,6 +139,7 @@
                             <td><?php echo htmlspecialchars($item->quantityrequested); ?></td>
                             <td><?php echo htmlspecialchars($item->date); ?></td>
                             <td>
+                                <button class="update-btn" data-id="<?= $item->requestid ?>">Edit</button>
                                 <form action="<?=ROOT?>/staff/staffinventory/deleterequest" method="POST">
                                 <input type="hidden" name="requestid" value="<?= $item->requestid ?>">
                                 <button class="deleteBtn">Delete</button>
@@ -195,6 +189,43 @@
                 <button type="button" id="closeRequestModal">Close</button>
             </div>
         </form>
+    </div>
+</div>
+
+<!--update request modal-->
+<div id="updaterequestModel" class="modal">
+        <div class = "modal-content">
+        <span class="close">&times;</span>
+        <h2>Update Request</h2>
+        <form id ="updateRequestForm" action="<?= ROOT ?>/staff/staffinventory/editrequest" method="POST">
+            <input type="hidden" id="updateRequestId" name="requestid">
+
+            <div class="form-group">
+                <label for="productName">Product Name: </label>
+                <input type="text" id="updaterequestProductName" name="name" required>
+            </div>
+
+            <div class="form-group">
+                <label for="quantity">Quantity: </label>
+                <input type="number" id="updaterequestQuantity" name="quantityrequested" required>
+            </div>
+
+            <div class="form-group">
+                <label for="timeframe">Time Frame: </label>
+                <select id="updaterequesttimeframe" name="timeframe" required>
+                    <option value="mid-year">Mid-year</option>
+                    <option value="year-end">Year-end</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="date">Date: </label>
+                <input type="date" id="updaterequestDate" name="date" value="required>
+            </div>
+
+            <button type="submit" class="submit-btn">Update</button>
+        </form>
+
     </div>
 </div>
 

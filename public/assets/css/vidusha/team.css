@@ -179,6 +179,16 @@ table td:last-child {
     border: 2px solid #dc3545;
 }
 
+.regno-link {
+    color: #007bff;
+    text-decoration: none;
+}
+
+.regno-link:hover {
+    text-decoration: underline;
+}
+
+
 @keyframes fadeInOut {
     0% {
         opacity: 0;

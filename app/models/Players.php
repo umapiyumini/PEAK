@@ -10,9 +10,11 @@ class Players{
 
         $userId = $this->getUserId();
 
-        $query = "SELECT sports_captain.sport_id, players.*
+        $query = "SELECT sports_captain.sport_id,student.registrationnumber,student.userid,user.userid,user.name, players.*
                 FROM sports_captain
                 JOIN players ON sports_captain.sport_id = players.sport_id
+                JOIN student ON players.regno = student.registrationnumber
+                JOIN user ON student.userid = user.userid
                 WHERE sports_captain.userid = :userid";
                 
         $result = $this->query($query, ['userid' => $userId]);

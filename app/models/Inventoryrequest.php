@@ -170,14 +170,13 @@ class Inventoryrequest {
     }
 
 
-    public function addRequest() {
-
+    public function addRequest($requests) {
         $userId = $this->getUserId();
-    
+        
         if (!$userId) {
-            die("User ID not found in session.");
+            return false;
         }
-    
+        
         $query = "INSERT INTO inventoryrequest (
                     equipmentid, 
                     quantityrequested, 
@@ -194,15 +193,21 @@ class Inventoryrequest {
                     :userid,
                     'pending',
                     :addnotes)";
+        
+        foreach ($requests as $req) {
+            $this->query($query, [
+                'name' => $req['name'],
+                'quantityrequested' => $req['quantityrequested'],
+                'timeframe' => $req['timeframe'],
+                'userid' => $req['userId'],
+                'addnotes' => $req['addnotes'],
+            ]);
+        }
     
-        return $this->query($query, [
-            'name' => $_POST['name'],
-            'quantityrequested' => $_POST['quantityrequested'],
-            'timeframe' => $_POST['timeframe'],
-            'userid' => $userId,
-            'addnotes' => $_POST['addnotes'],
-        ]);
+        return true;
     }
+    
+    
 
     public function editRequest($requestid, $equipmentid, $quantityrequested, $timeframe, $date){
 

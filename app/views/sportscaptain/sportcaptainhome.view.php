@@ -89,27 +89,22 @@
 	
     <div class="upcoming-events">
       <h2>Upcoming Events</h2>
-      <div class="events-grid">
-        <a href="#" class="event-card">
-          <h3>Fitness Challenge</h3>
-          <p>Date: 1st June 2024</p>
-          <p>Time: 4:00 PM - 7:00 PM</p>
-          <p>Venue: University Gymnasium</p>
-        </a>
-        <a href="event-schedule.html" class="event-card">
-          <h3>Inter faculty hockey</h3>
-          <p>Date: 10th July 2024</p>
-          <p>Time: 9:30 AM - 12:30 PM</p>
-          <p>Venue: UOC ground</p>
-        </a>
-        <a href="#" class="event-card">
-          <h3>Leadership program</h3>
-          <p>Date: 20th August 2024</p>
-          <p>Time: 1:00 PM - 5:00 PM</p>
-          <p>Venue: UOC ground</p>
-        </a>
+      <div id="event-list" class="events-grid">
+      <div class="event-card">
+        <?php if (!empty($data['events'])): ?>
+          <?php foreach($data['events'] as $event): ?>
+            
+            <h3><?= $event->event_name?></h3>
+            <p>Date: <?= $event->date?></p>
+            <p>Time: <?= $event->time?></p>
+            <p>Venue: <?= $event->venue?></p>
+          <?php endforeach; ?>
+        <?php else: ?>
+          <p>No upcoming events found.</p>
+        <?php endif; ?>
+        </div>
+        </div>
       </div>
-    </div>
     </aside>
   </main>
 	<footer class="footer">
