@@ -1,29 +1,11 @@
 @import url(ped.css);
 /* controls */
-.student-controls {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 2rem;
+
+
+.student-controls .search-bar {
+    width: 100%;
 }
 
-
-.add-student-btn {
-    padding: 0.75rem 1.5rem;
-    background-color: var(--secondary-color);
-    color: var(--white);
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-}
-
-
-.add-student-btn:hover {
-    opacity: 0.9;
-}
 .student-table {
     background-color: var(--white);
     padding: 20px;

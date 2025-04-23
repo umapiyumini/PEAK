@@ -28,77 +28,36 @@
             
                 <!-- Rates Table -->
                 <table class="rates-table" id="rates-table">
-                  <thead>
-                    <tr>
-                      <th>Ground</th>
-                      <th colspan="3">Practice (with Supervisor Charges)</th>
-                      <th colspan="3">Matches / Sports Festivals (with Supervisor Charges)</th>
-                    </tr>
-                    <tr>
-                      <th></th>
-                      <th>Full Day (Rs.)</th>
-                      <th>Half Day (Rs.)</th>
-                      <th>Two Hours (Rs.)</th>
-                      <th>Full Day (Rs.)</th>
-                      <th>Half Day (Rs.)</th>
-                      <th>Two Hours (Rs.)</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td>Baseball (30 Persons for practices)</td>
-                      <td>30,000.00</td>
-                      <td>17,500.00</td>
-                      <td>-</td>
-                      <td>65,000.00</td>
-                      <td>35,000.00</td>
-                      <td>-</td>
-                    </tr>
-                    <tr>
-                      <td>Basketball (25 Persons for practices) (without light)</td>
-                      <td>20,000.00</td>
-                      <td>12,000.00</td>
-                      <td>6,000.00</td>
-                      <td>40,000.00</td>
-                      <td>25,000.00</td>
-                      <td>10,000.00</td>
-                    </tr>
-                    <tr>
-                      <td>Basketball (25 Persons for practices) (with light)</td>
-                      <td>-</td>
-                      <td>17,500.00</td>
-                      <td>8,000.00</td>
-                      <td>-</td>
-                      <td>25,000.00</td>
-                      <td>12,500.00</td>
-                    </tr>
-                    <tr>
-                      <td>Cricket - Hard Ball with matting</td>
-                      <td>30,000.00</td>
-                      <td>17,500.00</td>
-                      <td>10,000.00</td>
-                      <td>35,000.00</td>
-                      <td>20,000.00</td>
-                      <td>-</td>
-                    </tr>
-                    <tr>
-                      <td>Soft Ball Cricket & Other functions (max. 3 pitches)</td>
-                      <td>-</td>
-                      <td>-</td>
-                      <td>
-                        4,000.00 (During working hours) <br>
-                        4,600.00 (Other than working hours)
-                      </td>
-                      <td>115,000.00</td>
-                      <td>65,000.00</td>
-                      <td>
-                        10,000.00 (During working hours) <br>
-                        13,000.00 (Other than working hours)
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-             
+  <thead>
+    <tr>
+      <th>Court Name</th>
+      <th>Image</th>
+      <th>Event</th>
+      <th>Duration</th>
+      <th>Description</th>
+      <th>Price (Rs.)</th>
+    </tr>
+  </thead>
+  <tbody>
+    <?php foreach ($rates as $rate): ?>
+      <tr>
+        <td><?= htmlspecialchars($rate->courtname) ?></td>
+        <td>
+          <?php if ($rate->courtimage): ?>
+            <img src="<?= htmlspecialchars($rate->courtimage) ?>" alt="<?= htmlspecialchars($rate->courtname) ?>" style="width:80px; height:auto;">
+          <?php else: ?>
+            <span>No Image</span>
+          <?php endif; ?>
+        </td>
+        <td><?= htmlspecialchars($rate->event) ?></td>
+        <td><?= htmlspecialchars($rate->duration) ?></td>
+        <td><?= htmlspecialchars($rate->description) ?></td>
+        <td><?= number_format($rate->price, 2) ?></td>
+      </tr>
+    <?php endforeach; ?>
+  </tbody>
+</table>
+
             
               
             

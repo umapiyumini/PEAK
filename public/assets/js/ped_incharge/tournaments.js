@@ -32,6 +32,33 @@ function viewTournament(tournamentdata) {
   document.getElementById("viewPlace").value = tournamentdata.dataset.place || '';
   document.getElementById("viewMenWomen").value = tournamentdata.dataset.category || '';
   document.getElementById("viewVenue").value = tournamentdata.dataset.venue || '';
+
+  tournamentId = tournamentdata.dataset.tournamentid || '';
+
+  fetch(`interuni_tournaments/getParticipants/${tournamentId}`)
+        .then(response => response.json())
+        .then(data => {
+          console.log(data); // Log the data for debugging
+            const participantsList = document.getElementById('viewParticipantsList');
+            participantsList.innerHTML = '';
+
+
+            if (data.length > 0) {
+                data.forEach(participant => {
+                    const participantItem = document.createElement('a');
+                    participantItem.classList.add('participant-item');
+                    participantItem.href = `student_profile/${participant.regno}`;
+                    participantItem.textContent = `${participant.regno}`;
+                    participantItem.style.display = 'block';
+                    participantsList.appendChild(participantItem);
+                });
+            } else {
+                participantsList.innerHTML = '<p>No participants found.</p>';
+            }
+        })
+        .catch(error => {
+            console.error('Error fetching participants:', error);
+        });
 }
 
 function closeModal(modalId) {

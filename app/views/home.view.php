@@ -83,11 +83,9 @@
         </div>
 
         <div class="f-col">
-            <img class="facility" id="facility2" src="<?=ROOT?>/assets/images/tennis.jpg">
-            <h3> Top tier Tennis court</h3>
-            <p>Our tennis courts offer a pristine playing surface for enthusiasts and professionals. 
-                Well-maintained and equipped with the latest amenities, they provide an excellent 
-                environment for both practice and competitive matches</p>
+            <img class="facility" id="facility2" src="<?=ROOT?>/assets/images/uma/hall.jpg">
+            <h3> Top tier Strength hall</h3>
+            <p> Our strength hall is a modern, fully-equipped facility designed for athletes and fitness enthusiasts of all levels. Featuring a wide range of high-quality equipment and ample space, it provides the perfect environment for strength training, conditioning, and personal development. Whether you're focused on building muscle, improving endurance, or enhancing overall fitness, our strength hall supports your goals in a safe and motivating setting. </p>
         </div>
 
         <div class="f-col">
@@ -98,49 +96,46 @@
                  it ensures a top-notch experience for athletes and spectators alike.</p>
             </div>
        </div>
+
+     
         </section>
 
+        
         <section class="feedbacks">
-        <h2>Community Highlights</h2>
-        <p>See what others have to say about their experience with our facilities! Here's some feedback
-             from past users who made reservations and enjoyed our top-quality venues.</p>
+    <h2>Community Highlights</h2>
+    <p>See what others have to say about their experience with our facilities! Here's some feedback
+        from past users who made reservations and enjoyed our top-quality venues.</p>
 
+    <div class="row">
+        <?php if(!empty($feedbacks)): ?>
+            <?php foreach($feedbacks as $feedback): ?>
+    <div class="feed-col facility">
+        <?php
+            // If image exists, use it; otherwise, use a default image
+            $imgSrc = isset($feedback->user_image) && $feedback->user_image
+                ? LINKROOT . "/uploads/profile_pictures/" . $feedback->user_image
+                : LINKROOT . "/assets/images/default-user.jpg";
+        ?>
+        <img src="<?=$imgSrc?>" alt="User profile picture" style="width:70px;height:70px;border-radius:50%;">
+        <div>
+            <p><?=htmlspecialchars($feedback->content)?></p>
+            <h3><?=htmlspecialchars($feedback->user_name)?></h3>
+            <?php
+                $rating = (int)$feedback->rating;
+                for($i=0; $i<5; $i++){
+                    echo $i < $rating ? '<span class="star">&#9733;</span>' : '<span class="star">&#9734;</span>';
+                }
+            ?>
+        </div>
+    </div>
+<?php endforeach; ?>
 
-             <div class="row">
-                <div class="feed-col facility" id="facility1">
-                    <img src="<?=ROOT?>/assets/images/user1.jpg">
-                    <div> 
-                        <p>
-                            "The facilities are top-notch! The Tennis court was well-maintained, 
-                            and our team loved the atmosphere. We had an amazing time during our session"</p>
-                           <h3>M H M Hamdi</h3> 
-                           <span class="star"> &#9733;</span>
-                           <span class="star"> &#9733;</span>
-                           <span class="star"> &#9733;</span>
-                           <span class="star"> &#9733;</span>
-                           <span class="star"> &#9733;</span>
-                       
-                    </div>
-                </div>
+        <?php else: ?>
+            <p>No feedback yet!</p>
+        <?php endif; ?>
+    </div>
+</section>
 
-                <div class="feed-col facility" id="facility2">
-                    <img src="<?=ROOT?>/assets/images/user2.jpg">
-                    <div> 
-                        <p>
-                            "The ground  was ideal for our sports day event. It was spacious, clean, 
-                            and the perfect setting for our activities. All our participants had a blast!"</p>
-                           <h3>Amantha Sirikantha</h3> 
-
-                           <span class="star"> &#9733;</span>
-                           <span class="star"> &#9733;</span>
-                           <span class="star"> &#9733;</span>
-                           <span class="star"> &#9733;</span>
-                           <span class="star"> &#9734;</span>
-                       
-                    </div>
-                </div>
-             </div>
-        </section>
 
         <section class="footer">
         <h4>About Us</h4>

@@ -156,12 +156,24 @@
         </div>
         <main>
             
+
+
+
+              
+
+<!-- Name -->
+<h2 id="customerName"><?= htmlspecialchars($user->name) ?></h2>
+
+
+
             <div class="profile-container view-mode">
                 <div class="profile-left">
-                    <div class="profile-image">
-                        <img src="<?=ROOT?>/assets/images/ped_incharge/externalcustomer.png" alt="Customer Photo" id="customerPhoto">
-                    </div>
-                    <h2 id="customerName">Customer Name</h2>
+                <div class="profile-image">
+                <img src="<?= $user->image_url ?>" alt="Profile Picture" class="propic" >
+
+</div>
+
+                <h2 id="customerName"><?= htmlspecialchars($user->name) ?></h2>
                 </div>
 
                 <div class="profile-right">
@@ -169,55 +181,55 @@
                         <h3><i class="uil uil-info-circle"></i> Personal Information</h3>
                         <div class="info-grid">
                             <div class="info-item">
-                                <label>Full Name:</label>
-                                <span id="customerFullName"></span>
-                            </div>
-                            <div class="info-item">
-                                <label>Email:</label>
-                                <span id="customerEmail"></span>
-                            </div>
-                            <div class="info-item">
-                                <label>Contact No:</label>
-                                <span id="customerContact"></span>
-                            </div>
-                            <div class="info-item">
-                                <label>NIC:</label>
-                                <span id="customerNIC"></span>
-                            </div>
-                            <div class="info-item full-width">
-                                <label>Address:</label>
-                                <span id="customerAddress"></span>
-                            </div>
-                        </div>
+                                <!-- Personal Information -->
+                            <span id="customerFullName"><?= htmlspecialchars($user->name) ?></span>
+                            <span id="customerEmail"><?= htmlspecialchars($user->email) ?></span>
+                            <span id="customerContact"><?= htmlspecialchars($user->contact_number) ?></span>
+                            <span id="customerNIC"><?= htmlspecialchars($user->nic) ?></span>
+                            <span id="customerAddress"><?= htmlspecialchars($user->address) ?></span>
+                            <span id="companyName"><?= htmlspecialchars($user->company_name) ?></span>
+
                     </div>
 
+    </div>
+   
+                   
                     <div class="info-card">
-                        <h3><i class="uil uil-building"></i> Organization Information</h3>
-                        <div class="info-grid">
-                            <div class="info-item">
-                                <label>Organization Name:</label>
-                                <span id="customerOrganization"></span>
-                            </div>
-                            <div class="info-item">
-                                <label>Position:</label>
-                                <span id="customerPosition"></span>
-                            </div>
-                            <div class="info-item full-width">
-                                <label>Organization Address:</label>
-                                <span id="organizationAddress"></span>
-                            </div>
-                        </div>
-                    </div>
+    <h3><i class="uil uil-history"></i> Reservation History</h3>
+    <div class="info-grid">
+        <div class="info-item full-width">
+            <?php if (!empty($reservations)): ?>
+                <table style="width:100%; border-collapse:collapse;">
+                    <thead>
+                        <tr>
+                            <th>Date</th>
+                            <th>Time</th>
+                            <th>Court</th>
+                            
+                            <th>Event</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php foreach ($reservations as $reservation): ?>
+                            <tr>
+                                <td><?= htmlspecialchars($reservation->date) ?></td>
+                                <td><?= htmlspecialchars($reservation->time) ?></td>
+                                <td><?= htmlspecialchars($reservation->courtname) ?></td>
+                                
+                                <td><?= htmlspecialchars($reservation->event) ?></td>
+                                <td><?= htmlspecialchars($reservation->status) ?></td>
+                            </tr>
+                        <?php endforeach; ?>
+                    </tbody>
+                </table>
+            <?php else: ?>
+                <span>No reservations found.</span>
+            <?php endif; ?>
+        </div>
+    </div>
+</div>
 
-                    <div class="info-card">
-                        <h3><i class="uil uil-history"></i> Reservation History</h3>
-                        <div class="info-grid">
-                            <div class="info-item full-width">
-                                <label>Recent Bookings:</label>
-                                <span id="customerBookings"></span>
-                            </div>
-                        </div>
-                    </div>
 
                     <!-- <div class="edit-buttons">
                         <button class="btn btn-edit" id="editButton">
@@ -235,91 +247,6 @@
         </main>
     </div>
 
-    <script>
-    const customerData = {
-        photo: "<?=ROOT?>/assets/images/ped_incharge/externalcustomer.png",
-        name: "John Smith",
-        fullName: "John William Smith",
-        email: "john.smith@example.com",
-        contact: "+94 77 123 4567",
-        nic: "991234567V",
-        address: "123 Main Street, Colombo 05",
-        organization: "Sports Club International",
-        position: "Events Manager",
-        organizationAddress: "45 Sports Avenue, Colombo 07",
-        bookings: "Tennis Court (2024-11-25)\nBadminton Court (2024-11-20)"
-    };
-
-    function displayCustomerProfile(data) {
-        document.getElementById('customerPhoto').src = data.photo;
-        document.getElementById('customerName').textContent = data.name;
-        document.getElementById('customerFullName').textContent = data.fullName;
-        document.getElementById('customerEmail').textContent = data.email;
-        document.getElementById('customerContact').textContent = data.contact;
-        document.getElementById('customerNIC').textContent = data.nic;
-        document.getElementById('customerAddress').textContent = data.address;
-        document.getElementById('customerOrganization').textContent = data.organization;
-        document.getElementById('customerPosition').textContent = data.position;
-        document.getElementById('organizationAddress').textContent = data.organizationAddress;
-        document.getElementById('customerBookings').textContent = data.bookings;
-    }
-
-    function toggleEditMode(enable) {
-        const container = document.querySelector('.profile-container');
-        const editButton = document.getElementById('editButton');
-        const saveButton = document.getElementById('saveButton');
-        const cancelButton = document.getElementById('cancelButton');
-
-        if (enable) {
-            container.classList.add('edit-mode');
-            container.classList.remove('view-mode');
-            editButton.style.display = 'none';
-            saveButton.style.display = 'block';
-            cancelButton.style.display = 'block';
-
-            document.querySelectorAll('.info-item').forEach(item => {
-                const span = item.querySelector('span');
-                if (!item.querySelector('input, textarea')) {
-                    const input = document.createElement(
-                        span.id.includes('Address') || span.id.includes('Bookings') 
-                        ? 'textarea' 
-                        : 'input'
-                    );
-                    input.value = span.textContent;
-                    input.dataset.forSpan = span.id;
-                    item.appendChild(input);
-                }
-            });
-        } else {
-            container.classList.remove('edit-mode');
-            container.classList.add('view-mode');
-            editButton.style.display = 'block';
-            saveButton.style.display = 'none';
-            cancelButton.style.display = 'none';
-        }
-    }
-
-    function saveChanges() {
-        document.querySelectorAll('.info-item input, .info-item textarea').forEach(input => {
-            const span = document.getElementById(input.dataset.forSpan);
-            if (span) span.textContent = input.value;
-            
-            const key = input.dataset.forSpan.replace('customer', '').toLowerCase();
-            customerData[key] = input.value;
-        });
-        toggleEditMode(false);
-    }
-
-    document.addEventListener('DOMContentLoaded', () => {
-        displayCustomerProfile(customerData);
-        
-        document.getElementById('editButton').addEventListener('click', () => toggleEditMode(true));
-        document.getElementById('saveButton').addEventListener('click', saveChanges);
-        document.getElementById('cancelButton').addEventListener('click', () => {
-            displayCustomerProfile(customerData);
-            toggleEditMode(false);
-        });
-    });
-    </script>
+   
 </body>
 </html>

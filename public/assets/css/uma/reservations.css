@@ -1,294 +1,402 @@
-*{
-    font-family: Arial, Helvetica, sans-serif;
-    margin: 0%;
-    padding: 0;
-    box-sizing:border-box ;
-}
-
-:root{
+/* Enhanced Purple Theme */
+:root {
     --darkpurple: #360335;
     --mediumpurple: #4b0a4a;
     --lightpurple: #ecafec;
     --white: #ffffff;
     --black: #000000;
     --grey: #d5d1d1;
-    --purplegrey:  #f7e3f7;
-    --lightgrey:#eee6f3;
+    --purplegrey: #f7e3f7;
+    --lightgrey: #eee6f3;
+    --accent-purple: #8458B3;
+    --light-accent: #d0bdf4;
+    --card-shadow: 0 8px 16px rgba(54, 3, 53, 0.1);
+    --hover-shadow: 0 12px 24px rgba(54, 3, 53, 0.2);
 }
 
-body{
+/* Base Styles */
+* {
+    font-family: Arial, Helvetica, sans-serif;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
     min-height: 100vh;
     overflow-x: hidden;
 }
 
-.container{
-    position: relative;
-    width: 100%;
-}
-
-.navigation{
-    position: fixed;
-    width: 200px;
-    height: 100%;
-    background: var(--darkpurple);
-    border-left: 10px solid var(--darkpurple);
-    transition: 0.5s;
-    overflow: hidden;
-    display: flex;
-    flex-direction: column; /* Stack items vertically */
-    align-items: center;
-}
-
-.navigation.active{
-    width:80px;
-
-}
-
-.navigation ul{
-    position: absolute;
-    top: 0;
-    left:0px;
-    width: 100%;
-}
-
-.navigation ul li{
-    position: relative;
-    width: 100%;
-    list-style: none;
-    border-top-left-radius:15px;
-    border-bottom-left-radius:15px ;
-}
-
-.navigation ul li:hover,
-.navigation ul li.hovered{
+/* Container Styling */
+.container1 {
     background: var(--white);
-    
-}
-.navigation ul li:hover a ,
-.navigation ul li.hovered a{
-    color: var(--darkpurple); 
-}
-
-.navigation ul li:hover .icon img {
-    filter: brightness(0) ;/* Change image to black using filter */
+    border-radius: 15px;
+    box-shadow: var(--card-shadow);
+    padding: 30px;
+    width: 90%;
+    max-width: 1200px;
+    margin: 30px auto;
+    transition: all 0.3s ease;
 }
 
-.navigation ul li:hover .title {
-    color: var(--darkpurple); 
+.container1:hover {
+    box-shadow: var(--hover-shadow);
 }
 
-.navigation ul li:nth-child(1){
-    margin-top:20px;
-    margin-bottom:20px;
-    pointer-events: none;
-    
-}
-
-.title{
-    margin-left: 10px; /* Add spacing between icon and title text */
-    font-size: 16px; /* Adjust font size */
-    font-weight: 500; /* Optional: Make text slightly bold */
-} 
-
-.icon img{
-    width: 40px;
-    height: 40px;
-    flex-shrink: 0;
-}
-
-.navigation ul li a {
-    display: flex; /* Use flexbox to align icon and text side by side */
-    align-items: center; /* Vertically align icon and text */
-    padding: 15px 20px; /* Add padding for spacing */
-    color: var(--lightpurple); /* Ensure text color matches */
-    text-decoration: none; /* Remove underline */
-    transition: 0.3s; /* Smooth hover effect */
-}
-
-.navigation .logo img {
-    width: 120px; /* Default size for the full navigation bar */
-    height: auto; /* Maintain aspect ratio */
-    transition: 0.3s ease; 
-}
-
-.logo {
-    display: flex;
-    justify-content: center; /* Center horizontally */
-    align-items: center; /* Center vertically */
-    height: 100%; /* Full height of the navigation bar */
-    width: 100%; /* Ensure it takes full width */
-    transition: 0.3s ease; /* Smooth transition */
-}
-
-.navigation.active .logo {
-    height: 80px; /* Adjust the height of the logo container in the collapsed state */
-    width: 100%; 
-}
-
-.navigation.active .logo img {
-    width: 70px; /* Smaller size for the collapsed navigation */
-    height: auto; /* Maintain aspect ratio */
-}
-
-
-
-
-
-.navigation ul li:hover a::before,
-.navigation ul li.hovered a::before{
-    content: '';
-    position: absolute;
-    right:0;
-    top:-50px;
-    width: 50px;
-    height:50px;
-    background-color:transparent;
-    border-radius: 50%;
-    box-shadow: 35px 35px 0 10px var(--white) ;
-    pointer-events: none;
-} 
-
-.navigation ul li:hover a::after,
-.navigation ul li.hovered a::after{
-    content: '';
-    position: absolute;
-    right:0;
-    bottom:-50px;
-    width: 50px;
-    height:50px;
-    background-color:transparent;
-    border-radius: 50%;
-    box-shadow: 35px -35px 0 10px var(--white) ;
-    pointer-events: none;
-
-} 
-
-/* main content */
-.main{
-    position:absolute;
-    width:calc(100% -200px) ;
-    left:200px;
-    right: 0;
-    min-height:100vh ;
-    background-color: var(--white);
-    transition: 0.5s;
-}
-
-.main.active{
-    width:calc(100%-80px);
-    left:80px;
-    
-}
-
-.topbar{
-    width:100%;
-    height: 60px;
+/* Reservation Header */
+.reservation-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 0 10px;
-    /* background-color: var(--darkpurple); */
-    background: var(--lightgrey);
+    margin-bottom: 25px;
+    
+    padding-bottom: 15px;
 }
 
-.toggle{
-    position:relative;
+.reservation-header h2 {
+    color: var(--darkpurple);
+    font-size: 24px;
+    font-weight: 600;
+    position: relative;
+}
+
+.reservation-header h2::after {
+    content: '';
+    position: absolute;
+    bottom: -15px;
+    left: 0;
     width: 60px;
-    height: 60px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    cursor: pointer;
-    font-size: 2.5rem;
-
+    height: 3px;
+    background: var(--accent-purple);
+    border-radius: 3px;
 }
 
-.user {
-    position:relative;
+.new-reservation-icon img {
+    width: 42px;
+    height: 42px;
+    transition: transform 0.3s ease;
+    filter: brightness(0) saturate(100%) invert(13%) sepia(82%) saturate(2152%) hue-rotate(271deg) brightness(89%) contrast(97%);
+}
+
+.new-reservation-icon:hover img {
+    transform: scale(1.15) rotate(15deg);
+}
+
+/* Reservations Grid */
+.reservations-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 25px;
+    margin-top: 30px;
+}
+
+/* Reservation Card */
+.reservation-card {
+    background: var(--white);
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(75, 10, 74, 0.08);
+    overflow: hidden;
+    transition: all 0.3s ease;
+    cursor: pointer;
+    position: relative;
+    border-top: 4px solid var(--accent-purple);
+}
+
+.reservation-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 20px rgba(75, 10, 74, 0.15);
+}
+
+.reservation-card.expanded {
+    grid-column: span 2;
+}
+
+/* Card Header */
+.card-header {
+    display: flex;
+    align-items: center;
+    padding: 15px 20px;
+    background: var(--white);
+    box-shadow: 0 2px 4px rgba(75, 10, 74, 0.03);
+}
+
+
+.facility-icon {
     width: 40px;
     height: 40px;
     border-radius: 50%;
+    background: var(--lightpurple);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-right: 15px;
+}
+
+.facility-icon img {
+    width: 24px;
+    height: 24px;
+    filter: brightness(0) saturate(100%) invert(13%) sepia(82%) saturate(2152%) hue-rotate(271deg) brightness(89%) contrast(97%);
+}
+
+.card-title {
+    flex-grow: 1;
+}
+
+.card-title h3 {
+    margin: 0;
+    color: var(--darkpurple);
+    font-size: 18px;
+    font-weight: 600;
+}
+
+.status-badge {
+    display: inline-block;
+    padding: 4px 10px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 500;
+    margin-top: 5px;
+}
+
+.status-badge.pending {
+    background-color: #fff3cd;
+    color: #856404;
+}
+
+.status-badge.topay {
+    background-color: #cce5ff;
+    color: #0043ce;
+}
+
+.status-badge.confirmed {
+    background-color: #d4edda;
+    color: #24A148;
+}
+
+.status-badge.paid {
+    background-color: #d4edda;
+    color: #155724;
+}
+
+.status-badge.cancelled {
+    background-color: #f8d7da;
+    color: #721c24;
+}
+
+.expand-icon {
+    width: 24px;
+    height: 24px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.arrow-down {
+    border: solid var(--darkpurple);
+    border-width: 0 2px 2px 0;
+    display: inline-block;
+    padding: 3px;
+    transform: rotate(45deg);
+    transition: transform 0.3s ease;
+}
+
+.reservation-card.expanded .arrow-down {
+    transform: rotate(-135deg);
+}
+
+/* Card Details */
+.card-details {
+    padding: 0;
+    max-height: 0;
     overflow: hidden;
+    transition: all 0.3s ease;
+    background: var(--white);
+}
+
+.reservation-card.expanded .card-details {
+    padding: 20px;
+    max-height: 500px;
+}
+
+.detail-row {
+    display: flex;
+    margin-bottom: 15px;
+}
+
+.detail-item {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.detail-label {
+    font-size: 12px;
+    color: var(--grey);
+    margin-bottom: 5px;
+}
+
+.detail-value {
+    font-size: 14px;
+    color: var(--black);
+    font-weight: 500;
+}
+
+/* Card Actions */
+.card-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 20px;
+    padding-top: 15px;
+    border-top: 1px solid var(--lightgrey);
+}
+
+.action-btn {
+    display: flex;
+    align-items: center;
+    padding: 8px 15px;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 500;
+    text-decoration: none;
+    transition: all 0.2s ease;
+    border: none;
     cursor: pointer;
 }
 
-.user img {
-    position: absolute;
-    top: 0;
-    left: 0px;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-
+.action-btn img {
+    width: 16px;
+    height: 16px;
+    margin-right: 8px;
 }
 
-/* ----------------res1-------------------------- */
-/* ----------------------------status board ----------------*/
-.statusboard{
-    width: 100%;
-    /* margin: auto; */
-    text-align: center;
-    background:var(--white);
-    margin-top: -1px;
-    padding: 20px 0;
-    
-}
-.container1 {
-    background:var(--white);
-    padding: 20px;
-    width: 100%; /* Use percentage for responsiveness */
-    max-width: 90%; /* Maximum width */
-    margin: 20px auto; /* Center the content horizontally */
-    text-align: center;
-    padding-top: 10px;
-    margin-top: 50px;
-    border-radius: 10px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-    
- /* Adjust this value based on your navbar height */
+.pay-now-btn {
+    background-color: var(--accent-purple);
+    color: var(--white);
 }
 
-.container1 h2{
-    text-align: left;
+.pay-now-btn:hover {
+    background-color: var(--darkpurple);
 }
 
-.reservations-grid {
-    display: grid;
-    grid-template-columns:repeat(2,1fr);
-    gap: 20px;
+.reschedule-btn {
+    background-color: var(--light-accent);
+    color: var(--darkpurple);
+}
+
+.reschedule-btn:hover {
+    background-color: var(--lightpurple);
+}
+
+.cancel-btn {
+    background-color: var(--lightgrey);
+    color: var(--darkpurple);
+}
+
+.cancel-btn:hover {
+    background-color: var(--grey);
+}
+
+/* History Table */
+.history-container {
     margin-top: 40px;
 }
 
-/* Reservation Card Styling */
-.reservation-card {
-    background-color: #fff;
-    padding:20px;
+.filter-container {
+    display: flex;
+    align-items: center;
+}
+
+#statusFilter {
+    margin-left: 10px;
+    padding: 8px 15px;
+    border-radius: 8px;
+    border: 1px solid var(--lightpurple);
+    background-color: var(--white);
+    color: var(--darkpurple);
+    font-size: 14px;
+    transition: all 0.2s ease;
+}
+
+#statusFilter:focus {
+    outline: none;
+    border-color: var(--accent-purple);
+    box-shadow: 0 0 0 3px rgba(132, 88, 179, 0.2);
+}
+
+.reservation-history table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    margin-top: 20px;
     border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    position:relative;
+    overflow: hidden;
+}
+
+.reservation-history th {
+    background-color: var(--darkpurple);
+    color: var(--white);
+    padding: 15px;
     text-align: left;
-    width: 80%;
-    transition: transform 0.9s ease;
+    font-weight: 500;
 }
 
-.reservation-card:hover{
-    transform: scale(1.1);
-}
-   
-
-
-/* Close Button */
-.close-btn {
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    font-size: 18px;
-    cursor: pointer;
-    color: #888;
+.reservation-history th:first-child {
+    border-top-left-radius: 10px;
 }
 
-.close-btn:hover {
-    color: #5b0404
+.reservation-history th:last-child {
+    border-top-right-radius: 10px;
+}
+
+.reservation-history td {
+    padding: 15px;
+    border-bottom: 1px solid var(--lightgrey);
+}
+
+.reservation-history tr:last-child td {
+    border-bottom: none;
+}
+
+.reservation-history tr:nth-child(even) {
+    background-color: var(--lightgrey);
+}
+
+.reservation-history tr:hover {
+    background-color: var(--purplegrey);
+}
+
+.status-pill {
+    display: inline-block;
+    padding: 5px 12px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 500;
+}
+
+.status-pill.pending {
+    background-color: #fff3cd;
+    color: #856404;
+}
+
+.status-pill.topay {
+    background-color: #cce5ff;
+    color: #0043ce;
+}
+
+.status-pill.confirmed {
+    background-color: #d4edda;
+    color: #24A148;
+}
+
+.status-pill.paid {
+    background-color: #d4edda;
+    color: #155724;
+}
+
+.status-pill.cancelled {
+    background-color: #f8d7da;
+    color: #721c24;
 }
 
 /* Status Styling */
@@ -296,442 +404,333 @@ body{
     font-weight: bold;
 }
 
-.status.pending {
-    color: orange;
+.status.confirmed {
+    color: #24A148;
 }
 
-.status.accepted {
-    color: limegreen;
+.status.topay {
+    color: #0043ce;
 }
 
-.status.paid {
-    color: blue;
+.form-fields-scrollable {
+    overflow-y: auto;
+    max-height: 60vh; /* Adjust as needed to fit header/footer */
+    padding-bottom: 20px;
 }
 
-/* New Reservation Card */
-.new-reservation {
+.popup-buttons {
+    position: sticky;
+    bottom: 0;
+    background: var(--white);
+    padding: 20px 0 0 0;
     display: flex;
-    flex-direction: column;
     justify-content: center;
-    align-items: center;
-    cursor: pointer;
-    border: 2px dashed #220329;
-    background-color: #f9f9f9;
-    
+    gap: 15px;
+    z-index: 2;
 }
-
-.new-reservation .plus-icon img {
-    width:50px;
-    height: auto;
-    margin-bottom: 10px;
-}
-
-.new-reservation p {
-    font-size: 1.1em;
-    font-weight: bold;
-    color: #30033a;
-    text-align: center;
-}
-
-.new-reservation:hover {
-    background-color: #f1e9f3;
-    border-color: #30033a;
-}
-
-@media (max-width: 700px) {
-    .reservations-grid {
-        grid-template-columns: 1fr; /* Stack cards in a single column on small screens */
-        
-    }
-
-    .reservation-card {
-        background-color: #fff;
-        padding:20px;
-        border-radius: 10px;
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        position:relative;
-        text-align: center;
-        width: 40%;
-        margin: 10px auto;
-       
-    }
-
-    .reservation-card a{
-        text-align: right;
-    }
-}
-
-/* Reservation History Section */
-.reservation-history {
-    margin-top: 20px; /* Space between account details and reservation history */
-}
-
-.reservation-history h1 {
-    font-size: 24px;
-    margin-bottom: 10px;
-    color: #333;
-    margin-top: 30px;
-}
-
-table {
-    width: 100%;
-    border:none;
-    /* border-collapse: collapse; */
-}
-
-/* table, th, td {
-    border: 1px solid #ddd;
-} */
-
-th, td {
-    padding: 10px;
-    text-align: center;
-}
-
-th {
-    background-color:#2f0629;
-    color: white;
-}
-
-tr:nth-child(even) {
-    background-color: #f4f4f9;
-}
-
-#statusFilter {
-    margin-top: 10px;
-    margin-bottom: 15px;
-    padding: 8px;
-    font-size: 16px;
-    border-radius: 10px;
-   
-}
-
-.filter{
-    text-align: left;
-}
-
-/* ---------------------------new reservation----------------------- */
-
-.reservation-wrapper {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    flex-grow: 1;
-    text-align: center;
-    /* padding-top: 120px; */
-}
-
-
-.facility-select {
-    width: 90%;
-    max-width: 400px;
-    padding: 10px;
-    margin-bottom: 20px;
-    border: none;
-    border-radius: 25px;
-    background-color: #d8cfe0;
-    font-size: 1rem;
-    color: #500047;
-}
-
-/* Calendar and time slots */
-.calendar {
-    width: 90%;
-    max-width: 600px;
-    background: #f4f4f9;
-    padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
-    text-align: left;
-}
-
-.time-slots {
-    display: flex;
-    flex-direction: column;
-    margin-bottom: 20px;
-}
-
-.day-slot {
-    margin: 10px 0;
-}
-
-.time-slot {
-    display: inline-block;
-    padding: 10px;
-    margin: 5px 0;
-    border-radius: 10px;
-    cursor: pointer;
-}
-
-.time-slot.available {
-    background-color: #d8cfe0; /* Light blue for available slots */
-}
-
-.time-slot.unavailable {
-    background-color: #d3d3d3; /* Grey for unavailable slots */
-    cursor: not-allowed;
-}
-
-.time-slot.selected {
-    background-color: #500047; /* Highlight selected slot */
-    color: white;
-}
-
-.confirm-button {
-    padding: 10px 20px;
-    background-color: #500047;
-    color: white;
-    border: none;
-    border-radius: 25px;
-    font-size: 1rem;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-    margin-top: 20px;
-}
-
-.confirm-button:hover:not(:disabled) {
-    background-color: #73296f;
-}
-
-.confirm-button:disabled {
-    background-color: #d3d3d3; /* Grey when disabled */
-    cursor: not-allowed;
-}
-
-
-
-/* -------proof-------- */
-/* Style the file upload input */
-.file-upload {
-    display: none; /* Hide the default file input */
-}
-
-.file-upload-label {
-    background-color: var(--darkpurple); /* Background color of the label */
-    color: var(--white); /* Text color */
-    padding: 10px 10px;
-    font-size: 12px;
-    cursor: pointer;
-    border-radius: 5px;
-    display: inline-block;
-    transition: background-color 0.3s ease;
-    margin-left: 5px;
-}
-
-/* Style when hovered over the label */
-.file-upload-label:hover {
-    background-color: var(--mediumpurple); /* Lighter purple when hovered */
-}
-
-/* Style for the file input text */
-.file-upload-text {
-    margin-left: 10px;
-    color: var(--black);
-}
-
-/* Optional: style the file name after selection */
-.file-upload-chosen {
-    margin-top: 10px;
-    font-size: 14px;
-    color: var(--grey); /* Text color */
-}
-
-
-/* -----------delete------------ */
-/* Garbage Icon */
-/* Tooltip Container */
-.tooltip {
-    position: relative;
-    display: inline-block;
-}
-
-/* Tooltip Text */
-.tooltip-text {
-    visibility: hidden; /* Hidden by default */
-    width: 140px; /* Adjust width */
-    background-color: var(--lightgrey); /* Tooltip background */
-    color:#5b0404; /* Tooltip text color */
-    text-align: center;
-    border-radius: 5px;
-    padding: 5px;
-    position: absolute;
-    bottom: 100%; /* Position above the icon */
-    left: 50%;
-    transform: translateX(-50%);
-    z-index: 1;
-    font-size: 12px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* Slight shadow for tooltip */
-    opacity: 0; /* Transparent initially */
-    transition: opacity 0.3s ease; /* Smooth fade-in */
-}
-
-/* Arrow for Tooltip */
-.tooltip-text::after {
-    content: "";
-    position: absolute;
-    top: 100%; /* Bottom of the tooltip */
-    left: 50%;
-    transform: translateX(-50%);
-    border-width: 5px;
-    border-style: solid;
-    border-color: var(--mediumpurple) transparent transparent transparent;
-}
-
-/* Show Tooltip on Hover */
-.tooltip:hover .tooltip-text {
-    visibility: visible;
-    opacity: 1;
-}
-
-
-.delete-icon {
-    width: 50px; /* Adjust size as needed */
-    height: 50px;
-    cursor: pointer;
-    margin-top: 10px;
-    display: inline-block;
-    transition: transform 0.2s ease, filter 0.2s ease;
-}
-
-.delete-icon:hover {
-    transform: scale(1.1); /* Slight zoom on hover */
-    filter: brightness(1.2); /* Make it brighter on hover */
-}
-
-/* ---------------------------Popup Styles */
-/* Popup Overlay */
+/* Popup Styling */
 .popup {
-    display: none; /* Hidden by default */
+    display: none;
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(0, 0, 0, 0.5); /* Transparent background */
+    background-color: rgba(0, 0, 0, 0.5);
     z-index: 1000;
+    backdrop-filter: blur(4px);
 }
 
-/* Popup Content */
 .popup-content {
     position: relative;
     width: 400px;
-    margin: 10% auto; /* Centered horizontally */
-    background-color: var(--lightgrey);
-    padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    margin: 15% auto;
+    background: var(--white);
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    animation: popup-fade 0.3s ease;
+    max-height: 90vh;
+    display: flex;
+    flex-direction: column;
 }
 
-/* Popup Heading */
+@keyframes popup-fade {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.popup-content.active {
+    animation: popup-fade 0.3s ease;
+}
+
+.close-icon {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    font-size: 24px;
+    color: var(--grey);
+    cursor: pointer;
+    transition: color 0.2s ease;
+}
+
+.close-icon:hover {
+    color: var(--darkpurple);
+}
+
 .popup-content h3 {
-    color: var(--mediumpurple);
-    font-size: 20px;
+    color: var(--darkpurple);
+    font-size: 22px;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.popup-content p {
     text-align: center;
     margin-bottom: 20px;
-}
-
-/* Form Inputs */
-.popup-content input[type="text"],
-.popup-content textarea {
-    width: 100%;
-    padding: 10px;
-    margin: 10px 0;
-    border: 1px solid var(--grey);
-    border-radius: 5px;
-    background-color: var(--white);
     color: var(--black);
-    font-size: 14px;
-    resize: none;
 }
 
-.popup-content textarea {
-    height: 80px;
-}
-
-/* Buttons Container */
-.popup-content .popup-buttons {
+.popup-buttons {
     display: flex;
-    justify-content: center; /* Center horizontally */
-    margin-top: 20px;
+    justify-content: center;
+    gap: 15px;
+    margin-top: 25px;
 }
 
-/* Buttons */
-.popup-content .popup-buttons button {
-    margin: 0 10px; /* Space between buttons */
-    padding: 10px 20px;
-    font-size: 14px;
-    font-weight: bold;
+.popup-buttons button {
+    padding: 10px 25px;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: 500;
     border: none;
-    border-radius: 5px;
     cursor: pointer;
-    transition: background-color 0.3s ease;
+    transition: all 0.2s ease;
 }
 
-/* Close Button */
-.popup-content .popup-buttons .close-btn {
-    background-color: var(--grey);
-    color: var(--black);
-}
-
-.popup-content .popup-buttons .close-btn:hover {
-    background-color: var(--purplegrey);
-}
-
-/* Confirm Button */
-.popup-content .popup-buttons .confirm-btn {
-    background-color: var(--mediumpurple);
+.confirm-btn {
+    background-color: var(--accent-purple);
     color: var(--white);
 }
 
-.popup-content .popup-buttons .confirm-btn:hover {
+.confirm-btn:hover {
     background-color: var(--darkpurple);
 }
 
-/* Optional Close Button Icon */
-.popup-content .close-icon {
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    font-size: 18px;
-    color: var(--black);
-    cursor: pointer;
-    transition: color 0.3s ease;
+.cancel-btn {
+    background-color: var(--lightgrey);
+    color: var(--darkpurple);
 }
 
-.popup-content .close-icon:hover {
-    color: var(--mediumpurple);
+.cancel-btn:hover {
+    background-color: var(--grey);
 }
 
-.pay-now-btn {
-    background-color:var(--mediumpurple);
-    color: white;
-    padding: 8px 14px;
-    border: none;
-    border-radius: 8px;
-    cursor: pointer;
-    font-weight: bold;
-    margin-top: 10px;
+/* Animation for status badges */
+.status-badge.animated,
+.status-pill.animated {
+    animation: badge-pulse 2s infinite;
 }
 
-.pay-now-btn:hover {
-    background-color:var(--darkpurple);
+
+/* Reschedule Modal Specific Styles */
+#reschedule-modal .popup-content {
+    background: var(--white);
+    border-radius: 15px;
+    box-shadow: var(--card-shadow);
+    padding: 30px 30px 20px 30px;
+    width: 400px;
+    max-width: 95vw;
+    margin: 10% auto;
+    position: relative;
+    animation: popup-fade 0.3s ease;
 }
 
-.reservation-header {
+#reschedule-modal h3 {
+    color: var(--darkpurple);
+    font-size: 22px;
+    margin-bottom: 22px;
+    text-align: center;
+    font-weight: 600;
+}
+
+#reschedule-form .form-group {
+    margin-bottom: 18px;
     display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 1rem;
+    flex-direction: column;
 }
 
-.new-reservation-icon img {
-    width: 36px;
-    height: 36px;
+#reschedule-form label {
+    color: var(--mediumpurple);
+    font-size: 15px;
+    margin-bottom: 6px;
+    font-weight: 500;
+    letter-spacing: 0.03em;
+}
+
+#reschedule-form input[type="text"],
+#reschedule-form input[type="date"],
+#reschedule-form input[type="time"] {
+    background: var(--lightgrey);
+    border: 1px solid var(--lightpurple);
+    color: var(--darkpurple);
+    padding: 9px 12px;
+    border-radius: 7px;
+    font-size: 15px;
+    font-weight: 500;
+    transition: border-color 0.2s;
+}
+
+#reschedule-form input[readonly] {
+    background: var(--purplegrey);
+    color: var(--mediumpurple);
+    cursor: not-allowed;
+    font-weight: 500;
+}
+
+#reschedule-form input:focus {
+    outline: none;
+    border-color: var(--accent-purple);
+    box-shadow: 0 0 0 2px rgba(132, 88, 179, 0.13);
+}
+
+#reschedule-modal .popup-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-top: 18px;
+}
+
+#reschedule-modal .confirm-btn {
+    background-color: var(--accent-purple);
+    color: var(--white);
+    border: none;
+    padding: 10px 22px;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: 600;
+    transition: background 0.2s;
+}
+
+#reschedule-modal .confirm-btn:hover {
+    background: var(--darkpurple);
+}
+
+#reschedule-modal .cancel-btn {
+    background: var(--lightgrey);
+    color: var(--darkpurple);
+    border: none;
+    padding: 10px 22px;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: 600;
+    transition: background 0.2s;
+}
+
+#reschedule-modal .cancel-btn:hover {
+    background: var(--grey);
+}
+
+#reschedule-modal .close-icon {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    font-size: 26px;
+    color: var(--grey);
     cursor: pointer;
-    transition: transform 0.2s ease;
+    transition: color 0.2s;
 }
 
-.new-reservation-icon img:hover {
-    transform: scale(1.1);
+#reschedule-modal .close-icon:hover {
+    color: var(--darkpurple);
+}
+
+
+#reschedule-time-slots label {
+    display: inline-block;
+    background: var(--lightgrey);
+    color: var(--darkpurple);
+    padding: 8px 16px;
+    border-radius: 8px;
+    margin-bottom: 8px;
+    margin-right: 10px;
+    cursor: pointer;
+    border: 1px solid var(--lightpurple);
+}
+#reschedule-time-slots input[type="radio"]:checked + span {
+    background: var(--accent-purple);
+    color: var(--white);
+}
+
+
+/* Responsive for small screens */
+@media (max-width: 600px) {
+    #reschedule-modal .popup-content {
+        width: 98vw;
+        padding: 18px 6vw 15px 6vw;
+    }
+    #reschedule-form label,
+    #reschedule-form input {
+        font-size: 14px;
+    }
+    #reschedule-modal .popup-buttons button {
+        font-size: 15px;
+        padding: 9px 10px;
+    }
+}
+
+
+@keyframes badge-pulse {
+    0% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.05);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .reservations-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .reservation-card.expanded {
+        grid-column: span 1;
+    }
+    
+    .detail-row {
+        flex-direction: column;
+    }
+    
+    .detail-item {
+        margin-bottom: 10px;
+    }
+    
+    .reservation-header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    
+    .new-reservation-icon {
+        margin-top: 15px;
+    }
+    
+    .filter-container {
+        margin-top: 15px;
+    }
+    
+    .popup-content {
+        width: 90%;
+       
+    }
 }
