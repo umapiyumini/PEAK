@@ -86,7 +86,12 @@
                             <td><?= htmlspecialchars($item->quantityrequested) ?></td>
                             <td><?= htmlspecialchars($item->timeframe) ?></td> 
                             <td><?= htmlspecialchars($item->date) ?></td>
-                            <td><button class="update-btn" data-id="<?= $item->requestid ?>">Edit</button></td>
+                            <td><button class="update-btn" data-id="<?= $item->requestid ?>"> Edit</button>
+                            <form action="<?=ROOT?>/sportscaptain/inventoryunpacked/deleteRequest" method="POST">
+                                <input type="hidden" name="requestid" value="<?= $item->requestid ?>">
+                                <button class="delete-btn">Delete</button>
+                            </form>
+                            </td>
                         </tr>
                     <?php endforeach; ?>
                 <?php else: ?>
@@ -103,7 +108,7 @@
         </main>
 
         <!-- Add Product Modal -->
-        <div id="addModal" class="modal">
+        <!--div id="addModal" class="modal">
             <div class="modal-content">
                 <span class="close">&times;</span>
                 <h2>Request Inventory</h2>
@@ -131,7 +136,50 @@
                 </form>
                 
             </div>
+        </div-->
+
+        <div id="addModal" class="modal">
+    <div class="modal-content">
+        <span class="close">&times;</span>
+        <h2>Request Year End Inventory</h2>
+        <form id="addProductForm" action="<?= ROOT ?>/sportscaptain/inventoryunpacked/addrequest" method="POST">
+            <div class="form-group">
+                <label for="timeFrame">Time Frame:</label>
+                <select id="timeFrame" name="timeframe" required>
+                    <option value="mid-year">Mid-Year</option>
+                    <option value="year-end">Year-End</option>
+                </select>
+
+            </div>
+            
+            <div id="equipment-container">
+    <!-- Initial equipment item -->
+    <div class="equipment-item">
+        <div class="form-row">
+            <div class="form-group">
+                <label for="productName_0">Product Name:</label>
+                <input type="text" id="productName_0" name="name[]" required>
+            </div>
+            <div class="form-group">
+                <label for="productQuantity_0">Quantity:</label>
+                <input type="number" id="productQuantity_0" name="quantityrequested[]" min="1" required>
+            </div>
+            <button type="button" class="remove-equipment-btn" style="display:none;">Remove</button>
         </div>
+    </div>
+</div>
+            
+            <button type="button" id="add-equipment-btn" class="btn">Add Another Equipment</button>
+            
+            <div class="form-group">
+                <label for="additionalNotes">Additional Details</label>
+                <textarea id="additionalNotes" name="addnotes" rows="4" placeholder="Enter any additional notes"></textarea>
+            </div>
+            
+            <button type="submit" class="submit-btn">Submit Request</button>
+        </form>
+    </div>
+</div>
 
         <!-- Update Quantity Modal -->
 <div id="updateModal" class="modal">

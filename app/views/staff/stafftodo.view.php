@@ -44,7 +44,7 @@
                     <td><?=htmlspecialchars($item->description)?></td>
                     <td><?=htmlspecialchars($item->deadline)?></td>
                     <td><input type="checkbox" class="status-checkbox"
-                        data-task-id="<?= $item->id ?>"
+                        data-task-id="<?= $item->taskid ?>"
                         <?= $item->status === 'Completed' ? 'checked' : '' ?>>
                     </td>
                     <!--td><?=htmlspecialchars($item->remark)?></td-->
@@ -61,7 +61,8 @@
 </div>
         </div>
 
-   
+    <script>const ROOT = "<?=ROOT?>";</script>
+
     <script src="<?=ROOT?>/assets/js/vidusha/todo.js"></script>
 
     

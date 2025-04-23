@@ -182,14 +182,14 @@ input:focus, textarea:focus {
 }
 
 /* Submit button */
-.submit-btn, .update-btn {
+.submit-btn, .update-btn,.delete-btn {
     background-color: #5a2e8a;
     color: #ffffff;
     border: none;
-    padding: 10px 15px;
+    padding: 8px 13px;
     border-radius: 6px;
     cursor: pointer;
-    font-size: 16px;
+    font-size: 14px;
     width: 100%;
     transition: background-color 0.3s ease;
 }
@@ -236,3 +236,18 @@ input:focus, textarea:focus {
     font-weight: bold;
 }
 
+.form-row {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.form-row .form-group {
+    flex: 1;
+    margin: 0;
+}
+
+.remove-equipment-btn {
+    align-self: flex-end;
+    margin-bottom: 10px;
+}

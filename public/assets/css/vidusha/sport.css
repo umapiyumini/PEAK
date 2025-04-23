@@ -128,7 +128,7 @@ body {
     text-align: center;
 }
 
-#newsContainer .news-item {
+#newsContainer .news-item ,.add-news{
     border: 1px solid #ddd;
     border-radius: 8px;
     margin-bottom: 20px;
@@ -276,4 +276,23 @@ button.next {
 
 button.prev:hover, button.next:hover {
     background-color: rgba(0, 0, 0, 0.8);
+}
+
+input, textarea {
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+button{
+    background-color: #5a2e8a;
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+    margin-left: 70px;
 }

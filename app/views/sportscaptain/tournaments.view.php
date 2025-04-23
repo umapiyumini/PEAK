@@ -216,7 +216,6 @@
           <th>Place</th>
           <th>Venue</th>
           <th>No of Players</th>
-          <th>Players Reg No</th>
           <th>Actions</th>
         </tr>
       </thead>
@@ -229,8 +228,12 @@
               <td><?= htmlspecialchars($record->place)?></td>
               <td><?= htmlspecialchars($record->venue)?></td>
               <td><?= htmlspecialchars($record->no_of_players)?></td>
-              <td><?= htmlspecialchars($record->players_Regno)?></td>
               <td>
+                <button type="button" class="view-btn" 
+                  onclick="openViewModal('interUni', '<?= $record->interrecordid ?>', 
+                    '<?= htmlspecialchars($record->players_Regno) ?>')">
+                  <i class="fas fa-eye"></i>
+                </button>
                 <button type="button" class="edit-btn" 
                   onclick="openEditModal('interUni', '<?= $record->interrecordid ?>', 
                     '<?= htmlspecialchars($record->tournament_name) ?>', 
@@ -268,7 +271,6 @@
           <th>2nd Place Faculty</th>
           <th>3rd Place Faculty</th>
           <th>No of Players</th>
-          <th>Players Reg No</th>
           <th>Actions</th>
         </tr>
       </thead>
@@ -282,8 +284,12 @@
               <td><?= htmlspecialchars($record->second_place)?></td>
               <td><?= htmlspecialchars($record->third_place)?></td>
               <td><?= htmlspecialchars($record->no_of_players)?></td>
-              <td><?= htmlspecialchars($record->players_regno)?></td>
               <td>
+              <button type="button" class="view-btn" 
+                  onclick="openViewModal('interFaculty', '<?= $record->interfacrecid ?>', 
+                    '<?= htmlspecialchars($record->players_regno) ?>')">
+                  <i class="fas fa-eye"></i>
+                </button>
                 <button type="button" class="edit-btn"
                   onclick="openEditModal('interFaculty', '<?= $record->interfacrecid ?>', 
                     '<?= htmlspecialchars($record->tournament_name) ?>', 
@@ -321,7 +327,6 @@
           <th>1st Place Faculty</th>
           <th>2nd Place Faculty</th>
           <th>3rd Place Faculty</th>
-          <th>Players Reg No</th>
           <th>Category</th>
           <th>Actions</th>
         </tr>
@@ -335,9 +340,13 @@
               <td><?= htmlspecialchars($record->first_place)?></td>
               <td><?= htmlspecialchars($record->second_place)?></td>
               <td><?= htmlspecialchars($record->third_place)?></td>
-              <td><?= htmlspecialchars($record->playersregno)?></td>
               <td><?= htmlspecialchars($record->no_of_players)?></td>
               <td>
+              <button type="button" class="view-btn" 
+                  onclick="openViewModal('freshers', '<?= $record->freshersid ?>', 
+                    '<?= htmlspecialchars($record->playersregno) ?>')">
+                  <i class="fas fa-eye"></i>
+                </button>
                 <button type="button" class="edit-btn"
                   onclick="openEditModal('freshers', '<?= $record->freshersid ?>', 
                     '<?= htmlspecialchars($record->tournament_name) ?>', 
@@ -565,6 +574,42 @@
       </form>
     </div>
   </div>
+
+  <!-- Inter University Modal -->
+<div id="interuniViewModal" class="modal">
+  <div class="modal-content">
+    <span class="close" onclick="closeModal('interuniViewModal')">&times;</span>
+    <h2>Inter University Players</h2>
+    <div id="viewPlayers">
+      <ul id="interUniPlayerList"></ul>
+    </div>
+    <button type="button" class="cancel" onclick="closeModal('interuniViewModal')">Close</button>
+  </div>
+</div>
+
+<!-- Inter Faculty Modal -->
+<div id="interfacultyViewModal" class="modal">
+  <div class="modal-content">
+    <span class="close" onclick="closeModal('interfacultyViewModal')">&times;</span>
+    <h2>Inter Faculty Players</h2>
+    <div id="viewPlayers">
+      <ul id="interFacultyPlayerList"></ul>
+    </div>
+    <button type="button" class="cancel" onclick="closeModal('interfacultyViewModal')">Close</button>
+  </div>
+</div>
+
+<!-- Freshers Modal -->
+<div id="freshersViewModal" class="modal">
+  <div class="modal-content">
+    <span class="close" onclick="closeModal('freshersViewModal')">&times;</span>
+    <h2>Freshers Tournament Players</h2>
+    <div id="viewPlayers">
+      <ul id="freshersPlayerList"></ul>
+    </div>
+    <button type="button" class="cancel" onclick="closeModal('freshersViewModal')">Close</button>
+  </div>
+</div>
 
 
   <script src="<?=ROOT?>/assets/js/vidusha/tournaments.js"></script>

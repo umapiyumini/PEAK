@@ -110,6 +110,14 @@ class Upcomingevent{
         }
     }
 
+    public function getAllUpcomingEvents(){
+
+        $query = "SELECT * FROM upcomingevents";
+        $result = $this->query($query);
+
+        return $result;
+    }
+
 }
     
     

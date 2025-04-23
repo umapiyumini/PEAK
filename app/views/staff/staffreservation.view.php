@@ -1,120 +1,186 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-1.0">
-        <link rel="stylesheet" href="<?=ROOT?>/assets/css/vidusha/todo.css">
-        <title>External User Dashboard</title>
-    </head>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="<?=ROOT?>/assets/css/vidusha/todo.css">
+    <style>
+        .slot-container {
+    display: flex;
+    margin-left: 70px;
+    gap: 15px;
+    margin-top: 20px;
+    justify-content: center;
 
+    
+}
 
-    <body>
-             
+.time-slot {
+    padding: 12px 20px;
+    border-radius: 12px;
+    font-weight: 600;
+    min-width: 120px;
+    text-align: center;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    cursor: default;
+    font-family: 'Segoe UI', sans-serif;
+    font-size: 16px;
+}
 
-            <!-- ----------------- main content ------------------ -->
+/* Hover effect for both */
+.time-slot:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15);
+}
 
-            <div class="container">
-        <!-- Reservations Section -->
-        <div class="reservations">
-            <h2>View Reservations</h2>
-            <label for="facility">Select Facility:</label>
-            <select id="facility">
-                <option value="" disabled selected>Select...</option>
-                <option value="ground">Ground</option>
-                <option value="basketball">Basketball Court</option>
-                <option value="tennis">Tennis Court</option>
-                <option value="indoor">Indoor Stadium</option>
-            </select>
-            <div id="dateNavigation">
-    <button id="prevDate"><</button>
-    <span id="currentDate"></span>
-    <button id="nextDate">></button>
-</div>
-<div id="timeSlots" class="time-slots"></div>
+/* Available slot style */
+.time-slot.available {
+    background-color: #4b0a4a;
+    color:rgb(255, 255, 255);
+    border: 1px solid #c8e6c9;
+}
 
-            <div id="timeSlots" class="time-slots">
-                <!-- Time slots will populate dynamically -->
-            </div>
+/* Reserved slot style */
+.time-slot.reserved {
+    background-color: #ffeaea;
+    color: #b71c1c;
+    border: 1px solid #ffcdd2;
+}
+
+    </style>
+    <title>Staff Reservation Dashboard</title>
+</head>
+<body>
+<div class="container">
+    <div class="reservations">
+        <h2>View Reservations</h2>
+
+        <label for="facility">Select Facility:</label>
+        <select id="facility">
+            <option value="" disabled selected>Select...</option>
+            <?php if(isset($staffType) && $staffType == 'indoor'): ?>
+                <option value="1">Badminton</option>
+                <option value="2">Table Tennis</option>
+                <option value="3">Volleyball</option>
+                <option value="4">Karate</option>
+                <option value="5">Wrestling</option>
+                <option value="6">Sports Center</option>
+            <?php elseif(isset($staffType) && $staffType == 'ground'): ?>
+                <option value="7">Baseball</option>
+                <option value="8">Hockey</option>
+                <option value="9">Cricket</option>
+                <option value="10">Cricket Turf</option>
+                <option value="11">Elle</option>
+                <option value="12">Tennis</option>
+                <option value="13">Basketball</option>
+                <option value="14">Football</option>
+                <option value="15">Netball</option>
+                <option value="16">Rugby</option>
+                <option value="17">Tennis</option>
+                <option value="18">Volleyball</option>
+            <?php endif; ?>
+        </select>
+
+        <div id="dateNavigation">
+            <button id="prevDate">&lt;</button>
+            <span id="currentDate"></span>
+            <button id="nextDate">&gt;</button>
         </div>
 
-    
-    <script src="<?=ROOT?>/assets/js/uma/staff.js"></script>
-    <script>
-   document.addEventListener('DOMContentLoaded', function () {
-    const userImage = document.getElementById('userImage');
-    const dropdownMenu = document.getElementById('dropdownMenu');
+        <div id="timeSlots" class="time-slots"></div>
+    </div>
+</div>
 
-    // Listen for the profile image click
-    userImage.addEventListener('click', function (event) {
-        event.preventDefault(); // Prevent the default action (e.g., navigating away)
-        console.log("User image clicked!"); // Debugging log
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    const facilitySelect = document.getElementById('facility');
+    const currentDateElement = document.getElementById('currentDate');
+    const prevDateButton = document.getElementById('prevDate');
+    const nextDateButton = document.getElementById('nextDate');
+    const timeSlotsContainer = document.getElementById('timeSlots');
 
-  
-    });
+    let currentDate = new Date();
+    updateDateDisplay();
 
-    document.querySelector('.user').addEventListener('click', function () {
-    const dropdown = document.querySelector('.dropdown');
-    dropdown.classList.toggle('show');  // Toggle the 'show' class
-});
-    // Check if the dropdown is being triggered correctly
-    document.addEventListener('click', function (event) {
-        if (!userImage.contains(event.target) && !dropdownMenu.contains(event.target)) {
-            dropdownMenu.classList.remove('show'); // Remove 'show' class to hide dropdown
-            console.log("Dropdown hidden (click outside)"); // Debugging log
+    prevDateButton.addEventListener('click', () => {
+        currentDate.setDate(currentDate.getDate() - 1);
+        updateDateDisplay();
+        if (facilitySelect.value) {
+            loadReservations(facilitySelect.value, formatDate(currentDate));
         }
     });
-});
 
-
-// ====================== DELETE JS ===========================
-document.querySelectorAll('.delete-btn').forEach(button => {
-    button.addEventListener('click', function() {
-        // Get the requestid from the hidden input field
-        const requestid = this.closest('tr').querySelector('.request-id').value;
-        
-        // Confirm the delete action
-        const confirmDelete = confirm('Are you sure you want to delete this request?');
-        
-        if (confirmDelete) {
-            // Send a POST request to delete the item
-            const formData = new FormData();
-            formData.append('delete_requestid', requestid);  // Add the requestid to the form data
-
-            fetch('', {
-                method: 'POST',
-                body: formData
-            })
-            .then(response => response.text())
-            .then(data => {
-                // Alert the user about the deletion outcome (optional)
-                if (data === 'success') {
-                    alert('Successfully deleted.');
-                } else {
-                    alert('Successfully deleted.');
-                }
-
-                // Reload the page after the operation, regardless of success or failure
-                location.reload();  // Reload the page to reflect the changes
-            })
-            .catch(error => {
-                console.error('Error deleting request:', error);
-                alert('Error occurred while deleting.');
-                
-                // Reload the page in case of error as well
-                location.reload();
-            });
+    nextDateButton.addEventListener('click', () => {
+        currentDate.setDate(currentDate.getDate() + 1);
+        updateDateDisplay();
+        if (facilitySelect.value) {
+            loadReservations(facilitySelect.value, formatDate(currentDate));
         }
     });
+
+    function updateDateDisplay() {
+        currentDateElement.textContent = formatDate(currentDate);
+    }
+
+    function formatDate(date) {
+        const year = date.getFullYear();
+        const month = String(date.getMonth() + 1).padStart(2, '0');
+        const day = String(date.getDate()).padStart(2, '0');
+        return `${year}-${month}-${day}`;
+    }
+
+    facilitySelect.addEventListener('change', function () {
+        const selectedFacility = this.value;
+        if (selectedFacility) {
+            loadReservations(selectedFacility, formatDate(currentDate));
+        } else {
+            timeSlotsContainer.innerHTML = '';
+        }
+    });
+
+    function loadReservations(facility, date) {
+    timeSlotsContainer.innerHTML = '<p>Loading reservations...</p>';
+
+    fetch(`<?=ROOT?>/staff/Staffreservation/getReservations?facility=${facility}&date=${date}`)
+        .then(response => {
+            if (!response.ok) throw new Error('Network error');
+            return response.text(); // raw HTML
+        })
+        .then(html => {
+            timeSlotsContainer.innerHTML = `<div class="slot-container">${html}</div>`;
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            timeSlotsContainer.innerHTML = `<p class="error">${error.message}</p>`;
+        });
+}
+
+    function displayReservations(slots) {
+        if (slots.length === 0) {
+            timeSlotsContainer.innerHTML = '<p>No time slots found.</p>';
+            return;
+        }
+
+        let html = '<div class="slot-container">';
+        slots.forEach(slot => {
+            html += `
+                <div class="time-slot ${slot.reserved ? 'reserved' : 'available'}">
+                    ${slot.time} - ${getEndTime(slot.time)}
+                </div>
+            `;
+        });
+        html += '</div>';
+
+        timeSlotsContainer.innerHTML = html;
+    }
+
+    function getEndTime(start) {
+        const [h, m] = start.split(':').map(Number);
+        const end = new Date(0, 0, 0, h + 2, m);
+        return `${String(end.getHours()).padStart(2, '0')}:${String(end.getMinutes()).padStart(2, '0')}`;
+    }
 });
-
-// ============================== UPDATE JS ============================
-
 </script>
-
-    
-    
 </body>
 </html>
-
-
-            <!-- test git comment -->

@@ -13,6 +13,20 @@ class Staff{
         return $this->query($query);
     }
 
+
+    public function getStaffType($userid){
+
+        $query = "SELECT type FROM $this->table 
+                JOIN user ON staff.userid = user.userid
+                WHERE user.userid = :userid";
+
+        $result = $this->query($query, ['userid' => $userid]);
+
+        return $result;
+
+    }
+}
+
     public function addStaff($data){
         $query = "INSERT INTO $this->table (name, emp_no, reg_no, designation, appointment_date, nic, dob, phone, address, type) VALUES (:name, :emp_no, :reg_no, :designation, :appointment_date, :nic, :dob, :phone, :address, :type)";
         $params = [
