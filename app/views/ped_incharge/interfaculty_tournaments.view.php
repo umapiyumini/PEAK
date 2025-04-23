@@ -17,22 +17,23 @@
       <div class="header">
           <h1>Tournament Records</h1>
           <button class="bell-icon"><i class="uil uil-bell"></i></button>
-            <!-- <div class="notifications-dropdown">
-                <div class="notifications-header">
-                    <h3>Notifications</h3>
-                    <span class="clear-all">Clear All</span>
-                </div>
-                <div class="notifications-list">
-                    <ul id="notificationsList"></ul>
-                </div>
-              </div> -->
             <button class="bell-icon"><i class="uil uil-signout"></i></button>
         </div>
       </div>
       <main>
-      <div class="sub-header">
-            <h2 class="sub-topic">Inter Faculty Games</h2>
-            </div>
+      <div class="tournament-type">
+                    <div class="grid-item interfacullty" id="interfaculty">
+                        <a>
+                            <h3>Inter Faculty</h3>
+                        </a>
+                    </div>
+                    <div class="grid-item freshers" id="freshers">
+                        <a>
+                            <h3>Freshers</h3>
+                        </a>
+                    </div>
+                </div>
+      <div class="interfaculty-tournaments" id="interfaculty-tournaments">          
         <div class="filters">
           <div class="filter-group">
             <label for="search">Search</label>
@@ -56,11 +57,13 @@
               <option value="2022">2022</option>
             </select>
           </div>
-          <!-- <button class="btn btn-add" onclick="openModal('Add Tournament')">Add Tournament</button> -->
         </div>
 
         <div class="records-table">
-          <table>
+          <table id="interfacultyTable">
+            <div class="sub-header">
+              <h2 class="sub-topic">Inter Faculty Games</h2>
+            </div>
             <thead>
               <tr>
                 <th>Sport</th>
@@ -121,7 +124,99 @@
         </div>
       </div>
 
-      <!-- Add/Edit Tournament Modal -->
+
+      <div class="freshers-tournaments" id="freshers-tournaments" style="display:none;">          
+        <div class="filters">
+          <div class="filter-group">
+            <label for="search">Search</label>
+            <input type="text" id="search" placeholder="Search tournaments...">
+          </div>
+          <div class="filter-group">
+            <label for="sport">Sport</label>
+            <select id="sport">
+              <option value="">All Sports</option>
+              <option value="basketball">Basketball</option>
+              <option value="soccer">Soccer</option>
+              <option value="volleyball">Volleyball</option>
+            </select>
+          </div>
+          <div class="filter-group">
+            <label for="year">Year</label>
+            <select id="year">
+              <option value="">All Years</option>
+              <option value="2024">2024</option>
+              <option value="2023">2023</option>
+              <option value="2022">2022</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="records-table">
+          <table id="freshersTable">
+            <div class="sub-header">
+              <h2 class="sub-topic">Freshers</h2>
+            </div>
+            <thead>
+              <tr>
+                <th>Sport</th>
+                <th>Year</th>
+                <th>1st Place</th>
+                <th>2nd Place</th>
+                <th>3rd Place</th>
+                <th>Men/Women</th>
+                <th>Participants</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody id="tournamentsBody">
+            <?php if(!empty($freshersList)):?>
+                <?php foreach ($freshersList as $i): ?>
+                  <tr>
+                    <td><?=$i->sport_name?></td>
+                    <td><?=$i->year?></td>
+                    <td><?=$i->first_place?></td>
+                    <td><?=$i->second_place?></td>
+                    <td><?=$i->third_place?></td>
+                    <td><?php?></td><!-- men/women column is not in database yet (need to add it) -->
+                    <td><?=$i->no_of_players?></td>
+                    <td>
+                      <button 
+                        class="btn btn-edit" 
+                        onclick="openModal(this)" 
+                        data-tournamentid="<?=$i->freshersid?>"
+                        data-sport="<?=$i->sport_name?>"
+                        data-date="<?=$i->year?>"
+                        data-place1="<?=$i->first_place?>"
+                        data-place2="<?=$i->second_place?>"
+                        data-place3="<?=$i->third_place?>"
+                        data-participantcount="<?=$i->no_of_players?>"
+                      >
+                        Edit
+                      </button>
+                      <button class="btn btn-delete" onclick="deleteTournament(<?=$i->freshersid?>)">Delete</button>
+                      <button 
+                        class="btn btn-view" 
+                        onclick="viewTournament(this)"
+                        data-tournamentid="<?=$i->freshersid?>"
+                        data-sport="<?=$i->sport_name?>"
+                        data-date="<?=$i->year?>"
+                        data-place1="<?=$i->first_place?>"
+                        data-place2="<?=$i->second_place?>"
+                        data-place3="<?=$i->third_place?>"
+                        data-participantcount="<?=$i->no_of_players?>"
+                      >
+                        View
+                      </button>
+                    </td>
+                  </tr>
+                <?php endforeach;?>
+              <?php endif;?>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Edit Tournament Modal -->
       <div id="tournamentModal" class="modal">
         <div class="modal-content">
           <div class="modal-header">
@@ -208,7 +303,7 @@
                   </div>
                   <div class="participants-section">
                       <h3>Participants</h3>
-                      <div id="viewParticipantsList" class="participants-list"></div>
+                      <div id="viewParticipantsList2" class="participants-list"></div>
                   </div>
               </div>
           </div>
@@ -267,6 +362,22 @@
         }
       }
     }
+
+    document.addEventListener("DOMContentLoaded", function() {
+    document.getElementById("interfaculty").addEventListener("click", function() {
+        let interfaculty = document.getElementById("interfaculty-tournaments");
+        let freshers = document.getElementById("freshers-tournaments");
+        interfaculty.style.display = "block";
+        freshers.style.display = "none";
+    });
+
+    document.getElementById("freshers").addEventListener("click", function() {
+        let interfaculty = document.getElementById("interfaculty-tournaments");
+        let freshers = document.getElementById("freshers-tournaments");
+        interfaculty.style.display = "none";
+        freshers.style.display = "block";
+    });
+  });
   </script>
 </body>
 </html>

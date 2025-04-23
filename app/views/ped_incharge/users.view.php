@@ -170,21 +170,31 @@
                     <thead>
                         <tr>
                             <th>Role</th>
-                            <th>Registration/Staff ID</th>
-                            <th>Name/Email</th>
-                            <th>Details</th>
-                            <th>Status</th>
+                            <th>Name</th>
+                            <th>Email</th>
+                            <th>Contact</th>
                             <th>Actions</th>
                         </tr>
                     </thead>
                     <tbody id="userTableBody">
-                        <!-- Table content will be dynamically populated -->
+                       <?php if(!empty($usersList)): ?>
+                        <?php foreach($usersList as $user): ?>
+                            <tr>
+                                <td><?= $user->role ?></td>
+                                <td><?= $user->name ?></td>
+                                <td><?= $user->email ?></td>
+                                <td><?= $user->contact_number ?></td>
+                                <td class="actions">
+                                    <button class="delete-btn" data-id="<?= $user->userid ?>">Delete</button>
+                                </td>
+                            </tr>
+                        <?php endforeach; ?>
+                        <?php endif; ?>
                     </tbody>
                 </table>
             </div>
         </div>
     </div>
-
         </main>
 
     

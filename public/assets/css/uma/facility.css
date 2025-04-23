@@ -303,3 +303,17 @@ body {
 .facility-card .reserve-button:hover {
     background-color: var(--mediumpurple);
 }
+
+
+button {
+    background-color: var(--darkpurple);
+    color: var(--white);
+    border: none;
+    padding: 0.8rem 1.5rem;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: background-color 0.3s;
+    margin-top: 15px;
+   
+  }

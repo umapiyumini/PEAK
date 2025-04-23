@@ -21,9 +21,16 @@
 
         /* Left sidebar styles */
         .profile-left {
-            background: #f8f9fa;
-            padding: 2rem;
+            background: var(--gray-light);
+            padding: 2rem 1.5rem;
             text-align: center;
+            border-right: 1px solid #e0e0e0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            border-top-left-radius: 15px;
+            border-bottom-left-radius: 15px;
         }
 
         .profile-image {
@@ -43,18 +50,22 @@
         }
 
         .profile-left h2 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: #2c3e50;
             margin-bottom: 1rem;
-            color: #333;
-        }
-
-        .basic-info {
-            text-align: left;
-            margin-top: 1.5rem;
         }
 
         .basic-info p {
-            margin: 0.5rem 0;
-            color: #666;
+            margin: 0.4rem 0;
+            font-size: 0.95rem;
+            color: #333;
+            text-align: left;
+        }
+
+        .basic-info span {
+            font-weight: 600;
+            color: #000;
         }
 
         /* Right content styles */
@@ -103,6 +114,14 @@
             color: #333;
             font-weight: 500;
         }
+
+        p span{
+            font-weight: 500;
+            width: 120px;
+            color: black;
+        }
+        
+    
 
         /* Responsive design */
         @media (max-width: 900px) {
@@ -179,11 +198,70 @@
         .view-mode .info-item textarea {
             display: none;
         }
+        #studentSports div {
+            padding: 0.2rem 0;
+            color: #333;
+            font-weight: 500;
+            border-bottom: 1px dashed #ccc;
+        }
+  
+        .tournament-item {
+            padding: 1rem 1.2rem;
+            margin-bottom: 1rem;
+            background-color: #ffffff;
+            border-radius: 8px;
+            transition: background-color 0.3s ease;
+        }
+
+
+
+        .tournament-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 0.5rem;
+        }
+
+        .tournament-name {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #1f2937;
+        }
+        .tournament-name span {
+            
+            color: #666;
+        }
+
+        .tournament-date {
+            font-size: 0.9rem;
+            color: #6b7280;
+        }
+
+        .tournament-result {
+            display: inline-block;
+            background-color:var(--res-sports);
+            color: white;
+            font-weight: 500;
+            padding: 4px 10px;
+            font-size: 0.875rem;
+            border-radius: 6px;
+            margin-top: 6px;
+            width: fit-content;
+        }
+        .tournament {
+    margin-bottom: 1.5rem; 
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    padding: 1rem;
+}
+
+
+    </style>
     </style>
 </head>
 <body>
 <?php $current_page = 'studentprofile'; include 'sidebar.view.php'?>
-    <div class="main-content">
+<div class="main-content">
         
         <div class="header">
             <h1>Student Profile</h1>
@@ -195,72 +273,89 @@
             <div class="profile-image">
                 <img src="<?=ROOT?>/assets/images/ped_incharge/pro_icon.jpg" alt="Student Photo" id="studentPhoto">
             </div>
-            <h2 id="studentName">Student Name</h2>
-            <div class="basic-info">
-                <p>Registration No: <span id="studentRegNo"></span></p>
-                <p>Faculty: <span id="studentFaculty"></span></p>
-            </div>
+            <?php if (!empty($studentDetails)) : ?>
+
+                    <h2 id="studentName"><?=$studentDetails[0]->name?></h2>
+                    <div class="basic-info">
+                        <p>Registration No: <span id="studentRegNo"><?=$studentDetails[0]->registrationnumber?></span></p>
+                        <p>Faculty: <span id="studentFaculty"><?=$studentDetails[0]->faculty?></span></p>
+                        <p>Department: <span id="studentFaculty"><?=$studentDetails[0]->department?></span></p>
+                        <p>Registered Date: <span id="studentRegDate"><?=$studentDetails[0]->id_start?></span></p>
+                        <p>ID Expiry Date: <span id="studentExpireDate"><?=$studentDetails[0]->id_end?></span></p>
+                    </div>
+
+             <?php endif; ?>
         </div>
         <div class="profile-right">
-        
-            <div class="info-card">
-                <h3><i class="uil uil-info-circle"></i> General Information</h3>
-                <div class="info-grid">
-                    <div class="info-item">
-                        <label>Registered Date:</label>
-                        <span id="studentRegDate"></span>
-                    </div>
-                    <div class="info-item">
-                        <label>ID Expiry Date:</label>
-                        <span id="studentExpireDate"></span>
-                    </div>
-                    <div class="info-item">
-                        <label>Academic Year:</label>
-                        <span id="academicYearDisplay"></span>
-                    </div>
-                    <div class="info-item">
-                        <label>Gender:</label>
-                        <span id="studentGender"></span>
-                    </div>
-                </div>
-            </div>
+            
 
             <div class="info-card">
                 <h3><i class="uil uil-user"></i> Personal Information</h3>
                 <div class="info-grid">
                     <div class="info-item">
-                        <label>studentBirthDate:</label>
-                        <span id="dobDisplay"></span>
+                            <label>Gender:</label>
+                            <span id="studentGender"><?=$studentDetails[0]->gender?></span>
+                    </div>
+                    <div class="info-item">
+                        <label>Date of Birth:</label>
+                        <span id="dobDisplay"><?=$studentDetails[0]->date_of_birth ?></span>
                     </div>
                     <div class="info-item">
                         <label>NIC:</label>
-                        <span id="studentNIC"></span>
+                        <span id="studentNIC"><?=$studentDetails[0]->nic ?></span>
                     </div>
                     <div class="info-item">
                         <label>Email:</label>
-                        <span id="studentEmail"></span>
+                        <span id="studentEmail"><?=$studentDetails[0]->email ?></span>
                     </div>
                     <div class="info-item">
                         <label>Contact:</label>
-                        <span id="studentContact"></span>
+                        <span id="studentContact"><?=$studentDetails[0]->contact_number?></span>
                     </div>
                     <div class="info-item">
                         <label>Address:</label>
-                        <span id="studentAddress"></span>
+                        <span id="studentAddress"><?=$studentDetails[0]->address ?></span>
                     </div>
                 </div>
             </div>
-
+           
             <div class="info-card">
                 <h3><i class="uil uil-medal"></i> Achievements & Activities</h3>
                 <div class="info-grid">
                     <div class="info-item">
                         <label>Sports:</label>
-                        <span id="studentSports"></span>
+                        <span id="studentSports">
+                        <?php if (!empty($sports)) : ?>
+                            <?php foreach ($sports as $sport): ?>
+                                <div><?= htmlspecialchars($sport->sport_name) ?></div><br>
+                            <?php endforeach; ?>
+                        <?php else : ?>
+                            <div>No sports registered.</div>
+                        <?php endif; ?>
+                        </span>
                     </div>
                     <div class="info-item full-width">
                         <label>Achievements:</label>
-                        <span id="studentAchievements"></span>
+                        <div class="card-body">    
+                            <div class="tournament-item">
+                                <?php if (!empty($interuni)) : ?>
+                                    <?php foreach ($interuni as $i): ?>
+                                        <div class="tournament">
+                                            <div class="tournament-header">
+                                                <div class="tournament-name"><?= htmlspecialchars($i->tournament_name) ?> - <span ><?= htmlspecialchars($i->sport_name) ?></span></div>
+                                                <div class="tournament-date"><?= htmlspecialchars(date('Y', strtotime($i->date))) ?></div>
+                                            </div>
+                                            <div>
+                                                <div class="tournament-result"><?= htmlspecialchars($i->place) ?></div>
+                                            </div>
+                                        </div>
+                                    <?php endforeach; ?>
+                                <?php else : ?>
+                                    <div>No Tournaments.</div>
+                                <?php endif; ?>
+                            </div>
+                        </div>
+
                     </div>
                 </div>
             </div>
@@ -280,231 +375,11 @@
         </main>
 	<script src="navbar.js"></script>
     <script>
+        
 
 
-const studentData = {
-    photo: "../assets/images/ped_incharge/pro_icon.jpg",
-    name: "Ryan ",
-    regNo: "321000001",
-    faculty: "Medicine",
-    regDate: "2023-09-01",
-    expireDate: "2027-09-01",
-    academicYear: "2023",
-    gender: "Male",
-    dateOfBirth: "2000-01-01",
-    nic: "1234567890",
-    email: "john.doe@example.com",
-    contact: "0123456789",
-    address: "123 Student Street, City",
-    sports: "Football, Cricket",
-    achievements: "Cricket SLUG Champions-2024"
-};
-
-// Function to display student data in the profile
-function displayStudentProfile(data) {
-    // Set profile image and name
-    document.getElementById('studentPhoto').src = data.photo;
-    document.getElementById('studentName').textContent = data.name;
-    
-    // Set basic info
-    document.getElementById('studentRegNo').textContent = data.regNo;
-    document.getElementById('studentFaculty').textContent = data.faculty;
-    
-    // Set general information
-    document.getElementById('studentRegDate').textContent = formatDate(data.regDate);
-    document.getElementById('studentExpireDate').textContent = formatDate(data.expireDate);
-    document.getElementById('academicYearDisplay').textContent = data.academicYear;
-    document.getElementById('studentGender').textContent = data.gender;
-    
-    // Set personal information
-    document.getElementById('dobDisplay').textContent = formatDate(data.dateOfBirth);
-    document.getElementById('studentNIC').textContent = data.nic;
-    document.getElementById('studentEmail').textContent = data.email;
-    document.getElementById('studentContact').textContent = data.contact;
-    document.getElementById('studentAddress').textContent = data.address;
-    
-    // Set achievements and activities
-    document.getElementById('studentSports').textContent = data.sports;
-    document.getElementById('studentAchievements').textContent = data.achievements;
-}
-
-// Helper function to format dates nicely
-function formatDate(dateString) {
-    if (!dateString) return '';
-    const options = { year: 'numeric', month: 'long', day: 'numeric' };
-    return new Date(dateString).toLocaleDateString(undefined, options);
-}
-
-// Function to get student data from form
-function getStudentDataFromForm() {
-    return {
-        photo: document.getElementById('studentPhoto').src,
-        name: document.getElementById('studentName').value,
-        regNo: document.getElementById('studentRegNo').value,
-        faculty: document.getElementById('studentFaculty').value,
-        regDate: document.getElementById('studentRegDate').value,
-        expireDate: document.getElementById('studentExpireDate').value,
-        academicYear: document.getElementById('academicYear').value,
-        gender: document.getElementById('studentGender').value,
-        dateOfBirth: document.getElementById('studentBirthDate').value,
-        nic: document.getElementById('studentNIC').value,
-        email: document.getElementById('studentEmail').value,
-        contact: document.getElementById('studentContact').value,
-        address: document.getElementById('studentAddress').value,
-        sports: document.getElementById('studentSports').value,
-        achievements: document.getElementById('studentAchievements').value
-    };
-}
-
-// Function to update profile from form data
-function updateProfileFromForm() {
-    const formData = getStudentDataFromForm();
-    displayStudentProfile(formData);
-}
-
-// Initialize profile when page loads
-document.addEventListener('DOMContentLoaded', () => {
-    // Display initial data
-    displayStudentProfile(studentData);
-    
-    // If there's a form, add submit event listener
-    const studentForm = document.getElementById('addStudentForm');
-    if (studentForm) {
-        studentForm.addEventListener('submit', (e) => {
-            e.preventDefault();
-            updateProfileFromForm();
-            // Close modal if it exists
-            const modal = document.getElementById('addModal');
-            if (modal) {
-                modal.style.display = 'none';
-            }
-        });
-    }
-});
-
-// Function to display student data when clicking view button in table
-function viewStudent(studentData) {
-    displayStudentProfile(studentData);
-}
-
-// Function to fetch student data from backend (example)
-async function fetchStudentData(studentId) {
-    try {
-        // Replace with your actual API endpoint
-        const response = await fetch(`/api/students/${studentId}`);
-        if (!response.ok) throw new Error('Failed to fetch student data');
-        const data = await response.json();
-        displayStudentProfile(data);
-    } catch (error) {
-        console.error('Error fetching student data:', error);
-        alert('Failed to load student data');
-    }
-}
-
-// Function to handle view button click in table
-function onViewButtonClick(studentId) {
-    fetchStudentData(studentId);
-}
-
-// edit
-let isEditing = false;
-        const editButton = document.getElementById('editButton');
-        const saveButton = document.getElementById('saveButton');
-        const cancelButton = document.getElementById('cancelButton');
-
-        // Function to toggle edit mode
-        function toggleEditMode(enable) {
-            isEditing = enable;
-            const container = document.querySelector('.profile-container');
-            
-            if (enable) {
-                container.classList.add('edit-mode');
-                container.classList.remove('view-mode');
-                editButton.style.display = 'none';
-                saveButton.style.display = 'block';
-                cancelButton.style.display = 'block';
-                document.querySelector('.upload-photo').classList.add('show');
-            } else {
-                container.classList.remove('edit-mode');
-                container.classList.add('view-mode');
-                editButton.style.display = 'block';
-                saveButton.style.display = 'none';
-                cancelButton.style.display = 'none';
-                document.querySelector('.upload-photo').classList.remove('show');
-            }
-
-            // Convert spans to input fields
-            document.querySelectorAll('.info-item').forEach(item => {
-                const span = item.querySelector('span');
-                const existingInput = item.querySelector('input, textarea');
-                
-                if (!existingInput) {
-                    const input = document.createElement(
-                        span.id === 'studentAddress' || span.id === 'studentAchievements' 
-                        ? 'textarea' 
-                        : 'input'
-                    );
-                    input.type = 'text';
-                    input.value = span.textContent;
-                    input.dataset.forSpan = span.id;
-                    item.appendChild(input);
-                }
-            });
-        }
-
-        // Function to save changes
-        function saveChanges() {
-            const updatedData = {...studentData};
-            
-            document.querySelectorAll('.info-item input, .info-item textarea').forEach(input => {
-                const spanId = input.dataset.forSpan;
-                const key = spanId.replace('student', '').replace('Display', '');
-                updatedData[key.toLowerCase()] = input.value;
-            });
-
-            // Update the global studentData object
-            Object.assign(studentData, updatedData);
-            
-            // Display updated data
-            displayStudentProfile(studentData);
-            
-            // Exit edit mode
-            toggleEditMode(false);
-        }
-
-        // Function to cancel editing
-        function cancelEdit() {
-            displayStudentProfile(studentData);
-            toggleEditMode(false);
-        }
-
-        // Event listeners for edit buttons
-        editButton.addEventListener('click', () => toggleEditMode(true));
-        saveButton.addEventListener('click', saveChanges);
-        cancelButton.addEventListener('click', cancelEdit);
-
-        // Modify the display function to create input fields
-        function displayStudentProfile(data) {
-            // Existing display logic remains the same
-            document.getElementById('studentPhoto').src = data.photo;
-            document.getElementById('studentName').textContent = data.name;
-            
-            // Update all spans with corresponding data
-            Object.keys(data).forEach(key => {
-                const elementId = 'student' + key.charAt(0).toUpperCase() + key.slice(1);
-                const element = document.getElementById(elementId);
-                if (element) {
-                    element.textContent = key.includes('date') ? formatDate(data[key]) : data[key];
-                }
-            });
-        }
-
-        // Initialize the profile in view mode
-        document.addEventListener('DOMContentLoaded', () => {
-            displayStudentProfile(studentData);
-            toggleEditMode(false);
-        });
     </script>
+</body>
 </body>
 </html>
 

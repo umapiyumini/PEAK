@@ -3,7 +3,7 @@
         public function index(){
             $tournamentModel = new InteruniTournaments();
             $tournamentList = $tournamentModel->findAllTournaments();
-            
+
             $this->view('ped_incharge/interuni_tournaments',['tournamentList'=>$tournamentList]);
         }
 
@@ -25,6 +25,12 @@
             $tournamentModel->deleteTournament($id);
             
             header('Location: ' . ROOT . '/ped_incharge/interuni_tournaments');
+        }
+
+        public function getParticipants($tournamentId){
+            $tournamentPlayerModel = new Interuniplayers();
+            $participants = $tournamentPlayerModel->getParticipantsByTournamentId($tournamentId);
+            echo json_encode($participants);
         }
     }
 

@@ -140,4 +140,35 @@ class User {
         return $this->query($query, $params);
     }
     
+    public function changeRole($userid, $role){
+        $query = "UPDATE $this->table SET role = :role WHERE userid = :userid";
+        $params = [
+            ':role' => $role,
+            ':userid' => $userid
+        ];
+        return $this->query($query, $params);
+
+    }
+
+    public function findAllUsers() {
+        $query = "SELECT * FROM $this->table";
+        return $this->query($query);
+    }
+
+
+    public function update($userid, $data)
+{
+    $set = [];
+    $params = [':userid' => $userid];
+    foreach ($data as $key => $value) {
+        $set[] = "$key = :$key";
+        $params[":$key"] = $value;
+    }
+    $setStr = implode(', ', $set);
+    $query = "UPDATE $this->table SET $setStr WHERE userid = :userid";
+    return $this->query($query, $params);
+}
+
+
+
 }
