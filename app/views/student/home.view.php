@@ -18,7 +18,7 @@
     }
 
     .notice-item {
-      border: 1px solid #ccc;
+      border: 8px solid #d8b4f8; /* Light purple */
       border-radius: 8px;
       padding: 15px 20px;
       background-color: #f9f9f9;

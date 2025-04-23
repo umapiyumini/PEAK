@@ -28,15 +28,18 @@ include 'nav.view.php';
                 <img src="<?=ROOT?>/assets/images/amar/profile.png" alt="Student Photo" id="studentPhoto">
 
             </div>
-            <h2 id="studentName">Student Name</h2>
+          
+          
             <div class="basic-info">
                 <?php if(!empty($details)): ?>
                     <?php foreach($details as $d): ?> 
                         
-                        
+                        <H3><?= $d->name ?></H3>
                         
                         <p>Registration No: <?= $d->registrationnumber ?><span id="studentRegNo"></span></p>
                         <p>Faculty: <?= $d->faculty ?></span></p>
+                        <?php endforeach; ?>
+                        <?php endif; ?>
 
             </div>
         </div>
@@ -58,7 +61,7 @@ include 'nav.view.php';
                         <span id="academicYearDisplay"></span>
                     </div>
                     <div class="info-item">
-                        <label>Gender:</label>
+                        <label>Gender:<?= $d->	gender ?></label>
                         <span id="studentGender"></span>
                     </div>
                 </div>
@@ -68,23 +71,23 @@ include 'nav.view.php';
                 <h3><i class="uil uil-user"></i> Personal Information</h3>
                 <div class="info-grid">
                     <div class="info-item">
-                        <label>studentBirthDate:</label>
+                        <label>studentBirthDate:<?= $d-> date_of_birth?></label>
                         <span id="dobDisplay"></span>
                     </div>
                     <div class="info-item">
-                        <label>NIC:</label>
+                        <label>NIC:<?= $d-> nic?></label>
                         <span id="studentNIC"></span>
                     </div>
                     <div class="info-item">
-                        <label>Email:</label>
+                        <label>Email:<?= $d->email?></label>
                         <span id="studentEmail"></span>
                     </div>
                     <div class="info-item">
-                        <label>Contact:</label>
+                        <label>Contact:<?= $d->contact_number?></label>
                         <span id="studentContact"></span>
                     </div>
                     <div class="info-item">
-                        <label>Address:</label>
+                        <label>Address:<?= $d->address?></label>
                         <span id="studentAddress"></span>
                     </div>
                 </div>

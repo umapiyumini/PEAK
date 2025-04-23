@@ -65,6 +65,16 @@
                 </a>
             </li>
 
+
+              <!-- Tournament -->
+              <li class="nav-item">
+                <a href="tournament" class="nav-link">
+                    
+                <i class="fa-solid fa-volleyball"></i>
+                    Tournament
+                </a>
+            </li>
+
              
 
             
