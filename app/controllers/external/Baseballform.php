@@ -42,6 +42,8 @@ class Baseballform extends Controller {
                 }
             }
 
+
+            //slot relationships
             $halfDayToTwoHour = [
                 '08:00:00' => ['08:00:00', '10:00:00'],
                 '13:00:00' => ['13:00:00', '15:00:00']

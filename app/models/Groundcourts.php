@@ -10,7 +10,14 @@ class Groundcourts {
         return $this->table;
     }
 
-    
+
+    //used
+    public function getAllGroundRates() {
+        $query = "SELECT * FROM $this->table ORDER BY description, event, duration";
+        return $this->query($query);
+    }
+
+
     public function getPriceByDetails($event, $duration, $description, $courtid) {
         // Adjust the query to include courtid
         $query = "SELECT price FROM $this->table WHERE event = :event AND duration = :duration AND description = :description AND courtid = :courtid LIMIT 1";
@@ -28,6 +35,11 @@ class Groundcourts {
     
         return $result ? $result[0]->price : null;
     }
+    
+
+
+    //not yet
+    
     
 public function getPriceByEventDurationDescription($event, $duration, $description) {
     // Query the database to get the base price based on event, duration, and description
@@ -47,10 +59,32 @@ public function getPriceByEventDurationDescription($event, $duration, $descripti
 }
 
 
-public function getAllGroundRates() {
-    $query = "SELECT * FROM $this->table ORDER BY description, event, duration";
-    return $this->query($query);
+public function getByKeys($courtid, $event, $duration, $description) {
+    $query = "SELECT * FROM $this->table WHERE courtid = :courtid AND event = :event AND duration = :duration AND description = :description LIMIT 1";
+    $params = [
+        'courtid' => $courtid,
+        'event' => $event,
+        'duration' => $duration,
+        'description' => $description
+    ];
+    $result = $this->query($query, $params);
+    return $result ? $result[0] : null;
 }
+
+public function updatePrice($courtid, $event, $duration, $description, $price) {
+    $query = "UPDATE $this->table SET price = :price WHERE courtid = :courtid AND event = :event AND duration = :duration AND description = :description";
+    $params = [
+        'price' => $price,
+        'courtid' => $courtid,
+        'event' => $event,
+        'duration' => $duration,
+        'description' => $description,
+    ];
+    return $this->query($query, $params);
+}
+
+
+
 
 
 }

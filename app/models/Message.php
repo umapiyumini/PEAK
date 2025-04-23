@@ -11,9 +11,6 @@ class Message {
     
         $sql = "INSERT INTO {$this->table} ($columns) VALUES ($values)";
         
-        // Debug: Output the SQL query
-        echo "SQL Query: " . $sql . "<br>";
-        var_dump($data);  // Check the values being passed to the query
         
         return $this->query($sql, $data);
     }

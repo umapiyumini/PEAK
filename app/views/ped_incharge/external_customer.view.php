@@ -14,15 +14,7 @@
             
             <h1>Customer Data</h1>  
             <button class="bell-icon"><i class="uil uil-bell"></i></button>
-            <!-- <div class="notifications-dropdown">
-                <div class="notifications-header">
-                    <h3>Notifications</h3>
-                    <span class="clear-all">Clear All</span>
-                </div>
-                <div class="notifications-list">
-                    <ul id="notificationsList"></ul>
-                </div>
-              </div> -->
+            
 
 
 
@@ -52,33 +44,39 @@
                             </tr>
                         </thead>
                         <tbody>
-<?php if (!empty($external_users)): ?>
-    <?php foreach ($external_users as $user): ?>
-        <tr>
-            <td><?= htmlspecialchars($user->userid) ?></td>
-            <td><?= htmlspecialchars($user->name) ?></td>
-            <td><?= htmlspecialchars($user->company_name) ?></td>
-            <td><?= htmlspecialchars($user->nic) ?></td>
-            <td><?= htmlspecialchars($user->email) ?></td>
-            <td><?= htmlspecialchars($user->contact_number) ?></td>
-            <td><?= htmlspecialchars($user->address) ?></td>
-            <td>
-    <a href="<?=ROOT?>/ped_incharge/external_Profile/index/<?= $user->userid ?>" title="View">
-        <i class="uil uil-eye"></i>
-    </a>
-</td>
+                        <?php if (!empty($external_users)): ?>
+                            <?php foreach ($external_users as $user): ?>
+                                <tr>
+                                    <td><?= htmlspecialchars($user->userid) ?></td>
+                                    <td><?= htmlspecialchars($user->name) ?></td>
+                                    <td><?= htmlspecialchars($user->company_name) ?></td>
+                                    <td><?= htmlspecialchars($user->nic) ?></td>
+                                    <td><?= htmlspecialchars($user->email) ?></td>
+                                    <td><?= htmlspecialchars($user->contact_number) ?></td>
+                                    <td><?= htmlspecialchars($user->address) ?></td>
+                                    <td>
+                            <a href="<?=ROOT?>/ped_incharge/external_Profile/index/<?= $user->userid ?>" title="View">
+                                <i class="uil uil-eye"></i>
+                            </a>
+                        </td>
 
-        </tr>
-    <?php endforeach; ?>
-<?php else: ?>
-    <tr><td colspan="8">No external users found.</td></tr>
-<?php endif; ?>
-</tbody>
+                        </tr>
+                    <?php endforeach; ?>
+                <?php else: ?>
+                    <tr><td colspan="8">No external users found.</td></tr>
+                <?php endif; ?>
+                </tbody>
 
                     </table>
                 </div>
             </div>
 
+
+
+
+
+
+            
             <section class="feedbacks">
     <h2>Customer Feedbacks</h2>
     <div class="row">

@@ -69,7 +69,8 @@
 </div>
 
 
-        <div id="reservationSummaryModal" class="modal">
+<div id="reservationSummaryModal" class="modal" style="display: none;">
+
                     <div class="modal-content">
                         <span class="close">&times;</span>
                         <h2>Reservation made</h2>

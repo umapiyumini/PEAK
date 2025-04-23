@@ -124,7 +124,14 @@
             </div>
         </div>
 
+
+
+
+
+
         <script>
+
+
         // Show/hide half-day options
         function showSlots() {
             const selectedDuration = document.getElementById("duration").value;
@@ -142,7 +149,7 @@
         function fetchPrice() {
             const event = bookingForSelect.value;
             const duration = durationSelect.value;
-            const description = "no"; // always "no" for baseball
+            const description = "no"; 
 
             if (event && duration) {
                 fetch('http://localhost/PEAK/public/external/baseballform/getPrice', {
@@ -168,6 +175,8 @@
                 priceInput.value = '';
             }
         }
+
+
 
         // Function to fetch discounted price
         function fetchDiscountedPrice(price) {
@@ -199,6 +208,8 @@
             });
         }
 
+
+
         // Add event listeners for form changes
         bookingForSelect.addEventListener('change', fetchPrice);
         durationSelect.addEventListener('change', fetchPrice);
@@ -208,6 +219,9 @@
                 fetchDiscountedPrice(price);
             }
         });
+
+
+        
 
         // Date availability check
         const dateInput = document.getElementById('date');

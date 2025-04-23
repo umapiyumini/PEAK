@@ -18,52 +18,44 @@
             
                 <!-- Search Bar -->
                 <div class="search-container">
-                  <input
-                    type="text"
-                    id="search-bar"
-                    placeholder="Search for a facility..."
-                    onkeyup="searchFacility()"
-                  />
+                  <input type="text" id="search-bar" placeholder="Search for a facility..." onkeyup="searchFacility()"/>
                 </div>
             
                 <!-- Rates Table -->
                 <table class="rates-table" id="rates-table">
-  <thead>
-    <tr>
-      <th>Court Name</th>
-      <th>Image</th>
-      <th>Event</th>
-      <th>Duration</th>
-      <th>Description</th>
-      <th>Price (Rs.)</th>
-    </tr>
-  </thead>
-  <tbody>
-    <?php foreach ($rates as $rate): ?>
-      <tr>
-        <td><?= htmlspecialchars($rate->courtname) ?></td>
-        <td>
-          <?php if ($rate->courtimage): ?>
-            <img src="<?= htmlspecialchars($rate->courtimage) ?>" alt="<?= htmlspecialchars($rate->courtname) ?>" style="width:80px; height:auto;">
-          <?php else: ?>
-            <span>No Image</span>
-          <?php endif; ?>
-        </td>
-        <td><?= htmlspecialchars($rate->event) ?></td>
-        <td><?= htmlspecialchars($rate->duration) ?></td>
-        <td><?= htmlspecialchars($rate->description) ?></td>
-        <td><?= number_format($rate->price, 2) ?></td>
-      </tr>
-    <?php endforeach; ?>
-  </tbody>
-</table>
+                    <thead>
+                      <tr>
+                        <th>Court Name</th>
+                        <th>Image</th>
+                        <th>Event</th>
+                        <th>Duration</th>
+                        <th>Description</th>
+                        <th>Price (Rs.)</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <?php foreach ($rates as $rate): ?>
+                        <tr>
+                          <td><?= htmlspecialchars($rate->courtname) ?></td>
+                          <td>
+                            <?php if ($rate->courtimage): ?>
+                              <img src="<?= htmlspecialchars($rate->courtimage) ?>" alt="<?= htmlspecialchars($rate->courtname) ?>" style="width:80px; height:auto;">
+                            <?php else: ?>
+                              <span>No Image</span>
+                            <?php endif; ?>
+                          </td>
+                          <td><?= htmlspecialchars($rate->event) ?></td>
+                          <td><?= htmlspecialchars($rate->duration) ?></td>
+                          <td><?= htmlspecialchars($rate->description) ?></td>
+                          <td><?= number_format($rate->price, 2) ?></td>
+                        </tr>
+                      <?php endforeach; ?>
+                    </tbody>
+                  </table>
 
             
-              
-            
-
+                </div>
               </div>
-            </div>
-           
-            </body>
-            </html>
+                            
+    </body>
+</html>

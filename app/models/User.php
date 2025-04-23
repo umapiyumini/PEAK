@@ -111,6 +111,16 @@ class User {
         return empty($this->errors);
     }
 
+
+    //used 
+    public function getUser($userid){
+        $query = "SELECT * FROM $this->table WHERE userid = :userid";
+        $params = [':userid' => $userid];
+        return $this->query($query, $params);
+    }
+
+
+    //not yet
     public function getLastID() {
         $query = "SELECT userid FROM $this->table ORDER BY userid DESC LIMIT 1";
         $result = $this->query($query); // Likely returns an array of objects
@@ -134,11 +144,9 @@ class User {
         return $this->query($query,$params);
     }
     
-    public function getUser($userid){
-        $query = "SELECT * FROM $this->table WHERE userid = :userid";
-        $params = [':userid' => $userid];
-        return $this->query($query, $params);
-    }
+
+
+  
     
     public function changeRole($userid, $role){
         $query = "UPDATE $this->table SET role = :role WHERE userid = :userid";
