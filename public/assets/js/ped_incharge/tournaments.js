@@ -48,7 +48,7 @@ function viewTournament(tournamentdata) {
                     const participantItem = document.createElement('a');
                     participantItem.classList.add('participant-item');
                     participantItem.href = `student_profile/${participant.regno}`;
-                    participantItem.textContent = `${participant.regno} - ${participant.name}`;
+                    participantItem.textContent = `${participant.regno}`;
                     participantItem.style.display = 'block';
                     participantsList.appendChild(participantItem);
                 });

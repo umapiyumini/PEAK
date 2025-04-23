@@ -104,6 +104,11 @@
             <button type="button" class="fbtn cancel" id="closeFeedbackModal">Cancel</button>
         </div>
     </form>
+        <!-- Add this inside your feedbackModal div, after the form -->
+    <div id="feedbackThankYou" style="display:none; text-align:center; margin-top:20px;">
+        <h3>Thank you for your feedback!</h3>
+    </div>
+
 </div>
 
                                 
@@ -141,8 +146,10 @@ closeFeedbackModal.addEventListener('click', function() {
 });
 
 // Close the feedback modal and submit the form when clicking the submit button
-submitBtn.addEventListener('click', function(e) {
-    e.preventDefault(); // Prevent form submission (so the page doesn't reload)
+// Replace your feedbackForm submit event with this:
+
+feedbackForm.addEventListener('submit', function(e) {
+    e.preventDefault();
 
     // Check if rating is provided before submitting
     if (!ratingInput.value) {
@@ -150,12 +157,38 @@ submitBtn.addEventListener('click', function(e) {
         return;
     }
 
-    // Submit the form
-    feedbackForm.submit(); // Submit the form
+    // Prepare form data
+    const formData = new FormData(feedbackForm);
 
-    // Hide the modal and re-enable scrolling
-    feedbackModal.style.display = 'none'; // Hide the modal
-    document.body.style.overflow = ''; // Enable scrolling back on the page
+    // Send AJAX request
+    fetch(feedbackForm.action, {
+        method: 'POST',
+        body: formData,
+        credentials: 'same-origin'
+    })
+    .then(response => response.text())
+    .then(data => {
+        // Hide the form
+        feedbackForm.style.display = 'none';
+        // Show thank you message
+        document.getElementById('feedbackThankYou').style.display = 'block';
+
+        // Optionally, close the modal after a delay
+        setTimeout(() => {
+            feedbackModal.style.display = 'none';
+            document.body.style.overflow = '';
+            // Reset form for next use
+            feedbackForm.reset();
+            feedbackForm.style.display = 'block';
+            document.getElementById('feedbackThankYou').style.display = 'none';
+            // Reset stars color
+            document.querySelectorAll('.star').forEach(s => s.style.color = 'gray');
+        }, 2000);
+    })
+    .catch(error => {
+        alert('Error submitting feedback. Please try again.');
+        console.error(error);
+    });
 });
 
 // Set rating when star is clicked

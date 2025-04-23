@@ -375,6 +375,7 @@ aside.calendar {
  .notice_board {
             width: 100%;
             margin-top:30px;
+            margin-bottom: 20px;
             background-color: white;
             padding: 10px;
             border-radius: 8px;
@@ -396,6 +397,13 @@ aside.calendar {
             border: 1px solid #ddd;
             border-radius: 4px;
         }
+        .notice-form select {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
         .notice-form button {
             background-color:#3A124C;
             color: white;
@@ -410,6 +418,7 @@ aside.calendar {
             border: 1px solid #ddd;
             border-radius: 4px;
             margin-bottom: 20px;
+            width: 100%;
         }
         .notice h2 {
             margin-top: 0;
@@ -433,7 +442,10 @@ aside.calendar {
             color: #666;
             font-size: 0.8em;
         }
-
+        .notice-visibility{
+            color: #666;
+            font-size: 0.8em;
+        }
 .upcoming-events {
 margin-top: 40px;
 }
@@ -610,6 +622,7 @@ grid-template-columns: 1fr;
     background: none;
     font-size: 20px;
     cursor: pointer;
+    float: right;
 }
 
 .form-group {
@@ -621,7 +634,10 @@ grid-template-columns: 1fr;
     margin-bottom: 5px;
 }
 
-.form-group input {
+.form-group input, 
+.form-group textarea, 
+.form-group select
+{
     width: 100%;
     padding: 8px;
     border: 1px solid #ddd;

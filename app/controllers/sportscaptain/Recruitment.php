@@ -35,7 +35,7 @@ class Recruitment extends Controller{
         $_SESSION['error'] = $e->getMessage();
     }
    }
-   header('location: ' .ROOT . 'sportscaptain/recruitment');
+   header('location: ' .ROOT . '/sportscaptain/recruitment');
    exit();
 
    }

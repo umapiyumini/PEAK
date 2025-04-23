@@ -50,6 +50,7 @@
                 <thead>
                     <tr>
                         <th>Reg No</th>
+                        <th>Name</th>
                         <th>Position</th>
                         <th>Jersey Number</th>
                         <th>Actions</th>
@@ -59,7 +60,12 @@
                 <?php if (!empty($players)): ?>
                     <?php foreach ($players as $item): ?>
                         <tr>
-                            <td><?= htmlspecialchars($item->regno) ?></td>
+                        <td>
+                        <a href="<?=ROOT?>/sportscaptain/studentprofile/<?= $item->regno ?>" class="regno-link">
+                        <?= htmlspecialchars($item->regno) ?>
+                        </a>
+                        </td>
+                            <td><?= htmlspecialchars($item->name) ?></td>
                             <td><?= htmlspecialchars($item->position) ?></td>
                             <td><?= htmlspecialchars($item->jerseyno) ?></td>
                             <td>

@@ -70,4 +70,17 @@ class Student{
         $params = [':regno' => $regno];
         return $this->query($query, $params);
     }
+
+    public function editStudentDetails($data){
+        $query = "UPDATE $this->table SET registrationnumber = :registrationnumber, faculty = :faculty, department = :department, id_start = :id_start, id_end = :id_end WHERE userid = :userid";
+        $params = [
+            ':registrationnumber' => $data['regNumber'],
+            ':faculty' => $data['faculty'],
+            ':department' => $data['department'],
+            ':id_start' => $data['id_start'],
+            ':id_end' => $data['id_end'],
+            ':userid' => $data['userid']
+        ];
+        return $this->query($query, $params);
+    }
 }

@@ -16,15 +16,6 @@
       <div class="header">
         <h1>Tournament Records</h1>
         <button class="bell-icon"><i class="uil uil-bell"></i></button>
-        <!-- <div class="notifications-dropdown">
-          <div class="notifications-header">
-              <h3>Notifications</h3>
-              <span class="clear-all">Clear All</span>
-          </div>
-          <div class="notifications-list">
-              <ul id="notificationsList"></ul>
-          </div>
-        </div> -->
         <button class="bell-icon"><i class="uil uil-signout"></i></button>
       </div>
     </div>
@@ -119,7 +110,7 @@
         </div>
       </div>
 
-      <!-- Add/Edit Tournament Modal -->
+      <!--Edit Tournament Modal -->
       <div id="tournamentModal" class="modal">
         <div class="modal-content">
           <div class="modal-header">
@@ -162,13 +153,6 @@
             <div class="form-group">
               <label for="participants">Number of Participants</label>
               <input type="number" name="participants" id="participants" required min="2">
-            </div>
-            <div class="form-group">
-              <label>Participants' Registration Numbers</label>
-              <div id="participantsContainer">
-                <!-- Participant input fields will go here -->
-              </div>
-              <button type="button" class="btn btn-add" onClick="addParticipant()">Add Participant</button>
             </div>
             <button type="submit" class="btn btn-add">Save Tournament</button>
           </form>

@@ -19,9 +19,6 @@
                     <input type="text" id="searchInput" placeholder="Search students...">
                     <i class="uil uil-search"></i>
                 </div>
-                <button class="add-student-btn" id="openAddModal">
-                    <i class="uil uil-plus"></i> Add New Student
-                </button>
             </div>
             <div>
                 <div class="student-table">
@@ -44,9 +41,6 @@
                     <td><?=$i->faculty?></td>
                     <td><?=$i->gender?></td>
                     <td class="action-buttons">
-                        <button class="btn btn-update" onclick="openEditModal(${student.id})">
-                            <i class="uil uil-edit"></i>
-                        </button>
                         <button class="btn btn-delete" onclick="deleteStudent(${student.id})">
                             <i class="uil uil-trash-alt"></i>
                         </button>
@@ -62,92 +56,6 @@
                 </div>
             </div>
 
-
-                    
-            <!-- Add Student Modal -->
-            <div id="addModal" class="modal">
-                <div class="modal-content">
-                    <span class="close">&times;</span>
-                    <h2>Add New Student</h2>
-                    <form id="addStudentForm">
-                        <!-- Registration Number -->
-                        <div class="form-group">
-                            <label for="studentRegNo">Registration No:</label>
-                            <input type="text" id="studentRegNo" required>
-                        </div>
-                        <!-- Full Name -->
-                        <div class="form-group">
-                            <label for="studentName">Full Name:</label>
-                            <input type="text" id="studentName" required>
-                        </div>
-                        <!-- Faculty -->
-                        <div class="form-group">
-                            <label for="studentFaculty">Faculty:</label>
-                            <input type="text" id="studentFaculty" required>
-                        </div>
-                        <!-- Registered Date -->
-                        <div class="form-group">
-                            <label for="studentRegDate">Registered Date:</label>
-                            <input type="date" id="studentRegDate" required>
-                        </div>
-                        <!-- ID Expiry Date -->
-                        <div class="form-group">
-                            <label for="studentExpireDate">ID Expiry Date:</label>
-                            <input type="date" id="studentExpireDate" required>
-                        </div>
-                        <!-- Date of Birth -->
-                        <div class="form-group">
-                            <label for="studentBirthDate">Date of Birth:</label>
-                            <input type="date" id="studentBirthDate" required>
-                        </div>
-                        <!-- NIC -->
-                        <div class="form-group">
-                            <label for="studentNIC">NIC:</label>
-                            <input type="text" id="studentNIC" required>
-                        </div>
-                        <!-- Email -->
-                        <div class="form-group">
-                            <label for="studentEmail">Email:</label>
-                            <input type="email" id="studentEmail">
-                        </div>
-                        <!-- Contact Number -->
-                        <div class="form-group">
-                            <label for="studentContact">Contact Number:</label>
-                            <input type="tel" id="studentContact" pattern="[0-9]{10}" placeholder="Enter 10-digit number" required>
-                        </div>
-                        <!-- Gender -->
-                        <div class="form-group">
-                            <label for="studentGender">Gender:</label>
-                            <select id="studentGender" required>
-                                <option value="" disabled selected>Select Gender</option>
-                                <option value="Male">Male</option>
-                                <option value="Female">Female</option>
-                                <option value="Other">Other</option>
-                            </select>
-                        </div>
-                        <!-- Address -->
-                        <div class="form-group">
-                            <label for="studentAddress">Address:</label>
-                            <textarea id="studentAddress" rows="3" required></textarea>
-                        </div>
-                        <!-- Sports -->
-                        <div class="form-group">
-                            <label for="studentSports">Sports:</label>
-                            <input type="text" id="studentSports" placeholder="E.g., Football, Basketball">
-                        </div>
-                        <!-- Achievements -->
-                        <div class="form-group">
-                            <label for="studentAchievements">Achievements:</label>
-                            <textarea id="studentAchievements" rows="3" ></textarea>
-                        </div>
-                        <!-- Modal Footer -->
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-cancel">Cancel</button>
-                            <button type="submit" class="btn btn-save">Add Student</button>
-                        </div>
-                    </form>
-                </div>
-            </div>
 
             <!-- Edit Student Modal -->
             <div id="editModal" class="modal">

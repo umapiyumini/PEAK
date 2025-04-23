@@ -185,7 +185,6 @@
                                 <td><?= $user->email ?></td>
                                 <td><?= $user->contact_number ?></td>
                                 <td class="actions">
-                                    <button class="edit-btn" data-id="<?= $user->userid ?>">Edit</button>
                                     <button class="delete-btn" data-id="<?= $user->userid ?>">Delete</button>
                                 </td>
                             </tr>

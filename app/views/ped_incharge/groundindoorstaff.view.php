@@ -26,31 +26,36 @@
     </div>
     <main>
         <div class="container">
-            <div class="task-form">
+            <form class="task-form" method="POST" action="<?=ROOT?>/ped_incharge/groundindoorstaff/addTask">
                 <h2>Assign New Task</h2>
+
                 <div class="form-group">
                     <label for="taskName">Task Name:</label>
-                    <input type="text" id="taskName" required>
+                    <input type="text" id="taskName" name="taskname" required>
                 </div>
-                <div class="form-group">
-                    <label for="assignDate">Assign Date:</label>
-                    <input type="date" id="assignDate" required>
-                </div>
-                <div class="form-group">
-                    <label for="assignTime">Assign Time:</label>
-                    <input type="time" id="assignTime" required>
-                </div>
+
                 <div class="form-group">
                     <label for="deadline">Deadline:</label>
-                    <input type="datetime-local" id="deadline" required>
+                    <input type="datetime-local" id="deadline" name="deadline" required>
                 </div>
+
                 <div class="form-group">
                     <label for="description">Description:</label>
-                    <textarea id="description" rows="3"></textarea>
+                    <textarea id="description" name="description" rows="3"></textarea>
                 </div>
-                <button class="add-btn" onclick="addTask()">Assign Task</button>
-            </div>
 
+                <div class="form-group">
+                    <label for="staffType">Assign To:</label>
+                    <select id="staffType" name="assignedto" required>
+                        <option value="">-- Select Staff Type --</option>
+                        <option value="Ground Staff">Ground Staff</option>
+                        <option value="Indoor Staff">Indoor Staff</option>
+                    </select>
+                </div>
+
+                <button class="add-btn" type="submit">Assign Task</button>
+            </form>
+            
             <div class="assigned-tasks">
                 <div class="filter-section">
                     <h2>Assigned Tasks</h2>
@@ -60,27 +65,32 @@
                         <option value="pending">Pending</option>
                         <option value="completed">Completed</option>
                     </select>
-                    <div class="task-list" id="taskList">
-                        <?php if(!empty($staffTodoList)):?>
-                            <ul id="assignedTasksList">
+                <div class="task-list" id="taskList">
+                    <?php if(!empty($staffTodoList)):?>
+                        <ul id="assignedTasksList">
                             <?php foreach($staffTodoList as $task): ?>
-                                <li class="task-item" data-status="<?= $task->status ?>">
-                                    <div class="task-details">
-                                        <h3>Task: <?= $task->taskname ?></h3>
-                                        <p><strong>Description:</strong> <?= $task->description ?></p>
-                                        <p><strong>Assigned Date:</strong> <?= $task->date ?></p>
-                                        <p><strong>Assigned Time:</strong> <?= $task->date ?></p>
-                                        <p><strong>Deadline:</strong> <?= $task->deadline ?></p>
-                                    </div>
-                                    <button class="mark-complete-btn" data-id="<?= $task->id ?>">Mark as Complete</button>
-                                </li>
+                            <li class="task-item" data-status="<?= $task->status ?>">
+                                <div class="task-details">
+                                    <h3>Task: <?= $task->taskname ?></h3>
+                                    <p><strong>Description:</strong> <?= $task->description ?></p>
+                                    <p><strong>Assigned Date & Time:</strong> <?= $task->time ?></p>
+                                    <p><strong>Deadline:</strong> <?= $task->deadline ?></p>
+                                    <p><strong>Assigned To:</strong> <?= $task->assignedto ?></p>                                    
+                                    <?php
+                                        $status = strtolower($task->status);
+                                        $statusClass = 'status-' . $status;
+                                    ?>
+                                    <p><strong>Status:</strong> <span class="<?= $statusClass ?>"><?= $task->status ?></span></p>    
+                                 </div>    
+                            </li>
                             <?php endforeach; ?>
-                            </ul>
-                        <?php endif;?>
-                    </div>
+                        </ul>
+                    <?php endif;?>
                 </div>
             </div>
         </div>
+
+    </div>
              
         <div class="ground-staff-table table">
             <div class="controls">
@@ -123,8 +133,24 @@
                             <td><?= $staff->phone ?></td>
                             <td><?= $staff->address ?></td>
                             <td class="actions">
-                                <button class="edit-btn" data-id="<?= $staff->staff_id ?>">Edit</button>
-                                <button class="delete-btn" data-id="<?= $staff->staff_id ?>">Delete</button>
+                                <button 
+                                    class="edit-btn" 
+                                    onclick="openEditModal(this)"
+                                    data-id="<?= $staff->staff_id ?>"
+                                    data-name="<?= $staff->name ?>"
+                                    data-emp_no="<?= $staff->emp_no ?>"
+                                    data-reg_no="<?= $staff->reg_no ?>"
+                                    data-designation="<?= $staff->designation ?>"
+                                    data-appointment_date="<?= $staff->appointment_date ?>"
+                                    data-nic="<?= $staff->nic ?>"
+                                    data-dob="<?= $staff->dob ?>"
+                                    data-phone="<?= $staff->phone ?>"
+                                    data-address="<?= $staff->address ?>"
+                                    data-type="<?= $staff->type ?>"
+                                    >
+                                    Edit
+                                </button>
+                                <button class="delete-btn" onclick="deleteStaff(this)" data-id="<?= $staff->staff_id ?>">Delete</button>
                             </td>
                         </tr>
                     <?php endforeach; ?>
@@ -139,42 +165,50 @@
         <div class="modal-content">
             <span class="close">&times;</span>
             <h2>Add New Staff Member</h2>
-            <form id="addStaffForm">
+            <form id="addStaffForm" method="POST" action="<?=ROOT?>/ped_incharge/groundindoorstaff/addStaffMember">
                 <div class="form-group">
                     <label for="fullName">Full Name:</label>
-                    <input type="text" id="fullName" required>
+                    <input type="text" id="fullName" name="name" required>
                 </div>
                 <div class="form-group">
                     <label for="empNo">Employee No:</label>
-                    <input type="text" id="empNo" required>
+                    <input type="text" id="empNo" name="emp_no" required>
                 </div>
                 <div class="form-group">
                     <label for="regNo">Registration No:</label>
-                    <input type="text" id="regNo" required>
+                    <input type="text" id="regNo" name="reg_no" required>
                 </div>
                 <div class="form-group">
                     <label for="designation">Designation:</label>
-                    <input type="text" id="designation" required>
+                    <input type="text" id="designation" name="designation" required>
                 </div>
                 <div class="form-group">
                     <label for="dateOfAppointment">Date of Appointment:</label>
-                    <input type="date" id="dateOfAppointment" required>
+                    <input type="date" id="dateOfAppointment" name="appointment_date"required>
                 </div>
                 <div class="form-group">
                     <label for="nic">NIC:</label>
-                    <input type="text" id="nic" required>
+                    <input type="text" id="nic" name="nic"required>
                 </div>
                 <div class="form-group">
                     <label for="dob">Date of Birth:</label>
-                    <input type="date" id="dob" required>
+                    <input type="date" id="dob" name="dob" required>
                 </div>
                 <div class="form-group">
                     <label for="contactNumber">Contact Number:</label>
-                    <input type="tel" id="contactNumber" required>
+                    <input type="tel" id="contactNumber" name="phone" required>
                 </div>
                 <div class="form-group">
                     <label for="address">Address:</label>
-                    <textarea id="address" required></textarea>
+                    <textarea id="address" name="address" required></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="staffType">Staff Type:</label>
+                    <select id="staffType" name="type" required>
+                        <option value="">-- Select Staff Type --</option>
+                        <option value="ground">Ground Staff</option>
+                        <option value="indoor">Indoor Staff</option>
+                    </select>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-cancel">Cancel</button>
@@ -189,43 +223,51 @@
         <div class="modal-content">
             <span class="close">&times;</span>
             <h2>Edit Staff Member</h2>
-            <form id="editStaffForm">
-                <input type="hidden" id="editStaffId">
+            <form id="editStaffForm" method="POST" action="<?=ROOT?>/ped_incharge/groundindoorstaff/editStaffMember">
+                <input type="hidden" id="editStaffId" name="staff_id">
                 <div class="form-group">
                     <label for="editFullName">Full Name:</label>
-                    <input type="text" id="editFullName" required>
+                    <input type="text" id="editFullName" name="name" required>
                 </div>
                 <div class="form-group">
                     <label for="editEmpNo">Employee No:</label>
-                    <input type="text" id="editEmpNo" required>
+                    <input type="text" id="editEmpNo" name="emp_no" required>
                 </div>
                 <div class="form-group">
                     <label for="editRegNo">Registration No:</label>
-                    <input type="text" id="editRegNo" required>
+                    <input type="text" id="editRegNo" name="reg_no" required>
                 </div>
                 <div class="form-group">
                     <label for="editDesignation">Designation:</label>
-                    <input type="text" id="editDesignation" required>
+                    <input type="text" id="editDesignation" name="designation" required>
                 </div>
                 <div class="form-group">
                     <label for="editDateOfAppointment">Date of Appointment:</label>
-                    <input type="date" id="editDateOfAppointment" required>
+                    <input type="date" id="editDateOfAppointment" name="appointment_date"required>
                 </div>
                 <div class="form-group">
                     <label for="editNic">NIC:</label>
-                    <input type="text" id="editNic" required>
+                    <input type="text" id="editNic" name="nic" required>
                 </div>
                 <div class="form-group">
                     <label for="editDob">Date of Birth:</label>
-                    <input type="date" id="editDob" required>
+                    <input type="date" id="editDob" name="dob" required>
                 </div>
                 <div class="form-group">
                     <label for="editContactNumber">Contact Number:</label>
-                    <input type="tel" id="editContactNumber" required>
+                    <input type="tel" id="editContactNumber" name="phone" required>
                 </div>
                 <div class="form-group">
                     <label for="editAddress">Address:</label>
-                    <textarea id="editAddress" required></textarea>
+                    <textarea id="editAddress" name="address" required></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="editStaffType">Staff Type:</label>
+                    <select id="editStaffType" name="type" required>
+                        <option value="">-- Select Staff Type --</option>
+                        <option value="ground">Ground Staff</option>
+                        <option value="indoor">Indoor Staff</option>
+                    </select>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-cancel">Cancel</button>

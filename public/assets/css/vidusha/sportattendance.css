@@ -22,44 +22,6 @@
     border-radius: 5px;
   }
 
-  .dropdown {
-    position: relative;
-    display: inline-block;
-}
-
-.dropbtn {
-    color: white;
-    padding: 14px 20px;
-    text-decoration: none;
-    background-color: #333;
-    border: none;
-    cursor: pointer;
-}
-
-.dropdown-content {
-    display: none;
-    position: absolute;
-    background-color: white;
-    box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
-    z-index: 1;
-    min-width: 160px;
-}
-
-.dropdown-content a {
-    color: black;
-    padding: 12px 16px;
-    text-decoration: none;
-    display: block;
-    text-align: left;
-}
-
-.dropdown-content a:hover {
-    background-color: #ddd;
-}
-
-.dropdown:hover .dropdown-content {
-    display: block;
-}
 
 body {
     font-family: Arial, sans-serif;
@@ -83,7 +45,9 @@ main {
 .controls {
     margin-bottom: 20px;
     display: flex;
-    justify-content: flex-start;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
 }
 
 #search-bar {
@@ -92,6 +56,52 @@ main {
     border: 1px solid #ccc;
     border-radius: 5px;
     width: 50%;
+}
+
+.action-btn {
+    padding: 8px 16px;
+    background-color: #5a2e8a;
+    color: white;
+    border: none;
+    cursor: pointer;
+    border-radius: 4px;
+}
+.scanner-area {
+    display: none;
+    margin: 20px 0;
+    padding: 15px;
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+#scanner-container {
+    margin: 20px auto;
+    max-width: 400px;
+    text-align: center;
+}
+#qr-reader {
+    width: 100%;
+    max-width: 500px;
+    margin: 0 auto;
+}
+.month-selector {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 15px;
+    flex-wrap: wrap;
+}
+.month-btn {
+    padding: 8px 16px;
+    background-color: #f0f0f0;
+    border: 1px solid #ccc;
+    cursor: pointer;
+    border-radius: 4px;
+}
+.month-btn.active {
+    background-color: #5a2e8a;
+    ;
+    color: white;
+    font-weight: bold;
 }
 
 table {

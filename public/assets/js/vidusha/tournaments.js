@@ -100,3 +100,53 @@ document.addEventListener('DOMContentLoaded', function() {
     };
   });
 });
+
+function openViewModal(type, recordId) {
+  // Determine which modal to open based on type
+  let modalId;
+  if (type === 'interUni') {
+    modalId = 'interuniViewModal';
+  } else if (type === 'interFaculty') {
+    modalId = 'interfacultyViewModal';
+  } else if (type === 'freshers') {
+    modalId = 'freshersViewModal';
+  } else {
+    console.error('Invalid tournament type');
+    return;
+  }
+  
+  document.getElementById(modalId).style.display = 'block';
+  
+  // Get the appropriate player list element
+  const playerList = document.getElementById(type + 'PlayerList');
+  if (!playerList) {
+    console.error('Player list element not found');
+    return;
+  }
+  
+  // Clear previous list and show loading
+  playerList.innerHTML = '<li>Loading players...</li>';
+  
+  // Fetch player data from server
+  fetch(`/get-players?type=${type}&id=${recordId}`)
+    .then(response => response.json())
+    .then(data => {
+      playerList.innerHTML = '';
+      
+      if (data && data.length > 0) {
+        data.forEach(player => {
+          const li = document.createElement('li');
+          li.textContent = player.registration_number || player.regno || player.reg_no;
+          playerList.appendChild(li);
+        });
+      } else {
+        const li = document.createElement('li');
+        li.textContent = 'No players registered';
+        playerList.appendChild(li);
+      }
+    })
+    .catch(error => {
+      playerList.innerHTML = '<li>Error loading players</li>';
+      console.error('Error fetching players:', error);
+    });
+}

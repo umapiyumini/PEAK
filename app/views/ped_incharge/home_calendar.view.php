@@ -59,21 +59,22 @@
                 <h2>Add Event</h2>
                 <button class="close-modal">&times;</button>
             </div>
-            <form id="eventForm">
+            <form id="eventForm" method="POST" action="<?=ROOT?>/ped_incharge/home_calendar/addEvent">
                 <div class="form-group">
                     <label for="eventTitle">Event Title</label>
-                    <input type="text" id="eventTitle" required>
+                    <input type="text" id="eventTitle" name="title" required>
                 </div>
                 <div class="form-group">
                     <label for="eventTime">Time</label>
-                    <input type="time" id="eventTime" required>
+                    <input type="time" id="eventTime" name="time" required>
                 </div>
                 <div class="form-group">
                     <label for="eventVenue">Venue</label>
-                    <input type="text" id="eventVenue">
+                    <input type="text" id="eventVenue" name="venue">
                 </div>
-                <input type="hidden" id="eventDate">
-                <button type="submit" class="submit-btn">Add Event</button>
+                <input type="hidden" id="eventDate" name="eventDate">
+                <button type="submit" class="submit-btn">Save</button>
+                <button type="button" id="deleteEventBtn" class="delete-btn">Delete</button>
             </form>
         </div>
     </div>
@@ -118,16 +119,39 @@
   
 
   <script>
+ 
+     const serverEvents = <?= json_encode($events) ?>;
+
+
      class Calendar {
-            constructor() {
+                constructor() {
                 this.today = new Date();
                 this.currentDate = new Date();
-                this.events = {};
+                this.events = this.loadEventsFromServer();
                 this.selectedDate = null;
-                
+
                 this.initializeCalendar();
                 this.setupEventListeners();
             }
+
+            
+                loadEventsFromServer() {
+                    const eventMap = {};
+
+                    serverEvents.forEach(event => {
+                        const date = event.date;
+                        if (!eventMap[date]) {
+                            eventMap[date] = [];
+                        }
+                        eventMap[date].push({
+                            title: event.title,
+                            time: event.time,
+                            venue: event.venue
+                        });
+                    });
+
+                    return eventMap;
+                }
 
             initializeCalendar() {
                 const calendar = document.getElementById('calendar');
@@ -185,6 +209,8 @@
                     this.createDateCell(nextMonthDays, true);
                     nextMonthDays++;
                 }
+
+                
             }
 
             createDateCell(day, isOtherMonth) {
@@ -221,6 +247,7 @@
                         const eventElement = document.createElement('div');
                         eventElement.className = 'event';
                         eventElement.textContent = `${event.time} ${event.title} ${event.venue}`;
+                        eventElement.onclick = () => this.showDeleteModal(dateString, index);
                         eventsList.appendChild(eventElement);
                     });
                 }
@@ -259,10 +286,10 @@
                     }
                 });
 
-                eventForm.addEventListener('submit', (e) => {
-                    e.preventDefault();
-                    this.addEvent();
-                });
+                // eventForm.addEventListener('submit', (e) => {
+                //     e.preventDefault();
+                //     this.addEvent();
+                // });
             }
 
             openEventModal(date) {
@@ -271,32 +298,20 @@
                 document.getElementById('eventModal').style.display = 'block';
             }
 
-            addEvent() {
-                const title = document.getElementById('eventTitle').value;
-                const time = document.getElementById('eventTime').value;
-                const venue = document.getElementById('eventVenue').value;
-                const dateString = document.getElementById('eventDate').value;
-
-                if (!this.events[dateString]) {
-                    this.events[dateString] = [];
-                }
-
-                this.events[dateString].push({ title, time,venue });
-                this.events[dateString].sort((a, b) => a.time.localeCompare(b.time));
-
-                document.getElementById('eventModal').style.display = 'none';
-                document.getElementById('eventForm').reset();
-                this.renderCalendar();
-            }
-
             formatDate(date) {
-                return date.toISOString().split('T')[0];
+                const year = date.getFullYear();
+                const month = String(date.getMonth() + 1).padStart(2, '0');
+                const day = String(date.getDate()).padStart(2, '0');
+                return `${year}-${month}-${day}`;
             }
 
             isToday(date) {
                 return this.formatDate(date) === this.formatDate(this.today);
             }
         }
+
+
+
 
         // Initialize calendar when page loads
         document.addEventListener('DOMContentLoaded', () => {
