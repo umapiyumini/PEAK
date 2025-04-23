@@ -30,9 +30,13 @@ include 'nav.view.php';
             </div>
             <h2 id="studentName">Student Name</h2>
             <div class="basic-info">
-                <p>Registration No: <span id="studentRegNo"></span></p>
-                <p>Faculty: <span id="studentFaculty"></span></p>
-                <p>Email: <span id="Email Address"></span></p>
+                <?php if(!empty($details)): ?>
+                    <?php foreach($details as $d): ?> 
+                        
+                        
+                        
+                        <p>Registration No: <?= $d->registrationnumber ?><span id="studentRegNo"></span></p>
+                        <p>Faculty: <?= $d->faculty ?></span></p>
 
             </div>
         </div>

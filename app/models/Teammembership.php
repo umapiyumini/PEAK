@@ -13,7 +13,7 @@ class Teammembership{
         'year_of_study',
         'contact_number',
         'university_email',
-        'user_id'
+        'userid'
     ];
 
     public function validate($data){

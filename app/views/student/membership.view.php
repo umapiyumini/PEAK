@@ -177,6 +177,7 @@
                         <?php if(!empty($membershipRequests)):?>
                             <?php foreach($membershipRequests as $membership): ?>
                                 <tr>
+                                    <td><?= $membership->request_id ?></td>
                                     <td><?= $membership->faculty ?></td>
                                     <td><?= $membership->year_of_study ?></td>
                                     <td><?= $membership->contact_number ?></td>
@@ -190,9 +191,7 @@
                                                 '<?= $membership->contact_number ?>',
                                                 '<?= htmlspecialchars($membership->university_email, ENT_QUOTES) ?>'
                                             )">View</button>
-                                            <?php $RequestId = $membership->RequestID ?>
-                                            <button class="action-btn edit-btn" onclick="window.location.href='<?= ROOT ?>/student/Editmedical?RequestId=<?= $RequestId ?>'">Edit</button>
-                                        <button class="action-btn delete-btn" onclick="confirmDelete(<?= $membership->request_id ?>)">Delete</button>
+                                            <button class="action-btn delete-btn" onclick="confirmDelete(<?= $membership->request_id ?>)">Delete</button>
                                     </td>
                                 </tr>
                             <?php endforeach; ?>
@@ -223,7 +222,7 @@
     <script>
         function confirmDelete(id) {
             if (confirm("Are you sure you want to delete this request?")) {
-                window.location.href = `<?= ROOT ?>/student/Membership/delete?RequestId=${id}`;
+                window.location.href = `<?= ROOT ?>/student/Membership/delete?request_id=${id}`;
             }
         }
 

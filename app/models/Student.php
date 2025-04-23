@@ -35,5 +35,14 @@ class Student{
         return empty($this->studenterrors);
     }
     
-
+    public function getStudent($userid)
+    
+    {
+        $query = "SELECT * FROM $this->table WHERE userid = :userid";
+        $param = [
+            'userid' => $userid
+        ];
+        $result = $this->query($query, $param);
+        return $result;
+    }
 }

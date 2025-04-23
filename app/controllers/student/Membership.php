@@ -14,7 +14,7 @@ class Membership extends Controller{
             'year_of_study' => $_POST['year_of_study'], 
             'contact_number' => $_POST['contact_number'], 
             'university_email' => $_POST['university_email'],  
-            'user_id' => $_SESSION['user_id'],
+            'userid' => $_SESSION['userid'],
         ];
 
         $teammembership = new Teammembership();
@@ -40,7 +40,7 @@ class Membership extends Controller{
             }
         } else {
             $teammembership = new Teammembership();
-            $teamData = $teammembership->where(['user_id' => $_SESSION['user_id']]);
+            $teamData = $teammembership->where(['userid' => $_SESSION['userid']]);
             // show($result);
             $data = [
                 'teamdata' => $teamData, 
@@ -48,8 +48,29 @@ class Membership extends Controller{
             
             $this->view('student/membership', $data); 
         }
+        
+    }
+    
+
+    //Delete Function
+    public function delete()
+    {
+        if (isset($_GET['request_id'])) {
+            $RequestId = $_GET['request_id'];
+            $teammembership = new Teammembership();
+            $isDeleted = $teammembership->delete($RequestId, 'request_id');
+            //DELETE FUNCTION RETURN TRUE IF THE DATA IS NOT DELETED
+            if (!$isDeleted) {
+                redirect('student/membership');
+            } else {
+                // Handle deletion failure (optional)
+                echo "Failed to delete the certificate request.";
+            }
+        } else {
+            // Handle missing RequestId (optional)
+            echo "Invalid Request.";
+        }
     }
 
-  
 
 }
