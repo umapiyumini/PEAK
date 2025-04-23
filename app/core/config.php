@@ -32,4 +32,3 @@ define('APP_DESCRIPTION',"Physical Education administrative kit");
 define('DEBUG',true);
 
 
-//can also put database connection here too

@@ -29,6 +29,7 @@ Trait Model {
 
         }
 
+        //exclusions
         foreach($keys_not as $key){
             $query .= "$key != :$key AND ";
 
