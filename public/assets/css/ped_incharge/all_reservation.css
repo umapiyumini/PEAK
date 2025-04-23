@@ -12,15 +12,15 @@
     box-shadow: 0 2px 4px rgba(0,0,0,0.1);
   }
   
-  .reservation.school {
+  .reservation.external-user{
     border-left: 2rem solid var(--res-external);
   }
   
-  .reservation.club {
+  .reservation.sports-captain{
     border-left: 2rem solid var(--res-sports);
   }
   
-  .reservation.individual {
+  .reservation.admin{
     border-left: 2rem solid var(--res-special);
   }
   
