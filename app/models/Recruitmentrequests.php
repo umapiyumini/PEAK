@@ -1,6 +1,6 @@
 <?php
 
-class Recruitmentrequests{
+class Recruitmentrequests {
 
     use Model;
     protected $table = 'recruitments';
@@ -47,35 +47,7 @@ class Recruitmentrequests{
 
     }
 
-    public function approverequest($regno = null){
-        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            $regno = $_POST['regno'] ?? $regno ?? null;
     
-            if (!$regno) {
-                $_SESSION['error'] = 'Registration number is required';
-                header('Location:' . ROOT . '/sportscaptain/recruitment');
-                exit();
-            }
-    
-            try {
-                $recruitmentModel = new Recruitmentrequests();
-                $request = $recruitmentModel->approveRequest($regno);
-    
-                if ($request) {
-                    $_SESSION['success'] = 'Request approved successfully';
-                    // Respond with a success message for AJAX
-                    echo json_encode(['success' => true]);
-                } else {
-                    $_SESSION['error'] = 'Failed to approve request';
-                    echo json_encode(['success' => false]);
-                }
-            } catch(Exception $e) {
-                $_SESSION['error'] = $e->getMessage();
-                echo json_encode(['success' => false, 'error' => $e->getMessage()]);
-            }
-        }
-        exit();
-    }
     
     
 
@@ -94,5 +66,21 @@ class Recruitmentrequests{
             $_SESSION['error'] = $e->getMessage();
         }
     }
-                
+       
+    
+    public function approverequest($regno){
+
+        try{
+
+            $query = "UPDATE recruitments SET status = 'approved' WHERE regno = :regno";
+            $result = $this->query($query, [
+                'regno' => $regno,
+               
+            ]);
+
+            return $result;
+        }catch(Exception $e){
+            $_SESSION['error'] = $e->getMessage();
+        }
+    }  
 }

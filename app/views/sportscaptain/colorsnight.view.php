@@ -35,6 +35,20 @@
                     </select>
                 </div>
 
+                <div class = "form-group">
+                    <label for="tournament">Tournament Name</label>
+                    <select id="tournament" name="tournament_name" required>
+                        <option value="interuniversity">Inter-University</option>
+                        <option value="SLUG">SLUG</option>
+                    </select>
+                </div>
+
+                <div class = "form-group">
+                    <label for="place">Place</label>
+                    <input type="text" id="teamPlace" name="place" readonly>
+                </div>
+
+
                 <!-- Table for Student Details -->
                 <div class="form-group">
                     <label>Student Details</label>
@@ -43,18 +57,13 @@
                             <tr>
                                 <th>Student Name</th>
                                 <th>Registration Number</th>
-                                <th>Inter-Uni Performance</th>
+                                <th>Attendance</th>
                                 <th>Awards</th>
-                                <th>Rewards</th>
-                                <th>Merit Awards</th>
-                                <th>Details</th>
-                                <th>Actions</th>
                             </tr>
                         </thead>
                         <tbody id="studentDetailsBody">
                         </tbody>
                     </table>
-                    <button type="button" class="add-btn" onclick="openModal()">Add Student</button>
                 </div>
 
                 <!-- Sport Captain Registration Number -->

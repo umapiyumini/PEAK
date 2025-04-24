@@ -258,11 +258,11 @@ class Reservations {
 
     
        
-}
+
 
 // Model function to check if the selected date is fully booked
 // Model: Function to check if the date is fully booked
-function isDateFullyBooked($date, $section, $conn) {
+public function isDateFullyBooked($date, $section, $conn) {
     $query = "SELECT * FROM reservations WHERE date = ? AND section = ? AND status IN ('to pay', 'paid', 'confirmed') AND duration = 'full'";
 
     if ($stmt = $conn->prepare($query)) {
@@ -276,19 +276,17 @@ function isDateFullyBooked($date, $section, $conn) {
 
     return false;
 }
+    public function getBookingsForDateSection($date, $section) {
+        $query = "SELECT * FROM {$this->table} 
+                  WHERE date = :date 
+                  AND section = :section 
+                  AND status IN ('to pay', 'paid', 'confirmed')";
+        return $this->query($query, [
+            'date' => $date,
+            'section' => $section
+        ]);
+    }
 
-
-
-public function getBookingsForDateSection($date, $section) {
-    $query = "SELECT * FROM {$this->table} 
-              WHERE date = :date 
-              AND section = :section 
-              AND status IN ('to pay', 'paid', 'confirmed')";
-    return $this->query($query, [
-        'date' => $date,
-        'section' => $section
-    ]);
-}
 
     
 
@@ -447,5 +445,5 @@ public function update($reservationid, $data) {
     return $this->query($query, $data);
 }
 
-}  
-
+  
+}

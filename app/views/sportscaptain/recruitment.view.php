@@ -19,8 +19,9 @@
         <p><strong>Faculty:</strong><?=htmlspecialchars($request->faculty)?></p>
         <p><strong>Reason:</strong><?=htmlspecialchars($request->reason)?></p>
         <div class="action-buttons">
-        <button class="approve-btn" onclick="approveRequest('<?= $request->regno ?>', this)">Approve</button>
-
+        
+          <button class="approve-btn" onclick="approverequest('<?= $request->regno ?>', this)">Approve</button>
+        
 
           <button class="reject-btn" onclick="rejectRequest('<?= $request->regno ?>', this)">Reject</button>
         </div>

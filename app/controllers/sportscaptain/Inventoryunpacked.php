@@ -59,7 +59,7 @@ class Inventoryunpacked extends Controller {
     
 
     //add request
-    public function addrequestold(){
+    public function addrequest(){
         
         if($_SERVER['REQUEST_METHOD'] == 'POST'){
             $requestModel = new Inventoryrequest();
@@ -78,7 +78,7 @@ class Inventoryunpacked extends Controller {
             exit;
     }
 
-    public function addrequest() {
+    public function addrequestnew() {
         if($_SERVER['REQUEST_METHOD'] == 'POST') {
             $name = $_POST['name'];
             $quantityrequested = $_POST['quantityrequested'];
