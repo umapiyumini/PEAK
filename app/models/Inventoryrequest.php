@@ -170,7 +170,7 @@ class Inventoryrequest {
     }
 
 
-    public function addRequest($requests) {
+    public function addRequestnew($requests) {
         $userId = $this->getUserId();
         
         if (!$userId) {
@@ -239,6 +239,40 @@ class Inventoryrequest {
         return $result;
     }
 
-   
+    public function addRequest() {
+
+        $userId = $this->getUserId();
+    
+        if (!$userId) {
+            die("User ID not found in session.");
+        }
+    
+        $query = "INSERT INTO inventoryrequest (
+                    equipmentid, 
+                    quantityrequested, 
+                    timeframe, 
+                    date, 
+                    requested_by,
+                    status, 
+                    addnotes)
+                  VALUES (
+                    (SELECT equipmentid FROM equipments WHERE name = :name),
+                    :quantityrequested,
+                    :timeframe,
+                    CURRENT_DATE,
+                    :userid,
+                    'pending',
+                    :addnotes)";
+    
+        return $this->query($query, [
+            'name' => $_POST['name'],
+            'quantityrequested' => $_POST['quantityrequested'],
+            'timeframe' => $_POST['timeframe'],
+            'userid' => $userId,
+            'addnotes' => $_POST['addnotes'],
+        ]);
+    }
+
+
 }
 

@@ -85,43 +85,41 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     });
 
-    // Update button functionality
-    document.addEventListener("click", (e) => {
-        if (e.target && e.target.classList.contains("update-btn")) {
-            const row = e.target.closest("tr");
-            const productName = row.cells[0].innerText.trim();
-            const quantity = row.cells[1].innerText.trim();
-            const equipmentId = e.target.getAttribute("data-id");
-    
-            const updateProductNameEl = document.getElementById("updateProductName");
-            const updateProductQuantityEl = document.getElementById("updateProductQuantity");
-            const updateIdEl = document.getElementById("updateid");
-            
-            if (updateProductNameEl) updateProductNameEl.value = productName;
-            if (updateProductQuantityEl) updateProductQuantityEl.value = quantity;
-            if (updateIdEl) updateIdEl.value = equipmentId;
-    
-            // Add current date automatically
-            const today = new Date().toISOString().split("T")[0];
-            const updateDateEl = document.getElementById("updateDate");
-            const updateQuantityForm = document.getElementById("updateQuantityForm");
-            
-            if (updateQuantityForm) {
-                if (!updateDateEl) {
-                    const dateInput = document.createElement("input");
-                    dateInput.type = "hidden";
-                    dateInput.name = "date";
-                    dateInput.id = "updateDate";
-                    dateInput.value = today;
-                    updateQuantityForm.appendChild(dateInput);
-                } else {
-                    updateDateEl.value = today;
-                }
-            }
-    
-            if (updateModal) updateModal.style.display = "block";
-        }
+   // Handle Update Quantity button click
+document.querySelectorAll(".update-quantity-btn").forEach(button => {
+    button.addEventListener("click", () => {
+        const id = button.getAttribute("data-id");
+        const name = button.getAttribute("data-name");
+        const quantity = button.getAttribute("data-quantity");
+
+        document.getElementById("updateid").value = id;
+        document.getElementById("updateProductName").value = name;
+        document.getElementById("updateProductQuantity").value = quantity;
+
+        updateModal.style.display = "block";
     });
+});
+
+// Handle Update Request button click
+document.querySelectorAll(".update-request-btn").forEach(button => {
+    button.addEventListener("click", () => {
+        const id = button.getAttribute("data-id");
+        const name = button.getAttribute("data-name");
+        const quantity = button.getAttribute("data-quantity");
+        const timeframe = button.getAttribute("data-timeframe");
+        const date = button.getAttribute("data-date");
+
+        document.getElementById("updateRequestId").value = id;
+        document.getElementById("updaterequestProductName").value = name;
+        document.getElementById("updaterequestQuantity").value = quantity;
+        document.getElementById("updaterequesttimeframe").value = timeframe;
+        document.getElementById("updaterequestDate").value = date;
+
+        updateRequestModal.style.display = "block";
+    });
+});
+
+    
 
     // Delete button confirmation
     const deleteButtons = document.querySelectorAll('.delete-btn');

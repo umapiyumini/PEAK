@@ -25,7 +25,7 @@ class Staff{
         return $result;
 
     }
-}
+
 
     public function addStaff($data){
         $query = "INSERT INTO $this->table (name, emp_no, reg_no, designation, appointment_date, nic, dob, phone, address, type) VALUES (:name, :emp_no, :reg_no, :designation, :appointment_date, :nic, :dob, :phone, :address, :type)";
