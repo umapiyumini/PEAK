@@ -1,86 +1,40 @@
-document.addEventListener('DOMContentLoaded', function() {
-    // Add event listener to the 'Add' button
-    document.getElementById('addRegNoBtn').addEventListener('click', function() {
-        // Create a new player group with regNo and priority inputs
-        const playerGroup = document.createElement('div');
-        playerGroup.classList.add('playerGroup');
-
-        const regNoInput = document.createElement('input');
-        regNoInput.type = 'text';
-        regNoInput.classList.add('regNo');
-        regNoInput.placeholder = 'Enter Registration No';
-        playerGroup.appendChild(regNoInput);
-
-        const priorityInput = document.createElement('input');
-        priorityInput.type = 'text';
-        priorityInput.classList.add('priority');
-        priorityInput.placeholder = 'Priority (1-5)';
-        playerGroup.appendChild(priorityInput);
-
-        // Append the new player group to the players container
-        document.getElementById('playerContainer').appendChild(playerGroup);
-    });
-
-    // Add event listener to the form submit
-    document.getElementById('form').addEventListener('submit', function(e) {
-        e.preventDefault();
-
-        const regNos = [];
-        const priorities = [];
-
-        // Collect registration numbers and priorities for each player
-        const regNoInputs = document.querySelectorAll('.regNo');
-        const priorityInputs = document.querySelectorAll('.priority');
-
-        regNoInputs.forEach((input, index) => {
-            if (input.value.trim() && priorityInputs[index].value.trim()) { // Ensure both fields have values
-                regNos.push(input.value.trim());
-                priorities.push(priorityInputs[index].value.trim());
-            }
-        });
-
+document.addEventListener('DOMContentLoaded', function () {
+    // Form date validation
+    document.getElementById('form').addEventListener('submit', function (e) {
         const startDate = document.getElementById('startdate').value;
-        const endDate = document.getElementById('enddate').value;
+        const endDate = document.getElementById('end_date').value;
 
-        if (regNos.length > 0) {
-            regNos.forEach((regNo, index) => {
-                const priority = priorities[index];
-                addRowToTable(regNo, startDate, endDate, priority); // Add each player's details to the table
-            });
-
-            // Optionally, clear the form after submission
-            document.getElementById('form').reset();
-            document.getElementById('playerContainer').innerHTML = ''; // Reset the players container
-            // Add an initial player input group back
-            const initialPlayerGroup = document.createElement('div');
-            initialPlayerGroup.classList.add('playerGroup');
-            
-            const initialRegNoInput = document.createElement('input');
-            initialRegNoInput.type = 'text';
-            initialRegNoInput.classList.add('regNo');
-            initialRegNoInput.placeholder = 'Enter Registration No';
-            initialPlayerGroup.appendChild(initialRegNoInput);
-            
-            const initialPriorityInput = document.createElement('input');
-            initialPriorityInput.type = 'text';
-            initialPriorityInput.classList.add('priority');
-            initialPriorityInput.placeholder = 'Priority (1-5)';
-            initialPlayerGroup.appendChild(initialPriorityInput);
-
-            document.getElementById('playerContainer').appendChild(initialPlayerGroup);
-        } else {
-            alert('Please enter at least one player\'s registration number and priority');
+        if (new Date(endDate) < new Date(startDate)) {
+            e.preventDefault();
+            alert('End date cannot be before start date.');
         }
     });
+});
 
-    // Function to add the submitted details to the table
-    function addRowToTable(regNo, startDate, endDate, priority) {
-        const tableBody = document.getElementById('detailsTable').getElementsByTagName('tbody')[0];
-        
-        const newRow = tableBody.insertRow();
-        newRow.insertCell(0).textContent = regNo;
-        newRow.insertCell(1).textContent = startDate;
-        newRow.insertCell(2).textContent = endDate;
-        newRow.insertCell(3).textContent = priority;
+document.querySelector('.addRegNoBtn').addEventListener('click', function () {
+    const container = document.getElementById('playerContainer');
+    
+    const entry = document.createElement('div');
+    entry.classList.add('player-entry');
+    entry.innerHTML = `
+        <input type="text" class="regNo" name="reg_no[]" placeholder="Enter Registration No" required> 
+        <select class="priority" name="priority[]" required>
+            <option value="">Select Priority</option>
+            <option value="1">1 (Highest)</option>
+            <option value="2">2 (High)</option>
+            <option value="3">3 (Medium)</option>
+            <option value="4">4 (Low)</option>
+            <option value="5">5 (Lowest)</option>
+        </select>
+        <button type="button" class="removeBtn">Remove</button>
+    `;
+
+    container.appendChild(entry);
+});
+
+// Delegate remove button clicks
+document.getElementById('playerContainer').addEventListener('click', function (e) {
+    if (e.target.classList.contains('removeBtn')) {
+        e.target.parentElement.remove();
     }
 });

@@ -111,12 +111,23 @@ class User {
         return empty($this->errors);
     }
 
+
+    //used 
+    public function getUser($userid){
+        $query = "SELECT * FROM $this->table WHERE userid = :userid";
+        $params = [':userid' => $userid];
+        return $this->query($query, $params);
+    }
+
+
+    //not yet
     public function getLastID() {
         $query = "SELECT userid FROM $this->table ORDER BY userid DESC LIMIT 1";
         $result = $this->query($query); // Likely returns an array of objects
-        return $result[0]->userid ?? null; // Access as an object
+        return $result[0]->userid ?? null; 
     }    
 
+<<<<<<< HEAD
     public function getName($userid)
     {
         $query = "SELECT name FROM $this->table WHERE userid = :userid";
@@ -130,4 +141,58 @@ class User {
         $params = ['userid' => $userid];
         return $this->query($query, $params)[0] ?? null; // Access as an object
     }
+=======
+    public function studentReg($data){
+        $query="INSERT INTO $this->table (name,gender,nic,email,date_of_birth,contact_number,address,username,password,role) VALUES (:name,:gender,:nic,:email,:date_of_birth,:contact_number,:address,:username,:password,:role)";
+        $params=[
+            ':name'=>$data['name'],
+            ':gender'=>$data['gender'],
+            ':nic'=>$data['nic'],
+            ':email'=>$data['email'],
+            ':date_of_birth'=>$data['dob'],
+            ':contact_number'=>$data['contact_number'],
+            ':address'=>$data['address'],
+            ':username'=>$data['email'],
+            ':password'=>password_hash($data['nic'], PASSWORD_DEFAULT),
+            ':role'=>'Internal User'
+        ];
+        return $this->query($query,$params);
+    }
+    
+
+
+  
+    
+    public function changeRole($userid, $role){
+        $query = "UPDATE $this->table SET role = :role WHERE userid = :userid";
+        $params = [
+            ':role' => $role,
+            ':userid' => $userid
+        ];
+        return $this->query($query, $params);
+
+    }
+
+    public function findAllUsers() {
+        $query = "SELECT * FROM $this->table";
+        return $this->query($query);
+    }
+
+
+    public function update($userid, $data)
+{
+    $set = [];
+    $params = [':userid' => $userid];
+    foreach ($data as $key => $value) {
+        $set[] = "$key = :$key";
+        $params[":$key"] = $value;
+    }
+    $setStr = implode(', ', $set);
+    $query = "UPDATE $this->table SET $setStr WHERE userid = :userid";
+    return $this->query($query, $params);
+}
+
+
+
+>>>>>>> 1ab259395f280bfcbbc33eaece8b34747b1c2f02
 }

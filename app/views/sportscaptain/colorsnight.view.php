@@ -7,7 +7,6 @@
     <link rel="stylesheet" href="<?=ROOT?>/assets/css/vidusha/colorsnight.css">
 </head>
 <body>
-
     <div class="navbar">
         <a href="excuse">Attendance Excuse Letter</a>
         <a href="hostal">Hostal Facilities</a>
@@ -19,22 +18,36 @@
     <div class="container">
         <div class="colorsnight">
             <h2>Colors Night Form</h2>
-            <form id="colorsnightform">
+            <form id="colorsnightform" action="<?=ROOT?>/sportscaptain/colorsnight/addformdetails" method="POST">
                 
                 <!-- Sport -->
                 <div class="form-group">
-                    <label for="teamName">Sport Name</label>
-                    <input type="text" id="teamName" name="teamName" placeholder="Enter the sport name" required>
+                    <!--label for="teamName">Sport Name</label-->
+                    <input type="hidden" id="sportid" name="sport_id" required>
                 </div>
                 
                 <!-- Gender -->
                 <div class="form-group">
                     <label for="gender">Select Team Gender</label>
-                    <select id="gender" name="gender" required>
+                    <select id="gender" name="team_gender" required>
                         <option value="men">Men</option>
                         <option value="women">Women</option>
                     </select>
                 </div>
+
+                <div class = "form-group">
+                    <label for="tournament">Tournament Name</label>
+                    <select id="tournament" name="tournament_name" required>
+                        <option value="interuniversity">Inter-University</option>
+                        <option value="SLUG">SLUG</option>
+                    </select>
+                </div>
+
+                <div class = "form-group">
+                    <label for="place">Place</label>
+                    <input type="text" id="teamPlace" name="place" readonly>
+                </div>
+
 
                 <!-- Table for Student Details -->
                 <div class="form-group">
@@ -44,29 +57,25 @@
                             <tr>
                                 <th>Student Name</th>
                                 <th>Registration Number</th>
-                                <th>Inter-Uni Performance</th>
+                                <th>Attendance</th>
                                 <th>Awards</th>
-                                <th>Rewards</th>
-                                <th>Merit Awards</th>
-                                <th>Details</th>
-                                <th>Actions</th>
                             </tr>
                         </thead>
-                        <tbody id="studentDetailsBody"></tbody>
+                        <tbody id="studentDetailsBody">
+                        </tbody>
                     </table>
-                    <button type="button" class="add-btn" onclick="openModal()">Add Student</button>
                 </div>
 
                 <!-- Sport Captain Registration Number -->
                 <div class="form-group">
                     <label for="captainRegNo">Sport Captain Registration Number</label>
-                    <input type="text" id="captainRegNo" name="captainRegNo" placeholder="Enter registration number" required>
+                    <input type="text" id="captainRegNo" name="captain_regno" placeholder="Enter registration number" required>
                 </div>
 
                 <!-- Today's Date -->
                 <div class="form-group">
                     <label for="todayDate">Today’s Date</label>
-                    <input type="date" id="todayDate" name="todayDate" readonly>
+                    <input type="date" id="todayDate" name="date" readonly>
                 </div>
 
                 <!-- Submit Button -->
@@ -83,33 +92,33 @@
                 <input type="hidden" id="editIndex">
                 <div class="form-group">
                     <label for="studentName">Student Name</label>
-                    <input type="text" id="studentName" placeholder="Enter student name" required>
+                    <input type="text" id="studentName" name="student_name" placeholder="Enter student name" required>
                 </div>
                 <div class="form-group">
                     <label for="registrationNumber">Registration Number</label>
-                    <input type="text" id="registrationNumber" placeholder="Enter registration number" required>
+                    <input type="text" id="registrationNumber" name="reg_no" placeholder="Enter registration number" required>
                 </div>
                 <div class="form-group">
                     <label for="interUniPerformance">Inter-Uni Performance</label>
-                    <input type="text" id="interUniPerformance" placeholder="Enter performance">
+                    <input type="text" id="interUniPerformance" namr="interuni_performance" placeholder="Enter performance">
                 </div>
                 
                 <div class="form-group">
                     <label for="awards">Awards</label>
-                    <input type="text" id="awards" placeholder="Enter awards" required>
+                    <input type="text" id="awards" name="awards" placeholder="Enter awards" >
                 </div>
 
                 <div class="form-group">
                     <label for="rewards">Rewards</label>
-                    <input type="text" id="rewards" placeholder="Enter rewards" required>
+                    <input type="text" id="rewards" name="rewards" placeholder="Enter rewards" >
                 </div>
                 <div class="form-group">
                     <label for="meritawards">Merit Awards</label>
-                    <input type="text" id="meritawards" placeholder="Enter Merit awards" required>
+                    <input type="text" id="meritawards" name="merit_rewards" placeholder="Enter Merit awards" required>
                 </div>
                 <div class="form-group">
                     <label for="details">Details</label>
-                    <input type="text" id="details" placeholder="Enter details" required>
+                    <input type="text" id="details" name="details" placeholder="Enter details" required>
                 </div>
                 <button type="button" class="submit-btn" onclick="saveStudent()">Save</button>
             </form>

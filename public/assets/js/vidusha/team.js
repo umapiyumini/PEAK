@@ -1,86 +1,70 @@
-// Get DOM elements
+// DOM Elements
 const form = document.getElementById("player-form");
 const playerRegNo = document.getElementById("player-regno");
 const playerPosition = document.getElementById("player-position");
 const playerNumber = document.getElementById("player-number");
 const rosterTable = document.getElementById("roster-table").getElementsByTagName("tbody")[0];
+const updateModal = document.getElementById("editModal");
+const closeUpdateModalButton = updateModal.querySelector(".close");
 
-// Track the currently editing row
-let editingRow = null;
+// Hide modal initially
+updateModal.style.display = 'none';
 
-// Function to add a player to the roster table
+// Open Edit Modal when clicking the Update button
+document.addEventListener("click", function (e) {
+    if (e.target.closest(".update-btn")) {
+        const button = e.target.closest(".update-btn");
+        const row = button.closest("tr");
+
+        if(!row) return;
+
+        // Get player data from the row
+        const regno = button.getAttribute("data-id");
+        const position = row.cells[1].innerText;
+        const jerseyno = row.cells[2].innerText;
+
+        document.getElementById("edit-regno").value = regno;
+        document.getElementById("edit-position").value = position;
+        document.getElementById("edit-jerseyno").value = jerseyno;
+
+        // Show the modal
+        updateModal.style.display = 'block';
+    }
+});
+
+// Close modal when clicking the close button
+closeUpdateModalButton.addEventListener("click", () => {
+    updateModal.style.display = "none";
+});
+
+// When clicking outside the modal, close it
+window.addEventListener("click", (e) => {
+    if (e.target === updateModal) {
+        updateModal.style.display = "none";
+    }
+});
+
+// Function to add player to roster
 function addPlayerToRoster(regNo, position, number) {
     const row = rosterTable.insertRow();
     row.setAttribute("data-regno", regNo);
 
     row.innerHTML = `
-         <td><a href="studentprofile?regNo=${regNo}" target="_blank">${regNo}</a></td>
+        <td>${regNo}</td>
         <td>${position}</td>
         <td>${number}</td>
-        <td style="text-align: center;">
-            <button class="btn-edit" onclick="editPlayer(this)">
+        <td>
+            <button class="update-btn" data-id="${regNo}">
                 <i class="fas fa-edit"></i>
             </button>
-            <button class="btn-delete" onclick="deletePlayer(this)">
-                <i class="fas fa-trash-alt"></i>
-            </button>
+            <form method="POST" action="<?=ROOT?>/sportscaptain/team/deleteplayer" style="display: inline;">
+                <input type="hidden" name="regno" value="${regNo}">
+                <button type="submit" class="delete-btn" onclick="return confirm('Are you sure you want to delete this player?');">
+                    <i class="fas fa-trash"></i>
+                </button>
+            </form>
         </td>
     `;
 }
 
-// Function to handle form submission (Add Player)
-form.addEventListener("submit", function (e) {
-    e.preventDefault();
 
-    const regNo = playerRegNo.value;
-    const position = playerPosition.value;
-    const number = playerNumber.value;
-
-    if (editingRow) {
-        // Update the existing row
-        editingRow.cells[0].innerHTML = `<a href="../../../../app/views/sportscaptain/studentprofile?regNo=${editingRow.getAttribute("data-regno")}" class="profile-link">${regNo}</a>`;
-        editingRow.cells[1].textContent = position;
-        editingRow.cells[2].textContent = number;
-
-        // Clear editing state
-        editingRow = null;
-    } else {
-        // Add new player to the roster
-        addPlayerToRoster(regNo, position, number);
-    }
-
-    // Clear the form
-    playerRegNo.value = "";
-    playerPosition.value = "";
-    playerNumber.value = "";
-});
-
-// Function to edit player details
-function editPlayer(button) {
-    const row = button.closest("tr");
-
-    // Prefill form fields with existing data
-    playerRegNo.value = row.cells[0].textContent;
-    playerPosition.value = row.cells[1].textContent;
-    playerNumber.value = row.cells[2].textContent;
-
-    // Set editing row
-    editingRow = row;
-}
-
-// Function to delete player
-function deletePlayer(button) {
-    const row = button.closest("tr");
-
-    if (confirm("Are you sure you want to delete this player?")) {
-        row.remove();
-    }
-}
-
-// Optional: Initialize the roster with sample data
-function initializeRoster() {
-    addPlayerToRoster("REG12345", "Forward", "10");
-    addPlayerToRoster("REG12346", "Goalkeeper", "1");
-}
-
-initializeRoster();

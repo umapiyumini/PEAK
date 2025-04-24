@@ -1,12 +1,4 @@
-var navLinks = document.getElementById("navLinks");
 
-function shownav() {
-    navLinks.style.right = "0";
-}
-
-function hidenav() {
-    navLinks.style.right = "-200px";
-}
 
 
 // -------------------------------scroll pop----------------

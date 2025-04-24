@@ -85,7 +85,8 @@
 }
 
 .column h2 {
-    font-size: 18px;
+    font-size: 20px;
+    font-weight: 600;
     color: #333;
     display: flex;
     align-items: center;
@@ -172,11 +173,8 @@
     
 } 
 
-.card.external {
-    border-left: 0.5rem solid var(--res-external);
-}
-.card.sports{
-    border-left: 0.5rem solid var(--res-sports);
+.card{
+    border: 1px solid #E0E0E0;
 }
  .card:hover {
     transform: translateY(-2px);
@@ -357,6 +355,38 @@ h3 {
 .close:hover {
     color: #333;
 }
+
+
+
+/* Colored Dots */
+.dot.new {
+    background-color: #007BFF;
+}
+
+.dot.awaiting {
+    background-color: #FD7E14;
+}
+
+.dot.done {
+    background-color: #6F42C1; /* Can vary per context, e.g., green for paid */
+}
+
+.column.paid .dot.done {
+    background-color: #28A745;
+}
+
+.column.done .dot.done {
+    background-color: #20C997;
+}
+
+.dot.cancelled {
+    background-color: #DC3545;
+}
+
+.dot.rejected {
+    background-color: #6C757D;
+}
+
 
 /* Responsive adjustments */
 @media (max-width: 768px) {

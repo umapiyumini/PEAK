@@ -14,10 +14,35 @@
             <h1>Facilities</h1>
         </div>
         <main>
-        
+        <a href="<?=ROOT?>/ped_incharge/rates"> <button class="edit-btn"> Ground rates </button> </a>
+        <a href="<?=ROOT?>/ped_incharge/ratesindoor"> <button class="edit-btn"> Indoor rates </button> </a>
         <div class="facilities-container" id="facilitiesContainer">
-            <!-- Facilities will be dynamically added here -->
-        </div>
+    <?php if (!empty($courts)): ?>
+        <?php foreach ($courts as $court): ?>
+            <div class="facility-card" data-id="<?= $court->courtid ?>">
+                <img src="<?= $court->image ?>" alt="<?= $court->name ?>" class="facility-image">
+                <div class="facility-content">
+                    <h3><?= $court->name ?></h3>
+                    <p><?= $court->description ?></p>
+                </div>
+                <div class="facility-actions">
+                <button class="btn btn-edit" onclick="fetchFacility(<?= $court->courtid ?>)">
+
+    <i class="uil uil-edit"></i> 
+</button>
+
+    <button class="btn btn-delete" onclick='deleteFacility(<?= $court->courtid ?>)'>
+        <i class="uil uil-trash-alt"></i> 
+    </button>
+</div>
+
+            </div>
+        <?php endforeach; ?>
+    <?php else: ?>
+        <p>No facilities found.</p>
+    <?php endif; ?>
+</div>
+
 
         <button class="add-facility" id="addFacilityBtn">
             <i class="uil uil-plus"></i>
@@ -31,26 +56,47 @@
                 <h2 id="modalTitle">Add Facility</h2>
                 <span class="close">&times;</span>
             </div>
-            <form id="facilityForm">
-                <div class="form-group">
-                    <label for="facilityName">Facility Name</label>
-                    <input type="text" id="facilityName" required>
-                </div>
-                <div class="form-group">
-                    <label for="facilityDescription">Description</label>
-                    <textarea id="facilityDescription" rows="4" required></textarea>
-                </div>
-                <div class="form-group">
-                    <label for="facilityImage">Image URL</label>
-                    <input type="text" id="facilityImage" required>
-                </div>
-                <button type="submit" class="btn btn-submit">Save Facility</button>
-            </form>
+            <form id="reservationForm" method="post" action="<?=ROOT?>/ped_incharge/ped_facilities/add" enctype="multipart/form-data">
+
+    <!-- Hidden input to store courtid -->
+    <input type="hidden" id="editCourtid" name="courtid">
+
+    <div class="form-group">
+        <label for="facilityName">Facility Name</label>
+        <input type="text" id="facilityName" name="name" required>
+    </div>
+
+    <div class="form-group">
+        <label for="facilitlocation">Location</label>
+        <input type="text" id="facilitylocation" name="location" required>
+    </div>
+
+    <div class="form-group">
+        <label for="facilitysection">Section</label>
+        <input type="text" id="facilitysection" name="section" required>
+    </div>
+    <div class="form-group">
+        <label for="facilityDescription">Description</label>
+        <textarea id="facilityDescription" rows="4" name="description" required></textarea>
+    </div>
+    <div class="form-group">
+    <label>Current Image:</label>
+    <img id="currentImage" src="" alt="Current Image" style="max-width: 100px; display: block; margin-bottom: 10px;">
+</div>
+<div class="form-group">
+    <label for="facilityImage">Change Image:</label>
+    <input type="file" id="facilityImage" name="image" accept="image/*">
+</div>
+
+    <button type="submit" class="btn btn-submit">Save Facility</button>
+</form>
+
         </div>
     </div>
-	
+    
 	<script src="<?=ROOT?>/assets/js/ped_incharge/navbar.js"></script>
+    
+
     <script src="<?=ROOT?>/assets/js/ped_incharge/facilities.js"></script>
 </body>
 </html>
-

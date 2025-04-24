@@ -125,26 +125,23 @@ Trait Model {
 
     // insert
     public function insert($data){
-
-         //remove unwanted data
-         if(!empty($this->allowed_columns)){
+        //remove unwanted data
+        if(!empty($this->allowed_columns)){
             foreach($data as $key => $value){
                 if(!in_array($key,$this->allowed_columns)){
                     unset($data[$key]);
-        
                 }
             }
         }
         
         $keys = array_keys($data);
-
+    
         $query = "INSERT INTO $this->table (".implode(",",$keys).") VALUES (:".implode(",:",$keys).") ";
-        $this->query($query,$data);
-        return false;
-        
-
+        return $this->query($query, $data);
     }
+    
 
+   
     // update
     public function update($id,$data,$id_column='userid'){
 
@@ -210,6 +207,12 @@ Trait Model {
             return false;
         }
     }
+
+    public function lastInsertId() {
+        $result = $this->query("SELECT LAST_INSERT_ID()");
+        return $result[0]->{"LAST_INSERT_ID()"};
+    }
+    
 
 }
 

@@ -18,127 +18,45 @@
 
     <!-- Search Bar -->
     <div class="search-container">
-      <input
-        type="text"
-        id="search-bar"
-        placeholder="Search for a facility..."
-        onkeyup="searchFacility()"
-      />
+      <input type="text" id="search-bar" placeholder="Search for a facility..." onkeyup="searchFacility()"/>
     </div>
 
     <!-- Rates Table -->
     <table class="rates-table" id="rates-table">
-      <thead>
+  <thead>
+    <tr>
+      <th>Court</th>
+      <th>Image</th>
+      <th>Event</th>
+      <th>Duration</th>
+      <th>Price</th>
+    </tr>
+  </thead>
+  <tbody>
+    <?php if (!empty($prices)): ?>
+      <?php foreach ($prices as $row): ?>
         <tr>
-          <th>Indoor Gym</th>
-          <th colspan="2">Practice (per hour)</th>
-          <th colspan="4">Tournament / Sports Festivals (With Supervisor charges)</th>
+          <td><?= htmlspecialchars($row->court_name) ?></td>
+          <td>
+            <?php if (!empty($row->court_image)): ?>
+              <img src="<?= htmlspecialchars($row->court_image) ?>" alt="<?= htmlspecialchars($row->court_name) ?>" width="80">
+            <?php endif; ?>
+          </td>
+          <td><?= htmlspecialchars($row->event) ?></td>
+          <td><?= htmlspecialchars($row->duration) ?></td>
+          <td><?= number_format($row->price, 2) ?></td>
         </tr>
-        <tr>
-          <th></th>
-          <th>Working Hours</th>
-          <th>Other than Working Hours</th>
-          <th>Working Hours (Full Day)</th>
-          <th>Working Hours (Half Day)</th>
-          <th>Other than Working Hours (Full Day)</th>
-          <th>Other than Working Hours (Half Day)</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td>Badminton (One Court - 08 Persons for practices)</td>
-          <td>800.00</td>
-          <td>1,100.00</td>
-          <td>-</td>
-          <td>-</td>
-          <td>-</td>
-          <td>-</td>
-        </tr>
-        <tr>
-          <td>Badminton (Two Courts - 16 Persons for practices)</td>
-          <td>1,600.00</td>
-          <td>1,900.00</td>
-          <td>-</td>
-          <td>-</td>
-          <td>-</td>
-          <td>-</td>
-        </tr>
-        <tr>
-          <td>Badminton (Four Courts - 30 Persons for practices)</td>
-          <td>3,000.00</td>
-          <td>3,600.00</td>
-          <td>50,000.00</td>
-          <td>35,000.00</td>
-          <td>59,000.00</td>
-          <td>41,000.00</td>
-        </tr>
-        <tr>
-          <td>Table Tennis (Two Tables - 08 Persons for practices)</td>
-          <td>900.00</td>
-          <td>1,200.00</td>
-          <td>-</td>
-          <td>-</td>
-          <td>-</td>
-          <td>-</td>
-        </tr>
-        <tr>
-          <td>Table Tennis</td>
-          <td>-</td>
-          <td>-</td>
-          <td>50,000.00</td>
-          <td>35,000.00</td>
-          <td>59,000.00</td>
-          <td>41,000.00</td>
-        </tr>
-        <tr>
-          <td>Karate / Taekwondo (Without Tatami)</td>
-          <td>-</td>
-          <td>-</td>
-          <td>50,000.00</td>
-          <td>35,000.00</td>
-          <td>59,000.00</td>
-          <td>41,000.00</td>
-        </tr>
-        <tr>
-          <td>Wrestling (Without Mattress)</td>
-          <td>-</td>
-          <td>-</td>
-          <td>50,000.00</td>
-          <td>35,000.00</td>
-          <td>59,000.00</td>
-          <td>41,000.00</td>
-        </tr>
-        <tr>
-          <td>Volleyball (25 Persons for practices)</td>
-          <td>5,000.00</td>
-          <td>5,600.00</td>
-          <td>-</td>
-          <td>-</td>
-          <td>-</td>
-          <td>-</td>
-        </tr>
-        <tr>
-          <td>Volleyball</td>
-          <td>-</td>
-          <td>-</td>
-          <td>60,000.00</td>
-          <td>40,000.00</td>
-          <td>69,000.00</td>
-          <td>46,000.00</td>
-        </tr>
-        <tr>
-          <td>Student Sport Center and Surrounding Area (Sports Activities & Functions)</td>
-          <td>-</td>
-          <td>-</td>
-          <td>30,000.00</td>
-          <td>20,000.00</td>
-          <td>39,000.00</td>
-          <td>26,000.00</td>
-        </tr>
-      </tbody>
-    </table>
+      <?php endforeach; ?>
+    <?php else: ?>
+      <tr>
+        <td colspan="5">No data available.</td>
+      </tr>
+    <?php endif; ?>
+  </tbody>
+</table>
+
   </div>
 
-  <script src="../js/dashboard.js"></script>
+  
 </body>
 </html>
