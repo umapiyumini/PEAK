@@ -6,6 +6,36 @@ class Reservations {
     protected $table = 'reservations';
     protected $fillable = ['reservationid','userid','courtid','section','event','duration','date','time','status','usertype','userdescription','userproof','numberof_participants','extradetails','price','discountedprice','occupied','created_at'];
 
+
+    //used
+    public function getUpcomingevents($userid) {
+        $query = "
+            SELECT r.*, c.name AS courtname 
+            FROM {$this->table} r 
+            JOIN courts c ON r.courtid = c.courtid 
+            WHERE r.userid = :userid 
+              AND r.status = 'confirmed' 
+              AND r.courtid != '38'
+              AND STR_TO_DATE(CONCAT(r.date, ' ', r.time), '%Y-%m-%d %H:%i:%s') > NOW()
+        ";
+        return $this->query($query, ['userid' => $userid]);
+    }
+    
+    // Get confirmed payments for a user
+    public function getDuePayments($userid) {
+        $query = 
+        "SELECT r.*,c.name AS courtname
+        FROM {$this->table} r
+        JOIN courts c ON r.courtid = c.courtid
+        WHERE r.userid = :userid
+        AND r.status = 'To pay'";
+        return $this->query($query, ['userid' => $userid]); 
+    }
+
+
+
+
+    //not yet
     
     public function insert($data) {
         error_log("Insert method is called.");
@@ -53,29 +83,7 @@ class Reservations {
         return $this->query($query, ['userid' => $userid]);
     }
 
-    public function getUpcomingevents($userid) {
-        $query = "
-            SELECT r.*, c.name AS courtname 
-            FROM {$this->table} r 
-            JOIN courts c ON r.courtid = c.courtid 
-            WHERE r.userid = :userid 
-              AND r.status = 'confirmed' 
-              AND r.courtid != '38'
-              AND STR_TO_DATE(CONCAT(r.date, ' ', r.time), '%Y-%m-%d %H:%i:%s') > NOW()
-        ";
-        return $this->query($query, ['userid' => $userid]);
-    }
     
-    // Get confirmed payments for a user
-    public function getDuePayments($userid) {
-        $query = 
-        "SELECT r.*,c.name AS courtname
-        FROM {$this->table} r
-        JOIN courts c ON r.courtid = c.courtid
-        WHERE r.userid = :userid
-        AND r.status = 'To pay'";
-        return $this->query($query, ['userid' => $userid]); 
-    }
 
 
     public function getActiveSubscription($userid, $courtid, $subscription) {
@@ -250,11 +258,11 @@ class Reservations {
 
     
        
-}
+
 
 // Model function to check if the selected date is fully booked
 // Model: Function to check if the date is fully booked
-function isDateFullyBooked($date, $section, $conn) {
+public function isDateFullyBooked($date, $section, $conn) {
     $query = "SELECT * FROM reservations WHERE date = ? AND section = ? AND status IN ('to pay', 'paid', 'confirmed') AND duration = 'full'";
 
     if ($stmt = $conn->prepare($query)) {
@@ -268,19 +276,17 @@ function isDateFullyBooked($date, $section, $conn) {
 
     return false;
 }
+    public function getBookingsForDateSection($date, $section) {
+        $query = "SELECT * FROM {$this->table} 
+                  WHERE date = :date 
+                  AND section = :section 
+                  AND status IN ('to pay', 'paid', 'confirmed')";
+        return $this->query($query, [
+            'date' => $date,
+            'section' => $section
+        ]);
+    }
 
-
-
-public function getBookingsForDateSection($date, $section) {
-    $query = "SELECT * FROM {$this->table} 
-              WHERE date = :date 
-              AND section = :section 
-              AND status IN ('to pay', 'paid', 'confirmed')";
-    return $this->query($query, [
-        'date' => $date,
-        'section' => $section
-    ]);
-}
 
     
 
@@ -439,5 +445,5 @@ public function update($reservationid, $data) {
     return $this->query($query, $data);
 }
 
-}  
-
+  
+}

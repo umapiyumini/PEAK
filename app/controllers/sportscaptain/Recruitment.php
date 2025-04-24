@@ -23,7 +23,7 @@ class Recruitment extends Controller{
     try{
 
         $recruitmentModel = new Recruitmentrequests();
-        $request = $recruitmentModel->approveRequest($regno);
+        $request = $recruitmentModel->approverequest($regno);
 
         if($request){
             $_SESSION['success'] = 'Request approved successfully';

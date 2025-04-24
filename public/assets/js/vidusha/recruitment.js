@@ -1,4 +1,4 @@
-function approveRequest(regno, btn) {
+function approverequest(regno, btn) {
   if (!confirm("Are you sure you want to approve this request?")) return;
 
   fetch('<?= ROOT ?>/sportscaptain/recruitment/approverequest', {

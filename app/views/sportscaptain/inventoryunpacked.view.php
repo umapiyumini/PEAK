@@ -8,7 +8,7 @@
     <title>Unpacked Inventory</title>
     <link rel="stylesheet" href="<?=ROOT?>/assets/css/vidusha/inventoryunpacked.css">
     <link rel="stylesheet" href="<?=ROOT?>/assets/css/vidusha/ped.css">
-    <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.8/css/line.css">
+    
 </head>
 <body>
 
@@ -47,11 +47,11 @@
                         <tr>
                             <td><?= htmlspecialchars($item->name) ?></td>
                             <td><?= htmlspecialchars($item->issued_quantity) ?></td>
-                            <td><button class="update-btn" 
-                                data-id="<?= $item->stocktid ?>" 
-                                data-name="<?= htmlspecialchars($item->name) ?>"
-                                data-quantity="<?= $item->issued_quantity ?>">Edit</button></td>    
-                        </tr>
+                            <td><button class="update-quantity-btn"
+    data-id="<?= $item->stocktid ?>" 
+    data-name="<?= htmlspecialchars($item->name) ?>"
+    data-quantity="<?= $item->issued_quantity ?>">Edit</button></td>
+
                     <?php endforeach; ?>
                 <?php else: ?>
                     <tr>
@@ -83,7 +83,12 @@
                             <td><?= htmlspecialchars($item->quantityrequested) ?></td>
                             <td><?= htmlspecialchars($item->timeframe) ?></td> 
                             <td><?= htmlspecialchars($item->date) ?></td>
-                            <td><button class="update-btn" data-id="<?= $item->requestid ?>"> Edit</button>
+                            <td><button class="update-request-btn" 
+    data-id="<?= $item->requestid ?>" 
+    data-name="<?= htmlspecialchars($item->name) ?>"
+    data-quantity="<?= $item->quantityrequested ?>"
+    data-timeframe="<?= $item->timeframe ?>"
+    data-date="<?= $item->date ?>">Edit</button>
                             <form action="<?=ROOT?>/sportscaptain/inventoryunpacked/deleteRequest" method="POST">
                                 <input type="hidden" name="requestid" value="<?= $item->requestid ?>">
                                 <button class="delete-btn">Delete</button>
@@ -105,7 +110,7 @@
         </main>
 
         <!-- Add Product Modal -->
-        <!--div id="addModal" class="modal">
+        <div id="addModal" class="modal">
             <div class="modal-content">
                 <span class="close">&times;</span>
                 <h2>Request Inventory</h2>
@@ -113,8 +118,8 @@
                 <div class="form-group">
                 <label for="timeFrame">Time Frame:</label>
                 <select id="timeFrame" name="timeframe" required>
-                    <option value="mid-year">Mid-Year</option>
-                    <option value="year-end">Year-End</option>
+                    <option value="mid year">Mid-Year</option>
+                    <option value="end year">Year-End</option>
                 </select>
             </div>
                     <div class="form-group">
@@ -133,9 +138,9 @@
                 </form>
                 
             </div>
-        </div-->
+        </div>
 
-        <div id="addModal" class="modal">
+        <!--div id="addModal" class="modal">
     <div class="modal-content">
         <span class="close">&times;</span>
         <h2>Request Year End Inventory</h2>
@@ -150,7 +155,7 @@
             </div>
             
             <div id="equipment-container">
-    <!-- Initial equipment item -->
+    <!-- Initial equipment item 
     <div class="equipment-item">
         <div class="form-row">
             <div class="form-group">
@@ -176,7 +181,7 @@
             <button type="submit" class="submit-btn">Submit Request</button>
         </form>
     </div>
-</div>
+</div-->
 
         <!-- Update Quantity Modal -->
 <div id="updateModal" class="modal">
@@ -225,8 +230,8 @@
             <div class="form-group">
                 <label for="timeframe">Time Frame: </label>
                 <select id="updaterequesttimeframe" name="timeframe" required>
-                    <option value="mid-year">Mid-year</option>
-                    <option value="year-end">Year-end</option>
+                    <option value="mid year">Mid-year</option>
+                    <option value="end year">Year-end</option>
                 </select>
             </div>
 

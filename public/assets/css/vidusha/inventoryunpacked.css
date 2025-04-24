@@ -182,7 +182,7 @@ input:focus, textarea:focus {
 }
 
 /* Submit button */
-.submit-btn, .update-btn,.delete-btn {
+.submit-btn, .update-quantity-btn,.update-request-btn, .delete-btn {
     background-color: #5a2e8a;
     color: #ffffff;
     border: none;

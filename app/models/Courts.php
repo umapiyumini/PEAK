@@ -15,6 +15,9 @@ class Courts {
         return $_SESSION['userid'];
     }
 
+
+    //used 
+
     // Fetch all courts
     public function getAllCourts() {
         // Query to select all records from the courts table
@@ -23,6 +26,20 @@ class Courts {
         // Use the query method from the Database trait to execute the query
         return $this->query($query);
     }
+
+
+    public function getCourtById($id) {
+        $query = "SELECT * FROM $this->table WHERE courtid = :id";
+        $result = $this->query($query, ['id' => $id]);
+        return $result ? $result[0] : null;
+    }
+
+    //not yet
+
+
+
+    
+    
 
 
      // Fetch courts by location
@@ -76,11 +93,7 @@ class Courts {
     }
 
     
-    public function getCourtById($id) {
-        $query = "SELECT * FROM $this->table WHERE courtid = :id";
-        $result = $this->query($query, ['id' => $id]);
-        return $result ? $result[0] : null;
-    }
+    
     
     public function getSectionByCourtid($courtid) {
         $query = "SELECT section FROM courts WHERE courtid = :courtid LIMIT 1";
