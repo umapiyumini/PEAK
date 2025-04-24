@@ -41,7 +41,6 @@ class Certification extends Controller{
             }
         } else {
             $certificaterequest = new Certificaterequest();
-            show($_SESSION['userid']);
             $certificateData = $certificaterequest->where(['UserID' => $_SESSION['userid']]);
             // show($result);
             $data = [

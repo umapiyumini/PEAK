@@ -2,10 +2,7 @@
 class Medical extends Controller{
    public function index(){
 
-    if (!isset($_SESSION['userid'])) {
-        header('Location:' . ROOT . '/Login');
-        exit;
-    }
+  
 
         //  Insert function
         if($_SERVER['REQUEST_METHOD']=='POST')
@@ -17,7 +14,7 @@ class Medical extends Controller{
                 'RegistrationID' => $_POST['RegistrationID'],
                 'ReasonForMedical' => $_POST['ReasonForMedical'],
                 'TimePeriod' => $_POST['TimePeriod'],  
-                'userid' => $_SESSION['userid'],
+                'userid' => $_SESSION['userid']
             ];
 
             $medicalrequest = new MedicalRequest();

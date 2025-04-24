@@ -8,7 +8,7 @@ class Student{
         'userid',
         'registrationnumber',
         'faculty',
-        'department',
+        'department'
     ];
 
     public $studenterrors = [];

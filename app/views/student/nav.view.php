@@ -46,7 +46,7 @@
 
             <!-- sportsblog -->
             <li class="nav-item">
-                <a href="sport" class="nav-link">
+                <a href="sports" class="nav-link">
                 <i class="fa-solid fa-basketball"></i>
                     Sport 
                 </a>

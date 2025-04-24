@@ -11,7 +11,7 @@ class MedicalRequest{
         'RegistrationID',
         'ReasonForMedical',
         'TimePeriod',
-        'userid',
+        'userid'
     ];
 
     public function validate($data){
