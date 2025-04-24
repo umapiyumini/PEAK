@@ -7,12 +7,9 @@ class Tournament extends Controller{
     {
         //Get DATA
 
-        $data = [
-            'Name' => $_POST['Name'],
-            'RegistrationID' => $_POST['RegistrationID'],
-            'ReasonForMedical' => $_POST['ReasonForMedical'],
-            'TimePeriod' => $_POST['TimePeriod'],  
-            'userid' => $_SESSION['userid']
+        $data1 = [
+            'tournament_name' => $_POST['tournament_name'],
+            'tournament_date' => $_POST['tournament_date'],
         ];
 
         $medicalrequest = new MedicalRequest();
