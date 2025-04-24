@@ -11,7 +11,6 @@
 
 </head>
 <body>
-
 	<header>
         <div class="header-container">
             <div class="logo">
@@ -49,29 +48,18 @@
 		 
      <h1>Notices</h1>
      <div class="notice-container">
+     <?php if (!empty($data['notices'])): ?>
+      <?php foreach($data['notices'] as $notice): ?> 
           <div class="notice">
-            <h2>Annual Sports Meet</h2>
-            <p><strong>Date:</strong> March 10, 2024</p>
-            <p><strong>Venue:</strong> Main Sports Ground</p>
-            <p><strong>Details:</strong> All departments are invited to participate. Registration closes on March 5, 2024.</p>
-          </div>
-          <div class="notice">
-            <h2>Gym Membership Renewal</h2>
-            <p><strong>Deadline:</strong> February 25, 2024</p>
-            <p><strong>Details:</strong> Renew your gym membership online or visit the office between 9 AM and 4 PM.</p>
-          </div>
-          <div class="notice">
-            <h2>Inter-Department Cricket League</h2>
-            <p><strong>Start Date:</strong> April 1, 2024</p>
-            <p><strong>Venue:</strong> University Cricket Ground</p>
-            <p><strong>Details:</strong> Teams must submit their final player list by March 20, 2024.</p>
-          </div>
-          <div class="notice">
-            <h2>Colors Night 2024</h2>
-            <p><strong>Date:</strong> May 15, 2024</p>
-            <p><strong>Venue:</strong> University Auditorium</p>
-            <p><strong>Details:</strong> Celebrate the achievements of our athletes. Tickets are available now!</p>
-          </div>
+            <h2><?= $notice->title?></h2>
+            <p><strong><?= $notice->content?></p>
+      </div>
+            <?php endforeach; ?>
+            <?php else: ?>
+              <p>No notices available.</p>
+            <?php endif; ?>
+          
+
         </div>
       
 			 
@@ -101,27 +89,22 @@
 	
     <div class="upcoming-events">
       <h2>Upcoming Events</h2>
-      <div class="events-grid">
-        <a href="#" class="event-card">
-          <h3>Fitness Challenge</h3>
-          <p>Date: 1st June 2024</p>
-          <p>Time: 4:00 PM - 7:00 PM</p>
-          <p>Venue: University Gymnasium</p>
-        </a>
-        <a href="event-schedule.html" class="event-card">
-          <h3>Inter faculty hockey</h3>
-          <p>Date: 10th July 2024</p>
-          <p>Time: 9:30 AM - 12:30 PM</p>
-          <p>Venue: UOC ground</p>
-        </a>
-        <a href="#" class="event-card">
-          <h3>Leadership program</h3>
-          <p>Date: 20th August 2024</p>
-          <p>Time: 1:00 PM - 5:00 PM</p>
-          <p>Venue: UOC ground</p>
-        </a>
+      <div id="event-list" class="events-grid">
+      <div class="event-card">
+        <?php if (!empty($data['events'])): ?>
+          <?php foreach($data['events'] as $event): ?>
+            
+            <h3><?= $event->event_name?></h3>
+            <p>Date: <?= $event->date?></p>
+            <p>Time: <?= $event->time?></p>
+            <p>Venue: <?= $event->venue?></p>
+          <?php endforeach; ?>
+        <?php else: ?>
+          <p>No upcoming events found.</p>
+        <?php endif; ?>
+        </div>
+        </div>
       </div>
-    </div>
     </aside>
   </main>
 	<footer class="footer">

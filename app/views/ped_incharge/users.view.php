@@ -20,7 +20,6 @@
 
         <div class="tabs">
             <button class="tab active" onclick="showSection('student-registration')">Student Registration</button>
-            <button class="tab" onclick="showSection('staff-registration')">Staff Registration</button>
             <button class="tab" onclick="showSection('captain-assignment')">Sport Captain Assignment</button>
             <button class="tab" onclick="showSection('executive-assignment')">Club Executive Assignment</button>
             <button class="tab" onclick="showSection('user-display')">View Users</button>
@@ -29,32 +28,31 @@
         <!-- Student Registration Form -->
         <div id="student-registration" class="form-section active">
             <h2>Student Registration</h2>
-            <form id="studentForm" onsubmit="handleStudentSubmit(event)">
+            <form id="studentForm" method="POST" action="<?=ROOT?>/ped_incharge/users/studentReg">
                 <div class="grid">
-                    <div class="form-group">
-                        <label>Role Type:</label>
-                        <select name="roleNumber" required>
-                            <option value="">Select Role</option>
-                            <option value="2">Student Only</option>
-                            <option value="3">Student and Sports Captain</option>
-                            <option value="4">Student, Sports Captain and Club Executive</option>
-                        </select>
-                    </div>
                     <div class="form-group">
                         <label>Registration Number:</label>
                         <input type="text" name="regNumber" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Full Name:</label>
+                        <input type="text" name="name" required>
                     </div>
                     <div class="form-group">
                         <label>Faculty:</label>
                         <input type="text" name="faculty" required>
                     </div>
                     <div class="form-group">
-                        <label>Start Date:</label>
-                        <input type="date" name="startDate" required>
+                        <label>Department:</label>
+                        <input type="text" name="department" required>
                     </div>
                     <div class="form-group">
-                        <label>End Date:</label>
-                        <input type="date" name="endDate" required>
+                        <label>Registered Date:</label>
+                        <input type="date" name="id_start" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Last Examination Date:</label>
+                        <input type="date" name="id_end" required>
                     </div>
                     <div class="form-group">
                         <label>Email:</label>
@@ -72,84 +70,40 @@
                         <label>NIC:</label>
                         <input type="text" name="nic" required>
                     </div>
-                </div>
-                <button type="submit" class="btn submit-btn">Register Student</button>
-            </form>
-        </div>
-
-        <!-- Staff Registration Form -->
-        <div id="staff-registration" class="form-section">
-            <h2>Ground/Indoor Staff Registration</h2>
-            <form id="staffForm" onsubmit="handleStaffSubmit(event)">
-                <div class="grid">
                     <div class="form-group">
-                        <label>Role Type:</label>
-                        <select name="roleNumber" required>
-                            <option value="">Select Role</option>
-                            <option value="5">Staff Member</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label>Staff ID:</label>
-                        <input type="text" name="staffId" required>
-                    </div>
-                    <div class="form-group">
-                        <label>Name:</label>
-                        <input type="text" name="name" required>
-                    </div>
-                    <div class="form-group">
-                        <label>Employee Number:</label>
-                        <input type="text" name="employeeNumber" required>
-                    </div>
-                    <div class="form-group">
-                        <label>Registration Number:</label>
-                        <input type="text" name="regNumber" required>
-                    </div>
-                    <div class="form-group">
-                        <label>NIC:</label>
-                        <input type="text" name="nic" required>
-                    </div>
-                    <div class="form-group">
-                        <label>Date of Birth:</label>
+                        <label>Date Of Birth:</label>
                         <input type="date" name="dob" required>
                     </div>
                     <div class="form-group">
                         <label>Contact Number:</label>
-                        <input type="tel" name="contact" required>
+                        <input type="text" name="contact_number" required>
                     </div>
                     <div class="form-group">
-                        <label>Date of Appointment:</label>
-                        <input type="date" name="appointmentDate" required>
+                        <label>Address:</label>
+                        <input type="text" name="address" required>
                     </div>
                 </div>
-                <div class="form-group">
-                    <label>Address:</label>
-                    <input type="text" name="address" required>
-                </div>
-                <button type="submit" class="btn submit-btn">Register Staff</button>
+                <button type="submit" class="btn submit-btn">Register Student</button>
             </form>
         </div>
 
         <!-- Sport Captain Assignment -->
         <div id="captain-assignment" class="form-section">
             <h2>Sport Captain Assignment</h2>
-            <form id="captainForm" onsubmit="handleCaptainSubmit(event)">
+            <form id="captainForm" method="POST" action="<?=ROOT?>/ped_incharge/users/captainReg">
                 <div class="grid">
                     <div class="form-group">
-                        <label>Role Type:</label>
-                        <select name="roleNumber" required>
-                            <option value="">Select Role</option>
-                            <option value="3">Sports Captain</option>
-                            <option value="4">Sports Captain and Club Executive</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
                         <label>Student Registration Number:</label>
-                        <input type="text" name="studentRegNumber" required>
+                        <input type="text" name="regno" required>
                     </div>
                     <div class="form-group">
                         <label>Sport:</label>
-                        <input type="text" name="sport" required>
+                        <select name="sport" required>
+                            <option value="">Select Sport</option>
+                            <?php foreach ($sportsList as $sport): ?>
+                                <option value="<?= $sport->sport_id ?>"><?= $sport->sport_name ?></option>
+                            <?php endforeach; ?>
+                        </select>
                     </div>
                     <div class="form-group">
                         <label>Assigned Date:</label>
@@ -159,6 +113,15 @@
                         <label>Captaincy End Date:</label>
                         <input type="date" name="endDate" required>
                     </div>
+                    <div class="form-group">
+                        <label>Captain or Vice-Captain:</label>
+                        <select name="position" required>
+                            <option value="">Select Position</option>
+                            <option value="captain">Captain</option>
+                            <option value="vice_captain">Vice Captain</option>
+                            <option value="manager">Manager</option>
+                        </select>
+                    </div>
                 </div>
                 <button type="submit" class="btn submit-btn">Assign Captain</button>
             </form>
@@ -167,30 +130,19 @@
         <!-- Club Executive Assignment -->
         <div id="executive-assignment" class="form-section">
             <h2>Amalgamated Club Executive Assignment</h2>
-            <form id="executiveForm" onsubmit="handleExecutiveSubmit(event)">
+            <form id="executiveForm" method="POST" action="<?=ROOT?>/ped_incharge/users/clubReg">
                 <div class="grid">
                     <div class="form-group">
-                        <label>Role Type:</label>
-                        <select name="roleNumber" required>
-                            <option value="">Select Role</option>
-                            <option value="4">Club Executive</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
                         <label>Student Registration Number:</label>
-                        <input type="text" name="studentRegNumber" required>
+                        <input type="text" name="regno" required>
                     </div>
                     <div class="form-group">
                         <label>Designation:</label>
-                        <input type="text" name="designation" required>
+                        <input type="text" name="post" required>
                     </div>
                     <div class="form-group">
-                        <label>Assigned Date:</label>
-                        <input type="date" name="assignedDate" required>
-                    </div>
-                    <div class="form-group">
-                        <label>End Date:</label>
-                        <input type="date" name="endDate" required>
+                        <label>Year:</label>
+                        <input type="text" name="year" required>
                     </div>
                 </div>
                 <button type="submit" class="btn submit-btn">Assign Executive</button>
@@ -218,21 +170,31 @@
                     <thead>
                         <tr>
                             <th>Role</th>
-                            <th>Registration/Staff ID</th>
-                            <th>Name/Email</th>
-                            <th>Details</th>
-                            <th>Status</th>
+                            <th>Name</th>
+                            <th>Email</th>
+                            <th>Contact</th>
                             <th>Actions</th>
                         </tr>
                     </thead>
                     <tbody id="userTableBody">
-                        <!-- Table content will be dynamically populated -->
+                       <?php if(!empty($usersList)): ?>
+                        <?php foreach($usersList as $user): ?>
+                            <tr>
+                                <td><?= $user->role ?></td>
+                                <td><?= $user->name ?></td>
+                                <td><?= $user->email ?></td>
+                                <td><?= $user->contact_number ?></td>
+                                <td class="actions">
+                                    <button class="delete-btn" data-id="<?= $user->userid ?>">Delete</button>
+                                </td>
+                            </tr>
+                        <?php endforeach; ?>
+                        <?php endif; ?>
                     </tbody>
                 </table>
             </div>
         </div>
     </div>
-
         </main>
 
     

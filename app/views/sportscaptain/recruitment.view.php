@@ -7,25 +7,32 @@
   <link rel="stylesheet" href="<?=ROOT?>/assets/css/vidusha/recruitment.css">
 </head>
 <body>
-
   <div class="container">
     <h1>Student Recruitment Notifications</h1>
     <div id="notification-list">
-      <!-- Sample student notification -->
+      
+       <?php if(isset($data['recritmentrequest'])): ?>
+        <?php foreach($data['recritmentrequest'] as $request): ?>
       <div class="notification-card">
-        <p><strong>Registration No:</strong> 12345</p>
-        <p><strong>Name:</strong> John Doe</p>
-        <p><strong>Faculty:</strong> Computer Science</p>
-        <p><strong>Reason:</strong> School hocky team member</p>
+        <p><strong>Registration No:</strong><?=htmlspecialchars($request->regno)?></p>
+        <p><strong>Name:</strong><?=htmlspecialchars($request->name)?></p>
+        <p><strong>Faculty:</strong><?=htmlspecialchars($request->faculty)?></p>
+        <p><strong>Reason:</strong><?=htmlspecialchars($request->reason)?></p>
         <div class="action-buttons">
-          <button class="approve-btn" onclick="approveRequest(12345)">Approve</button>
-          <button class="reject-btn" onclick="rejectRequest(12345)">Reject</button>
+        
+          <button class="approve-btn" onclick="approverequest('<?= $request->regno ?>', this)">Approve</button>
+        
+
+          <button class="reject-btn" onclick="rejectRequest('<?= $request->regno ?>', this)">Reject</button>
         </div>
       </div>
-      <!-- Add more notifications dynamically -->
+  <?php endforeach; ?>
+  <?php else: ?>
+    <p>No recruitment requests available.</p>
+  <?php endif; ?>
     </div>
   </div>
-  <div id="notification-list"></div>
+
 <div id="message-container"></div>
 
   <script src="<?=ROOT?>/assets/js/vidusha/recruitment.js"></script>

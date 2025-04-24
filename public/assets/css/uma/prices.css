@@ -11,7 +11,7 @@
     color: var(--darkpurple);
   }
   
-  .cards {
+  /* .cards {
     display: flex;
     justify-content: center;
     gap: 2rem;
@@ -31,7 +31,35 @@
   .card:hover {
     transform: translateY(-10px);
     box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
-  }
+  } */
+
+
+  /* Style for the cards container using Flexbox */
+.cards {
+  display: flex; /* Enables flexbox layout */
+  flex-wrap: wrap; /* Allows the items to wrap into multiple lines */
+  gap: 20px; /* Adds space between the cards */
+  justify-content: space-around; /* Distributes space evenly */
+}
+
+/* Style for individual cards */
+.card {
+  flex: 1 1 30%; /* Each card will take 30% of the container width */
+  min-width: 250px; /* Prevents the cards from becoming too small */
+  max-width: 350px; /* Limits the width of the cards */
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  transition: transform 0.3s ease;
+}
+
+/* Hover effect for cards */
+.card:hover {
+  transform: translateY(-5px); /* Slight hover animation */
+}
+
   
   .card h2 {
     color: var(--darkpurple);

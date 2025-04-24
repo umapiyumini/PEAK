@@ -22,44 +22,71 @@
     <main>
         <div class="controls">
             <input type="text" id="search-bar" placeholder="Search by player name..." onkeyup="filterTable()">
-            <button id="generate-qr" onclick="generateQR()">Generated QR Code</button>
+            <button id="generate-qr" onclick="generateQRCode()">Generated QR Code</button>
+            <img id="qr-image" src="" alt="QR Code">
         </div>
         
-        <table id="attendance-chart">
-            <thead>
-                <tr>
-                    <th>Player Name</th>
-                    <th>2024-11-22</th>
-                    <th>2024-11-23</th>
-                    <th>2024-11-24</th>
-                    <th>2024-11-25</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>John Doe</td>
-                    <td class="present">Present</td>
-                    <td class="absent" title="Sick">Absent</td>
-                    <td class="present">Present</td>
-                    <td class="absent" title="Sick">Absent</td>
-                </tr>
-                <tr>
-                    <td>Jane Smith</td>
-                    <td class="present">Present</td>
-                    <td class="present">Present</td>
-                    <td class="absent" title="Sick">Absent</td>
-                    <td class="present">Present</td>
-                </tr>
-                <tr>
-                    <td>Mike Johnson</td>
-                    <td class="absent" title="Sick">Absent</td>
-                    <td class="absent" title="Sick">Absent</td>
-                    <td class="present">Present</td>
-                    <td class="present">Present</td>
-                </tr>
-            </tbody>
-        </table>
+        <?php if (!empty($attendance['records'])) { ?>
+    <table id="attendance-chart">
+        <thead>
+            <tr>
+                <th>Player Name</th>
+                <?php foreach ($attendance['dates'] as $date) { ?>
+                    <th><?php echo htmlspecialchars($date); ?></th>
+                <?php } ?>  
+            </tr>
+        </thead>
+        <tbody>
+        <?php
+        $groupedAttendance = [];
+
+        foreach ($attendance['records'] as $record) {
+            $groupedAttendance[$record->name][$record->date] = $record->attendance;
+        }
+
+        foreach ($groupedAttendance as $playerName => $playerAttendance) { ?>
+            <tr>
+                <td><?php echo htmlspecialchars($playerName); ?></td>
+                
+                <?php foreach ($attendance['dates'] as $date) { 
+                    $status = $playerAttendance[$date] ?? 'Absent'; 
+                    $class = ($status === 'Present') ? 'present' : 'absent';
+                ?>
+                    <td class="<?php echo $class; ?>"><?php echo htmlspecialchars($status); ?></td>
+
+                <?php } ?>
+            </tr>
+        <?php } ?>
+        </tbody>
+    </table>
+<?php } else { ?>
+    <p>No attendance records found.</p>
+<?php } ?>
     </main>
+
+    <!-- Absent Reason Modal -->
+<div id="absentReasonModal" class="modal" style="display:none;">
+  <div class="modal-content">
+    <span class="close">&times;</span>
+    <h2>Enter Absent Reason</h2>
+    <textarea id="absentReason" rows="4" cols="50" placeholder="Enter reason here..."></textarea>
+    <button id="submitReason">Submit</button>
+  </div>
+</div>
+
+    <script>
+function generateQRCode() {
+    const userId = "<?= $_SESSION['userid'] ?? 'guest' ?>";
+    const date = new Date().toISOString().slice(0, 10);
+    const qrText = `attendance|${userId}|${date}`;
+    const qrUrl = `https://chart.googleapis.com/chart?cht=qr&chs=200x200&chl=${encodeURIComponent(qrText)}`;
+    
+  
+    console.log("QR Text:", qrText);
+    console.log("QR URL:", qrUrl);
+    document.getElementById("qr-image").src = qrUrl;
+}
+</script>
     <script src="<?=ROOT?>/assets/js/vidusha/sportattendance.js"></script>
 </body>
 </html>

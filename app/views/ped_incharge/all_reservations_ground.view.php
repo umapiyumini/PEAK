@@ -35,116 +35,46 @@
                 <i class="uil uil-search"></i>
             </div>
 
-            <div id="reservations-school">
-                <div class="reservation school">
+            <?php if(!empty($allReservations)): ?>
+             <?php foreach($allReservations as $i): ?>
+                <div class="reservation <?= strtolower(str_replace(' ', '-', $i->role)) ?>">
                     <div class="reservation-header">
-                        <h3 class="client-name">Royal College</h3>
-                        <span class="status">Paid</span>
+                        <h3 class="client-name"><?= $i->username ?></h3>
+                        <span class="status"><?= $i->status ?></span>
                     </div>
                     <div class="reservation-details">
                         <div class="detail-item">
                             <div class="detail-label">Reservation ID</div>
-                            <div class="detail-value">GR001</div>
+                            <div class="detail-value"><?= $i->reservationid ?></div>
                         </div>
                         <div class="detail-item">
                             <div class="detail-label">Contact</div>
-                            <div class="detail-value">+1234567890</div>
+                            <div class="detail-value"><?= $i->contact_number ?></div>
                         </div>
                         <div class="detail-item">
                             <div class="detail-label">Date</div>
-                            <div class="detail-value">2024-11-18</div>
+                            <div class="detail-value"><?= $i->date ?></div>
                         </div>
                         <div class="detail-item">
                             <div class="detail-label">Time</div>
-                            <div class="detail-value">14:00-16:00</div>
+                            <div class="detail-value"><?= $i->time ?></div>
                         </div>
                         <div class="detail-item">
                             <div class="detail-label">Event</div>
-                            <div class="detail-value">Hockey practices</div>
+                            <div class="detail-value"><?= $i->event ?></div>
                         </div>
                         <div class="detail-item">
                             <div class="detail-label">Court</div>
-                            <div class="detail-value">Hockey Court</div>
+                            <div class="detail-value"><?= $i->courtname ?></div>
                         </div>
                         <div class="detail-item">
                             <div class="detail-label">Payment</div>
-                            <div class="detail-value">5000Rs</div>
+                            <div class="detail-value"><?= $i->discountedprice ?></div>
                         </div>
                     </div>
-                    <button class="cancel-btn" >Cancel Reservation</button>
                 </div>
-
-                <div class="reservation club">
-                    <div class="reservation-header">
-                        <h3 class="client-name">UOC rugby team</h3>
-                    </div>
-                    <div class="reservation-details">
-                        <div class="detail-item">
-                            <div class="detail-label">Reservation ID</div>
-                            <div class="detail-value">GR002</div>
-                        </div>
-                        <div class="detail-item">
-                            <div class="detail-label">Contact</div>
-                            <div class="detail-value">+1987654321</div>
-                        </div>
-                        <div class="detail-item">
-                            <div class="detail-label">Date</div>
-                            <div class="detail-value">2024-11-18</div>
-                        </div>
-                        <div class="detail-item">
-                            <div class="detail-label">Time</div>
-                            <div class="detail-value">16:30-18:30</div>
-                        </div>
-                        <div class="detail-item">
-                            <div class="detail-label">Event</div>
-                            <div class="detail-value">Practices</div>
-                        </div>
-                        <div class="detail-item">
-                            <div class="detail-label">Court</div>
-                            <div class="detail-value">Rugby Court</div>
-                        </div>
-                    </div>
-                    <button class="cancel-btn">Cancel Reservation</button>
-                </div>
-
-                <div class="reservation individual">
-                    <div class="reservation-header">
-                        <h3 class="client-name">Mr. Weerasinghe</h3>
-                        <span class="status">Not paid</span>
-                    </div>
-                    <div class="reservation-details">
-                        <div class="detail-item">
-                            <div class="detail-label">Reservation ID</div>
-                            <div class="detail-value">GR003</div>
-                        </div>
-                        <div class="detail-item">
-                            <div class="detail-label">Contact</div>
-                            <div class="detail-value">+1122334455</div>
-                        </div>
-                        <div class="detail-item">
-                            <div class="detail-label">Date</div>
-                            <div class="detail-value">2024-11-19</div>
-                        </div>
-                        <div class="detail-item">
-                            <div class="detail-label">Time</div>
-                            <div class="detail-value">09:00-10:00</div>
-                        </div>
-                        <div class="detail-item">
-                            <div class="detail-label">Event</div>
-                            <div class="detail-value">Cricket match</div>
-                        </div>
-                        <div class="detail-item">
-                            <div class="detail-label">Court</div>
-                            <div class="detail-value">Cricket Pitch</div>
-                        </div>
-                        <div class="detail-item">
-                            <div class="detail-label">Payment</div>
-                            <div class="detail-value">10000Rs</div>
-                        </div>
-                    </div>
-                    <button class="cancel-btn">Cancel Reservation</button>
-                </div>
-
+                <?php endforeach; ?>
+               <?php endif; ?>
         </main>   
 
   

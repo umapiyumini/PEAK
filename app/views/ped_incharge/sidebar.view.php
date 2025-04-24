@@ -447,7 +447,7 @@
                 <div class="dropdown">
                     <a href="<?=ROOT?>/ped_incharge/interuni_tournaments" class="dropdown-link">Inter University</a>
                     <a href="<?=ROOT?>/ped_incharge/interfaculty_tournaments" class="dropdown-link">Inter Faculty</a>
-                    <a href="<?=ROOT?>/ped_incharge/#" class="dropdown-link">Other Tournaments</a>
+                    <a href="<?=ROOT?>/ped_incharge/other_tournaments" class="dropdown-link">Other Tournaments</a>
                 </div>
             </li>
             <li class="nav-item has-dropdown <?= $current_page == 'letters' ? 'actived' : '' ?>">

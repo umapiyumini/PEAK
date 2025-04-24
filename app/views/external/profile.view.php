@@ -18,33 +18,38 @@
                 <h1>Account Details</h1>
                 <div class="details-row">
                     <div class="profile-details">
-                        <p><strong>Full name</strong><span class="boxes">Uma Piyumini</span></p>
-                        <p><strong>User name</strong><span class="boxes">Umz2002</span></p>
-                        <p><strong>Company</strong> <span class="boxes">ABC Company Pvt(ltd)</span></p>
-                        <p><strong>Email</strong> <span class="boxes">your.email@example.com</span></p>
-                        <p><strong>Phone</strong> <span class="boxes">0705691983</span></p>
-                        <p><strong>Address</strong> <span class="boxes">w/3/2, Anderson Flats, Colombo 05</span></p>
+                    <p><strong>Full name</strong> <span class="boxes"><?= htmlspecialchars($user->name) ?></span></p>
+                    <p><strong>Email</strong> <span class="boxes"><?= htmlspecialchars($user->email) ?></span></p>
+                    <p><strong>Company</strong> <span class="boxes"><?= htmlspecialchars($company_name) ?></span></p>
+                    <p><strong>Phone</strong> <span class="boxes"><?= htmlspecialchars($user->contact_number) ?></span></p>
+                    <p><strong>Address</strong> <span class="boxes"><?= htmlspecialchars($user->address) ?></span></p>
+
                         <button id="editProfileBtn">Edit Profile</button><br>
                         <button id="logoutBtn">Logout</button><br>
                         <button id="deleteaccount">Delete Account</button>
                     </div>
                     <!-- Image uploading box -->
-        <div class="imageUploadBox">
-            <div id="imagePreview" class="imagePreviewBox">
-                <div id="imageContainer"></div>
-            </div>
+                    <form id="profileImageForm" enctype="multipart/form-data">
+                        <div class="imageUploadBox">
+                        <div id="imagePreview" class="imagePreviewBox">
+                            <div id="imageContainer">
+                                <?php if (!empty($user->image)): ?>
+                                    <img src="/PEAK/uploads/profile_pictures/<?= htmlspecialchars($user->image) ?>" 
+                                        alt="Profile Picture"
+                                        style="width:100%; height:100%; object-fit:cover;">
+                                <?php endif; ?>
+                            </div>
+                        </div>
 
-            
-            <input type="file" class="imageChooseInput" name="image" id="image" 
-                accept="image/jpg, image/jpeg, image/png, image/webp" 
-                onchange="previewImage(event)">
-            
-            
-            <button type="button" class="imageChooseBtn" onclick="triggerFileInput()">Choose</button>
-            <button type="button" class="imageRemoveBtn" onclick="removeImage()">Remove</button>
+                            <input type="file" class="imageChooseInput" name="image" id="image"
+                                accept="image/jpg, image/jpeg, image/png, image/webp"
+                                onchange="previewImage(event)">
+                            <button type="button" class="imageChooseBtn" onclick="triggerFileInput()">Choose</button>
+                            <button type="button" class="imageRemoveBtn" onclick="removeImage()">Remove</button>
+                            <button type="submit" class="imageChooseBtn">Upload</button>
+                        </div>
+                    </form>
 
-           
-        </div>
                     
                 </div>
             
@@ -55,24 +60,14 @@
                 <div class="modal-content">
                     <span class="close">&times;</span>
                     <h2>Edit Profile</h2>
-                    <form id="editProfileForm">
-                        <label for="fullName">Full Name:</label>
-                        <input type="text" id="fullName" value="Uma Piyumini">
-            
-                        <label for="userName">User Name:</label>
-                        <input type="text" id="userName" value="Umz2002">
-            
-                        <label for="company">Company:</label>
-                        <input type="text" id="company" value="ABC Company Pvt(ltd)" disabled class="disabled-cursor">
-            
-                        <label for="email">Email:</label>
-                        <input type="email" id="email" value="your.email@example.com" disabled class="disabled-cursor">
-            
-                        <label for="phone">Phone:</label>
-                        <input type="tel" id="phone" value="0705691983">
-            
-                        <label for="address">Address:</label>
-                        <input type="text" id="address" value="w/3/2, Anderson Flats, Colombo 05">
+                    <form id="editProfileForm" >
+                    <input type="text" id="fullName" value="<?= htmlspecialchars($user->name) ?>">
+                    <input type="email" id="email" value="<?= htmlspecialchars($user->email) ?>" >
+                    <input type="text" id="company" value="<?= htmlspecialchars($company_name) ?>" disabled class="disabled-cursor">
+                    
+                    <input type="tel" id="phone" value="<?= htmlspecialchars($user->contact_number) ?>">
+                    <input type="text" id="address" value="<?= htmlspecialchars($user->address) ?>">
+
             
                         <button type="button" id="confirmUpdateBtn">Confirm Update</button>
                     </form>

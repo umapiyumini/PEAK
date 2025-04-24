@@ -144,3 +144,23 @@
     width: 100%;
     padding: 0.75rem;
 }
+
+.edit-btn {
+    background: linear-gradient(90deg, #a78bfa 0%, #7c3aed 100%);
+    color: #fff;
+    padding: 7px 16px;
+    border: none;
+    border-radius: 6px;
+    font-weight: 500;
+    font-size: 0.98rem;
+    cursor: pointer;
+    text-decoration: none;
+    box-shadow: 0 2px 8px 0 rgba(124, 58, 237, 0.10);
+    transition: background 0.2s, box-shadow 0.2s;
+    outline: none;
+}
+
+.edit-btn:hover, .edit-btn:focus {
+    background: linear-gradient(90deg, #7c3aed 0%, #a78bfa 100%);
+    box-shadow: 0 4px 16px 0 rgba(124, 58, 237, 0.18);
+}

@@ -19,6 +19,7 @@ Trait Model {
 
     
     // where
+
     // public function where($data,$data_not = []){
     //     $keys = array_keys($data);
     //     $keys_not = array_keys($data_not);
@@ -26,7 +27,17 @@ Trait Model {
     //     foreach($keys as $key){
     //         $query .= $key . " = :".$key . "&&";
 
+    public function where($data,$data_not = []){
+        $keys = array_keys($data);
+        $keys_not = array_keys($data_not);
+        $query = "SELECT * FROM $this->table WHERE ";
+        foreach($keys as $key){
+            $query .= "$key = :$key AND ";
+
+
+
     //     }
+
 
     //     foreach($keys_not as $key){
     //         $query .= $key . " != :".$key . "&&";
@@ -36,6 +47,11 @@ Trait Model {
     //     $query = trim($query," && ");
 
     //     $query .= "order by $this->order_column $this->order_type  limit $this->limit offset $this->offset"; 
+
+        //exclusions
+        foreach($keys_not as $key){
+            $query .= "$key != :$key AND ";
+
 
     //     $data = array_merge($data,$data_not);
     //     return $this->query($query,$data);
@@ -61,6 +77,7 @@ Trait Model {
             $params[':' . str_replace(['>', '<', '=', ' '], '', $paramKey)] = $value;
         }
 
+
         $query = "SELECT * FROM $this->table";
         if (!empty($conditions)) {
             $query .= " WHERE " . implode(" AND ", $conditions);
@@ -82,6 +99,12 @@ Trait Model {
                 $query .= " OFFSET " . (int)$options['offset'];
             }
         }
+
+        $query = rtrim($query, " AND ");
+
+
+         $query .= " ORDER BY $this->order_column $this->order_type LIMIT $this->limit OFFSET $this->offset";
+
 
         return $this->query($query, $params);
     }
@@ -125,26 +148,23 @@ Trait Model {
 
     // insert
     public function insert($data){
-
-         //remove unwanted data
-         if(!empty($this->allowed_columns)){
+        //remove unwanted data
+        if(!empty($this->allowed_columns)){
             foreach($data as $key => $value){
                 if(!in_array($key,$this->allowed_columns)){
                     unset($data[$key]);
-        
                 }
             }
         }
         
         $keys = array_keys($data);
-
+    
         $query = "INSERT INTO $this->table (".implode(",",$keys).") VALUES (:".implode(",:",$keys).") ";
-        $this->query($query,$data);
-        return false;
-        
-
+        return $this->query($query, $data);
     }
+    
 
+   
     // update
     public function update($id,$data,$id_column='userid'){
 
@@ -210,6 +230,12 @@ Trait Model {
             return false;
         }
     }
+
+    public function lastInsertId() {
+        $result = $this->query("SELECT LAST_INSERT_ID()");
+        return $result[0]->{"LAST_INSERT_ID()"};
+    }
+    
 
 }
 

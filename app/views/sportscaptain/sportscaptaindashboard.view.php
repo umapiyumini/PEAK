@@ -37,7 +37,7 @@
             </li>
             <li>
                 <img src="<?=ROOT?>/assets/images/vidusha/event.png" alt="Reservation Icon" class="icon">
-                <a href="#" onclick="loadContent('groundreservation', 'Reservation')">Reservation</a>
+                <a href="#" onclick="loadContent('reservation', 'Reservation')">Reservation</a>
             </li>
             
             <li>
@@ -50,7 +50,7 @@
             </li>
             <li>
                 <img src="<?=ROOT?>/assets/images/vidusha/tournament.png" alt="Tournament Icon" class="icon">
-                <a href="#" onclick="loadContent('tournaments', 'Tournaments')">Tournaments</a>
+                <a href="#" onclick="loadContent('tournamentrecords', 'Tournamentrecords')">Tournaments</a>
             </li>
             <li>
                 <img src="<?=ROOT?>/assets/images/vidusha//recruitment.png" alt="Recruitment Icon" class="icon">
@@ -59,7 +59,7 @@
             
             <li>
                 <img src="<?=ROOT?>/assets/images/vidusha/calendar.png" alt="Calendar Icon" class="icon">
-                <a href="#" onclick="loadContent('gymcalendar', 'Gym Calendar')">Gym Calendar</a>
+                <a href="#" onclick="loadContent('upcoming', 'Upcoming')">Upcoming Events</a>
             </li>
             <li>
                 <img src="<?=ROOT?>/assets/images/vidusha/switch.png" alt="Calendar Icon" class="icon">
