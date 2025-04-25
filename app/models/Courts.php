@@ -115,6 +115,13 @@ class Courts {
     }
     
 
+
+    public function getCourtByName($name) {
+        $query = "SELECT * FROM {$this->table} WHERE name = :name LIMIT 1";
+        $result = $this->query($query, ['name' => $name]);
+        return $result ? $result[0] : null;
+    }
+    
     
 }
 
