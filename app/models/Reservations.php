@@ -4,7 +4,7 @@ class Reservations {
     use Model;
     
     protected $table = 'reservations';
-    protected $fillable = ['reservationid','userid','courtid','section','event','duration','date','time','status','usertype','userdescription','userproof','numberof_participants','extradetails','price','discountedprice','occupied','created_at'];
+    protected $fillable = ['reservationid','userid','courtid','event','duration','date','time','status','usertype','userdescription','userproof','numberof_participants','extradetails','price','discountedprice','created_at'];
 
 
     //used
@@ -33,6 +33,75 @@ class Reservations {
     }
 
 
+//to check if date is fully booked
+public function isFullDayBooked($date, $section) {
+    $query = "SELECT COUNT(*) as count FROM {$this->table} r
+              JOIN courts c ON r.courtid = c.courtid
+              WHERE r.date = :date AND c.section = :section AND r.duration = 'full' AND (UPPER(r.status) = 'CONFIRMED' OR UPPER(r.status) = 'PAID' OR UPPER(r.status) = 'TO PAY')";
+    
+    $result = $this->query($query, ['date' => $date, 'section' => $section]);
+    return $result[0]->count > 0;
+}
+
+public function getBookedHalfDaySlots($date, $section) {
+    $query = "SELECT r.time FROM {$this->table} r
+              JOIN courts c ON r.courtid = c.courtid
+              WHERE r.date = :date AND c.section = :section 
+              AND r.duration = 'half'
+              AND (UPPER(r.status) = 'CONFIRMED' OR UPPER(r.status) = 'PAID' OR UPPER(r.status) = 'TO PAY')";
+    
+    $result = $this->query($query, ['date' => $date, 'section' => $section]);
+    
+    $bookedSlots = [];
+    if ($result) {
+        foreach ($result as $row) {
+            $bookedSlots[] = $row->time;
+        }
+    }
+    
+    return $bookedSlots;
+}
+
+
+
+public function getBookedTwoHourSlots($date, $section) {
+    $query = "SELECT r.time FROM {$this->table} r
+              JOIN courts c ON r.courtid = c.courtid
+              WHERE r.date = :date AND c.section = :section 
+              AND r.duration = '2 hour'
+              AND (UPPER(r.status) = 'CONFIRMED' OR UPPER(r.status) = 'PAID' OR UPPER(r.status) = 'TO PAY')";
+    
+    $result = $this->query($query, ['date' => $date, 'section' => $section]);
+    
+    $bookedSlots = [];
+    if ($result) {
+        foreach ($result as $row) {
+            $bookedSlots[] = $row->time;
+        }
+    }
+    
+    return $bookedSlots;
+}
+
+
+public function getBookedOneHourSlots($date, $section) {
+    $query = "SELECT r.time FROM {$this->table} r
+              JOIN courts c ON r.courtid = c.courtid
+              WHERE r.date = :date AND c.section = :section 
+              AND r.duration = '1 hour'
+              AND (UPPER(r.status) = 'CONFIRMED' OR UPPER(r.status) = 'PAID' OR UPPER(r.status) = 'TO PAY')";
+    
+    $result = $this->query($query, ['date' => $date, 'section' => $section]);
+    
+    $bookedSlots = [];
+    if ($result) {
+        foreach ($result as $row) {
+            $bookedSlots[] = $row->time;
+        }
+    }
+    
+    return $bookedSlots;
+}
 
 
     //not yet
@@ -190,7 +259,13 @@ class Reservations {
         return $reservedSlots;
     }
 
-    public function getReservations(){
+
+    public function getReservations() {
+        $query = "SELECT * FROM {$this->table} JOIN courts ON courts.courtid = {$this->table}.courtid WHERE location='ground'";
+        return $this->query($query);
+    }
+
+    public function getReservationbyUser(){
 
         $userId = $this->getUserId();
 
@@ -262,30 +337,7 @@ class Reservations {
 
 // Model function to check if the selected date is fully booked
 // Model: Function to check if the date is fully booked
-public function isDateFullyBooked($date, $section, $conn) {
-    $query = "SELECT * FROM reservations WHERE date = ? AND section = ? AND status IN ('to pay', 'paid', 'confirmed') AND duration = 'full'";
 
-    if ($stmt = $conn->prepare($query)) {
-        $stmt->bind_param('ss', $date, $section);
-        $stmt->execute();
-        $result = $stmt->get_result();
-
-        // If there's a match, it means the date is fully booked
-        return $result->num_rows > 0;
-    }
-
-    return false;
-}
-    public function getBookingsForDateSection($date, $section) {
-        $query = "SELECT * FROM {$this->table} 
-                  WHERE date = :date 
-                  AND section = :section 
-                  AND status IN ('to pay', 'paid', 'confirmed')";
-        return $this->query($query, [
-            'date' => $date,
-            'section' => $section
-        ]);
-    }
 
 
     
@@ -396,13 +448,10 @@ public function findById($reservationid) {
         return $this->query($query);
     }
 
-    public function getReservations() {
-        $query = "SELECT * FROM {$this->table} JOIN courts ON courts.courtid = {$this->table}.courtid WHERE location='ground'";
-        return $this->query($query);
-    }
+   
 
     
-}
+
 
   
 public function getFutureReservationsByUser($userid) {

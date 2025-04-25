@@ -63,4 +63,28 @@ public function updatePrice($courtid, $event, $duration, $price) {
     return $this->query($query, $params);
 }
 
+
+
+ //fetching price in form column
+ public function getPriceByCourtName($event, $duration, $courtName) {
+    // Join courts and groundcourts tables to find the price based on court name
+    $query = "SELECT ic.price 
+              FROM $this->table ic
+              JOIN courts c ON ic.courtid = c.courtid
+              WHERE ic.event = :event 
+              AND ic.duration = :duration 
+              AND c.name = :courtName
+              LIMIT 1";
+    
+    $params = [
+        'event' => $event, 
+        'duration' => $duration, 
+        'courtName' => $courtName
+    ];
+
+    $result = $this->query($query, $params);
+    
+    return $result ? $result[0]->price : null;
+}
+
 }
