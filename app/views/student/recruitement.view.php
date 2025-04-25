@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Student Enhancement Requests</title>
+    <title>Student Recruitment Requests</title>
     <style>
         * {
             margin: 0;
@@ -32,11 +32,6 @@
             margin-bottom: 20px;
         }
 
-        h1 {
-            font-size: 28px;
-            margin-bottom: 10px;
-        }
-
         h2 {
             font-size: 22px;
             margin-bottom: 15px;
@@ -57,10 +52,6 @@
 
         .add-btn:hover {
             background-color: #004c99;
-        }
-
-        .table-section {
-            margin-top: 30px;
         }
 
         table {
@@ -102,14 +93,6 @@
             background-color: #218838;
         }
 
-        .edit-btn {
-            background-color: #0066cc;
-        }
-
-        .edit-btn:hover {
-            background-color: #004c99;
-        }
-
         .delete-btn {
             background-color: #dc3545;
         }
@@ -124,12 +107,6 @@
             color: #6c757d;
         }
 
-        .empty-state p {
-            margin-bottom: 20px;
-            font-size: 18px;
-        }
-
-        /* Modal Styles */
         .modal {
             display: none;
             position: fixed;
@@ -149,12 +126,6 @@
             border-radius: 8px;
             width: 50%;
             box-shadow: 0 4px 8px rgba(0,0,0,0.2);
-            animation: fadeIn 0.3s ease;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: scale(0.95); }
-            to { opacity: 1; transform: scale(1); }
         }
 
         .close {
@@ -179,55 +150,55 @@
     </style>
 </head>
 <body>
-    <?php include 'nav.view.php';?>
+    <?php include 'nav.view.php'; ?>
 
     <div class="container">
         <div class="card">
-            <h2>Enhancement Request Portal</h2>
-            <button class="add-btn" onclick="(window.location.href='<?= ROOT ?>/student/Addenhancement')">Add Enhancement</button>
+            <h2>Recruitment Request Portal</h2>
+            <button class="add-btn" onclick="(window.location.href='<?= ROOT ?>/student/Addrecruitement')">Add Recruitment Request</button>
 
-            <div class="table-section">
-                <h3>Your Enhancement Requests</h3>
-                <div id="requestsTable">
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>Request ID</th>
-                                <th>Enhancement Description</th>
-                                <th>Proposed Duration</th>
-                                <th>Actions</th>
-                            </tr>
-                        </thead>
-                        <tbody id="tableBody">
-                        <?php if(!empty($enhancementRequests)):?>
-                            <?php foreach($enhancementRequests as $enhancementRequest): ?>
-                            <tr>
-                                <td><?= $enhancementRequest->RequestID ?></td>
-                                <td><?= $enhancementRequest->ReasonForEnhancement ?></td>
-                                <td><?= $enhancementRequest->TimePeriod ?></td>
-                                <td>
-                                    <button class="action-btn view-btn" 
-                                        onclick="openModal('<?= $enhancementRequest->RequestID ?>', '<?= htmlspecialchars($enhancementRequest->ReasonForEnhancement, ENT_QUOTES) ?>', '<?= $enhancementRequest->TimePeriod ?>')">
-                                        View
-                                    </button>
-                                    <?php $RequestId = $enhancementRequest->RequestID ?>
-                                    <button class="action-btn edit-btn" onclick="window.location.href='<?= ROOT ?>/student/Edithancement?RequestId=<?= $RequestId ?>'">Edit</button>
-                                    <button class="action-btn delete-btn" onclick="confirmDelete(<?= $RequestId ?>)">Delete</button>
-                                </td>
-                            </tr>
+            <h3>Your Recruitment Requests</h3>
+            <div id="requestsTable">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Request ID</th>
+                            <th>Faculty</th>
+                            <th>Year of Study</th>
+                            <th>Contact Number</th>
+                            <th>University Email</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tableBody">
+                        <?php if(!empty($recruitmentRequests)):?>
+                            <?php foreach($recruitmentRequests as $request): ?>
+                                <tr>
+                                    <td><?= $request->request_id ?></td>
+                                    <td><?= $request->faculty ?></td>
+                                    <td><?= $request->year_of_study ?></td>
+                                    <td><?= $request->contact_number ?></td>
+                                    <td><?= $request->university_email ?></td>
+                                    <td>
+                                        <button class="action-btn view-btn" 
+                                            onclick="openModal(
+                                                '<?= $request->request_id ?>',
+                                                '<?= htmlspecialchars($request->faculty, ENT_QUOTES) ?>',
+                                                '<?= $request->year_of_study ?>',
+                                                '<?= $request->contact_number ?>',
+                                                '<?= htmlspecialchars($request->university_email, ENT_QUOTES) ?>'
+                                            )">View</button>
+                                        <button class="action-btn delete-btn" onclick="confirmDelete(<?= $request->request_id ?>)">Delete</button>
+                                    </td>
+                                </tr>
                             <?php endforeach; ?>
-                        <?php else:?>
-                            <tr>
-                                <td colspan="4" style="text-align: center;">No enhancement requests to show</td>
-                            </tr>
-                        <?php endif; ?> 
-                        </tbody>
-                    </table>
-                </div>
+                        <?php endif;?>
+                    </tbody>
+                </table>
+            </div>
 
-                <div id="emptyState" class="empty-state" style="display: none;">
-                    <p>You don't have any enhancement requests yet.</p>
-                </div>
+            <div id="emptyState" class="empty-state" style="display: none;">
+                <p>You don't have any recruitment requests yet.</p>
             </div>
         </div>
     </div>
@@ -236,24 +207,28 @@
     <div id="viewModal" class="modal">
         <div class="modal-content">
             <span class="close" onclick="closeModal()">&times;</span>
-            <h3>Enhancement Request Details</h3>
+            <h3>Recruitment Request Details</h3>
             <p><strong>Request ID:</strong> <span id="modalRequestID"></span></p>
-            <p><strong>Description:</strong> <span id="modalReason"></span></p>
-            <p><strong>Duration:</strong> <span id="modalDuration"></span></p>
+            <p><strong>Faculty:</strong> <span id="modalFaculty"></span></p>
+            <p><strong>Year of Study:</strong> <span id="modalYear"></span></p>
+            <p><strong>Contact Number:</strong> <span id="modalContact"></span></p>
+            <p><strong>University Email:</strong> <span id="modalEmail"></span></p>
         </div>
     </div>
 
     <script>
         function confirmDelete(id) {
-            if (confirm("Are you sure you want to delete this request?")) {
-                window.location.href = `<?= ROOT ?>/student/Enhancement/delete?RequestId=${id}`;
+            if (confirm("Are you sure you want to delete this recruitment request?")) {
+                window.location.href = `<?= ROOT ?>/student/Recruitment/delete?request_id=${id}`;
             }
         }
 
-        function openModal(id, reason, duration) {
+        function openModal(id, faculty, year, contact, email) {
             document.getElementById('modalRequestID').innerText = id;
-            document.getElementById('modalReason').innerText = reason;
-            document.getElementById('modalDuration').innerText = duration;
+            document.getElementById('modalFaculty').innerText = faculty;
+            document.getElementById('modalYear').innerText = year;
+            document.getElementById('modalContact').innerText = contact;
+            document.getElementById('modalEmail').innerText = email;
             document.getElementById('viewModal').style.display = 'block';
         }
 
@@ -275,6 +250,8 @@
                 document.getElementById('emptyState').style.display = 'block';
             }
         }
+
+        checkIfEmpty();
     </script>
 </body>
 </html>

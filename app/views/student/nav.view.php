@@ -75,6 +75,16 @@
                 </a>
             </li>
 
+            
+              <!-- Tournament -->
+              <li class="nav-item">
+                <a href="recruitement" class="nav-link">
+                    
+                <i class="fa-solid fa-volleyball"></i>
+                    Recruitements
+                </a>
+            </li>
+
              
 
             
@@ -92,6 +102,8 @@
                 <div class="dropdown">
                     <a href="medical" class="dropdown-link">Medical</a>
                     <a href="certification" class="dropdown-link">Certifications</a>
+                    <a href="enhancement" class="dropdown-link">Enhancement</a>
+
                 </div>
             </li>
 

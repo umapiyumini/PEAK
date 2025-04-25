@@ -1,12 +1,12 @@
 <?php
 class Editcertificate extends Controller{
     public function index(){
-        $RequestId = $_GET['RequestId'];
+        $RequestId = $_GET['RequestID'];
         // show($id);
         $data = [
             'RequestId' => $RequestId,
         ];
 
-        $this->view('student/editcertificate');
+        $this->view('student/editcertificate',$data);
     }
 }

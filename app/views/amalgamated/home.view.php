@@ -254,84 +254,84 @@ main{
 
 }
 
-/*calendar style*/
+    /*calendar style*/
 
-section.content {
-    flex: 1; 
-    border-radius: 10px;
-    width: fit-content;
-    padding: auto;
-     display: flex;
-	flex-direction: column;
-	align-content: center;
-	justify-content: flex-start;
-    margin-left: 240px;
+    section.content {
+        flex: 1; 
+        border-radius: 10px;
+        width: fit-content;
+        padding: auto;
+        display: flex;
+        flex-direction: column;
+        align-content: center;
+        justify-content: flex-start;
+        margin-left: 240px;
 
+        
+    }
+
+    aside.calendar {
+    flex: 0 0 300px; 
     
-}
-
-aside.calendar {
-  flex: 0 0 300px; 
- 
-}
+    }
 
 
-.calendar {
-  width: 100%;
-  background-color: #fff;
-  border-radius: 10px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  padding: 20px;
-  margin: 20px;
-}
+    .calendar {
+    width: 100%;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    margin: 20px;
+    }
 
-.calendar-header {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-size: 24px;
-  font-weight: bold;
-  margin-bottom: 20px;
-}
+    .calendar-header {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 20px;
+    }
 
-.nav_cal {
-  color: rgba(62, 3, 74,0.9);
-  cursor: pointer;
-  font-size: 10px; 
-}
-.nav_cal i{
-	font-size: 24px;
-}
+    .nav_cal {
+    color: rgba(62, 3, 74,0.9);
+    cursor: pointer;
+    font-size: 10px; 
+    }
+    .nav_cal i{
+        font-size: 24px;
+    }
 
-.days {
-  display: grid;
-  grid-template-columns: repeat(7, 1fr);
-  text-align: center;
-  font-weight: bold;
-  padding-bottom: 10px;
-}
+    .days {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    text-align: center;
+    font-weight: bold;
+    padding-bottom: 10px;
+    }
 
-.dates {
-  display: grid;
-  grid-template-columns: repeat(7, 1fr);
-  text-align: center;
-}
+    .dates {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    text-align: center;
+    }
 
-.date {
-  padding: 10px;
-  margin: 2px;
-  cursor: pointer;
-}
+    .date {
+    padding: 10px;
+    margin: 2px;
+    cursor: pointer;
+    }
 
-.date.active {
-  background-color: rgba(62, 3, 74,0.7);
-  color: white;
-  border-radius: 50%;
-}
+    .date.active {
+    background-color: rgba(62, 3, 74,0.7);
+    color: white;
+    border-radius: 50%;
+    }
 
-.date:not(.active):hover {
-  background-color: #e0e0e0;
-}
+    .date:not(.active):hover {
+    background-color: #e0e0e0;
+    }
 
 @media (max-width: 768px) {
   main {

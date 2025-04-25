@@ -56,7 +56,7 @@
             color: #333;
         }
 
-        input[type="text"],
+        input[type="text"],input[type="number"],
         textarea {
             width: 100%;
             padding: 12px;
@@ -120,7 +120,7 @@
 
             <div class="form-group">
                         <label for="name">Request Id</label>
-                        <input type="number" id="RequestID" placeholder="" name="RequestID" value="<?= $data['RequestID'] ?>" readonly>
+                        <input type="number" id="RequestId" placeholder="" name="RequestId" value="<?= $data['RequestId'] ?>" readonly>
                     </div>
                     
                 <div class="form-group">

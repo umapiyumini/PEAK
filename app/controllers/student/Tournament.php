@@ -7,12 +7,26 @@ class Tournament extends Controller{
     {
         //Get DATA
 
-        $data1 = [
-            'tournament_name' => $_POST['tournament_name'],
-            'tournament_date' => $_POST['tournament_date'],
+        $teamplayersdata = [
+            'reg_no' => $_POST['reg_no']
         ];
 
-        $medicalrequest = new MedicalRequest();
+        $temptournamentcards = [
+            'tournament_name' => $_POST['tournament_name'],
+            'category' => $_POST['category'],
+            'year' => $_POST['year']
+
+        ];
+
+        $facultydata = [
+            'faculty_name' => $_POST['faculty_name'];
+        ]
+
+        $entryrequest = new Teamrequest();
+        $entryrequest = new Tempplayers();
+        $entryrequest = new Faculty();
+
+
 
         if($medicalrequest->validate($data))
         {
@@ -28,7 +42,7 @@ class Tournament extends Controller{
             $data  = [
                 'errors' => $errors,
 
-            ];
+            ];  
             
             $this->view('student/Editmedical',['errors' => $errors]);
 

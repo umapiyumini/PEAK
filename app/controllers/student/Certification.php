@@ -24,19 +24,21 @@ class Certification extends Controller{
             {
                 $isInserted = $certificaterequest->insert($data);
 
-                if (!$isInserted){
+                if ($isInserted){
                     redirect('student/certification');
                 }
                 
             }else {
+                
                 $errors = $certificaterequest->errors;
+                show($errors);
                 // show($errors);
                 $data  = [
                     'errors' => $errors,
 
                 ];
                 
-                $this->view('student/Editcertifcate',['errors' => $errors]);
+                $this->view('student/addcertifcate',['errors' => $errors]);
 
             }
         } else {
@@ -72,7 +74,7 @@ class Certification extends Controller{
             if($certificaterequest->validate($data))
             {
                 $RequestId = $_POST['RequestId'];
-                $isUpdated = $certificaterequest->update($RequestId, $data, 'RequestId');
+                $isUpdated = $certificaterequest->update($RequestId, $data, 'RequestID');
 
                 if (!$isUpdated){
                     redirect('student/certification');
@@ -86,7 +88,7 @@ class Certification extends Controller{
                     'errors' => $errors,
                 ];
                 
-                $this->view('student/Editmedical', $data);
+                $this->view('student/Editcertificate', $data);
 
             }
         } else {
