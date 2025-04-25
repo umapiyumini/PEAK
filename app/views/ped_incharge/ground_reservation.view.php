@@ -149,6 +149,11 @@
             background-color: rgba(255, 152, 0, 0.3);
             color: #e65100;
             border: 1px solid #FF9800;
+            position: relative;
+            min-height: 60px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
         }
         
         .payment-pending {
@@ -187,7 +192,83 @@
             justify-content: center;
         }
 
+/* Add these CSS rules to your existing style section */
 
+/* Highlight available slots as clickable */
+.section.available {
+    background-color: #f1f5f9;
+    color: #333;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.section.available:hover {
+    background-color: #e3e8f0;
+    transform: scale(1.03);
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.section.available::after {
+    content: "Click to reserve";
+    display: block;
+    font-size: 10px;
+    color: #6b7280;
+    font-style: italic;
+    margin-top: 2px;
+}
+
+.section:not(.available) {
+    cursor: default;
+}
+
+.section.rejected {
+    background-color: #f1f5f9;
+    color: #333;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.section.rejected:hover {
+    background-color: #e3e8f0;
+    transform: scale(1.03);
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.section.rejected::after {
+    content: "Click to reserve";
+    display: block;
+    font-size: 10px;
+    color: #6b7280;
+    font-style: italic;
+    margin-top: 2px;
+}
+.modal-content {
+    max-width: 600px;
+    max-height: 90vh;
+    overflow-y: auto;
+}
+
+#duration {
+    font-weight: bold;
+}
+
+.cancel-button {
+    display: block;
+    margin-top: 5px;
+    padding: 2px 5px;
+    background-color: #ff5252;
+    color: white;
+    border: none;
+    border-radius: 3px;
+    font-size: 11px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.cancel-button:hover {
+    background-color: #d32f2f;
+    transform: scale(1.05);
+}
         @media (max-width: 768px) {
             .time-slots-header, .time-slot {
                 grid-template-columns: 80px repeat(5, 1fr);
@@ -209,6 +290,19 @@
     
     <?php $current_page = 'reservation'; include 'sidebar.view.php';?>
 
+    <?php
+        if (isset($_SESSION['error'])) {
+            echo "<div id='error-message' style='position: fixed ;top: 20px; right: 20px;background-color:rgb(206, 29, 29);color: white; padding: 15px 20px; border-radius: 5px; z-index: 9999; box-shadow: 0 2px 10px rgba(0,0,0,0.2); transition: opacity 0.5s ease-out;'>"
+                . htmlspecialchars($_SESSION['error']) . "</div>";
+            unset($_SESSION['error']);
+        }
+
+        if (isset($_SESSION['success'])) {
+            echo "<div id='success-message' style='position: fixed ;top: 20px; right: 20px;background-color:rgb(57, 184, 11);color: white; padding: 15px 20px; border-radius: 5px; z-index: 9999; box-shadow: 0 2px 10px rgba(0,0,0,0.2); transition: opacity 0.5s ease-out;'>"
+                . htmlspecialchars($_SESSION['success']) . "</div>";
+            unset($_SESSION['success']);
+        }
+    ?>
     <!-- Header and Main Content -->
 
     <div class="main-content">
@@ -249,23 +343,21 @@
             <div class="action-buttons">
                 <button class="button" onclick="window.location.href='requests';">Requests</button>
                 <button class="button" onclick="window.location.href='all_reservations_ground';">All reservations</button>
-                <button class="button" onclick="openModal()" >Make a Reservation</button>
             </div>
 
             <div class="time-slots-container" id="time-slots">
                 <h2 id="availability-date">Ground Availability</h2>
 
-                    <div class="time-slots-header">
-                        <div>Time</div>
-                            <?php foreach ($allSections as $section): ?>
-                                <div>Section <?= $section ?></div>
-                            <?php endforeach; ?>
-                    </div>
+                <div class="time-slots-header">
+                    <div>Time</div>
+                    <?php foreach ($allSections as $section): ?>
+                        <div>Section <?= $section ?></div>
+                    <?php endforeach; ?>
+                </div>
 
                     <div class="time-slots-content" id="slots-container">
                     <?php 
-                            $processed = []; // Keep track of slots we've already handled
-                            
+                            $processed = []; //keep track of process handled
                             foreach ($allTimeSlots as $timeIndex => $time): ?>
                                 <div class="time-slot">
                                     <div class="time-label"><?= $time ?></div>
@@ -279,10 +371,8 @@
                         
                         $data = $structured[$time][$section] ?? ['status' => 'available', 'bookedBy' => null, 'event' => null, 'userType' => null, 'span' => 1];
                         
-                        // Get the event name to display
                         $displayText = !empty($data['event']) ? $data['event'] . ' (ID: ' . $data['reservationid'] . ', Name: ' . $data['name'] . ')': 'Available';
-                        
-                        // Determine CSS class based on booking status and type
+                
                         if($data['status'] == 'available') {
                             $sectionClass = 'available';
                         } 
@@ -308,7 +398,6 @@
                             $sectionClass = 'available';
                         }
                         
-                        // Add status information to title attribute
                         $statusInfo = '';
                         if($data['status'] == 'paid') {
                             $statusInfo = ' (Paid)';
@@ -318,11 +407,9 @@
                             $statusInfo = ' (' . ucfirst($data['userType']) . ')';
                         }
                         
-                        // Set grid-row-span for multi-slot reservations
                         $span = isset($data['span']) ? $data['span'] : 1;
                         $spanStyle = ($span > 1) ? 'grid-row: span '.$span.';' : '';
                 
-                // If this is a spanning slot, mark future slots as processed
                 if ($span > 1) {
                     for ($i = 0; $i < $span; $i++) {
                         if ($timeIndex + $i < count($allTimeSlots)) {
@@ -332,9 +419,13 @@
                 }
             ?>
                 <div class="section <?= $sectionClass ?>"
-                     style="<?= $spanStyle ?>"
-                     title="<?= htmlspecialchars($displayText . $statusInfo) ?>">
+                    style="<?= $spanStyle ?>"
+                    title="<?= htmlspecialchars($displayText . $statusInfo) ?>"
+                    <?= ($data['status'] == 'available') ? 'onclick="openReservationModal(\'' . $time . '\', \'' . $section . '\')"' : '' ?>>
                     <?= htmlspecialchars($displayText) ?>
+                    <?php if ($sectionClass == 'booked-special'): ?>
+                        <button class="cancel-button" onclick="cancelReservation(<?= $data['reservationid'] ?>)">Cancel</button>
+                    <?php endif; ?>
                 </div>
             <?php endforeach; ?>
         </div>
@@ -348,13 +439,10 @@
     <div class="modal-content">
         <div class="modal-header">
             <h2>Make a New Reservation</h2>
-            <span class="close" onclick="closeModal()">&times;</span>
+            <span class="close" onclick="closeModal('reservationModal')">&times;</span>
         </div>
         <div class="modal-body">
-            <form id="newReservationForm" method="POST" action="<?=ROOT?>/ped_incharge/save_reservation">
-                <!-- Hidden user ID from session -->
-                <!-- <input type="hidden" name="user_id" value="<?= $_SESSION['user_id'] ?>"> -->
-                
+            <form id="newReservationForm" method="POST" action="ground_reservation/saveReservation">
                 <div class="form-group">
                     <label for="event_name">Event Name:</label>
                     <input type="text" id="event_name" name="event" required>
@@ -362,46 +450,62 @@
                 
                 <div class="form-group">
                     <label for="event_date">Date:</label>
-                    <input type="date" id="event_date" name="date" required min="<?= date('Y-m-d') ?>">
+                    <input type="date" id="event_date" name="date" readonly min="<?= date('Y-m-d') ?>">
                 </div>
                 
                 <div class="form-row">
                     <div class="form-group half">
                         <label for="start_time">Start Time:</label>
-                        <input type="time" id="start_time" name="start_time" required>
+                        <input type="time" id="start_time" name="time" readonly>
                     </div>
                     
                     <div class="form-group half">
-                        <label for="end_time">End Time:</label>
-                        <input type="time" id="end_time" name="end_time" required>
+                        <label for="duration">Duration:</label>
+                        <select id="duration" name="duration" required>
+                            <option value="">Select a duration</option>
+                            <option value="2 hour">2 Hours</option>
+                            <option value="half">Half Day</option>
+                            <option value="full">Full Day</option>
+                        </select>
                     </div>
                 </div>
                 
                 <div class="form-group">
-                    <label for="section">Ground Section:</label>
-                    <select id="section" name="section" required>
+                    <label for="section">Section:</label>
+                    <select id="section" name="section" disabled onchange="populateCourts(this.value)">
                         <option value="">Select a section</option>
-                        <option value="C">Section C</option>
-                        <option value="D">Section D</option>
-                        <option value="E">Section E</option>
-                        <option value="F">Section F</option>
-                        <option value="G">Section G</option>
+                        <option value="C">C</option>
+                        <option value="D">D</option>
+                        <option value="E">E</option>
+                        <option value="F">F</option>
+                        <option value="G">G</option>
                     </select>
                 </div>
-                
+
+                <div class="form-group">
+                    <label for="court">Court:</label>
+                    <select id="court" name="court" required>
+                        <option value="">Select a court</option>
+                        <!-- Options will be populated dynamically -->
+                    </select>
+                </div>
+                <?php
+                    $courtsBySection = [];
+
+                    foreach($groundcourts as $court) {
+                        $courtsBySection[$court->section][] = [
+                            'id' => $court->courtid,
+                            'name' => $court->name
+                        ];
+                    }
+                    ?>
+
+                    <div id="court-data" data-courts='<?= json_encode($courtsBySection) ?>'></div>
+
+
                 <div class="form-group">
                     <label for="reserved_by">Reserved By:</label>
                     <input type="text" id="reserved_by" name="reserved_by" required>
-                </div>
-                
-                <div class="form-group">
-                    <label for="reservation_type">Reservation Type:</label>
-                    <select id="reservation_type" name="reservation_type" required>
-                        <option value="">Select type</option>
-                        <option value="internal">Internal</option>
-                        <option value="external">External</option>
-                        <option value="special">Special</option>
-                    </select>
                 </div>
                 
                 <div class="form-group">
@@ -463,45 +567,144 @@
         // Get the modal element
         const modal = document.getElementById("reservationModal");
         
+
         // Function to open the modal
-        function openModal() {
-            modal.style.display = "block";
-            document.body.style.overflow = "hidden"; // Prevent scrolling behind modal
-            
-            // Set the current selected date in the form
-            const calendarDate = document.getElementById("reservation-date").value;
-            if (calendarDate) {
-                document.getElementById("event_date").value = calendarDate;
-            } else {
-                const today = new Date().toISOString().split('T')[0];
-                document.getElementById("event_date").value = today;
-            }
+        function openReservationModal(timeSlot, section) {
+        const startTime = timeSlot.split(' - ')[0];    
+        modal.style.display = "block";
+        document.body.style.overflow = "hidden";
+    
+    // Set current date & time
+    const calendarDate = document.getElementById("reservation-date").value;
+    document.getElementById("event_date").value = calendarDate;   
+    document.getElementById("start_time").value = startTime;
+    
+    // Set the section
+    const sectionSelect = document.getElementById("section");
+    for (let i = 0; i < sectionSelect.options.length; i++) {
+        if (sectionSelect.options[i].value === section) {
+            sectionSelect.selectedIndex = i;
+            break;
+        }
+    }
+    populateCourts(section);
+    
+    updateDurationOptions(startTime);
+}
+
+// Add this new function to dynamically update duration options
+function updateDurationOptions(startTime) {
+    const durationSelect = document.getElementById("duration");
+    
+    // Clear existing options
+    durationSelect.innerHTML = "";
+    
+    // Add default empty option
+    const defaultOption = document.createElement("option");
+    defaultOption.value = "";
+    defaultOption.text = "Select a duration";
+    durationSelect.add(defaultOption);
+    
+    // Add options based on start time
+    if (startTime === "08:00:00") {
+        // For 8:00 AM, all options are available
+        addDurationOption(durationSelect, "2 hour", "2 Hours");
+        addDurationOption(durationSelect, "half", "Half Day");
+        addDurationOption(durationSelect, "full", "Full Day");
+    } 
+    else if (startTime === "13:00:00") {
+        // For 1:00 PM, only 2 hours and half day options
+        addDurationOption(durationSelect, "2 hour", "2 Hours");
+        addDurationOption(durationSelect, "half", "Half Day");
+    }
+    else {
+        // For 10:00 AM and 3:00 PM, only 2 hours option
+        addDurationOption(durationSelect, "2 hour", "2 Hours");
+    }
+}
+
+// Helper function to add options to select
+function addDurationOption(selectElement, value, text) {
+    const option = document.createElement("option");
+    option.value = value;
+    option.text = text;
+    selectElement.add(option);
+}
+
+function populateCourts(section) {
+    const courtSelect = document.getElementById("court");
+    courtSelect.innerHTML = '<option value="">Select a court</option>';
+
+    const courtDataElement = document.getElementById("court-data");
+    const courtsBySection = JSON.parse(courtDataElement.dataset.courts);
+
+    if (courtsBySection[section]) {
+        courtsBySection[section].forEach(court => {
+            const option = document.createElement("option");
+            option.value = court.id;
+            option.textContent = court.name;
+            courtSelect.appendChild(option);
+        });
+    }
+}
+
+
+// Function to open the modal
+    function openModal() {
+        modal.style.display = "block";
+        document.body.style.overflow = "hidden";
+        
+        // Set the current selected date in the form
+        const calendarDate = document.getElementById("reservation-date").value;
+        if (calendarDate) {
+            document.getElementById("event_date").value = calendarDate;
+        } else {
+            const today = new Date().toISOString().split('T')[0];
+            document.getElementById("event_date").value = today;
         }
         
-        // Function to close the modal
-        function closeModal() {
-            modal.style.display = "none";
-            document.body.style.overflow = "auto"; // Restore scrolling
+        // Reset the form for manual entry
+        document.getElementById("start_time").value = "";
+        document.getElementById("section").selectedIndex = 0;
+        
+        // Update duration options with default (8 AM)
+        updateDurationOptions("08:00:00");
+    }
+
+    function closeModal(modal) {
+        modal.style.display = "none";
+        document.body.style.overflow = "auto"; 
+    }   
+
+    window.onclick= function(event){
+        if(event.target.classList.contains('modal')){
+            event.target.style.display = 'none';
         }
+    }
+
+    //error message disappear
+    setTimeout(() => {
+    const fadeOut = (id) => {
+        const el = document.getElementById(id);
+        if (el) {
+            el.style.opacity = "0";
+            el.style.transform = "translateY(-10px)";
+            setTimeout(() => el.remove(), 500);
+        }
+    };
+
+    fadeOut('error-message');
+    fadeOut('success-message');
+}, 3000);
+
+    //cancel reservation
+    function cancelReservation(reservationid){
+        event.stopPropagation();
         
-        // When the user clicks anywhere outside of the modal, close it
-        window.addEventListener("click", function(event) {
-            if (event.target == modal) {
-                closeModal();
-            }
-        });
-        
-        // Form validation before submission
-        document.getElementById("newReservationForm").addEventListener("submit", function(event) {
-            const startTime = document.getElementById("start_time").value;
-            const endTime = document.getElementById("end_time").value;
-            
-            // Check if end time is after start time
-            if (startTime >= endTime) {
-                event.preventDefault();
-                alert("End time must be after start time");
-            }
-        });
+        if (confirm("Are you sure you want to cancel this reservation?")) {
+            window.location.href = "ground_reservation/cancelReservation/" + reservationid;
+        }
+    }
     </script>
 
     <script src="<?=ROOT?>/assets/js/ped_incharge/home.js"></script>

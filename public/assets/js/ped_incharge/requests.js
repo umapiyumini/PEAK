@@ -57,3 +57,11 @@ function acceptRequest(){
 function rejectRequest(){
     window.location.href = "requests/reject/" + document.getElementById("reservationID").innerHTML;
 }
+
+function acceptRequestIndoor(){
+    window.location.href = "indoor_requests/accept/" + document.getElementById("reservationID").innerHTML;
+}
+
+function rejectRequestIndoor(){
+    window.location.href = "indoor_requests/reject/" + document.getElementById("reservationID").innerHTML;
+}

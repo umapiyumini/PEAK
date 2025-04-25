@@ -1,15 +1,15 @@
 <?php
-class Requests extends Controller {
+class Indoor_requests extends Controller {
     public function index() {
         $reservationsModel = new Reservations();
-        $newPendingReservations = $reservationsModel->getAllPendingReservations('new');
-        $oldPendingReservations = $reservationsModel->getAllPendingReservations('old');        
-        $topayReservations = $reservationsModel->getAllTopayReservations();
-        $paidReservations = $reservationsModel->getAllPaidReservations();
-        $confirmedReservations = $reservationsModel->getAllConfirmedReservations();
-        $rejectedReservations = $reservationsModel->getAllRejectedReservations();
+        $newPendingReservations = $reservationsModel->getAllIndoorPendingReservations('new');
+        $oldPendingReservations = $reservationsModel->getAllIndoorPendingReservations('old');        
+        $topayReservations = $reservationsModel->getAllIndoorTopayReservations();
+        $paidReservations = $reservationsModel->getAllIndoorPaidReservations();
+        $confirmedReservations = $reservationsModel->getAllIndoorConfirmedReservations();
+        $rejectedReservations = $reservationsModel->getAllInddorRejectedReservations();
 
-        $activeReservations = $reservationsModel->getAllPaidTopayConfirmedReservations();
+        $activeReservations = $reservationsModel->getActiveReservationsIndoor();
 
         //flag for conflicting reservations
         $flagConflicts = function (&$pendingList) use ($activeReservations, $reservationsModel) {
@@ -33,7 +33,7 @@ class Requests extends Controller {
         $flagConflicts($newPendingReservations);
         $flagConflicts($oldPendingReservations);
 
-        $this->view('ped_incharge/requests', ['newPendingReservations' => $newPendingReservations, 'oldPendingReservations' => $oldPendingReservations, 'topayReservations' => $topayReservations, 'paidReservations' => $paidReservations, 'confirmedReservations' => $confirmedReservations, 'rejectedReservations' => $rejectedReservations]);
+        $this->view('ped_incharge/indoor_requests', ['newPendingReservations' => $newPendingReservations, 'oldPendingReservations' => $oldPendingReservations, 'topayReservations' => $topayReservations, 'paidReservations' => $paidReservations, 'confirmedReservations' => $confirmedReservations, 'rejectedReservations' => $rejectedReservations]);
     }
 
 
@@ -42,15 +42,8 @@ class Requests extends Controller {
         $reservation = $acceptreservationmodel->findById($reservationid);
 
         $acceptreservationmodel->acceptReservation($reservation);
-        
-        // After accepting, check and reject any conflicting pending reservations
-        // $rejectedCount = $acceptreservationmodel->rejectConflictingReservations();
-        
-        // if ($rejectedCount > 0) {
-        //     $_SESSION['message'] = "$rejectedCount conflicting reservation(s) were automatically rejected.";
-        // }
-        
-        header('location: ' . ROOT . '/ped_incharge/requests');
+
+        header('location: ' . ROOT . '/ped_incharge/indoor_requests');
         exit;
     }
 
@@ -58,7 +51,7 @@ class Requests extends Controller {
         $rejectreservationmodel = new Reservations();
         $reservation = $rejectreservationmodel->findById($reservationid);
         $rejectreservationmodel->rejectReservation($reservation);
-        header('location: ' . ROOT . '/ped_incharge/requests');
+        header('location: ' . ROOT . '/ped_incharge/indoor_requests');
         exit;
     }
 

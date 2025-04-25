@@ -20,10 +20,15 @@
             <button class="bell-icon"><a href="<?=ROOT?>/logout"><i class="uil uil-signout"></i></a></button>
         </div> 
         <main>
-            <div class="search-bar">
-                <input type="text" id="searchInput" placeholder="Search...">
-                <i class="uil uil-search"></i>
-            </div>
+        <div class="filter-container">
+            <label for="roleFilter">Filter by type:</label>
+            <select id="roleFilter">
+                <option value="all">All</option>
+                <option value="admin">Special</option>
+                <option value="sports-captain">Internal</option>
+                <option value="external-user">External</option>
+            </select>
+        </div>
 
             <?php if(!empty($allReservations)): ?>
              <?php foreach($allReservations as $i): ?>
@@ -71,6 +76,32 @@
 
    
     <script src="<?=ROOT?>/assets/js/ped_incharge/navbar.js"></script>
+    <script>
+document.addEventListener('DOMContentLoaded', function() {
+            const roleFilter = document.getElementById('roleFilter');
+            const reservations = document.querySelectorAll('.reservation');
+            
+            // Add debug info to see what classes are actually present
+            console.log('Available classes:', Array.from(reservations).map(r => r.className));
+
+            // Function to filter reservations based on role
+            function filterReservations() {
+                const roleValue = roleFilter.value;
+                
+                reservations.forEach(reservation => {
+                    // If "All" is selected or the reservation has the selected class
+                    if (roleValue === 'all' || reservation.classList.contains(roleValue)) {
+                        reservation.style.display = 'block';
+                    } else {
+                        reservation.style.display = 'none';
+                    }
+                });
+            }
+
+            // Add event listener for filter changes
+            roleFilter.addEventListener('change', filterReservations);
+        });
+</script>
 
 </body>
 </html>

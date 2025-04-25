@@ -14,7 +14,7 @@
     <div class="main-content">
         <div class="header">
             <button onclick="history.back()" class="goBackButton"><i class="uil uil-arrow-left"></i></button>
-            <h1>Reservation Requests</h1>
+            <h1>Indoor Reservation Requests</h1>
             <button class="bell-icon"><i class="uil uil-bell"></i></button>
             <div class="notifications-dropdown">
                 <div class="notifications-header">
@@ -47,7 +47,7 @@
             <p class="date"><?= $i->date ?></p>
             <?php
               $durationMap = [
-                  '2 hour' => '2 Hours',
+                  '1 hour' => '1 Hours',
                   'full' => 'Full day',
                   'half' => 'Half day'
               ];
@@ -77,7 +77,7 @@
             <p class="time"><?= $i->time ?></p>
                 <?php
                   $durationMap = [
-                      '2 hour' => '2 Hours',
+                      '1 hour' => '1 Hours',
                       'full' => 'Full day',
                       'half' => 'Half day'
                   ];
@@ -107,7 +107,7 @@
             <p class="time"><?= $i->time ?></p>
             <?php
                   $durationMap = [
-                      '2 hour' => '2 Hours',
+                      '1 hour' => '1 Hours',
                       'full' => 'Full day',
                       'half' => 'Half day'
                   ];
@@ -135,7 +135,16 @@
             <p class="event"><?= $i->event ?></p>
             <p class="date"><?= $i->date ?></p>
             <p class="time"><?= $i->time ?></p>
-            <p class="time"><?= strtoupper($i->duration) ?></p>
+            <?php
+                  $durationMap = [
+                      '1 hour' => '1 Hours',
+                      'full' => 'Full day',
+                      'half' => 'Half day'
+                  ];
+                  $displayDuration = $durationMap[$i->duration] ?? ucfirst($i->duration);
+                  ?>
+
+            <p class="time"><?= $displayDuration ?></p>
           </div>
         <?php endforeach; ?>
       <?php else: ?>
@@ -157,7 +166,7 @@
             <p class="time"><?= $i->time ?></p>
             <?php
                   $durationMap = [
-                      '2 hour' => '2 Hours',
+                      '1 hour' => '1 Hours',
                       'full' => 'Full day',
                       'half' => 'Half day'
                   ];
@@ -192,7 +201,7 @@
             <p class="time"><?= $i->time ?></p>
             <?php
                   $durationMap = [
-                      '2 hour' => '2 Hours',
+                      '1 hour' => '1 Hours',
                       'full' => 'Full day',
                       'half' => 'Half day'
                   ];
@@ -296,8 +305,8 @@
         </div>
 
         <div id="modalActions" class="modal-footer">     
-          <button class="accept-btn" onclick="acceptRequest()" id="acceptbtn">Accept</button>
-          <button class="reject-btn" onclick="rejectRequest()">Reject</button>
+          <button class="accept-btn" onclick="acceptRequestIndoor()" id="acceptbtn">Accept</button>
+          <button class="reject-btn" onclick="rejectRequestIndoor()">Reject</button>
         </div>
     </div>
 

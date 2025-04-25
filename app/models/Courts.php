@@ -63,6 +63,20 @@ class Courts {
         $query = "DELETE FROM $this->table WHERE courtid = :courtid";
         return $this->query($query, ['courtid' => $courtid]);
     }
+
+    public function getGroundCourtsBySection(){
+        $query = "SELECT * FROM $this->table WHERE location = 'ground' 
+          AND section IS NOT NULL 
+          AND section != ''";
+        return $this->query($query);
+    }
+
+    public function getIndoorCourtsBySection(){
+        $query = "SELECT * FROM $this->table WHERE location = 'indoor' 
+          AND section IS NOT NULL 
+          AND section != ''";
+        return $this->query($query);
+    }
     
     
 }

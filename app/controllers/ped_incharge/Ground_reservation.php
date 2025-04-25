@@ -5,7 +5,7 @@ class Ground_reservation extends Controller{
         $selectedDate = isset($_GET['date']) ? $_GET['date'] : date('Y-m-d'); 
     
         $reservationsModel = new Reservations();
-        $allReservations = $reservationsModel->getReservations();
+        $allReservations = $reservationsModel->getActiveReservations();
     
         // Define all possible time slots for display
         $allTimeSlots = array("08:00:00 - 10:00:00", "10:00:00 - 12:00:00", "13:00:00 - 15:00:00", "15:00:00 - 17:00:00");
@@ -88,11 +88,46 @@ class Ground_reservation extends Controller{
             }
         }
     
+            
+        $groundcourtsmodel= new Courts();
+        $groundcourts= $groundcourtsmodel->getGroundCourtsBySection();
+
         $this->view('ped_incharge/ground_reservation', [
             'structured' => $structured, 
             'allTimeSlots' => $allTimeSlots, 
             'allSections' => $allSections,
-            'selectedDate' => $selectedDate
+            'selectedDate' => $selectedDate,
+            'groundcourts' => $groundcourts
         ]);
+    }
+
+    public function saveReservation(){
+        if($_SERVER['REQUEST_METHOD'] == 'POST'){
+            $reservationmodel = new Reservations();
+
+            try {
+                $result = $reservationmodel->addSpecialReservation($_POST);
+    
+                if (!$result) {
+                    $_SESSION['error'] = "Reservation not possible due to a conflict or system error.";
+                } else {
+                    $_SESSION['success'] = "Reservation successful!";
+                }
+            } catch (Exception $e) {
+                error_log("Reservation Error: " . $e->getMessage());
+                $_SESSION['error'] = "An unexpected error occurred. Please try again.";
+            }
+
+            header('Location: '. ROOT .'/ped_incharge/ground_reservation');
+        }else{
+            header('Location: '. ROOT .'/ped_incharge/ground_reservation');
+        }
+    }
+
+    public function cancelReservation($id= ''){
+        $reservationmodel= new Reservations();
+        $cancel= $reservationmodel->cancelSpecialReservations($id);
+
+        header('Location: '. ROOT .'/ped_incharge/ground_reservation');
     }
 }
