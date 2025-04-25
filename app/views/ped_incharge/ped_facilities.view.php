@@ -14,7 +14,8 @@
             <h1>Facilities</h1>
         </div>
         <main>
-        
+        <a href="<?=ROOT?>/ped_incharge/rates"> <button class="edit-btn"> Ground rates </button> </a>
+        <a href="<?=ROOT?>/ped_incharge/ratesindoor"> <button class="edit-btn"> Indoor rates </button> </a>
         <div class="facilities-container" id="facilitiesContainer">
     <?php if (!empty($courts)): ?>
         <?php foreach ($courts as $court): ?>

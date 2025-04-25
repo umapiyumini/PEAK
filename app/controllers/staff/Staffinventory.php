@@ -14,44 +14,73 @@ class Staffinventory extends Controller{
     }
 
     public function editEquipment(){
-
         if ($_SERVER['REQUEST_METHOD'] === 'POST'){
             
             $inventoryModel = new Unpackedinventory();
             $inventoryEditModel = new Inventoryedit();
-
-            $equipmentid = $_POST['editid'];
-            $newQuantity = $_POST['quantity'];
-
     
-            $stockItem = $inventoryModel->get_by_id($equipmentid);
-            if ($newQuantity > $stockItem->quantity) {
-        
-                    $_SESSION['error'] = "New quantity cannot exceed current stock!";
-                    header('Location: ' . ROOT . '/staff/staffinventory');
-                    exit();
-                    
-    }
-            
-    $result = $inventoryEditModel->editQuantity(
-        $_POST['equipmentid'],
-        $_POST['date'],
-        $_POST['quantity'],
-        $_POST['reason']
-    );
-
-            if ($result) {
-                echo "Success: Data updated!";
-            } else {
-                echo "Error: Data not updated!";
+            $equipmentid = $_POST['equipmentid'];
+            $newQuantity = (int)$_POST['quantity'];
+            $reason = $_POST['reason'];
+            $date = $_POST['date'];
+    
+            // Validate input
+            if(empty($equipmentid) || empty($reason) || $newQuantity <= 0){ {
+                $_SESSION['error'] = "Invalid input data!";
+                header('Location: ' . ROOT . '/staff/staffinventory');
+                exit();
             }
-        
+    
+            // Get current stock item
+            $stockItem = $inventoryModel->get_by_id($equipmentid);
+            if (!$stockItem) {
+                $_SESSION['error'] = "Equipment not found!";
+                header('Location: ' . ROOT . '/staff/staffinventory');
+                exit();
+            }
+    
+            // Check if quantity is valid
+            if ($newQuantity > $stockItem->issued_quantity) {
+                $_SESSION['error'] = "New quantity cannot exceed current stock!";
+                header('Location: ' . ROOT . '/staff/staffinventory');
+                exit();
+            }
+            
+            // Record the edit
+            $result = $inventoryEditModel->editQuantity(
+                $equipmentid,
+                $date,
+                $newQuantity,
+                $reason
+            );
+    
+            // Update the stock quantity
+            if ($result) {
+                // Calculate the new quantity
+                $updatedQuantity = $stockItem->issued_quantity - $newQuantity;
+                
+                // Update the stock table
+                $updateResult = $inventoryModel->updateEquipment($equipmentid, $updatedQuantity);
+                
+                if ($updateResult) {
+                    $_SESSION['message'] = "Equipment quantity updated successfully!";
+                } else {
+                    $_SESSION['error'] = "Failed to update stock quantity!";
+                }
+            } else {
+                $_SESSION['error'] = "Failed to record inventory edit!";
+            }
+    
+            
+            }
 
-            header('Location:' . ROOT . '/staff/staffinventory');
+            
         }
+        header('Location:' . ROOT . '/staff/staffinventory');
+                exit();
     }
-
-    public function addrequest(){
+        
+        public function addrequest(){
         
         if($_SERVER['REQUEST_METHOD'] == 'POST'){
             $requestModel = new Inventoryrequest();
@@ -90,5 +119,29 @@ class Staffinventory extends Controller{
         header('Location:' . ROOT . '/staff/staffinventory');
         exit;
     }
+
+    public function editrequest(){
+
+        if($_SERVER['REQUEST_METHOD'] === 'POST'){
+            
+            $requestModel = new Inventoryrequest();
+            $result = $requestModel->editRequest(
+                $_POST['requestid'],
+                $_POST['name'],
+                $_POST['quantityrequested'],
+                $_POST['timeframe'],
+                $_POST['date']
+            );
+
+            if ($result) {
+                echo "Success: Data updated!";
+            } else {
+                echo "Error: Data not updated!";
+            }
+        }
+        header('Location:' . ROOT . '/staff/staffinventory');
+        exit();
+    }
+
 
 }

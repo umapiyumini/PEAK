@@ -1,6 +1,6 @@
 <?php
 
-class Recruitmentrequests{
+class Recruitmentrequests {
 
     use Model;
     protected $table = 'recruitments';
@@ -37,7 +37,7 @@ class Recruitmentrequests{
         $query = "SELECT recruitments.* FROM sports_captain
                 JOIN sport ON sports_captain.sport_id = sport.sport_id
                 JOIN recruitments ON sports_captain.sport_id = recruitments.sport_id
-                WHERE sports_captain.userid = :userid && recruitments.status ='pending'";
+                WHERE sports_captain.userid = :userid AND recruitments.status ='pending'";
 
         return $this->query($query, ['userid' => $userId]);
 
@@ -47,21 +47,9 @@ class Recruitmentrequests{
 
     }
 
-    public function approveRequest($regno){
-
-        try{
-
-            $query = "UPDATE recruitments SET status = 'approved' WHERE regno = :regno";
-            $result = $this->query($query, [
-                'regno' => $regno,
-               
-            ]);
-
-            return $result;
-        }catch(Exception $e){
-            $_SESSION['error'] = $e->getMessage();
-        }
-    }
+    
+    
+    
 
     public function rejectRequest($regno){
 
@@ -78,5 +66,21 @@ class Recruitmentrequests{
             $_SESSION['error'] = $e->getMessage();
         }
     }
-                
+       
+    
+    public function approverequest($regno){
+
+        try{
+
+            $query = "UPDATE recruitments SET status = 'approved' WHERE regno = :regno";
+            $result = $this->query($query, [
+                'regno' => $regno,
+               
+            ]);
+
+            return $result;
+        }catch(Exception $e){
+            $_SESSION['error'] = $e->getMessage();
+        }
+    }  
 }

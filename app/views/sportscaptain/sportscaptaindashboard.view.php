@@ -50,7 +50,7 @@
             </li>
             <li>
                 <img src="<?=ROOT?>/assets/images/vidusha/tournament.png" alt="Tournament Icon" class="icon">
-                <a href="#" onclick="loadContent('tournaments', 'Tournaments')">Tournaments</a>
+                <a href="#" onclick="loadContent('tournamentrecords', 'Tournamentrecords')">Tournaments</a>
             </li>
             <li>
                 <img src="<?=ROOT?>/assets/images/vidusha//recruitment.png" alt="Recruitment Icon" class="icon">

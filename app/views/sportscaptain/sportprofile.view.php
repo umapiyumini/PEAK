@@ -70,8 +70,15 @@
                         <h1>Sport News Not Found</h1>
                     <?php } ?>
                     </div>
-            
-                    
+                    <div class="add-news">
+                        <h2>Add News</h2>
+                        <form action="<?=ROOT?>/sportscaptain/sportprofile/addnews" method="POST">
+                        <input type="text" name="topic" placeholder="Topic" required>
+                        <textarea name="content" placeholder="Content" required></textarea>
+                        <input type="hidden" name="published_date" value="<?= date('Y-m-d') ?>">
+                        <input type="hidden" name="sport_id" value="<?= $sport->sport_id ?>">
+                        <button type="submit">Add News</button>
+                        </form>   
                 </div>
             </aside>
         </div>

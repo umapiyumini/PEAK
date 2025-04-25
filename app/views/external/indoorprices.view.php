@@ -18,12 +18,7 @@
 
     <!-- Search Bar -->
     <div class="search-container">
-      <input
-        type="text"
-        id="search-bar"
-        placeholder="Search for a facility..."
-        onkeyup="searchFacility()"
-      />
+      <input type="text" id="search-bar" placeholder="Search for a facility..." onkeyup="searchFacility()"/>
     </div>
 
     <!-- Rates Table -->
@@ -62,6 +57,6 @@
 
   </div>
 
-  <script src="../js/dashboard.js"></script>
+  
 </body>
 </html>

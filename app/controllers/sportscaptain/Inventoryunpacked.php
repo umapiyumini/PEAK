@@ -78,6 +78,45 @@ class Inventoryunpacked extends Controller {
             exit;
     }
 
+    public function addrequestnew() {
+        if($_SERVER['REQUEST_METHOD'] == 'POST') {
+            $name = $_POST['name'];
+            $quantityrequested = $_POST['quantityrequested'];
+            $timeframe = $_POST['timeframe'];
+            $userId = $_SESSION['user_id'];
+            $addnotes = $_POST['addnotes'];
+    
+            try {
+                $requests = [];
+    
+                for ($i = 0; $i < count($name); $i++) {
+                    $requests[] = [
+                        'name' => $name[$i],
+                        'quantityrequested' => $quantityrequested[$i],
+                        'timeframe' => $timeframe,
+                        'userId' => $userId,
+                        'addnotes' => $addnotes
+                    ];
+                }
+            
+                $requestModel = new Inventoryrequest();
+                $result = $requestModel->addRequest($requests);
+    
+                if ($result) {
+                    $_SESSION['success'] = "Request successfully submitted!";
+                } else {
+                    $_SESSION['error'] = "Error: Request could not be processed!";
+                }
+            } catch(Exception $e) {
+                $_SESSION['error'] = "Error: " . $e->getMessage();
+            }
+        }
+        
+        header('Location:' . ROOT . '/sportscaptain/inventoryunpacked');
+        exit;
+    }
+    
+
     public function editrequest(){
 
         if($_SERVER['REQUEST_METHOD'] === 'POST'){
@@ -101,7 +140,28 @@ class Inventoryunpacked extends Controller {
         exit();
     }
 
-    
+    public function deleterequest(){
+
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $requestModel = new Inventoryrequest();
+            $requestId = $_POST['requestid'];
+            
+            $result = $requestModel->deleteRequest($requestId);
+            
+            if ($result) {
+                echo "Success: Request deleted!";
+            } else {
+                echo "Error: Request not deleted!";
+            }
+        } else {
+            echo "Error: Invalid request method!";
+        }
+        header('location: ' .ROOT . '/sportscaptain/inventoryunpacked');
+        exit();
+    }
 }
+
+    
+
 
 

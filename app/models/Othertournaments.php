@@ -22,9 +22,11 @@ class Othertournaments{
             die("User ID not found in session.");
         }
 
-        $query = "SELECT sports_captain.sport_id,othertournaments.*
+        $query = "SELECT user.name,othertournaments.*
                 FROM sports_captain
                 JOIN othertournaments ON sports_captain.sport_id = othertournaments.sport_id
+                JOIN student ON othertournaments.player_regno = student.registrationnumber
+                JOIN user ON student.userid = user.userid
                 WHERE sports_captain.userid = :userid";
 
         $result = $this->query($query,['userid'=> $userId]);

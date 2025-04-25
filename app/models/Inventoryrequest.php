@@ -170,6 +170,75 @@ class Inventoryrequest {
     }
 
 
+    public function addRequestnew($requests) {
+        $userId = $this->getUserId();
+        
+        if (!$userId) {
+            return false;
+        }
+        
+        $query = "INSERT INTO inventoryrequest (
+                    equipmentid, 
+                    quantityrequested, 
+                    timeframe, 
+                    date, 
+                    requested_by,
+                    status, 
+                    addnotes)
+                  VALUES (
+                    (SELECT equipmentid FROM equipments WHERE name = :name),
+                    :quantityrequested,
+                    :timeframe,
+                    CURRENT_DATE,
+                    :userid,
+                    'pending',
+                    :addnotes)";
+        
+        foreach ($requests as $req) {
+            $this->query($query, [
+                'name' => $req['name'],
+                'quantityrequested' => $req['quantityrequested'],
+                'timeframe' => $req['timeframe'],
+                'userid' => $req['userId'],
+                'addnotes' => $req['addnotes'],
+            ]);
+        }
+    
+        return true;
+    }
+    
+    
+
+    public function editRequest($requestid, $equipmentid, $quantityrequested, $timeframe, $date){
+
+        $query = "UPDATE inventoryrequest SET 
+                equipmentid = (SELECT equipmentid FROM equipments WHERE name = :equipmentid),
+                quantityrequested = :quantityrequested,
+                timeframe = :timeframe,
+                date = :date
+                WHERE requestid = :requestid";
+
+        return $this->query($query, [
+            'equipmentid' => $equipmentid,
+            'quantityrequested' => $quantityrequested,
+            'timeframe' => $timeframe,
+            'date' => $date,
+            'requestid' => $requestid
+        ]);
+                
+    }
+
+    public function getAllRequests(){
+
+        $query = "SELECT inventoryrequest.*, equipments.name FROM inventoryrequest
+                JOIN equipments ON inventoryrequest.equipmentid = equipments.equipmentid
+                WHERE inventoryrequest.status = 'pending'";
+
+        $result = $this->query($query);
+        
+        return $result;
+    }
+
     public function addRequest() {
 
         $userId = $this->getUserId();
@@ -204,36 +273,6 @@ class Inventoryrequest {
         ]);
     }
 
-    public function editRequest($requestid, $equipmentid, $quantityrequested, $timeframe, $date){
 
-        $query = "UPDATE inventoryrequest SET 
-                equipmentid = (SELECT equipmentid FROM equipments WHERE name = :equipmentid),
-                quantityrequested = :quantityrequested,
-                timeframe = :timeframe,
-                date = :date
-                WHERE requestid = :requestid";
-
-        return $this->query($query, [
-            'equipmentid' => $equipmentid,
-            'quantityrequested' => $quantityrequested,
-            'timeframe' => $timeframe,
-            'date' => $date,
-            'requestid' => $requestid
-        ]);
-                
-    }
-
-    public function getAllRequests(){
-
-        $query = "SELECT inventoryrequest.*, equipments.name FROM inventoryrequest
-                JOIN equipments ON inventoryrequest.equipmentid = equipments.equipmentid
-                WHERE inventoryrequest.status = 'pending'";
-
-        $result = $this->query($query);
-        
-        return $result;
-    }
-
-   
 }
 

@@ -1,7 +1,8 @@
-
 document.addEventListener('DOMContentLoaded', () => {
+    const ROOT = "<?=ROOT?>"; // make sure this is defined above if needed
     const filterSelect = document.getElementById('taskFilterSelect');
     const rows = document.querySelectorAll('#taskTable tbody tr');
+    const checkboxes = document.querySelectorAll('.status-checkbox');
 
     // Apply initial checkbox-based class
     rows.forEach(row => {
@@ -12,31 +13,24 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     // Handle checkbox toggle
-    document.addEventListener('DOMContentLoaded', () => {
-        document.querySelectorAll('.status-checkbox').forEach(checkbox => {
-            checkbox.addEventListener('change', function () {
-                const taskId = this.dataset.taskId;
-                const isChecked = this.checked;
-                const status = isChecked ? 'Completed' : 'Pending';
-    
-                fetch("<?= ROOT ?>/stafftodo/updatestatus", {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/x-www-form-urlencoded'
-                    },
-                    body: `task_id=${taskId}&status=${status}`
-                })
-                .then(response => response.json())
-                .then(data => {
-                    if (!data.success) {
-                        alert("Failed to update status.");
-                        this.checked = !isChecked; // revert checkbox
-                    }
-                })
-                .catch(err => {
-                    alert("Error updating task.");
-                    this.checked = !isChecked; // revert checkbox
-                });
+    checkboxes.forEach(checkbox => {
+        checkbox.addEventListener('change', function () {
+            const taskId = this.dataset.taskId;
+            const status = this.checked ? 'Completed' : 'Not Completed';
+
+            fetch(`${ROOT}/staff/stafftodo/updatestatus`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                },
+                body: `taskid=${taskId}&status=${encodeURIComponent(status)}`
+            })
+            .then(response => response.json())
+            .then(data => {
+                console.log('Status updated:', data);
+            })
+            .catch(error => {
+                console.error('Error updating status:', error);
             });
         });
     });
@@ -61,10 +55,6 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // Filter on change
     filterSelect.addEventListener('change', filterTasks);
-
-    // Initial load
-    filterTasks();
+    filterTasks(); // Initial filter
 });
-

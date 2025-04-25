@@ -20,6 +20,22 @@ class Sportattendance extends Controller{
         $this->view('sportscaptain/sportattendance',['attendance' => $attendance]);
     }
 
-   
+   public function markattendnace(){
+
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $userId = $this->getUserId();
+            if (!$userId) {
+                die("User ID not found in session.");
+            }
+
+            $sportId = $_POST['sport_id'];
+            $date = $_POST['date'];
+            $attendance = $_POST['attendance'];
+            $regno = $_POST['regno'];
+
+            $attendanceModel = new Attendance();
+            $attendanceModel->insertAttendance($userId, $sportId, $date, $attendance, $regno);
+        }
+   }
 
 }

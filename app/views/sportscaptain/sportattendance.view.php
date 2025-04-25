@@ -40,7 +40,6 @@
         <?php
         $groupedAttendance = [];
 
-        // Group attendance records by player
         foreach ($attendance['records'] as $record) {
             $groupedAttendance[$record->name][$record->date] = $record->attendance;
         }
@@ -50,10 +49,11 @@
                 <td><?php echo htmlspecialchars($playerName); ?></td>
                 
                 <?php foreach ($attendance['dates'] as $date) { 
-                    $status = $playerAttendance[$date] ?? 'Absent'; // Default to 'Absent' if no record
+                    $status = $playerAttendance[$date] ?? 'Absent'; 
                     $class = ($status === 'Present') ? 'present' : 'absent';
                 ?>
                     <td class="<?php echo $class; ?>"><?php echo htmlspecialchars($status); ?></td>
+
                 <?php } ?>
             </tr>
         <?php } ?>
@@ -62,8 +62,18 @@
 <?php } else { ?>
     <p>No attendance records found.</p>
 <?php } ?>
-
     </main>
+
+    <!-- Absent Reason Modal -->
+<div id="absentReasonModal" class="modal" style="display:none;">
+  <div class="modal-content">
+    <span class="close">&times;</span>
+    <h2>Enter Absent Reason</h2>
+    <textarea id="absentReason" rows="4" cols="50" placeholder="Enter reason here..."></textarea>
+    <button id="submitReason">Submit</button>
+  </div>
+</div>
+
     <script>
 function generateQRCode() {
     const userId = "<?= $_SESSION['userid'] ?? 'guest' ?>";

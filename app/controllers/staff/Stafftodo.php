@@ -20,23 +20,19 @@ class Stafftodo extends Controller{
             $todoModal = new Todo();
             $result = $todoModal->updateStatus($taskid, $status);
 
-            if($result){
-                $_SESSION['success'] = 'Updated';
-            }else{
-                $_SESSION['error'] = 'Can not update';
+            if ($result) {
+                echo json_encode(['status' => 'success', 'message' => 'Updated']);
+            } else {
+                echo json_encode(['status' => 'error', 'message' => 'Cannot update']);
             }
 
-        }catch(Exception $e){
-            $_SESSION['error'] = getMessage->$e;
+        } catch (Exception $e) {
+            echo json_encode(['status' => 'error', 'message' => $e->getMessage()]);
         }
 
     }
 
-     header('location: ' .ROOT. '/staff/stafftodo');   
-        
-
-
-
+     exit;  
    }
 
 }

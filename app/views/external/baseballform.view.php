@@ -7,6 +7,15 @@
         <title>External User Dashboard</title>
     </head>
     <body>
+    <?php
+    
+    $showSuccessModal = false;
+    if (isset($_SESSION['reservation_success']) && $_SESSION['reservation_success'] === true) {
+        $showSuccessModal = true;
+        // Clear the session variable
+        $_SESSION['reservation_success'] = false;
+    }
+    ?>
         <!-- navigation bar -->
         <?php include 'enav.view.php'; ?>
         <div class="main">
@@ -28,6 +37,9 @@
         </div>
 
         <form id="reservationForm" method="post" action="<?=ROOT?>/external/baseballform/reserve" enctype="multipart/form-data">
+        <input type="hidden" id="description" name="description" value="no">
+            <input type="hidden" name="court_name" value="baseball">
+
 
             <!-- Booking For -->
             <label for="bookingFor">Booking For:</label>
@@ -36,6 +48,10 @@
                 <option value="practice">Practice</option>
                 <option value="tournament">Tournament</option>
             </select>
+
+            <!-- Hidden field for description -->
+            
+
 
             <!-- Date Picker -->
             <?php 
@@ -113,177 +129,311 @@
 
         </div>
 
+
+
+
+
         <!-- Modal Structure -->
         <div id="successModal" class="modal" style="display: none;">
             <div class="modal-content">
                 <h4>Reservation Successful</h4>
                 <p>Your reservation has been made! You can check the status in the Reservations tab.</p>
             </div>
-            <div class="modal-footer">
-                <a href="#" class="modal-close btn" id="closeModal">Close</a>
-            </div>
+            
         </div>
 
-        <script>
-        // Show/hide half-day options
-        function showSlots() {
-            const selectedDuration = document.getElementById("duration").value;
-            document.getElementById("halfDayOptions").style.display = (selectedDuration === "half") ? "block" : "none";
-        }
 
-        // Get form elements
+
+
+
+
+        <script>
+
+
+document.addEventListener('DOMContentLoaded', function() {
+        // Get the form elements
         const bookingForSelect = document.getElementById('bookingFor');
         const durationSelect = document.getElementById('duration');
+        const descriptionSelect = document.getElementById('description');
         const priceInput = document.getElementById('price');
-        const discountedPriceInput = document.getElementById('discountedPrice');
-        const userTypeSelect = document.getElementById('userType');
-
-        // Function to fetch price
-        function fetchPrice() {
-            const event = bookingForSelect.value;
-            const duration = durationSelect.value;
-            const description = "no"; // always "no" for baseball
-
-            if (event && duration) {
-                fetch('http://localhost/PEAK/public/external/baseballform/getPrice', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/x-www-form-urlencoded',
-                    },
-                    body: `bookingFor=${encodeURIComponent(event)}&duration=${encodeURIComponent(duration)}&description=${encodeURIComponent(description)}`
-                })
-                .then(response => response.json())
-                .then(data => {
-                    if (data.price) {
-                        priceInput.value = data.price;
-                    } else {
-                        priceInput.value = 'Price not available';
-                    }
-                })
-                .catch(error => {
-                    console.error('Error fetching price:', error);
-                    priceInput.value = 'Error fetching price';
-                });
-            } else {
-                priceInput.value = '';
-            }
-        }
-
-        // Function to fetch discounted price
-        function fetchDiscountedPrice(price) {
-            const userType = userTypeSelect.value;
-
-            if (!userType || !price) {
-                discountedPriceInput.value = '';
-                return;
-            }
-
-            fetch('http://localhost/PEAK/public/external/volleyballform/getDiscountedPrice', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/x-www-form-urlencoded',
-                },
-                body: `userType=${encodeURIComponent(userType)}&price=${encodeURIComponent(price)}`
-            })
-            .then(response => response.json())
-            .then(data => {
-                if (data.discountedPrice !== undefined) {
-                    discountedPriceInput.value = data.discountedPrice;
-                } else {
-                    discountedPriceInput.value = 'Not available';
-                }
-            })
-            .catch(error => {
-                console.error('Error fetching discounted price:', error);
-                discountedPriceInput.value = 'Error';
-            });
-        }
-
-        // Add event listeners for form changes
-        bookingForSelect.addEventListener('change', fetchPrice);
-        durationSelect.addEventListener('change', fetchPrice);
-        userTypeSelect.addEventListener('change', () => {
-            const price = priceInput.value;
-            if (price) {
-                fetchDiscountedPrice(price);
-            }
-        });
-
-        // Date availability check
+        const userTypeSelect= document.getElementById('userType');
+        const discountedPriceInput = document.getElementById('discountedPrice')
         const dateInput = document.getElementById('date');
-        const availabilityMessage = document.getElementById('availabilityMessage');
-        const fullDayOption = document.getElementById('fullDayOption');
-        const halfDayOption = document.getElementById('halfDayOption');
 
-        dateInput.addEventListener('change', function() {
-            const selectedDate = dateInput.value;
-            if (!selectedDate) return;
+        // Add event listeners
+        bookingForSelect.addEventListener('change', updatePrice);
+        durationSelect.addEventListener('change', updatePrice);
+        // descriptionSelect.addEventListener('change', updatePrice);
+        userTypeSelect.addEventListener('change',updateDiscountedPrice);
+         dateInput.addEventListener('change', checkAvailability);
 
-            fetch('http://localhost/PEAK/public/external/baseballform/checkAvailability', {
-                method: 'POST',
-                headers: {'Content-Type': 'application/x-www-form-urlencoded'},
-                body: `date=${encodeURIComponent(selectedDate)}`
-            })
-            .then(response => response.json())
-            .then(data => {
-                // Disable duration options based on backend response
-                if (fullDayOption) fullDayOption.disabled = !data.full;
-                if (halfDayOption) halfDayOption.disabled = !data.half;
+         function updatePrice() {
+            // Only proceed if both booking type and duration are selected
+            if (bookingForSelect.value && durationSelect.value) {
+                // Map form values to database values
+                const event = bookingForSelect.value === 'practice' ? 'practice' : 'tournament';
+                const duration = durationSelect.value ;
+                const description = 'no';
+                
+                // Create form data
+                const formData = new FormData();
+                formData.append('court_name', 'baseball'); // Use the actual court name
+                formData.append('event', event);
+                formData.append('duration', duration);
+                formData.append('description', description); // Default description
+                
+                // Send request
+                const xhr = new XMLHttpRequest();
+                xhr.open('POST', '<?=ROOT?>/external/baseballform/getPrice', true);
+                xhr.onreadystatechange = function() {
+                    if (xhr.readyState === 4 && xhr.status === 200) {
+                        priceInput.value = xhr.responseText;
+                    }
+                };
+                xhr.send(formData);
+            }
+            if (userTypeSelect.value) {
+                updateDiscountedPrice();
+            }
+            
+        }
 
-                // Show/hide availability message
-                if (data.message) {
-                    availabilityMessage.textContent = data.message;
-                    availabilityMessage.style.display = "block";
-                } else {
-                    availabilityMessage.textContent = "";
-                    availabilityMessage.style.display = "none";
-                }
+        
+        function updateDiscountedPrice() {
+            // Only proceed if both price and user type are available
+            if (priceInput.value && userTypeSelect.value) {
+                // Create form data
+                const formData = new FormData();
+                formData.append('usertype', userTypeSelect.value);
+                formData.append('price', priceInput.value);
+                
+                // Send request to get discounted price
+                const xhr = new XMLHttpRequest();
+                xhr.open('POST', '<?=ROOT?>/external/baseballform/getDiscount', true);
+                xhr.onreadystatechange = function() {
+                    if (xhr.readyState === 4 && xhr.status === 200) {
+                        discountedPriceInput.value = xhr.responseText;
+                    }
+                };
+                xhr.send(formData);
+            } else {
+                discountedPriceInput.value = '';
+            }
+        }
 
-                // Reset all half-day slots to enabled
-                document.querySelectorAll('#halfDayOptions input[type="radio"]').forEach(r => r.disabled = false);
 
-                // Disable booked half-day slots
-                if (Array.isArray(data.bookedHalfSlots)) {
-                    data.bookedHalfSlots.forEach(function(time) {
-                        let radio = document.querySelector('#halfDayOptions input[type="radio"][value="' + time + '"]');
-                        if (radio) radio.disabled = true;
-                    });
-                }
 
-                // Disable half-day slots that overlap with booked 2-hour slots
-                if (Array.isArray(data.disableHalfDaySlots)) {
-                    data.disableHalfDaySlots.forEach(function(time) {
-                        let radio = document.querySelector('#halfDayOptions input[type="radio"][value="' + time + '"]');
-                        if (radio) radio.disabled = true;
-                    });
-                }
-            })
-            .catch(error => {
-                availabilityMessage.textContent = "Error checking date availability.";
-                availabilityMessage.style.display = "block";
-                console.error(error);
-            });
         });
 
-        // Modal logic
-        document.addEventListener('DOMContentLoaded', function() {
-            <?php if (isset($_SESSION['reservation_success']) && $_SESSION['reservation_success']): ?>
-                document.getElementById('successModal').style.display = 'flex';
-                <?php unset($_SESSION['reservation_success']); ?>
-            <?php endif; ?>
-            var closeBtn = document.getElementById('closeModal');
-            if (closeBtn) {
-                closeBtn.onclick = function() {
-                    document.getElementById('successModal').style.display = 'none';
+//checking availability
+
+function showSlots() {
+    const durationSelect = document.getElementById('duration');
+    const halfDayOptions = document.getElementById('halfDayOptions');
+    
+    if (durationSelect.value === 'half') {
+        halfDayOptions.style.display = 'block';
+    } else {
+        halfDayOptions.style.display = 'none';
+    }
+}
+
+
+//availability check
+
+function checkAvailability() {
+    const dateInput = document.getElementById('date');
+    const durationSelect = document.getElementById('duration');
+    const messageElem = document.getElementById('availabilityMessage');
+    const halfDayOption = document.getElementById('halfDayOption');
+    const fullDayOption = document.getElementById('fullDayOption');
+    const slot1 = document.getElementById('slot1');
+    const slot2 = document.getElementById('slot2');
+
+    // Reset options and message
+    messageElem.style.display = 'none';
+    halfDayOption.disabled = false;
+    fullDayOption.disabled = false;
+    slot1.disabled = false;
+    slot2.disabled = false;
+    
+    if (!dateInput.value) {
+        return;
+    }
+
+    // Create form data
+    const formData = new FormData();
+    formData.append('date', dateInput.value);
+    formData.append('court_name', 'baseball');
+    
+    // Send request
+    const xhr = new XMLHttpRequest();
+    xhr.open('POST', '<?=ROOT?>/external/baseballform/checkFullDayAvailability', true);
+    xhr.onreadystatechange = function() {
+        if (xhr.readyState === 4 && xhr.status === 200) {
+            if (xhr.responseText === 'full') {
+                // Show message
+                messageElem.style.display = 'block';
+                messageElem.textContent = 'This date is fully booked for this section.';
+                
+                // Disable all duration options
+                fullDayOption.disabled = true;
+                halfDayOption.disabled = true;
+                
+                // Reset duration selection if needed
+                if (durationSelect.value === 'full' || durationSelect.value === 'half' ) {
+                    durationSelect.value = '';
+                    document.getElementById('halfDayOptions').style.display = 'none';
+                    
+                }
+            } else {
+                checkHalfDayAvailability(dateInput.value);
+            }
+        }
+    };
+    xhr.send(formData);
+}
+
+
+function checkHalfDayAvailability(date) {
+    const messageElem = document.getElementById('availabilityMessage');
+    const halfDayOption = document.getElementById('halfDayOption');
+    const fullDayOption = document.getElementById('fullDayOption');
+    const slot1 = document.getElementById('slot1');
+    const slot2 = document.getElementById('slot2');
+    
+    
+    // Reset all slots
+   
+    
+    // Create form data
+    const formData = new FormData();
+    formData.append('date', date);
+    formData.append('court_name', 'baseball');
+  
+    const xhr = new XMLHttpRequest();
+    xhr.open('POST', '<?=ROOT?>/external/baseballform/checkHalfDayAvailability', true);
+    xhr.onreadystatechange = function() {
+        if (xhr.readyState === 4 && xhr.status === 200) {
+            const responseParts = xhr.responseText.split('|');
+            const halfDayStatus = responseParts[0];
+            const twoHourSlots = responseParts[1] ? responseParts[1].split(',') : [];
+            
+            console.log("Half-day status:", halfDayStatus);
+            console.log("Two-hour slots booked:", twoHourSlots);
+            
+            // Process half-day availability
+            if (halfDayStatus === 'both') {
+                // Both half-day slots are booked
+                messageElem.style.display = 'block';
+                messageElem.textContent = 'All time slots are booked for this date.';
+                halfDayOption.disabled = true;
+                fullDayOption.disabled = true;
+                
+            } else if (halfDayStatus === 'morning') {
+                // Morning slot is booked
+                messageElem.style.display = 'block';
+                messageElem.textContent = 'Morning slot is already booked. Only afternoon slot is available.';
+                fullDayOption.disabled = true;
+                slot1.disabled = true;
+                
+                
+                // If morning slot was selected, clear it
+                if (slot1.checked) {
+                    slot1.checked = false;
+                }
+            } else if (halfDayStatus === 'afternoon') {
+                // Afternoon slot is booked
+                messageElem.style.display = 'block';
+                messageElem.textContent = 'Afternoon slot is already booked. Only morning slot is available.';
+                fullDayOption.disabled = true;
+                slot2.disabled = true;
+                
+                
+                // If afternoon slot was selected, clear it
+                if (slot2.checked) {
+                    slot2.checked = false;
                 }
             }
-            var modal = document.getElementById('successModal');
-            if (modal) {
-                modal.onclick = function(e) {
-                    if (e.target === modal) modal.style.display = 'none';
+            
+            // Process two-hour slot availability
+            if (twoHourSlots.length > 0) {
+                // Enable two-hour option since we need to check individual slots
+              
+                
+                twoHourSlots.forEach(slot => {
+                    // Disable specific two-hour slots
+                    if (slot === '08:00:00') {
+                       
+                        slot1.disabled =true;
+                        
+                    }
+                    if (slot === '10:00:00') {
+                        
+                        slot1.disabled =true;
+                       
+                    }
+                    if (slot === '13:00:00') {
+                       
+                        slot2.disabled =true;
+                        
+                    }
+                    if (slot === '15:00:00') {
+                       
+                        slot2.disabled =true;
+                        
+                    }
+                });
+                
+                // Disable full day option if any two-hour slot is booked
+                fullDayOption.disabled = true;
+                
+                // Display message about two-hour bookings if no other message is displayed
+                if (halfDayStatus === 'none' && !messageElem.textContent) {
+                    messageElem.style.display = 'block';
+                    messageElem.textContent = 'Some time slots are already booked for this date.';
                 }
+                
+                
+                
+                
             }
-        });
-        </script>
+        }
+    };
+    xhr.send(formData);
+}
+
+// Add event listener to date input
+document.addEventListener('DOMContentLoaded', function() {
+    // Your existing code...
+    
+    // Add event listener for date changes
+    const dateInput = document.getElementById('date');
+    dateInput.addEventListener('change', checkAvailability);
+});
+
+document.addEventListener('DOMContentLoaded', function() {
+    // Check if we should show the success modal
+    <?php if ($showSuccessModal): ?>
+    const successModal = document.getElementById('successModal');
+    successModal.style.display = 'block';
+    
+    // Add event listener to close button
+    document.getElementById('closeModal').addEventListener('click', function() {
+        successModal.style.display = 'none';
+    });
+    
+    // Close modal when clicking outside of it
+    window.addEventListener('click', function(event) {
+        if (event.target === successModal) {
+            successModal.style.display = 'none';
+        }
+    });
+    <?php endif; ?>
+});
+
+    
+</script>
+
     </body>
 </html>

@@ -1,43 +1,45 @@
-function approveRequest(regno, btn) {
+function approverequest(regno, btn) {
   if (!confirm("Are you sure you want to approve this request?")) return;
 
-  fetch('<?=ROOT?>/sportscaptain/recruitment/approverequest', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/x-www-form-urlencoded',
-    },
-    body: `regno=${encodeURIComponent(regno)}`
+  fetch('<?= ROOT ?>/sportscaptain/recruitment/approverequest', {
+      method: 'POST',
+      headers: {
+          'Content-Type': 'application/x-www-form-urlencoded',
+      },
+      body: `regno=${encodeURIComponent(regno)}`
   })
-  .then(response => {
-    if (response.ok) {
-      alert("Request approved successfully!");
-      btn.closest('.notification-card').remove();
-    } else {
-      alert("Failed to approve the request.");
-    }
+  .then(response => response.json())  // Expecting JSON response
+  .then(data => {
+      if (data.success) {
+          alert("Request approved successfully!");
+          btn.closest('.notification-card').remove();  // Remove the card from UI
+      } else {
+          alert("Failed to approve the request.");
+      }
   })
   .catch(error => {
-    console.error("Error approving request:", error);
-    alert("Something went wrong.");
+      console.error("Error approving request:", error);
+      alert("Something went wrong.");
   });
 }
 
 function rejectRequest(regno, btn) {
   if (!confirm("Are you sure you want to reject this request?")) return;
 
-  fetch('<?=ROOT?>/sportscaptain/recruitment/rejectrequest', {
+  fetch('<?= ROOT ?>/sportscaptain/recruitment/rejectrequest', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/x-www-form-urlencoded',
     },
     body: `regno=${encodeURIComponent(regno)}`
   })
-  .then(response => {
-    if (response.ok) {
+  .then(response => response.json())  // Expecting JSON response
+  .then(data => {
+    if (data.success) {
       alert("Request rejected!");
       btn.closest('.notification-card').remove();
     } else {
-      alert("Failed to approve the request.");
+      alert("Failed to reject the request.");
     }
   })
   .catch(error => {
