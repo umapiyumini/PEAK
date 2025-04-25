@@ -33,12 +33,12 @@ class Recruitement extends Controller{
 
             ];
             
-            $this->view('student/Editrecruitement',['errors' => $errors]);
+            $this->view('student/Addrecruitement',['errors' => $errors]);
 
         }
     } else {
         $recruitment = new Recruit();
-        $medicalData = $recruitment->where(['sport_id' => $_SESSION['sport_id']]);
+        $recruitmentData = $recruitment->where(['sport_id' => $_SESSION['sport_id']]);
         // show($result);
         $data = [
             'recuruitmentdata' => $recruitmentData, 

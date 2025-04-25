@@ -31,14 +31,14 @@ class Certification extends Controller{
             }else {
                 
                 $errors = $certificaterequest->errors;
-                show($errors);
+                
                 // show($errors);
                 $data  = [
                     'errors' => $errors,
 
                 ];
                 
-                $this->view('student/addcertifcate',['errors' => $errors]);
+                $this->view('student/Addcertificate',['errors' => $errors]);
 
             }
         } else {

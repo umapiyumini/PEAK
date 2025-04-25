@@ -120,11 +120,13 @@
                 <div class="form-group">
                     <label for="name">Full Name</label>
                      <!-- error start -->
-                     <p class="errors"><?php
-                            if (!empty($errors['Name'])) {
+                     <p class="errors">
+                     <?php 
+                            if(!empty($errors['Name']))
+                            {
                                 echo $errors['Name'];
                             }
-                        ?>
+                            ?>
                         </p>
                         <!-- error end  -->
                     <input type="text" id="name" placeholder="Enter Full Name" name="Name">

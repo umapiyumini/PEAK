@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -163,10 +162,10 @@
                     <thead>
                         <tr>
                             <th>Request ID</th>
+                            <th>Registration Number</th>
+                            <th>Reason</th>
                             <th>Faculty</th>
-                            <th>Year of Study</th>
-                            <th>Contact Number</th>
-                            <th>University Email</th>
+                            <th>Status</th>
                             <th>Actions</th>
                         </tr>
                     </thead>
@@ -174,19 +173,19 @@
                         <?php if(!empty($recruitmentRequests)):?>
                             <?php foreach($recruitmentRequests as $request): ?>
                                 <tr>
-                                    <td><?= $request->request_id ?></td>
+                                    <td><?= $request->recruitmentid ?></td>
+                                    <td><?= $request->regno ?></td>
+                                    <td><?= $request->reason ?></td>
                                     <td><?= $request->faculty ?></td>
-                                    <td><?= $request->year_of_study ?></td>
-                                    <td><?= $request->contact_number ?></td>
-                                    <td><?= $request->university_email ?></td>
+                                    <td><?= $request->accept ?></td>
                                     <td>
                                         <button class="action-btn view-btn" 
                                             onclick="openModal(
-                                                '<?= $request->request_id ?>',
-                                                '<?= htmlspecialchars($request->faculty, ENT_QUOTES) ?>',
-                                                '<?= $request->year_of_study ?>',
-                                                '<?= $request->contact_number ?>',
-                                                '<?= htmlspecialchars($request->university_email, ENT_QUOTES) ?>'
+                                                '<?= $request->recruitmentid ?>',
+                                                '<?= htmlspecialchars($request->regno, ENT_QUOTES) ?>',
+                                                '<?= $request->reason ?>',
+                                                '<?= $request->faculty ?>',
+                                                '<?= htmlspecialchars($request->accept, ENT_QUOTES) ?>'
                                             )">View</button>
                                         <button class="action-btn delete-btn" onclick="confirmDelete(<?= $request->request_id ?>)">Delete</button>
                                     </td>
@@ -209,10 +208,10 @@
             <span class="close" onclick="closeModal()">&times;</span>
             <h3>Recruitment Request Details</h3>
             <p><strong>Request ID:</strong> <span id="modalRequestID"></span></p>
+            <p><strong>Registration Number:</strong> <span id="modalRegNo"></span></p>
+            <p><strong>Reason:</strong> <span id="modalReason"></span></p>
             <p><strong>Faculty:</strong> <span id="modalFaculty"></span></p>
-            <p><strong>Year of Study:</strong> <span id="modalYear"></span></p>
-            <p><strong>Contact Number:</strong> <span id="modalContact"></span></p>
-            <p><strong>University Email:</strong> <span id="modalEmail"></span></p>
+            <p><strong>Status:</strong> <span id="modalStatus"></span></p>
         </div>
     </div>
 
@@ -223,12 +222,12 @@
             }
         }
 
-        function openModal(id, faculty, year, contact, email) {
+        function openModal(id, regNo, reason, faculty, status) {
             document.getElementById('modalRequestID').innerText = id;
+            document.getElementById('modalRegNo').innerText = regNo;
+            document.getElementById('modalReason').innerText = reason;
             document.getElementById('modalFaculty').innerText = faculty;
-            document.getElementById('modalYear').innerText = year;
-            document.getElementById('modalContact').innerText = contact;
-            document.getElementById('modalEmail').innerText = email;
+            document.getElementById('modalStatus').innerText = status;
             document.getElementById('viewModal').style.display = 'block';
         }
 

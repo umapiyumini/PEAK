@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Approval Form</title>
+    <title>Certificate Request</title>
     <style>
         * {
             margin: 0;
@@ -56,14 +56,17 @@
             color: #333;
         }
 
-        input[type="text"],
-        textarea,
-        select {
+        input[type="text"], input[type="number"], textarea, select {
             width: 100%;
             padding: 12px;
             border: 1px solid #ddd;
             border-radius: 4px;
             font-size: 16px;
+        }
+
+        textarea {
+            height: 120px;
+            resize: vertical;
         }
 
         .submit-btn {
@@ -110,40 +113,47 @@
 
 <div class="container">
     <div class="card">
-        <div class="form-container">
-            <h1>Approval Form</h1>
-            <form method="POST" action="<?= ROOT ?>/student/Approva/">
+        <div class="form-container" id="certificate-form">
+            <h1>Enhancement Request</h1>
+            <form method="POST" action="<?= ROOT ?>/student/Enhancement/edit">
+
                 <div class="form-group">
-                    <label for="reg-no">Registration Number</label>
-                    <p class="errors"><?php if (!empty($errors['registration_no'])) echo $errors['registration_no']; ?></p>
-                    <input type="text" id="reg-no" name="registration_no" placeholder="Enter Registration Number">
+                    <label for="RequestId">Request Id</label>
+                    <input type="number" id="RequestId" placeholder="" name="RequestId" value="<?= $data['RequestId'] ?>" readonly>
                 </div>
 
                 <div class="form-group">
-                    <label for="name">Name</label>
-                    <p class="errors"><?php if (!empty($errors['name'])) echo $errors['name']; ?></p>
-                    <input type="text" id="name" name="name" placeholder="Enter Full Name">
+                    <label for="name">Full Name</label>
+                    <p class="errors"><?php if (!empty($errors['Name'])) { echo $errors['Name']; } ?></p>
+                    <input type="text" id="name" placeholder="Enter Full Name" name="Name">
                 </div>
 
                 <div class="form-group">
-                    <label for="faculty">Faculty</label>
-                    <p class="errors"><?php if (!empty($errors['faculty'])) echo $errors['faculty']; ?></p>
-                    <input type="text" id="faculty" name="faculty" placeholder="Enter Faculty">
+                    <label for="registration-id">Student Registration Number</label>
+                    <p class="errors"><?php if (!empty($errors['RegistrationNumber'])) { echo $errors['RegistrationNumber']; } ?></p>
+                    <input type="text" id="registration-id" placeholder="Enter Registration Number" name="RegistrationNumber">
                 </div>
 
                 <div class="form-group">
-                    <label for="reason">Reason</label>
-                    <p class="errors"><?php if (!empty($errors['reason'])) echo $errors['reason']; ?></p>
-                    <textarea id="reason" name="reason" rows="4" placeholder="Enter Reason"></textarea>
+                    <label for="year">Year of Achievement</label>
+                    <p class="errors"><?php if (!empty($errors['Year'])) { echo $errors['Year']; } ?></p>
+                    <input type="text" id="year" placeholder="Enter Year of Achievement" name="Year">
                 </div>
 
                 <div class="form-group">
-                    <label for="status">Status</label>
-                    <p class="errors"><?php if (!empty($errors['status'])) echo $errors['status']; ?></p>
-                    <select id="status" name="status">
-                        <option value="">Select</option>
-                        <option value="accepted">Accepted</option>
-                        <option value="notaccepted">Not Accepted</option>
+                    <label for="sport-name">Sport Name</label>
+                    <p class="errors"><?php if (!empty($errors['Sport'])) { echo $errors['Sport']; } ?></p>
+                    <input type="text" id="sport-name" placeholder="Enter Sport Name" name="Sport" value="<?= htmlspecialchars($data['Sport'] ?? '') ?>">
+                </div>
+
+                <div class="form-group">
+                    <label for="achievement">Achievement</label>
+                    <p class="errors"><?php if (!empty($errors['Achievement'])) { echo $errors['Achievement']; } ?></p>
+                    <select id="achievement" name="Achievement">
+                        <option value="Interuni">Interuni</option>
+                        <option value="Interfaculty">Interfaculty</option>
+                        <option value="Freshers">Freshers</option>
+                        <option value="SLUG">SLUG</option>
                     </select>
                 </div>
 
@@ -152,6 +162,5 @@
         </div>
     </div>
 </div>
-
 </body>
 </html>

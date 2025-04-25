@@ -2,7 +2,7 @@
 
 class Certificaterequest{
     use Model;
-    protected $errors;
+    public $errors;
     protected $table = 'certificaterequest';
 
     protected $allowedColumns = [

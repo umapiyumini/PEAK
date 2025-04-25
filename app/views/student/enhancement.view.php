@@ -1,4 +1,6 @@
-
+<?php
+    $enhancementRequests = $data['enhancedata'];
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -193,8 +195,8 @@
                         <thead>
                             <tr>
                                 <th>Request ID</th>
-                                <th>Enhancement Description</th>
-                                <th>Proposed Duration</th>
+                                <th>Sport</th>
+                                <th>Achievement</th>
                                 <th>Actions</th>
                             </tr>
                         </thead>
@@ -203,15 +205,17 @@
                             <?php foreach($enhancementRequests as $enhancementRequest): ?>
                             <tr>
                                 <td><?= $enhancementRequest->RequestID ?></td>
-                                <td><?= $enhancementRequest->ReasonForEnhancement ?></td>
-                                <td><?= $enhancementRequest->TimePeriod ?></td>
+                                <td><?= $enhancementRequest->sport ?></td>
+                                <td><?= $enhancementRequest->achievement ?></td>
                                 <td>
                                     <button class="action-btn view-btn" 
-                                        onclick="openModal('<?= $enhancementRequest->RequestID ?>', '<?= htmlspecialchars($enhancementRequest->ReasonForEnhancement, ENT_QUOTES) ?>', '<?= $enhancementRequest->TimePeriod ?>')">
+                                        onclick="openModal('<?= $enhancementRequest->RequestID ?>', 
+                                        '<?= htmlspecialchars($enhancementRequest->sport, ENT_QUOTES) ?>', 
+                                        '<?= $enhancementRequest->achievement ?>')">
                                         View
                                     </button>
                                     <?php $RequestId = $enhancementRequest->RequestID ?>
-                                    <button class="action-btn edit-btn" onclick="window.location.href='<?= ROOT ?>/student/Edithancement?RequestId=<?= $RequestId ?>'">Edit</button>
+                                    <button class="action-btn edit-btn" onclick="window.location.href='<?= ROOT ?>/student/Editenhancement?RequestId=<?= $RequestId ?>'">Edit</button>
                                     <button class="action-btn delete-btn" onclick="confirmDelete(<?= $RequestId ?>)">Delete</button>
                                 </td>
                             </tr>
@@ -238,8 +242,8 @@
             <span class="close" onclick="closeModal()">&times;</span>
             <h3>Enhancement Request Details</h3>
             <p><strong>Request ID:</strong> <span id="modalRequestID"></span></p>
-            <p><strong>Description:</strong> <span id="modalReason"></span></p>
-            <p><strong>Duration:</strong> <span id="modalDuration"></span></p>
+            <p><strong>Sport:</strong> <span id="modalSport"></span></p>
+            <p><strong>Achievement:</strong> <span id="modalAchievement"></span></p>
         </div>
     </div>
 
@@ -250,10 +254,10 @@
             }
         }
 
-        function openModal(id, reason, duration) {
+        function openModal(id, sport, achievement) {
             document.getElementById('modalRequestID').innerText = id;
-            document.getElementById('modalReason').innerText = reason;
-            document.getElementById('modalDuration').innerText = duration;
+            document.getElementById('modalSport').innerText = sport;
+            document.getElementById('modalAchievement').innerText = achievement;
             document.getElementById('viewModal').style.display = 'block';
         }
 

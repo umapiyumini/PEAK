@@ -4,11 +4,13 @@ class Medical extends Controller{
 
   
 
+        
         //  Insert function
         if($_SERVER['REQUEST_METHOD']=='POST')
         {
             //Get DATA
 
+            
             $data = [
                 'Name' => $_POST['Name'],
                 'RegistrationID' => $_POST['RegistrationID'],
@@ -35,7 +37,7 @@ class Medical extends Controller{
 
                 ];
                 
-                $this->view('student/addmedical',['errors' => $errors]);
+                $this->view('student/Addmedical',['errors' => $errors]);
 
             }
         } else {

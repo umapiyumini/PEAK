@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Approval Form</title>
+    <title>Add Enhancement Request</title>
     <style>
         * {
             margin: 0;
@@ -57,13 +57,18 @@
         }
 
         input[type="text"],
-        textarea,
-        select {
+        select,
+        textarea {
             width: 100%;
             padding: 12px;
             border: 1px solid #ddd;
             border-radius: 4px;
             font-size: 16px;
+        }
+
+        textarea {
+            height: 120px;
+            resize: vertical;
         }
 
         .submit-btn {
@@ -106,44 +111,41 @@
 </head>
 <body>
 
-<?php include 'nav.view.php';?>
+<?php include 'nav.view.php'; ?>
 
 <div class="container">
     <div class="card">
-        <div class="form-container">
-            <h1>Approval Form</h1>
-            <form method="POST" action="<?= ROOT ?>/student/Approva/">
+        <div class="form-container" id="enhancement-form">
+            <h1>Enhancement Request</h1>
+            <form method="POST" action="<?= ROOT ?>/student/Enhancement/">
+                
                 <div class="form-group">
-                    <label for="reg-no">Registration Number</label>
-                    <p class="errors"><?php if (!empty($errors['registration_no'])) echo $errors['registration_no']; ?></p>
-                    <input type="text" id="reg-no" name="registration_no" placeholder="Enter Registration Number">
-                </div>
-
-                <div class="form-group">
-                    <label for="name">Name</label>
+                    <label for="name">Full Name</label>
                     <p class="errors"><?php if (!empty($errors['name'])) echo $errors['name']; ?></p>
-                    <input type="text" id="name" name="name" placeholder="Enter Full Name">
+                    <input type="text" id="name" placeholder="Enter Full Name" name="name">
                 </div>
 
                 <div class="form-group">
-                    <label for="faculty">Faculty</label>
-                    <p class="errors"><?php if (!empty($errors['faculty'])) echo $errors['faculty']; ?></p>
-                    <input type="text" id="faculty" name="faculty" placeholder="Enter Faculty">
+                    <label for="registration-id">Student Registration ID</label>
+                    <p class="errors"><?php if (!empty($errors['registration_number'])) echo $errors['registration_number']; ?></p>
+                    <input type="text" id="registration-id" placeholder="Enter Registration ID" name="registration_number">
                 </div>
 
                 <div class="form-group">
-                    <label for="reason">Reason</label>
-                    <p class="errors"><?php if (!empty($errors['reason'])) echo $errors['reason']; ?></p>
-                    <textarea id="reason" name="reason" rows="4" placeholder="Enter Reason"></textarea>
+                    <label for="sport">Sport</label>
+                    <p class="errors"><?php if (!empty($errors['sport'])) echo $errors['sport']; ?></p>
+                    <input type="text" id="sport" placeholder="Enter Sport Name" name="sport">
                 </div>
 
                 <div class="form-group">
-                    <label for="status">Status</label>
-                    <p class="errors"><?php if (!empty($errors['status'])) echo $errors['status']; ?></p>
-                    <select id="status" name="status">
-                        <option value="">Select</option>
-                        <option value="accepted">Accepted</option>
-                        <option value="notaccepted">Not Accepted</option>
+                    <label for="achievement">Achievement</label>
+                    <p class="errors"><?php if (!empty($errors['achievement'])) echo $errors['achievement']; ?></p>
+                    <select id="achievement" name="achievement">
+                        <option value="">-- Select Achievement --</option>
+                        <option value="Freshers">Freshers</option>
+                        <option value="Interfaculty">Interfaculty</option>
+                        <option value="Interuni">Interuni</option>
+                        <option value="SLUG">SLUG</option>
                     </select>
                 </div>
 
