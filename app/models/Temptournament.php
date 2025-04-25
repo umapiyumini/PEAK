@@ -28,6 +28,7 @@ class Temptournament{
         ];
 
         $result = $this->query($query, $params);
+
         
         
         return true;

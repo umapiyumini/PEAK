@@ -35,6 +35,12 @@ class Sport {
         return $this->query($query, $params);
     }
 
+    public function addNewSport($data){
+        $query= "INSERT INTO $this->table (sport_name,frontimage) VALUES (:sport_name, :frontimage)";
+        $params= [':sport_name' => $data['sport_name'],
+                  ':frontimage' => $data['image']];
+        return $this->query($query, $params);
+    }
     
 }
 
