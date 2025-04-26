@@ -348,6 +348,44 @@ public function getBookingsForDateSection($date, $section) {
         ]);
     }
 
+    public function cancelReservations($reservationId) {
+        $userId = $this->getUserId();
+    
+        if (!$userId) {
+            return false;
+        }
+        
+        // First, get the reservation details to check its status
+        $query = "SELECT * FROM {$this->table} WHERE reservationid = :reservationid AND userid = :userid";
+        $reservation = $this->query($query, [
+            'reservationid' => $reservationId,
+            'userid' => $userId
+        ], true); // true to get a single record
+        
+        if (!$reservation) {
+            return false; // Reservation not found or doesn't belong to this user
+        }
+        
+        // Check the status and take appropriate action
+        if (in_array($reservation->status, ['pending', 'To pay', 'rejected'])) {
+            // For these statuses, we can delete the reservation directly
+            $query = "DELETE FROM {$this->table} WHERE reservationid = :reservationid AND userid = :userid";
+            return $this->query($query, [
+                'reservationid' => $reservationId,
+                'userid' => $userId
+            ]);
+        } else if (in_array($reservation->status, ['paid', 'confirmed'])) {
+            // For these statuses, update the status to 'cancelled' instead of deleting
+            $query = "UPDATE {$this->table} SET status = 'cancelled' WHERE reservationid = :reservationid AND userid = :userid";
+            return $this->query($query, [
+                'reservationid' => $reservationId,
+                'userid' => $userId
+            ]);
+        }
+        
+        return false; // If we reach here, the status didn't match any of our conditions
+    }
+    
     public function getReservationsByCourtLocation($location) {
         $query = "SELECT reservations.*, courts.name, courts.location
                   FROM reservations
@@ -482,6 +520,32 @@ public function findById($reservationid) {
         
         return false; 
     }
+
+
+    public function updates($reservationId, $data) {
+        $userId = $this->getUserId();
+        
+        if (!$userId) {
+            return false;
+        }
+        
+        // Build the SET part of the query
+        $setClause = "";
+        $params = ['reservationid' => $reservationId, 'userid' => $userId];
+        
+        foreach ($data as $key => $value) {
+            if ($setClause !== "") {
+                $setClause .= ", ";
+            }
+            $setClause .= "$key = :$key";
+            $params[$key] = $value;
+        }
+        
+        $query = "UPDATE {$this->table} SET $setClause WHERE reservationid = :reservationid AND userid = :userid";
+        
+        return $this->query($query, $params);
+    }
+    
     
 
     public function rejectReservation($reservation) {
@@ -738,7 +802,7 @@ public function findById($reservationid) {
             WHERE r.userid = :userid
               AND r.courtid != '38'
               AND STR_TO_DATE(CONCAT(r.date, ' ', r.time), '%Y-%m-%d %H:%i:%s') > NOW()
-              AND r.status IN ('To pay', 'Confirmed', 'Paid', 'pending')
+              AND r.status IN ('To pay', 'Confirmed', 'Paid', 'pending','rejected','cancelled')
             ORDER BY r.date, r.time
         ";
         return $this->query($query, ['userid' => $userid]);

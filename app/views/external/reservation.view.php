@@ -129,7 +129,8 @@
                         <option value="Pending">Pending</option>
                         <option value="To pay">To Pay</option>
                         <option value="Paid">Paid</option>
-                        <option value="Cancelled">Cancelled</option>
+                        <option value="rejected">Rejected</option>
+                        <option value="rejected">Cancelled</option>
                     </select>
                 </div>
             </div>
