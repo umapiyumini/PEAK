@@ -50,11 +50,7 @@
                     <div class="error-message" style="text-align:left; color: red; font-size: 12px;"><?=$errors['email']?></div>
                 <?php endif;?>
 
-                <div class="formlable">Organization ID</div>   
-                <input type="text" name="companyid" value="<?=htmlspecialchars($_POST['companyid'] ?? '')?>">
-                <?php if(!empty($exerrors['companyid'])): ?>
-                    <div class="error-message" style="text-align:left; color: red; font-size: 12px;"><?=$exerrors['companyid']?></div>
-                <?php endif;?>
+                
 
                 <div class="formlable">Organization Name</div>   
                 <input type="text" name="company_name" value="<?=htmlspecialchars($_POST['company_name'] ?? '')?>">
@@ -62,12 +58,7 @@
                     <div class="error-message" style="text-align:left; color: red; font-size: 12px;"><?=$exerrors['company_name']?></div>
                 <?php endif;?>
 
-                <div class="formlable">Organization Address </div>
-                <input type="text" name="address" value="<?=htmlspecialchars($_POST['address'] ?? '')?>">
-                <?php if(!empty($exerrors['address'])): ?>
-                    <div class="error-message" style="text-align:left; color: red; font-size: 12px;"><?=$exerrors['address']?></div>
-                <?php endif;?>
-
+                
                 <div class="gender-selection">
                     <label class="formlable">Gender</label>
                     <div>

@@ -21,22 +21,13 @@ class User {
 
     public $errors = [];
 
-
     public function validate($data) {
-
         // Email validation
         if (empty($data['email'])) {
             $this->errors['email'] = 'Email is required';
         } elseif (!filter_var($data['email'], FILTER_VALIDATE_EMAIL)) {
             $this->errors['email'] = 'Invalid email format';
         }
-
-        // Username validation
-        // if (empty($data['username'])) {
-        //     $this->errors['username'] = 'Username is required';
-        // } elseif (!preg_match("/^[a-zA-Z0-9]+$/", $data['username'])) {
-        //     $this->errors['username'] = 'Username cannot contain spaces or special characters';
-        // }
 
         // Password validation
         if (empty($data['password'])) {
@@ -99,17 +90,83 @@ class User {
             $this->errors['terms'] = 'You must agree to the terms and conditions';
         }
 
-        // if (empty($data['company'])) {
-        //     $this->errors['company'] = 'Company is required';
-        // }
-
-        // if(empty($data['companyid'])) {
-        //     $this->errors['companyid'] = 'Company ID is required';
-        // }
-
+        // NIC and DOB validation
+        if(!empty($data['nic']) && !empty($data['dob']) && !empty($data['gender'])) {
+            if(!$this->validateNicWithDob($data['nic'], $data['dob'], $data['gender'])) {
+                // Error message is set inside validateNicWithDob method
+            }
+        }
+        
         // Return true if no errors
         return empty($this->errors);
     }
+
+    private function validateNicWithDob($nic, $dob, $gender)
+    {
+        // Clean the NIC number
+        $nic = trim($nic);
+        
+        // Get year from DOB
+        $dobYear = date('Y', strtotime($dob));
+        $dobYearLastTwo = substr($dobYear, -2);
+        
+        // Get day of year from DOB (1-366)
+        $dobDayOfYear = date('z', strtotime($dob)) + 1;
+        
+        // Check if old NIC format (9 digits + V/X)
+        if(strlen($nic) == 10 && (strtoupper(substr($nic, -1)) === 'V' || strtoupper(substr($nic, -1)) === 'X')) {
+            // Extract year and day from old NIC
+            $nicYear = substr($nic, 0, 2);
+            $nicDayGender = (int)substr($nic, 2, 3);
+            
+            // Calculate actual day (removing gender offset)
+            $nicDay = ($nicDayGender > 500) ? $nicDayGender - 500 : $nicDayGender;
+            
+            // Check gender consistency
+            $nicGender = ($nicDayGender > 500) ? 'female' : 'male';
+            if($nicGender !== $gender) {
+                $this->errors['gender'] = "Gender doesn't match the gender encoded in NIC";
+                return false;
+            }
+            
+            // Verify year and day match
+            if($nicYear != $dobYearLastTwo || $nicDay != $dobDayOfYear) {
+                $this->errors['nic'] = "NIC number doesn't match the provided date of birth";
+                return false;
+            }
+            
+            return true;
+        }
+        // Check if new NIC format (12 digits)
+        else if(strlen($nic) == 12 && is_numeric($nic)) {
+            // Extract year and day from new NIC
+            $nicYear = substr($nic, 0, 4);
+            $nicDayGender = (int)substr($nic, 4, 3);
+            
+            // Calculate actual day (removing gender offset)
+            $nicDay = ($nicDayGender > 500) ? $nicDayGender - 500 : $nicDayGender;
+            
+            // Check gender consistency
+            $nicGender = ($nicDayGender > 500) ? 'female' : 'male';
+            if($nicGender !== $gender) {
+                $this->errors['gender'] = "Gender doesn't match the gender encoded in NIC";
+                return false;
+            }
+            
+            // Verify year and day match
+            if($nicYear != $dobYear || $nicDay != $dobDayOfYear) {
+                $this->errors['nic'] = "NIC number doesn't match the provided date of birth";
+                return false;
+            }
+            
+            return true;
+        }
+        
+        // Invalid NIC format
+        $this->errors['nic'] = "Invalid NIC format";
+        return false;
+    }
+
 
 
     //used 

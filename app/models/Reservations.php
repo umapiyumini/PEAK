@@ -104,6 +104,17 @@ public function getBookedOneHourSlots($date, $section) {
 }
 
 
+public function getBookingsForDateSection($date, $section) {
+    $query = "SELECT r.*, c.section 
+              FROM {$this->table} r
+              JOIN courts c ON r.courtid = c.courtid
+              WHERE r.date = :date 
+              AND c.section = :section
+              AND (UPPER(r.status) = 'CONFIRMED' OR UPPER(r.status) = 'PAID' OR UPPER(r.status) = 'TO PAY')";
+    
+    return $this->query($query, ['date' => $date, 'section' => $section]);
+}
+
     //not yet
     
     public function insert($data) {
@@ -265,6 +276,21 @@ public function getBookedOneHourSlots($date, $section) {
         return $this->query($query);
     }
 
+
+    public function getReservationDetailsById($reservationid) {
+        $query = "
+            SELECT r.*, c.name AS courtname, c.location, c.section
+            FROM {$this->table} r
+            JOIN courts c ON r.courtid = c.courtid
+            WHERE r.reservationid = :reservationid
+            LIMIT 1
+        ";
+        
+        $result = $this->query($query, ['reservationid' => $reservationid]);
+        return $result ? $result[0] : null;
+    }
+    
+
     public function getReservationbyUser(){
 
         $userId = $this->getUserId();
@@ -331,7 +357,33 @@ public function getBookedOneHourSlots($date, $section) {
         return $this->query($query, ['location' => $location]);
     }
 
-    
+    public function isDateAvailableForFullDay($date, $section, $currentReservationId = null) {
+        // Check if there are any reservations on this date in the same section
+        // Exclude the current reservation being rescheduled
+        $query = "SELECT COUNT(*) as count 
+                  FROM {$this->table} r
+                  JOIN courts c ON r.courtid = c.courtid
+                  WHERE r.date = :date 
+                  AND c.section = :section
+                  AND (UPPER(r.status) = 'CONFIRMED' OR UPPER(r.status) = 'PAID' OR UPPER(r.status) = 'TO PAY')";
+        
+        // If we're rescheduling an existing reservation, exclude it from the check
+        if ($currentReservationId) {
+            $query .= " AND r.reservationid != :reservationId";
+            $params = [
+                'date' => $date, 
+                'section' => $section,
+                'reservationId' => $currentReservationId
+            ];
+        } else {
+            $params = ['date' => $date, 'section' => $section];
+        }
+        
+        $result = $this->query($query, $params);
+        
+        // If count is greater than 0, the date is not available
+        return ($result[0]->count == 0);
+    }
        
 
 
@@ -454,24 +506,24 @@ public function findById($reservationid) {
 
 
   
-public function getFutureReservationsByUser($userid) {
-    $query = "
-        SELECT r.*, c.name AS courtname, c.location
-        FROM {$this->table} r
-        JOIN courts c ON r.courtid = c.courtid
-        WHERE r.userid = :userid
-          AND r.courtid != '38'
-          AND STR_TO_DATE(CONCAT(r.date, ' ', r.time), '%Y-%m-%d %H:%i:%s') > NOW()
-          AND r.status IN ('To pay', 'Confirmed', 'Paid', 'pending') -- Add other active statuses if needed
-        ORDER BY r.date, r.time
-    ";
-    return $this->query($query, ['userid' => $userid]);
-}
-
+    public function getFutureReservationsByUser($userid) {
+        $query = "
+            SELECT r.*, c.name AS courtname, c.location, c.section
+            FROM {$this->table} r
+            JOIN courts c ON r.courtid = c.courtid
+            WHERE r.userid = :userid
+              AND r.courtid != '38'
+              AND STR_TO_DATE(CONCAT(r.date, ' ', r.time), '%Y-%m-%d %H:%i:%s') > NOW()
+              AND r.status IN ('To pay', 'Confirmed', 'Paid', 'pending')
+            ORDER BY r.date, r.time
+        ";
+        return $this->query($query, ['userid' => $userid]);
+    }
+    
 // All reservations for this user
 public function getAllReservationsByUser($userid) {
     $query = "
-        SELECT r.*, c.name AS courtname, c.location
+        SELECT r.*, c.name AS courtname, c.location, c.section
         FROM {$this->table} r
         JOIN courts c ON r.courtid = c.courtid
         WHERE r.userid = :userid
