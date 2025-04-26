@@ -42,14 +42,14 @@ class StaffTodo {
         return $this->query($query, $params);
     }
 
-    public function updateStatus($taskid){
-        $query= "UPDATE $this->table SET status = 'Overdue' WHERE taskid = :taskid";
-        $params = [
+    // public function updateStatus($taskid){
+    //     $query= "UPDATE $this->table SET status = 'Overdue' WHERE taskid = :taskid";
+    //     $params = [
 
-            ':taskid' => $taskid
-        ];
-        return $this->query($query, $params);
-    }
+    //         ':taskid' => $taskid
+    //     ];
+    //     return $this->query($query, $params);
+    // }
 
 }
 
