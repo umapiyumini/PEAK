@@ -38,7 +38,7 @@ class Subscription {
 
 
 public function getSubscriptionEndDateByUser($userid) {
-    $userid = intval($userid); // sanitize input to prevent SQL injection
+    $userid = intval($userid); 
     return $this->query("SELECT * FROM subscription WHERE userid = $userid ORDER BY subscription_end_date DESC LIMIT 1");
 }
 
@@ -88,7 +88,7 @@ public function isWithinTwoWeeksOfExpiry($userId) {
 
     if (!empty($result[0]->subscription_end_date)) {
 
-        $endDate = $result[0]->subscription_end_date; // ✅ Correct
+        $endDate = $result[0]->subscription_end_date; 
 
         $today = date('Y-m-d');
         $diff = (strtotime($endDate) - strtotime($today)) / (60 * 60 * 24); // difference in days
