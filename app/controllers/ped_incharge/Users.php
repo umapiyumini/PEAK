@@ -9,12 +9,17 @@
         }
         public function studentReg(){
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-            show($_POST);
             $user = new User();
-            $user->studentReg($_POST);
-            $_POST['userid'] = $user->getLastID();
-            $student = new Student();
-            $student->studentReg($_POST);
+            if($user->validate2($_POST)) {
+                $user->studentReg($_POST);
+                $_POST['userid'] = $user->getLastID();
+                $student = new Student();
+                $student->studentReg($_POST);
+                $_SESSION['success']= "Student Registered Successfully"
+            } else {
+                // show($user->errors);
+                $_SESSION['errors'] = $user->errors;
+            }
             header('Location: users');
         }
         }

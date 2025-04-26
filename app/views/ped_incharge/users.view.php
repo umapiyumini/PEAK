@@ -25,6 +25,14 @@
             <button class="tab" onclick="showSection('user-display')">View Users</button>
         </div>
 
+        <?php if(!empty($_SESSION['errors'])){
+            foreach($_SESSION['errors'] as $err) {
+                $errr = $err;
+            }
+            echo "<div id='error-message' style='position: fixed ;top: 20px; right: 20px;background-color:rgb(206, 29, 29);color: white; padding: 15px 20px; border-radius: 5px; z-index: 9999; box-shadow: 0 2px 10px rgba(0,0,0,0.2); transition: opacity 0.5s ease-out;'>" . $errr ."</div>";
+            unset($_SESSION['errors']);
+        }?>
+
         <!-- Student Registration Form -->
         <div id="student-registration" class="form-section active">
             <h2>Student Registration</h2>
@@ -197,7 +205,22 @@
     </div>
         </main>
 
-    
+    <script>
+           //error message disappear
+            setTimeout(() => {
+            const fadeOut = (id) => {
+                const el = document.getElementById(id);
+                if (el) {
+                    el.style.opacity = "0";
+                    el.style.transform = "translateY(-10px)";
+                    setTimeout(() => el.remove(), 500);
+                }
+            };
+
+            fadeOut('error-message');
+            fadeOut('success-message');
+        }, 3000);
+    </script>
 	<script src="<?=ROOT?>/assets/js/ped_incharge/users.js"></script>
 	<script src="<?=ROOT?>/assets/js/ped_incharge/navbar.js"></script>
 </body>
