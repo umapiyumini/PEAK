@@ -9,7 +9,7 @@
 
             require_once __DIR__ . '\Groundindoorstaff.php';
             $stafftodoController = new Groundindoorstaff();
-            $stafftodoController->updateStatus();
+            $stafftodoController->updateStatus2();
 
             $this->view('ped_incharge/home',['notices'=>$notices, 'errors'=>$this->errors]);
 

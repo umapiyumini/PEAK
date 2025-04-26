@@ -46,10 +46,10 @@
 
                 <div class="form-group">
                     <label for="staffType">Assign To:</label>
-                    <select id="staffType" name="assignedto" required>
+                    <select id="staffType" name="type" required>
                         <option value="">-- Select Staff Type --</option>
-                        <option value="Ground Staff">Ground Staff</option>
-                        <option value="Indoor Staff">Indoor Staff</option>
+                        <option value="ground">Ground Staff</option>
+                        <option value="indoor">Indoor Staff</option>
                     </select>
                 </div>
 
@@ -75,7 +75,7 @@
                                     <p><strong>Description:</strong> <?= $task->description ?></p>
                                     <p><strong>Assigned Date & Time:</strong> <?= $task->time ?></p>
                                     <p><strong>Deadline:</strong> <?= $task->deadline ?></p>
-                                    <p><strong>Assigned To:</strong> <?= $task->assignedto ?></p>                                    
+                                    <p><strong>Assigned To:</strong> <?= $task->type ?></p>                                    
                                     <?php
                                         $status = strtolower($task->status);
                                         $statusClass = 'status-' . $status;
@@ -166,6 +166,10 @@
             <span class="close">&times;</span>
             <h2>Add New Staff Member</h2>
             <form id="addStaffForm" method="POST" action="<?=ROOT?>/ped_incharge/groundindoorstaff/addStaffMember">
+                <div class="form-group">
+                    <label for="staffID">Staff ID:</label>
+                    <input type="text" id="staffID" name="staff_id" required>
+                </div>
                 <div class="form-group">
                     <label for="fullName">Full Name:</label>
                     <input type="text" id="fullName" name="name" required>

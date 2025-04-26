@@ -418,6 +418,10 @@
                     }
                 }
             ?>
+                <?php 
+                    $isPastDate = $selectedDate < date('Y-m-d');
+                    $canReserve = $data['status'] == 'available' && !$isPastDate;
+                ?>
                 <div class="section <?= $sectionClass ?>"
                     style="<?= $spanStyle ?>"
                     title="<?= htmlspecialchars($displayText . $statusInfo) ?>"
@@ -445,9 +449,13 @@
             <form id="newReservationForm" method="POST" action="ground_reservation/saveReservation">
                 <div class="form-group">
                     <label for="event_name">Event Name:</label>
-                    <input type="text" id="event_name" name="event" required>
-                </div>
-                
+                    <select id="event_name" name="event" required>
+                        <option value="">-- Select Event --</option>
+                        <option value="practice">Practice</option>
+                        <option value="tournament">Tournament</option>
+                        <option value="other">Other</option>
+                    </select>
+                </div> 
                 <div class="form-group">
                     <label for="event_date">Date:</label>
                     <input type="date" id="event_date" name="date" readonly min="<?= date('Y-m-d') ?>">
@@ -510,7 +518,7 @@
                 
                 <div class="form-group">
                     <label for="participants">Number of Participants:</label>
-                    <input type="number" id="participants" name="participants" min="1" required>
+                    <input type="number" id="participants" name="participants" min="1">
                 </div>
                 
                 <div class="form-group">
@@ -529,6 +537,80 @@
 
 
     <script>
+
+        // document.addEventListener('DOMContentLoaded', function() {
+        //     updateDisplayDate();
+            
+        //     document.getElementById('newReservationForm').addEventListener('submit', function(event) {
+        //         const selectedDate = document.getElementById('event_date').value;
+        //         const today = new Date().toISOString().split('T')[0];
+                
+        //         if (selectedDate < today) {
+        //             event.preventDefault();
+        //             alert('Cannot make reservations for past dates.');
+        //             return false;
+        //         }
+        //         return true;
+        //     });
+        // });
+
+
+    function openReservationModal(timeSlot, section) {
+        // Check if selected date is today or future
+        const calendarDate = document.getElementById("reservation-date").value;
+        const today = new Date().toISOString().split('T')[0];
+        
+        if (calendarDate < today) {
+            alert('Cannot make reservations for past dates.');
+            return; // Don't open the modal
+        }
+        
+        const startTime = timeSlot.split(' - ')[0];
+        const modal = document.getElementById("reservationModal"); // Make sure to get the modal
+        modal.style.display = "block";
+        document.body.style.overflow = "hidden";
+
+        // Set current date & time
+        document.getElementById("event_date").value = calendarDate;   
+        document.getElementById("start_time").value = startTime;
+        
+        // Set the section
+        const sectionSelect = document.getElementById("section");
+        for (let i = 0; i < sectionSelect.options.length; i++) {
+            if (sectionSelect.options[i].value === section) {
+                sectionSelect.selectedIndex = i;
+                break;
+            }
+        }
+        populateCourts(section);
+        
+        updateDurationOptions(startTime);
+    }
+
+        function openModal() {
+            // Check if selected date is today or future
+            const calendarDate = document.getElementById("reservation-date").value;
+            const today = new Date().toISOString().split('T')[0];
+
+            if (calendarDate < today) {
+                alert('Cannot make reservations for past dates.');
+                return; // Don't open the modal
+            }
+            
+            modal.style.display = "block";
+            document.body.style.overflow = "hidden";
+            
+            // Set the current selected date in the form
+            document.getElementById("event_date").value = calendarDate;
+            
+            // Reset the form for manual entry
+            document.getElementById("start_time").value = "";
+            document.getElementById("section").selectedIndex = 0;
+            
+            // Update duration options with default (8 AM)
+            updateDurationOptions("08:00:00");
+        }
+
         // Function to change the date and reload the page with the selected date
         function changeDate() {
             const dateInput = document.getElementById('reservation-date').value;
@@ -566,31 +648,7 @@
 
         // Get the modal element
         const modal = document.getElementById("reservationModal");
-        
 
-        // Function to open the modal
-        function openReservationModal(timeSlot, section) {
-        const startTime = timeSlot.split(' - ')[0];    
-        modal.style.display = "block";
-        document.body.style.overflow = "hidden";
-    
-    // Set current date & time
-    const calendarDate = document.getElementById("reservation-date").value;
-    document.getElementById("event_date").value = calendarDate;   
-    document.getElementById("start_time").value = startTime;
-    
-    // Set the section
-    const sectionSelect = document.getElementById("section");
-    for (let i = 0; i < sectionSelect.options.length; i++) {
-        if (sectionSelect.options[i].value === section) {
-            sectionSelect.selectedIndex = i;
-            break;
-        }
-    }
-    populateCourts(section);
-    
-    updateDurationOptions(startTime);
-}
 
 // Add this new function to dynamically update duration options
 function updateDurationOptions(startTime) {
@@ -649,27 +707,6 @@ function populateCourts(section) {
 }
 
 
-// Function to open the modal
-    function openModal() {
-        modal.style.display = "block";
-        document.body.style.overflow = "hidden";
-        
-        // Set the current selected date in the form
-        const calendarDate = document.getElementById("reservation-date").value;
-        if (calendarDate) {
-            document.getElementById("event_date").value = calendarDate;
-        } else {
-            const today = new Date().toISOString().split('T')[0];
-            document.getElementById("event_date").value = today;
-        }
-        
-        // Reset the form for manual entry
-        document.getElementById("start_time").value = "";
-        document.getElementById("section").selectedIndex = 0;
-        
-        // Update duration options with default (8 AM)
-        updateDurationOptions("08:00:00");
-    }
 
     function closeModal(modal) {
         modal.style.display = "none";

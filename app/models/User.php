@@ -138,7 +138,7 @@ class User {
             ':contact_number'=>$data['contact_number'],
             ':address'=>$data['address'],
             ':username'=>$data['email'],
-            ':password'=>password_hash($data['nic'], PASSWORD_DEFAULT),
+            ':password'=>password_hash($data['Abcd@1234'], PASSWORD_DEFAULT),
             ':role'=>'Internal User'
         ];
         return $this->query($query,$params);

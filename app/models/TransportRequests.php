@@ -89,4 +89,38 @@ class TransportRequests{
                 return false;
             }
         }
+
+        
+    public function viewAllTransportRequests(){
+        $query="SELECT * FROM $this->table t
+                JOIN sport ON sport.sport_id= t.sport_id";
+        return $this->query($query);        
+
     }
+
+    public function handleAction($id, $action)
+    {
+        if (!in_array($action, ['approve', 'reject'])) {
+            return ['success' => false, 'message' => 'Invalid action'];
+        }
+        
+        $status = ($action === 'approve') ? 'Approved' : 'Rejected';
+        
+        $query = "UPDATE $this->table SET status = :status WHERE request_id = :id";
+        $params = [':status' => $status, ':id' => $id];
+        
+        $result = $this->query($query, $params);
+        
+        if ($result) {
+            return [
+                'success' => true, 
+                'message' => "transport request " . ($action === 'approve' ? 'approved' : 'rejected') . " successfully"
+            ];
+        } else {
+            return [
+                'success' => false,
+                'message' => "Failed to " . $action . " transport request"
+            ];
+        }
+    }
+}
