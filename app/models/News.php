@@ -30,11 +30,13 @@ class News{
 
     public function addnews(){
 
+    
         $userId = $this->getUserId();
 
         if(!$userId){
             die("User ID not found in session.");
         }
+
 
         $query = "SELECT sport_id FROM sports_captain WHERE userid = :userid";
         $sportId = $this->query($query, ['userid' => $userId])[0]->sport_id;
@@ -49,7 +51,7 @@ class News{
             'sport_id' => $sportId
         ]);
         
-        return $result;
+        return true;
     }
 
     

@@ -25,17 +25,41 @@ class Sportattendance extends Controller{
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $userId = $this->getUserId();
             if (!$userId) {
-                die("User ID not found in session.");
+                $_SESSION['error']='User ID not found in session';
+                header('Location: ' . ROOT . '/sportscaptain/sportattendance');
+                exit();
             }
+
+            try{
 
             $sportId = $_POST['sport_id'];
             $date = $_POST['date'];
             $attendance = $_POST['attendance'];
             $regno = $_POST['regno'];
 
+           
+            if (empty($sportId) || empty($date) || empty($attendance) || empty($regno)) {
+                $_SESSION['error'] = 'All fields are required.';
+                header('Location: ' . ROOT . '/sportscaptain/sportattendance');
+                exit();
+            }
+
             $attendanceModel = new Attendance();
-            $attendanceModel->insertAttendance($userId, $sportId, $date, $attendance, $regno);
-        }
-   }
+            $record = $attendanceModel->insertAttendance($userId, $sportId, $date, $attendance, $regno);
+
+            if ($record) {
+                $_SESSION['success'] = 'Attendance marked successfully!';
+            } else {
+                $_SESSION['error'] = 'Failed to mark attendance.';
+            }
+
+            } catch (Exception $e) {
+                $_SESSION['error'] = 'Error: ' . $e->getMessage();
+            }
+
+            header('Location: ' . ROOT . '/sportscaptain/sportattendance');
+            exit();
+}
+}
 
 }

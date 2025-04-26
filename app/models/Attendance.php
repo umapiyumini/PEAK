@@ -61,7 +61,6 @@ class Attendance{
                 die("User ID not found in session.");
             }
 
-            
             $query = "INSERT INTO attendance (date, regno, attendance, sport_id) 
             VALUES (:date, :regno, :attendance, (SELECT sport_id FROM player WHERE userid = :userid))";
             

@@ -1,3 +1,5 @@
+<?php include_once('../app/views/includes/message.php'); ?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -5,7 +7,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Hockey</title>
     <link rel="stylesheet" href="<?=ROOT?>/assets/css/vidusha/sport.css">
-	<link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.8/css/line.css">
 </head>
 <body>
     
@@ -17,27 +18,20 @@
             <a href="schedule">Schedule</a>
             <a href="sportrecords">Records</a>
     </div>
-    
+    <?php include_once(__DIR__ . '/../includes/message.php'); ?>
 	<main>	
 		<div class="content-container">
+        
+
             <section class="main-content">
             <?php if (!empty($sport) && !empty($sport->sport_name)) { ?>
             <h1><?php echo htmlspecialchars($sport->sport_name); ?></h1>
             <?php } else { ?>
                 <h1>Sport Not Found</h1>
             <?php } ?>
-                <div class="image-slider">
-                    <div class="slides">
+            <img src="<?=ROOT?>/assets/images/vidusha/images1.jpeg" alt="Hockey Action 1">
                         
-                            <img src="<?=ROOT?>/assets/images/vidusha/images1.jpeg" alt="Hockey Action 1">
-                            <img src="<?=ROOT?>/assets/images/vidusha/images2.jpeg" alt="Hockey Action 2">
-                            <img src="<?=ROOT?>/assets/images/vidusha/images3.jpg" alt="Hockey Team Celebration">
-                        
-                    </div>
-                    <!-- Navigation Arrows -->
-                    <button class="prev">&#10094;</button>
-                    <button class="next">&#10095;</button>
-                </div>
+                   
                 <h2>Team 2024</h2>
 				<article class="captains">
 			        <div class="tile2">
@@ -57,7 +51,6 @@
                 <h2>Latest News</h2>
                 <div id="newsContainer">
 
-                    <!-- News Item 2 -->
                     <div class="news-item">
                     <?php if (!empty($news)) { ?>
                         <?php foreach ($news as $news){?>
