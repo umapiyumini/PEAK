@@ -16,6 +16,19 @@
             <a href="sportrecords">Records</a>
 </div>
 <div class="container">
+<?php if(isset($_SESSION['success'])): ?>
+    <div class="alert alert-success">
+        <?= $_SESSION['success']; ?>
+        <?php unset($_SESSION['success']); ?>
+    </div>
+<?php endif; ?>
+
+<?php if(isset($_SESSION['error'])): ?>
+    <div class="alert alert-danger">
+        <?= $_SESSION['error']; ?>
+        <?php unset($_SESSION['error']); ?>
+    </div>
+<?php endif; ?>
 <h1>Sports Practice Schedule</h1>
 <div class="schedule-actions"> 
     <div class="schedule-filter">
@@ -60,8 +73,8 @@
                 <?= $item->category ?>
               </div>
               <div class="schedule-actions">
-                <button class="edit-button" id="edit-button" data-id="<?= $item->id ?>" >Edit</button>
-                <button class="delete-button" data-id="<?= $item->id ?>">Cancel</button>
+                <button class="edit-button" id="edit-button" data-id="<?= $item->scheduleid ?>" >Edit</button>
+                <button class="delete-button" data-id="<?= $item->scheduleid ?>">Cancel</button>
               </div>
             </div>
           <?php endforeach; ?>
@@ -138,7 +151,7 @@
               <option value="Match">Match</option>
             </select>
           </div>
-          <input type="hidden" id="edit-id" name="id">
+          <input type="hidden" id="edit-id" name="shduleid">
           <div class="form-actions">
             <button type="submit" class="submit-button">Save Changes</button>
           </div>
@@ -161,7 +174,7 @@
           <p><strong>Time:</strong> <span id="cancel-time"></span></p>
         </div>
         <form id="cancel-form" action="<?=ROOT?>/sportscaptain/Schedule/deleteschedule" method="POST">
-          <input type="hidden" id="cancel-id" name="id">
+          <input type="hidden" id="cancel-id" name="scheduleid">
           <div class="form-actions">
             <button type="submit" class="submit-button">Confirm Cancel</button>
           </div>

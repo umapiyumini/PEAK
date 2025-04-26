@@ -115,6 +115,19 @@
 
 
         </div>
+
+        <!-- Add this right before the closing </body> tag in your contact.view.php file -->
+<div id="messageModal" class="popup" style="display:none;">
+    <div class="popup-content">
+        <span class="close-icon" onclick="closeMessageModal()">&times;</span>
+        <h3>Message Sent</h3>
+        <p>Thank you for your message. We will get back to you as soon as possible.</p>
+        <div class="popup-buttons">
+            <button type="button" class="confirm-btn" onclick="closeMessageModal()">OK</button>
+        </div>
+    </div>
+</div>
+
       
     </body>
     <script>
@@ -197,6 +210,27 @@ document.querySelectorAll('.star').forEach(star => {
     });
 });
 
+// Check for success message in session and show popup
+document.addEventListener('DOMContentLoaded', function() {
+    <?php if(isset($_SESSION['success_message'])): ?>
+        showMessageModal();
+        <?php unset($_SESSION['success_message']); ?>
+    <?php endif; ?>
+});
+
+function showMessageModal() {
+    document.getElementById('messageModal').style.display = 'flex';
+    setTimeout(() => {
+        document.querySelector('#messageModal .popup-content').classList.add('active');
+    }, 10);
+}
+
+function closeMessageModal() {
+    document.querySelector('#messageModal .popup-content').classList.remove('active');
+    setTimeout(() => {
+        document.getElementById('messageModal').style.display = 'none';
+    }, 300);
+}
 
     </script>
 </html>
