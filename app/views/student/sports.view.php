@@ -103,7 +103,7 @@
 <div class="container">
     <div class="sports-grid">
         <div class="sport-card">
-            <a href="swimming">
+            <a href="<?=ROOT ?>/student/Swimming">
                 <div class="sport-image">
                     <img src="/api/placeholder/400/320" alt="Basketball player dunking" />
                 </div>
@@ -112,7 +112,7 @@
         </div>
         
         <div class="sport-card">
-            <a href="swimming">
+            <a href="<?=ROOT ?>/student/Swimming">
                 <div class="sport-image">
                     <img src="/api/placeholder/400/320" alt="Soccer player kicking ball" />
                 </div>
@@ -121,7 +121,7 @@
         </div>
         
         <div class="sport-card">
-            <a href="swimming">
+            <a href="<?=ROOT ?>/student/Swimming">
                 <div class="sport-image">
                     <img src="/api/placeholder/400/320" alt="Tennis player serving" />
                 </div>
@@ -130,7 +130,7 @@
         </div>
         
         <div class="sport-card">
-            <a href="swimming">
+            <a href="<?=ROOT ?>/student/Swimming">
                 <div class="sport-image">
                     <img src="/api/placeholder/400/320" alt="Swimming competition" />
                 </div>
@@ -139,7 +139,7 @@
         </div>
         
         <div class="sport-card">
-            <a href="swimming">
+            <a href="<?=ROOT ?>/student/Swimming">
                 <div class="sport-image">
                     <img src="/api/placeholder/400/320" alt="Baseball player batting" />
                 </div>

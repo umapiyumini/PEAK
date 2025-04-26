@@ -109,7 +109,6 @@
 </head>
 <body>
 
-<?php include 'nav.view.php';?>
 
 <div class="container">
     <div class="card">
@@ -134,11 +133,7 @@
                     <input type="text" id="registration-id" placeholder="Enter Registration Number" name="RegistrationNumber">
                 </div>
 
-                <div class="form-group">
-                    <label for="year">Year of Achievement</label>
-                    <p class="errors"><?php if (!empty($errors['Year'])) { echo $errors['Year']; } ?></p>
-                    <input type="text" id="year" placeholder="Enter Year of Achievement" name="Year">
-                </div>
+              
 
                 <div class="form-group">
                     <label for="sport-name">Sport Name</label>
@@ -147,15 +142,11 @@
                 </div>
 
                 <div class="form-group">
-                    <label for="achievement">Achievement</label>
-                    <p class="errors"><?php if (!empty($errors['Achievement'])) { echo $errors['Achievement']; } ?></p>
-                    <select id="achievement" name="Achievement">
-                        <option value="Interuni">Interuni</option>
-                        <option value="Interfaculty">Interfaculty</option>
-                        <option value="Freshers">Freshers</option>
-                        <option value="SLUG">SLUG</option>
-                    </select>
-                </div>
+    <label for="achievement">Achievement</label>
+    <p class="errors"><?php if (!empty($errors['achievement'])) echo $errors['achievement']; ?></p>
+    <input type="text" id="achievement" name="achievement" placeholder="Enter Achievement">
+</div>
+
 
                 <button type="submit" class="submit-btn">Submit</button>
             </form>

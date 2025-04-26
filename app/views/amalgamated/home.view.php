@@ -688,8 +688,8 @@ include 'nav.view.php';
                 
                         <p class="contentn"><strong></strong><?= htmlspecialchars(is_array($notice) ? $notice['content'] : $notice->content) ?></p>
                        
-                        <button type='submit' class='view-btn' onclick="navigateToviewNotice('<?= is_array($notice) ? $notice['noticeid'] : $notice->noticeid ?>')">view</button>
-                        <button type='submit' class='view-btn' onclick="navigateTodeleteNotice('<?= is_array($notice) ? $notice['noticeid'] : $notice->noticeid ?>')">Delete</button>
+                        <button type='submit' class='view-btn' id="view-btn" onclick="navigateToviewNotice('<?= is_array($notice) ? $notice['noticeid'] : $notice->noticeid ?>')">view</button>
+                        <button type='submit' class='view-btn' id="delete-btn"  onclick="navigateTodeleteNotice('<?= is_array($notice) ? $notice['noticeid'] : $notice->noticeid ?>')">Delete</button>
                     </div>
                 <?php endforeach; ?>
             <?php endif; ?>
@@ -715,12 +715,23 @@ include 'nav.view.php';
 			 
 		 
 	 </section>
-   
+	<script src="<?=ROOT?>/assets/js/amar/nav.js"></script>
+    <script>
+        const addbtn = document.querySelector('.styled-button');
+        const viewbtn = document.querySelector('.view-btn');
+        const deletebtn = document.querySelector('.delete-btn');
+      
+        addbtn.addEventListener('click', function() {
+            window.location.href = '<?=ROOT?>/amalgamated/Addnotice';
+        });
 
+        function navigateToviewNotice(noticeId) {
+            window.location.href = '<?=ROOT?>/amalgamated/viewNotice/' + noticeId;
+        }
 
-
-
-  </script>
-	<script src="navbar.js"></script>
+        function navigateTodeleteNotice(noticeId) {
+            window.location.href = '<?=ROOT?>/amalgamated/Removenotice/' + noticeId;
+        }
+    </script>
 </body>
 </html>

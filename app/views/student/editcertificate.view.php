@@ -123,30 +123,20 @@
                         <input type="number" id="RequestId" placeholder="" name="RequestId" value="<?= $data['RequestId'] ?>" readonly>
                     </div>
                     
-                <div class="form-group">
-                    <label for="name">Full Name</label>
+               
+                    <div class="form-group">
+                    <label for="name">Tournament</label>
                      <!-- error start -->
-                     <p class="errors"><?php
-                            if (!empty($errors['Name'])) {
-                                echo $errors['Name'];
+                     <p class="errors">
+                     <?php 
+                            if(!empty($errors['tournament']))
+                            {
+                                echo $errors['tournament'];
                             }
-                        ?>
+                            ?>
                         </p>
                         <!-- error end  -->
-                    <input type="text" id="name" placeholder="Enter Full Name" name="Name">
-                </div>
-
-                <div class="form-group">
-                    <label for="registration-id">Student Registration Number</label>
-                     <!-- error start -->
-                     <p class="errors"><?php
-                            if (!empty($errors['RegistrationNumber'])) {
-                                echo $errors['RegistrationNumber'];
-                            }
-                        ?>
-                        </p>
-                        <!-- error end  -->
-                    <input type="text" id="registration-id" placeholder="Enter Registration Number" name="RegistrationNumber">
+                    <input type="text" id="tournament" placeholder="Enter the Tournament Name" name="tournament">
                 </div>
 
                 <div class="form-group">

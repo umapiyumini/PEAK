@@ -119,6 +119,7 @@
             text-decoration: none;
             font-weight: bold;
             border-radius: 5px;
+            margin-top: 20px;
         }
         .back-button:hover, .join-button:hover {
             background-color: #0a3880;
@@ -138,7 +139,7 @@
 <div class="container">
     <div class="button-row">
         <a href="sports" class="back-button">Back to All Sports</a>
-        <a href="membership" class="join-button">Join</a>
+        <a href="<?=ROOT ?>/student/Recruitement" class="join-button">Join</a>
     </div>
 
     <div class="sport-details">

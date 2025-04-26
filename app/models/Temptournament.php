@@ -35,5 +35,11 @@ class Temptournament{
         return empty($this->errors);
     }
 
+    public function getAll1() {
+        $sql = "SELECT * FROM temp_tournaments";
+        return $this->query($sql);
+    }
+    
+
   
 }

@@ -67,6 +67,7 @@
   </style>
 </head>
 <body>
+<?php include 'nav.view.php'; ?>
   <div class="container">
     <h1 style="color: #4a148c; text-align: center;">Pool Booking System</h1>
 

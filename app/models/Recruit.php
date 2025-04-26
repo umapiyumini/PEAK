@@ -3,15 +3,16 @@
 class Recruit{
     use Model;
 
+    public $errors;
+
     protected $table = 'recruitments';
     protected $allowed_columns = [
         'recruitmentid  ',
         'regno',
-        'name',
         'faculty',
         'reason',
         'sport_id',
-        'accept'
+        'status'
     ];
 
     public $recruiterrors = [];
@@ -22,21 +23,18 @@ class Recruit{
             $this->recruiterrors['regno'] = 'Registration number is required';
         }
 
-        if (empty($data['name'])) {
-            $this->recruiterrors['name'] = 'Name is required';
-        }   
-
         if (empty($data['faculty'])) {
             $this->recruiterrors['faculty'] = 'Faculty is required';
+        }   
+
+        if (empty($data['sport_id'])) {
+            $this->recruiterrors['sport_id'] = 'Sport ID  is required';
         }
 
         if (empty($data['reason'])) {
             $this->recruiterrors['reason'] = 'Reason is required';
         }
 
-        if (empty($data['accept'])) {
-            $this->recruiterrors['accept'] = 'Accept is required';
-        }
 
        
 
@@ -45,6 +43,12 @@ class Recruit{
         //return true if no errors
         return empty($this->recruiterrors);
     }
+
+    public function getAll() {
+        $sql = "SELECT * FROM recruitments";
+        return $this->query($sql);
+    }
+    
   
 
 

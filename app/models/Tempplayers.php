@@ -27,5 +27,11 @@ class Tempplayers{
         return empty($this->errors);
     }
 
+    public function getAll2() {
+        $sql = "SELECT * FROM temp_players";
+        return $this->query($sql);
+    }
+    
+
   
 }

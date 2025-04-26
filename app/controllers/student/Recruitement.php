@@ -1,3 +1,6 @@
+
+
+
 <?php
 class Recruitement extends Controller{
    public function index(){
@@ -9,20 +12,27 @@ class Recruitement extends Controller{
 
         $data = [
             'regno' => $_POST['regno'],
-            'name' => $_POST['name'],
             'faculty' => $_POST['faculty'],
             'reason' => $_POST['reason'],  
-            'accept' => $_SESSION['accept']
+            'sport_id' => $_POST['sport_id'],
+            'status' => $_POST['status']
         ];
+
+        //show($data);
+        
 
         $recruitment = new Recruit();
 
+        //$r = $recruitment->validate($data);
+        //show($r);
+
         if($recruitment->validate($data))
-        {
+        {   
+            show($data);
             $isInserted = $recruitment->insert($data);
 
-            if (!$isInserted){
-                redirect('student/recruitement');
+            if ($isInserted){
+                header('Location: ' . ROOT . '/student/Recruitement');
             }
             
         }else {
@@ -38,8 +48,9 @@ class Recruitement extends Controller{
         }
     } else {
         $recruitment = new Recruit();
-        $recruitmentData = $recruitment->where(['sport_id' => $_SESSION['sport_id']]);
-        // show($result);
+        // show( $_SESSION['recruitmentid']);
+        $recruitmentData = $recruitment->getAll();
+        //show($recruitmentData);
         $data = [
             'recuruitmentdata' => $recruitmentData, 
         ];
@@ -60,12 +71,12 @@ public function edit()
             'name' => $_POST['name'],
             'faculty' => $_POST['faculty'],
             'reason' => $_POST['reason'],  
-            'accept' => $_SESSION['accept']
+            'status' => $_POST['status']
         ];
 
         $recruitment = new Recruit();
 
-        if($medicalrequest->validate($data))
+        if($recruitment->validate($data))
         {
             $RecruitmentId = $_POST['recruitmentid'];
             $isUpdated = $recruitment->update($RecruitmentId, $data, 'recruitmentid');
@@ -101,13 +112,13 @@ public function edit()
 //Delete Function
 public function delete()
 {
-    if (isset($_GET['RequestId'])) {
-        $RequestId = $_GET['RequestId'];
-        $medicalrequest = new Recruit();
-        $isDeleted = $medicalrequest->delete($RequestId, 'RequestID');
+    if (isset($_GET['recruitmentid'])) {
+        $Recruitmentid = $_GET['recruitmentid'];
+        $recruitment = new Recruit();
+        $isDeleted = $recruitment->delete($Recruitmentid, 'recruitmentid');
         //DELETE FUNCTION RETURN TRUE IF THE DATA IS NOT DELETED
         if (!$isDeleted) {
-            redirect('student/Medical');
+            redirect('student/Recruitement');
         } else {
             // Handle deletion failure (optional)
             echo "Failed to delete the medical request.";

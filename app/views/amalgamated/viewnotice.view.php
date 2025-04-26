@@ -77,7 +77,7 @@
     <?php include 'nav.view.php'; ?>
 
     <div class="form-container" id="notice-form">
-        <h1>Add New Notice</h1>
+        <h1>Edit Notice</h1>
         <form action="<?= ROOT ?>/amalgamated/Editnotice/<?= $notice->noticeid ?>" method="POST" id='notice-form'>
   
             <div class="form-group">

@@ -11,21 +11,22 @@ class Certification extends Controller{
             //Get DATA
 
             $data = [
-                'Name' => $_POST['Name'],
-                'RegistrationNumber' => $_POST['RegistrationNumber'],
+                'tournament' => $_POST['tournament'],
                 'Year' => $_POST['Year'],
                 'Sport' => $_POST['Sport'],  
                 'UserID' => $_SESSION['userid'],
             ];
+           
 
             $certificaterequest = new Certificaterequest();
 
             if($certificaterequest->validate($data))
             {
+               
                 $isInserted = $certificaterequest->insert($data);
 
                 if ($isInserted){
-                    redirect('student/certification');
+                    redirect('student/Certification');
                 }
                 
             }else {
@@ -62,11 +63,10 @@ class Certification extends Controller{
             //Get DATA
 
             $data = [
-                'Name' => $_POST['Name'],
-                'RegistrationNumber' => $_POST['RegistrationNumber'],
+                'tournament' => $_POST['tournament'],
                 'Year' => $_POST['Year'],
                 'Sport' => $_POST['Sport'],  
-                'UserID' => $_SESSION['userid'],
+                'UserID' => $_SESSION['userid']
             ];
 
             $certificaterequest = new Certificaterequest();

@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Certificate Request</title>
+    <title>Approval Form</title>
     <style>
         * {
             margin: 0;
@@ -56,18 +56,14 @@
             color: #333;
         }
 
-        input[type="text"],
-        textarea {
+        input[type="text"],input[type="number"],
+        textarea,
+        select {
             width: 100%;
             padding: 12px;
             border: 1px solid #ddd;
             border-radius: 4px;
             font-size: 16px;
-        }
-
-        textarea {
-            height: 120px;
-            resize: vertical;
         }
 
         .submit-btn {
@@ -114,50 +110,50 @@
 
 <div class="container">
     <div class="card">
-        <div class="form-container" id="certificate-form">
-            <h1>Certificate Request</h1>
-            <form method="POST" action="<?= ROOT ?>/student/Certification/">
-                <div class="form-group">
-                    <label for="name">Tournament</label>
-                     <!-- error start -->
-                     <p class="errors">
-                     <?php 
-                            if(!empty($errors['tournament']))
-                            {
-                                echo $errors['tournament'];
-                            }
-                            ?>
-                        </p>
-                        <!-- error end  -->
-                    <input type="text" id="tournament" placeholder="Enter the Tournament Name" name="tournament">
-                </div>
+        <div class="form-container">
+            <h1>Approval Form</h1>
+            <form method="POST" action="<?= ROOT ?>/student/Recruitement/Edit">
 
+            <div class="form-group">
+                        <label for="name">Request Id</label>
+                        <input type="number" id="RequestId" placeholder="" name="recruitmentid" value="<?= $data['recruitmentid'] ?>" readonly>
+                    </div>
+
+
+            
                 
-
                 <div class="form-group">
-                    <label for="year">Year of Achievement</label>
-                     <!-- error start -->
-                     <p class="errors"><?php
-                            if (!empty($errors['Year'])) {
-                                echo $errors['Year'];
-                            }
-                        ?>
-                        </p>
-                        <!-- error end  -->
-                    <input type="text" id="year" placeholder="Enter Year of Achievement" name="Year">
+                    <label for="reg-no">Registration Number</label>
+                    <p class="errors"><?php if (!empty($errors['regno'])) echo $errors['regno']; ?></p>
+                    <input type="text" id="reg-no" name="regno" placeholder="Enter Registration Number">
                 </div>
 
                 <div class="form-group">
-                    <label for="sport-name">Sport Name</label>
-                     <!-- error start -->
-                     <p class="errors"><?php
-                            if (!empty($errors['Sport'])) {
-                                echo $errors['Sport'];
-                            }
-                        ?>
-                        </p>
-                        <!-- error end  -->
-                    <input type="text" id="sport-name" placeholder="Enter Sport Name" name="Sport">
+                    <label for="name">Name</label>
+                    <p class="errors"><?php if (!empty($errors['name'])) echo $errors['name']; ?></p>
+                    <input type="text" id="name" name="name" placeholder="Enter Full Name">
+                </div>
+
+                <div class="form-group">
+                    <label for="faculty">Faculty</label>
+                    <p class="errors"><?php if (!empty($errors['faculty'])) echo $errors['faculty']; ?></p>
+                    <input type="text" id="faculty" name="faculty" placeholder="Enter Faculty">
+                </div>
+
+                <div class="form-group">
+                    <label for="reason">Reason</label>
+                    <p class="errors"><?php if (!empty($errors['reason'])) echo $errors['reason']; ?></p>
+                    <textarea id="reason" name="reason" rows="4" placeholder="Enter Reason"></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label for="status">Status</label>
+                    <p class="errors"><?php if (!empty($errors['accept'])) echo $errors['accept']; ?></p>
+                    <select id="status" name="accept">
+                        <option value="">Select</option>
+                        <option value=1>Accepted</option>
+                        <option value=0>Not Accepted</option>
+                    </select>
                 </div>
 
                 <button type="submit" class="submit-btn">Submit</button>
@@ -165,5 +161,6 @@
         </div>
     </div>
 </div>
+
 </body>
 </html>

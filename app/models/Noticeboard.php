@@ -3,6 +3,8 @@
 class Noticeboard{
     use Model;
 
+    public $errors;
+
     protected $table = 'noticeboard';
 
     protected $allowedColumns = [
@@ -33,6 +35,8 @@ class Noticeboard{
         if(empty($data['publishtime'])){
             $this->errors['publishtime'] = 'publlishtime is required';
         }
+
+      
 
         //var_dump($this->errors);
         return empty($this->errors);

@@ -138,16 +138,11 @@
                 </div>
 
                 <div class="form-group">
-                    <label for="achievement">Achievement</label>
-                    <p class="errors"><?php if (!empty($errors['achievement'])) echo $errors['achievement']; ?></p>
-                    <select id="achievement" name="achievement">
-                        <option value="">-- Select Achievement --</option>
-                        <option value="Freshers">Freshers</option>
-                        <option value="Interfaculty">Interfaculty</option>
-                        <option value="Interuni">Interuni</option>
-                        <option value="SLUG">SLUG</option>
-                    </select>
-                </div>
+    <label for="achievement">Achievement</label>
+    <p class="errors"><?php if (!empty($errors['achievement'])) echo $errors['achievement']; ?></p>
+    <input type="text" id="achievement" name="achievement" placeholder="Enter Achievement">
+</div>
+
 
                 <button type="submit" class="submit-btn">Submit</button>
             </form>

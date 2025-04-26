@@ -209,7 +209,8 @@
                                 <td><?= $medicalRequest->TimePeriod ?></td>
                                 <td>
                                     <button class="action-btn view-btn" 
-                                        onclick="openModal('<?= $medicalRequest->RequestID ?>', '<?= htmlspecialchars($medicalRequest->ReasonForMedical, ENT_QUOTES) ?>', '<?= $medicalRequest->TimePeriod ?>')">
+                                        onclick="openModal('<?= $medicalRequest->RequestID ?>',
+                                         '<?= htmlspecialchars($medicalRequest->ReasonForMedical, ENT_QUOTES) ?>', '<?= $medicalRequest->TimePeriod ?>')">
                                         View
                                     </button>
                                     <?php $RequestId = $medicalRequest->RequestID ?>
@@ -234,16 +235,7 @@
         </div>
     </div>
 
-    <!-- Modal -->
-    <div id="viewModal" class="modal">
-        <div class="modal-content">
-            <span class="close" onclick="closeModal()">&times;</span>
-            <h3>Medical Request Details</h3>
-            <p><strong>Request ID:</strong> <span id="modalRequestID"></span></p>
-            <p><strong>Reason:</strong> <span id="modalReason"></span></p>
-            <p><strong>Duration:</strong> <span id="modalDuration"></span></p>
-        </div>
-    </div>
+    
 
     <script>
         function confirmDelete(id) {

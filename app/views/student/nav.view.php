@@ -29,7 +29,7 @@
         <!-- DashBoard -->
            <!-- profile -->
         <li class="nav-item">
-                <a href="home" class="nav-link">
+                <a href="<?=ROOT ?>/student/Home" class="nav-link">
                 <i class="fa-solid fa-gauge"></i>
                    Home
                 </a>
@@ -38,7 +38,7 @@
 
         <!-- profile -->
         <li class="nav-item">
-                <a href="profile" class="nav-link">
+                <a href="<?=ROOT ?>/student/Profile" class="nav-link">
                 <i class="fa-regular fa-user"></i>
                     Profile
                 </a>
@@ -46,7 +46,7 @@
 
             <!-- sportsblog -->
             <li class="nav-item">
-                <a href="sports" class="nav-link">
+                <a href="<?=ROOT ?>/student/Sports" class="nav-link">
                 <i class="fa-solid fa-basketball"></i>
                     Sport 
                 </a>
@@ -58,7 +58,7 @@
 
               <!-- pool  -->
             <li class="nav-item">
-                <a href="pool" class="nav-link">
+                <a href="<?=ROOT ?>/student/Pool" class="nav-link">
                     
                 <i class="fa-solid fa-person-swimming fa-lg"></i>
                     Pool
@@ -68,22 +68,19 @@
 
               <!-- Tournament -->
               <li class="nav-item">
-                <a href="tournament" class="nav-link">
+                <a href="<?=ROOT ?>/student/Tournament" class="nav-link">
                     
                 <i class="fa-solid fa-volleyball"></i>
                     Tournament
                 </a>
             </li>
 
+
             
-              <!-- Tournament -->
-              <li class="nav-item">
-                <a href="recruitement" class="nav-link">
-                    
-                <i class="fa-solid fa-volleyball"></i>
-                    Recruitements
-                </a>
-            </li>
+
+
+            
+             
 
              
 
@@ -100,9 +97,9 @@
                     <i class="arrow"></i>
                 </a>
                 <div class="dropdown">
-                    <a href="medical" class="dropdown-link">Medical</a>
-                    <a href="certification" class="dropdown-link">Certifications</a>
-                    <a href="enhancement" class="dropdown-link">Enhancement</a>
+                    <a href="<?=ROOT ?>/student/Medical" class="dropdown-link">Medical</a>
+                    <a href="<?=ROOT ?>/student/Certification" class="dropdown-link">Certifications</a>
+                    <a href="<?=ROOT ?>/student/Enhancement" class="dropdown-link">Enhancement</a>
 
                 </div>
             </li>

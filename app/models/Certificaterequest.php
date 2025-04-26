@@ -7,11 +7,13 @@ class Certificaterequest{
 
     protected $allowedColumns = [
         'RequestID',
-        'Name',
+        'tournament',
         'RegistrationNumber',
         'Year',
         'Sport',
+        'date',
         'UserID',
+        'status'
         
         
     ];
@@ -19,12 +21,8 @@ class Certificaterequest{
     public function validate($data){
         $this->errors = [];
 
-        if(empty($data['Name'])){
-            $this->errors['Name'] = 'Name is required';
-        }
-
-        if(empty($data['RegistrationNumber'])){
-            $this->errors['RegistrationNumber'] = 'RegistrationNumber is required';
+        if(empty($data['tournament'])){
+            $this->errors['tournament'] = 'Tournament is required';
         }
 
         if(empty($data['Year'])){
@@ -34,6 +32,8 @@ class Certificaterequest{
         if(empty($data['Sport'])){
             $this->errors['Sport'] = 'Sport is required';
         }
+
+        
 
         //var_dump($this->errors);
         return empty($this->errors);

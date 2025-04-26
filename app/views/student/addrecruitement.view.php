@@ -106,24 +106,20 @@
 </head>
 <body>
 
-<?php include 'nav.view.php';?>
+
+
 
 <div class="container">
     <div class="card">
         <div class="form-container">
             <h1>Approval Form</h1>
-            <form method="POST" action="<?= ROOT ?>/student/Approva/">
+            <form method="POST" action="<?= ROOT ?>/student/Recruitement/">
                 <div class="form-group">
                     <label for="reg-no">Registration Number</label>
-                    <p class="errors"><?php if (!empty($errors['registration_no'])) echo $errors['registration_no']; ?></p>
-                    <input type="text" id="reg-no" name="registration_no" placeholder="Enter Registration Number">
+                    <p class="errors"><?php if (!empty($errors['regno'])) echo $errors['regno']; ?></p>
+                    <input type="text" id="reg-no" name="regno" placeholder="Enter Registration Number">
                 </div>
 
-                <div class="form-group">
-                    <label for="name">Name</label>
-                    <p class="errors"><?php if (!empty($errors['name'])) echo $errors['name']; ?></p>
-                    <input type="text" id="name" name="name" placeholder="Enter Full Name">
-                </div>
 
                 <div class="form-group">
                     <label for="faculty">Faculty</label>
@@ -131,21 +127,39 @@
                     <input type="text" id="faculty" name="faculty" placeholder="Enter Faculty">
                 </div>
 
+
+                
+                <div class="form-group">
+    <label for="name">Sport</label>
+    <p class="errors"><?php if (!empty($errors['name'])) echo $errors['name']; ?></p>
+    <select id="name" name="sport_id">
+        
+        <option value="1">Cricket</option>
+        <option value="2">Baseball</option>
+        <option value="3">Hockey</option>
+        <option value="4">Football</option>
+        
+    </select>
+</div>
+
+
                 <div class="form-group">
                     <label for="reason">Reason</label>
                     <p class="errors"><?php if (!empty($errors['reason'])) echo $errors['reason']; ?></p>
                     <textarea id="reason" name="reason" rows="4" placeholder="Enter Reason"></textarea>
                 </div>
 
-                <div class="form-group">
+                <input type="hidden" name="status" value="pending">
+
+                <!-- <div class="form-group">
                     <label for="status">Status</label>
-                    <p class="errors"><?php if (!empty($errors['status'])) echo $errors['status']; ?></p>
+                    <p class="errors"><?php if (!empty($errors['accept'])) echo $errors['accept']; ?></p>
                     <select id="status" name="status">
                         <option value="">Select</option>
-                        <option value="accepted">Accepted</option>
-                        <option value="notaccepted">Not Accepted</option>
+                        <option value=1>Accepted</option>
+                        <option value=0>Not Accepted</option>
                     </select>
-                </div>
+                </div> -->
 
                 <button type="submit" class="submit-btn">Submit</button>
             </form>

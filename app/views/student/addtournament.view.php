@@ -142,10 +142,6 @@
         }
         
         .col-reg {
-            flex: 2;
-        }
-        
-        .col-year {
             flex: 1;
         }
         
@@ -164,8 +160,6 @@
             background-color: #218838;
         }
         
-       
-        
         .note {
             font-size: 14px;
             color: #666;
@@ -182,10 +176,10 @@
             <h2>Tournament Entry Form</h2>
             
             <div class="form-container">
-                <form id="sportRegistrationForm" action="process_tournament.php" method="<?= ROOT ?>/student/Tournament/">
+                <form id="sportRegistrationForm" action="<?= ROOT ?>/student/Tournament/">
                     <div class="form-group">
                         <label for="sportType">Tournament Type:</label>
-                        <select id="sportType" name="sportType" required>
+                        <select id="sportType" name="sportType" >
                             <option value="">-- Select Tournament Type --</option>
                             <option value="Inter Faculty">Interfaculty Tournament</option>
                             <option value="freshers">Freshers Tournament</option>
@@ -194,7 +188,7 @@
                     
                     <div class="form-group">
                         <label for="faculty">Faculty:</label>
-                        <select id="faculty" name="faculty" required>
+                        <select id="faculty" name="faculty" >
                             <option value="">-- Select Faculty --</option>
                             <option value="UCSC">UCSC</option>
                             <option value="Management">Management</option>
@@ -213,12 +207,18 @@
                     
                     <div class="form-group">
                         <label for="category">Category:</label>
-                        <select id="category" name="category" required>
+                        <select id="category" name="category" >
                             <option value="">-- Select Category --</option>
                             <option value="men">Men</option>
                             <option value="women">Women</option>
                         </select>
                     </div>
+                    
+                    <div class="form-group">
+    <label for="year">Year:</label>
+    <input type="text" id="year" name="year" placeholder="Enter your year">
+</div>
+
                     
                     <!-- Players Registration Section -->
                     <div class="player-section">
@@ -228,7 +228,6 @@
                         <div class="player-header">
                             <div class="col-number">#</div>
                             <div class="col-reg">Registration Number</div>
-                            <div class="col-year">Year</div>
                         </div>
                         
                         <div class="player-rows">
@@ -236,10 +235,7 @@
                             <div class="player-row">
                                 <div class="col-number">1</div>
                                 <div class="col-reg">
-                                    <input type="text" name="regNumber[]" placeholder="Enter registration number" required>
-                                </div>
-                                <div class="col-year">
-                                    <input type="text" name="playerYear[]" placeholder="Enter year" required>
+                                    <input type="text" name="regNumber[]" placeholder="Enter registration number" >
                                 </div>
                             </div>
                             
@@ -249,18 +245,12 @@
                                 <div class="col-reg">
                                     <input type="text" name="regNumber[]" placeholder="Enter registration number">
                                 </div>
-                                <div class="col-year">
-                                    <input type="text" name="playerYear[]" placeholder="Enter year">
-                                </div>
                             </div>
                             
                             <div class="player-row">
                                 <div class="col-number">3</div>
                                 <div class="col-reg">
                                     <input type="text" name="regNumber[]" placeholder="Enter registration number">
-                                </div>
-                                <div class="col-year">
-                                    <input type="text" name="playerYear[]" placeholder="Enter year">
                                 </div>
                             </div>
                             
@@ -269,18 +259,12 @@
                                 <div class="col-reg">
                                     <input type="text" name="regNumber[]" placeholder="Enter registration number">
                                 </div>
-                                <div class="col-year">
-                                    <input type="text" name="playerYear[]" placeholder="Enter year">
-                                </div>
                             </div>
                             
                             <div class="player-row">
                                 <div class="col-number">5</div>
                                 <div class="col-reg">
                                     <input type="text" name="regNumber[]" placeholder="Enter registration number">
-                                </div>
-                                <div class="col-year">
-                                    <input type="text" name="playerYear[]" placeholder="Enter year">
                                 </div>
                             </div>
                         </div>
@@ -290,7 +274,6 @@
                     
                     <div class="button-group">
                         <button type="submit" class="submit-btn">Submit Registration</button>
-                        
                     </div>
                 </form>
             </div>
@@ -302,20 +285,19 @@
         document.getElementById('sportRegistrationForm').addEventListener('submit', function(e) {
             // Get all filled registration numbers
             const regFields = document.querySelectorAll('input[name="regNumber[]"]');
-            const yearFields = document.querySelectorAll('input[name="playerYear[]"]');
             
             let validPlayerCount = 0;
             
-            // Count valid player entries (both reg number and year filled)
+            // Count valid player entries
             for (let i = 0; i < regFields.length; i++) {
-                if (regFields[i].value && yearFields[i].value) {
+                if (regFields[i].value) {
                     validPlayerCount++;
                 }
             }
             
             // Validate at least one player is entered
             if (validPlayerCount === 0) {
-                alert('Please add at least one player with registration number and year');
+                alert('Please add at least one player with registration number');
                 e.preventDefault();
                 return false;
             }
@@ -324,8 +306,9 @@
             const sportType = document.getElementById('sportType').value;
             const faculty = document.getElementById('faculty').value;
             const category = document.getElementById('category').value;
+            const year = document.getElementById('year').value;
             
-            if (!sportType || !faculty || !category) {
+            if (!sportType || !faculty || !category || !year) {
                 alert('Please fill in all required fields');
                 e.preventDefault();
                 return false;

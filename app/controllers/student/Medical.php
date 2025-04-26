@@ -26,7 +26,7 @@ class Medical extends Controller{
                 $isInserted = $medicalrequest->insert($data);
 
                 if ($isInserted){
-                    redirect('student/medical');
+                    redirect('student/Medical');
                 }
                 
             }else {
@@ -75,7 +75,7 @@ class Medical extends Controller{
                 $isUpdated = $medicalrequest->update($RequestId, $data, 'RequestID');
 
                 if (!$isUpdated){
-                    redirect('student/medical');
+                    redirect('student/Medical');
                 }
                 
             }else {
@@ -86,7 +86,7 @@ class Medical extends Controller{
                     'errors' => $errors,
                 ];
                 
-                $this->view('student/Editmedical', $data);
+                $this->view('student/editmedical', $data);
 
             }
         } else {

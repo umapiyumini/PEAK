@@ -1,3 +1,7 @@
+<?php
+    $recruitmentRequests = $data['recuruitmentdata'];
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -31,6 +35,11 @@
             margin-bottom: 20px;
         }
 
+        h1 {
+            font-size: 28px;
+            margin-bottom: 10px;
+        }   
+
         h2 {
             font-size: 22px;
             margin-bottom: 15px;
@@ -51,6 +60,10 @@
 
         .add-btn:hover {
             background-color: #004c99;
+        }
+
+        .table-section {
+            margin-top: 30px;
         }
 
         table {
@@ -92,6 +105,14 @@
             background-color: #218838;
         }
 
+        .edit-btn {
+            background-color: #0066cc;
+        }
+
+        .edit-btn:hover {
+            background-color: #004c99;
+        }
+
         .delete-btn {
             background-color: #dc3545;
         }
@@ -104,6 +125,11 @@
             text-align: center;
             padding: 40px 0;
             color: #6c757d;
+        }
+
+        .empty-state p {
+            margin-bottom: 20px;
+            font-size: 18px;
         }
 
         .modal {
@@ -163,9 +189,9 @@
                         <tr>
                             <th>Request ID</th>
                             <th>Registration Number</th>
-                            <th>Reason</th>
                             <th>Faculty</th>
-                            <th>Status</th>
+                            <th>Reason</th>
+                            <th>Sport</th>
                             <th>Actions</th>
                         </tr>
                     </thead>
@@ -175,9 +201,10 @@
                                 <tr>
                                     <td><?= $request->recruitmentid ?></td>
                                     <td><?= $request->regno ?></td>
-                                    <td><?= $request->reason ?></td>
                                     <td><?= $request->faculty ?></td>
-                                    <td><?= $request->accept ?></td>
+                                    <td><?= $request->reason ?></td>
+                                    
+                                    <td><?= $request->sport_id  ?></td>
                                     <td>
                                         <button class="action-btn view-btn" 
                                             onclick="openModal(
@@ -185,12 +212,18 @@
                                                 '<?= htmlspecialchars($request->regno, ENT_QUOTES) ?>',
                                                 '<?= $request->reason ?>',
                                                 '<?= $request->faculty ?>',
-                                                '<?= htmlspecialchars($request->accept, ENT_QUOTES) ?>'
+                                                '<?= htmlspecialchars($request->sport_id , ENT_QUOTES) ?>'
                                             )">View</button>
-                                        <button class="action-btn delete-btn" onclick="confirmDelete(<?= $request->request_id ?>)">Delete</button>
+                                             <?php $Recruitmentid = $request->recruitmentid ?>
+                                    <button class="action-btn edit-btn" onclick="window.location.href='<?= ROOT ?>/student/Editrecruitement?recruitmentid=<?= $Recruitmentid ?>'">Edit</button>
+                                    <button class="action-btn delete-btn" onclick="confirmDelete(<?= $Recruitmentid ?>)">Delete</button>
                                     </td>
                                 </tr>
                             <?php endforeach; ?>
+                            <?php else:?>
+                            <tr>
+            <td colspan="6" style="text-align: center;">No medical requests to   show</td>
+        </tr>
                         <?php endif;?>
                     </tbody>
                 </table>
@@ -218,7 +251,7 @@
     <script>
         function confirmDelete(id) {
             if (confirm("Are you sure you want to delete this recruitment request?")) {
-                window.location.href = `<?= ROOT ?>/student/Recruitment/delete?request_id=${id}`;
+                window.location.href = `<?= ROOT ?>/student/Recruitement/delete?recruitmentid=${id}`;
             }
         }
 
@@ -241,6 +274,15 @@
                 modal.style.display = "none";
             }
         }
+
+        function deleteRow(btn) {
+            if (confirm('Are you sure you want to delete this medical request?')) {
+                const row = btn.closest('tr');
+                row.remove();
+                checkIfEmpty();
+            }
+        }
+
 
         function checkIfEmpty() {
             const tableBody = document.getElementById('tableBody');

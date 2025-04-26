@@ -194,6 +194,7 @@
                         <thead>
                             <tr>
                                 <th>Request ID</th>
+                                <th>Tournament</th>
                                 <th>Year</th>
                                 <th>Sport</th>
                                 <th>Actions</th>
@@ -203,12 +204,13 @@
                             <?php if(!empty($certificateRequests)):?>
                                 <?php foreach($certificateRequests as $certificaterequest): ?>
                                     <tr>
-                                        <td><?= $certificaterequest->RequestID ?></td>
+                                    <td><?= $certificaterequest->RequestID ?></td>
+                                        <td><?= $certificaterequest->tournament ?></td>
                                         <td><?= $certificaterequest->Year ?></td>
                                         <td><?= $certificaterequest->Sport ?></td>
                                         <td>
                                             <button class="action-btn view-btn" 
-                                                onclick="openModal('<?= $certificaterequest->RequestID ?>', '<?= htmlspecialchars($certificaterequest->Year, ENT_QUOTES) ?>', '<?= $certificaterequest  ->Sport ?>')">
+                                                onclick="openModal('<?= $certificaterequest->RequestID ?>','<?= $certificaterequest->tournament  ?>', '<?= htmlspecialchars($certificaterequest->Year, ENT_QUOTES) ?>', '<?= $certificaterequest  ->Sport ?>')">
                                                 View
                                             </button>
                                             <?php $RequestId = $certificaterequest->RequestID ?>
@@ -219,7 +221,7 @@
                                 <?php endforeach; ?>
                             <?php else:?>
                             <tr>
-            <td colspan="4" style="text-align: center;">No Certificate requests to show</td>
+            <td colspan="5" style="text-align: center;">No Certificate requests to show</td>
         </tr>
     <?php endif; ?>
                         </tbody>
@@ -239,6 +241,7 @@
             <span class="close" onclick="closeModal()">&times;</span>
             <h3>Certificate Request Details</h3>
             <p><strong>Request ID:</strong> <span id="modalRequestID"></span></p>
+            <p><strong>Tournament:</strong> <span id="modaltournament"></span></p>
             <p><strong>Sport:</strong> <span id="modalReason"></span></p>
             <p><strong>Year:</strong> <span id="modalDuration"></span></p>
         </div>
@@ -251,8 +254,9 @@
             }
         }
 
-        function openModal(id, reason, duration) {
+        function openModal(id, tournament,reason, duration) {
             document.getElementById('modalRequestID').innerText = id;
+            document.getElementById('modaltournament').innerText = tournament;
             document.getElementById('modalReason').innerText = reason;
             document.getElementById('modalDuration').innerText = duration;
             document.getElementById('viewModal').style.display = 'block';
