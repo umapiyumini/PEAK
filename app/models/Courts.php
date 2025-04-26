@@ -15,6 +15,9 @@ class Courts {
         return $_SESSION['userid'];
     }
 
+
+    //used 
+
     // Fetch all courts
     public function getAllCourts() {
         // Query to select all records from the courts table
@@ -23,6 +26,20 @@ class Courts {
         // Use the query method from the Database trait to execute the query
         return $this->query($query);
     }
+
+
+    public function getCourtById($id) {
+        $query = "SELECT * FROM $this->table WHERE courtid = :id";
+        $result = $this->query($query, ['id' => $id]);
+        return $result ? $result[0] : null;
+    }
+
+    //not yet
+
+
+
+    
+    
 
 
      // Fetch courts by location
@@ -76,11 +93,7 @@ class Courts {
     }
 
     
-    public function getCourtById($id) {
-        $query = "SELECT * FROM $this->table WHERE courtid = :id";
-        $result = $this->query($query, ['id' => $id]);
-        return $result ? $result[0] : null;
-    }
+    
     
     public function getSectionByCourtid($courtid) {
         $query = "SELECT section FROM courts WHERE courtid = :courtid LIMIT 1";
@@ -100,8 +113,29 @@ class Courts {
         $query = "DELETE FROM $this->table WHERE courtid = :courtid";
         return $this->query($query, ['courtid' => $courtid]);
     }
+
+    public function getGroundCourtsBySection(){
+        $query = "SELECT * FROM $this->table WHERE location = 'ground' 
+          AND section IS NOT NULL 
+          AND section != ''";
+        return $this->query($query);
+    }
+
+    public function getIndoorCourtsBySection(){
+        $query = "SELECT * FROM $this->table WHERE location = 'indoor' 
+          AND section IS NOT NULL 
+          AND section != ''";
+        return $this->query($query);
+    }
     
 
+
+    public function getCourtByName($name) {
+        $query = "SELECT * FROM {$this->table} WHERE name = :name LIMIT 1";
+        $result = $this->query($query, ['name' => $name]);
+        return $result ? $result[0] : null;
+    }
+    
     
 }
 

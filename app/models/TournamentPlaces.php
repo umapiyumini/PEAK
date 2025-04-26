@@ -26,6 +26,15 @@ class TournamentPlaces
         ];
 
         return $this->query($query, $params);
-        var_dump($params);
+
+
+    }
+
+    public function finddd($rr) {
+        $query = "SELECT * FROM tournament_place tp 
+        JOIN faculties f ON f.facultyid= tp.faculty_id
+        where tp.tournament_id = $rr->recordid ORDER BY place ASC";
+        return $this->query($query);
+
     }
 }

@@ -1,56 +1,63 @@
 <?php
-    class Interfaculty_tournaments extends Controller{
-        public function index(){
-            $tournamentModel = new InterfacultyTournaments();
-            $tournamentList = $tournamentModel->findAllTournaments();
+class Interfaculty_tournaments extends Controller {
+    public function index() {   
+        $interfacultymodel = new TournamentRecord();
+        $tournamentplaceModel = new TournamentPlaces();
+        $tournamentPlayerModel = new TournamentPlayers(); 
+        
+        $tournaments = $interfacultymodel->findInterfacultyRecords();
+        $freshers = $interfacultymodel-> findFreshersRecords();
+        $interfacultyrecords = array(); 
+        $freshersrecords = array(); 
 
-            $freshersModel = new Freshers();
-            $freshersList = $freshersModel->findAllTournaments();
+        foreach($tournaments as $tournament) {
+            // Get places for this tournament
+            $places = $tournamentplaceModel->finddd($tournament);
             
-            $this->view('ped_incharge/interfaculty_tournaments',['tournamentList'=>$tournamentList, 'freshersList'=>$freshersList]);
+            if ($places) {
+                // Create an array to store tournament data with places
+                $tournamentData = [
+                    'tournament_info' => $tournament,
+                    'places' => []
+                ];
+                
+                // Add each place to the tournament data
+                foreach($places as $place) {
+                    $tournamentData['places'][$place->place] = $place;
+                    
+                    // Get players for this place (you'll need to implement this method)
+                    $players = $tournamentPlayerModel->findPlayersByPlaceId($place->placeid);
+                    $tournamentData['places'][$place->place]->players = $players;
+                }
+                
+                $interfacultyrecords[] = $tournamentData;
+            }
         }
 
-        public function saveTournament() {
-            $sportModel = new Sport();
-            $sportid = $sportModel->findSportId($_POST['sportInput']);
-            $_POST['sport_id'] = $sportid[0]->sport_id;
-
-            $tournamentModel = new InterfacultyTournaments();
-            $tournamentModel->saveTournament($_POST);
+        foreach($freshers as $tournament) {
+            // Get places for this tournament
+            $places = $tournamentplaceModel->finddd($tournament);
             
-            header('Location: ' . ROOT . '/ped_incharge/interfaculty_tournaments');
+            if ($places) {
+                // Create an array to store tournament data with places
+                $tournamentData = [
+                    'tournament_info' => $tournament,
+                    'places' => []
+                ];
+                
+                // Add each place to the tournament data
+                foreach($places as $place) {
+                    $tournamentData['places'][$place->place] = $place;
+                    
+                    // Get players for this place (you'll need to implement this method)
+                    $players = $tournamentPlayerModel->findPlayersByPlaceId($place->placeid);
+                    $tournamentData['places'][$place->place]->players = $players;
+                }
+                
+                $freshersrecords[] = $tournamentData;
+            }
         }
-
-        public function deleteTournament($id) {
-            $tournamentModel = new InterfacultyTournaments();
-            $tournamentModel->deleteTournament($id);
-            
-            header('Location: ' . ROOT . '/ped_incharge/interfaculty_tournaments');
-        }
-
-        public function saveFreshersTournament() {
-            $sportModel = new Sport();
-            $sportid = $sportModel->findSportId($_POST['sportInput']);
-            $_POST['sport_id'] = $sportid[0]->sport_id;
-
-            $tournamentModel = new Freshers();
-            $tournamentModel->saveFreshersTournament($_POST);
-            
-            header('Location: ' . ROOT . '/ped_incharge/interfaculty_tournaments');
-        }
-
-        public function deleteFreshersTournament($id) {
-            $tournamentModel = new freshers();
-            $tournamentModel->deleteFreshersTournament($id);
-            
-            header('Location: ' . ROOT . '/ped_incharge/interfaculty_tournaments');
-        }
-
-        public function getParticipants($tournamentId){
-            $tournamentPlayerModel = new Interfaculty_player();
-            $participants = $tournamentPlayerModel->getParticipantsByTournamentId($tournamentId);
-            echo json_encode($participants);
-        }
-
+        
+        $this->view('ped_incharge/interfaculty_tournaments', ['interfacultyrecords' => $interfacultyrecords, 'freshersrecords' => $freshersrecords]);
     }
-
+}

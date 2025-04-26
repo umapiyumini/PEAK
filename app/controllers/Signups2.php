@@ -33,4 +33,5 @@ class Signups2 extends Controller{
 
         $this->view('signups2', $data);
     }
+    
 }

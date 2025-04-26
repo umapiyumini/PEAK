@@ -23,28 +23,29 @@
             before uploading the proof.
         </p>
 
-        <?php if (session_status() === PHP_SESSION_NONE) session_start(); ?>
         <?php if (!empty($_SESSION['payment_success'])): ?>
-          <script>
-            window.onload = function() {
-              const modal = document.getElementById("confirmationModal");
-              const closeBtn = document.querySelector(".close");
-              modal.style.display = "block";
-              closeBtn.onclick = function () {
-                  modal.style.display = "none";
-              };
-              window.onclick = function (event) {
-                  if (event.target == modal) {
-                      modal.style.display = "none";
-                  }
-              };
-            };
-          </script>
-          <?php unset($_SESSION['payment_success']); ?>
-        <?php endif; ?>
+  <script>
+    window.onload = function() {
+      const modal = document.getElementById("confirmationModal");
+      const closeBtn = document.querySelector(".close");
+      modal.style.display = "block";
+      closeBtn.onclick = function () {
+          modal.style.display = "none";
+      };
+      window.onclick = function (event) {
+          if (event.target == modal) {
+              modal.style.display = "none";
+          }
+      };
+    };
+  </script>
+  <?php unset($_SESSION['payment_success']); ?>
+<?php endif; ?>
 
-        <form action="<?= ROOT ?>/external/pay/submitPayment" method="POST" enctype="multipart/form-data" >
-            <div>
+
+        
+        <form id="paymentForm" action="<?= ROOT ?>/external/pay/submitPayment" method="POST" enctype="multipart/form-data" onsubmit="return validateAndSubmit(event)">    
+        <div>
                 <label for="reservationid">Reservation ID</label>
                 <input type="text" id="reservationid" name="reservationid" 
                     value="<?= isset($_POST['reservationid']) ? htmlspecialchars($_POST['reservationid']) : '' ?>" 
@@ -67,38 +68,42 @@
         </div>
         
         <!-- Confirmation Modal -->
-        <div id="confirmationModal" class="modal">
+        <div id="confirmationModal" class="modal" style="display: none;">
           <div class="modal-content">
             <span class="close">&times;</span>
             <p>✅ Your payment proof was submitted successfully. It will be checked and confirmed soon.</p>
           </div>
         </div>
+
+        
+
+
+
+
+</div>
+
         <script>
-            document.addEventListener('DOMContentLoaded', function() {
+           function validateAndSubmit(event) {
+    event.preventDefault(); // Prevent default form submission
+    
+    // Check if file is selected
+    const fileInput = document.getElementById('paymentproof');
+    if (!fileInput.files.length) {
+        alert('Please select a payment proof file');
+        return false;
+    }
+    
+    // Show the modal
     const modal = document.getElementById('confirmationModal');
-    const closeBtn = modal.querySelector('.close');
-
-    function closeModal() {
-        modal.style.display = 'none';
-    }
-
-    if (modal && closeBtn) {
-        closeBtn.addEventListener('click', closeModal);
-
-        // Close modal when clicking outside the modal content
-        modal.addEventListener('click', function(event) {
-            if (event.target === modal) {
-                closeModal();
-            }
-        });
-    }
-
-    // Function to show modal
-    window.showModal = function() {
-        modal.style.display = 'block';
-    };
-});
-
+    modal.style.display = 'block';
+    
+    // Submit the form after a short delay to allow the modal to be seen
+    setTimeout(function() {
+        document.getElementById('paymentForm').submit();
+    }, 2000); // 2 seconds delay
+    
+    return false; // Prevent default form submission
+}
             </script>
     </body>
 

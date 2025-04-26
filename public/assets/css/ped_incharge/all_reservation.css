@@ -1,9 +1,7 @@
 @import url(ped.css);
 
 /* all reservations ground */
-/* .reservation-container{
-    margin: 2rem ;
-} */
+
 .reservation {
     background: white;
     border-radius: 8px;
@@ -12,15 +10,15 @@
     box-shadow: 0 2px 4px rgba(0,0,0,0.1);
   }
   
-  .reservation.school {
+  .reservation.external-user{
     border-left: 2rem solid var(--res-external);
   }
   
-  .reservation.club {
+  .reservation.sports-captain{
     border-left: 2rem solid var(--res-sports);
   }
   
-  .reservation.individual {
+  .reservation.admin{
     border-left: 2rem solid var(--res-special);
   }
   
@@ -72,9 +70,34 @@
     padding: 8px 16px;
     border-radius: 4px;
     cursor: pointer;
-    transition: background 0.3s;
+    position: absolute;
+    right: 2rem;
+    bottom: 1rem;
+    margin-top: auto;
   }
   
   .cancel-btn:hover {
     background: #c82333;
   }
+
+  .filter-container {
+    display: flex;
+    align-items: center;
+    margin: 15px 0;
+    padding: 0 20px;
+}
+
+.filter-container label {
+    margin-right: 10px;
+    font-weight: bold;
+}
+
+.filter-container select {
+    padding: 8px 12px;
+    border-radius: 4px;
+    border: 1px solid #ddd;
+    background-color: white;
+    font-size: 14px;
+    cursor: pointer;
+}
+

@@ -70,7 +70,7 @@ class Pay extends Controller {
         $result = $this->query($query, $data); // Using the trait's query method
 
         if ($result) {
-            echo "Reservation status updated to 'paid'.";
+            header('Location: ' . ROOT . '/external/reservation');
         } else {
             if (session_status() === PHP_SESSION_NONE) session_start();
                     $_SESSION['payment_success'] = true;

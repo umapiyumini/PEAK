@@ -412,6 +412,62 @@ body{
     border-radius: 10px;
   }
 
+  .popup {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.popup-content {
+    background-color: white;
+    padding: 20px;
+    border-radius: 5px;
+    width: 400px;
+    max-width: 90%;
+    text-align: center;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    transform: scale(0.8);
+    opacity: 0;
+    transition: transform 0.3s, opacity 0.3s;
+}
+
+.popup-content.active {
+    transform: scale(1);
+    opacity: 1;
+}
+
+.close-icon {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    font-size: 24px;
+    cursor: pointer;
+}
+
+.popup-buttons {
+    margin-top: 20px;
+}
+
+.confirm-btn {
+    background-color:var(--mediumpurple);
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.confirm-btn:hover {
+    background-color:var(--darkpurple);
+}
 
 /* -----------feedback---------------- */
 /* Modal background */

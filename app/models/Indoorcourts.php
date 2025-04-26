@@ -10,7 +10,12 @@ class Indoorcourts {
         return $this->table;
     }
 
-    
+    public function getAllIndoorRates() {
+        $query = "SELECT * FROM $this->table ";
+        return $this->query($query);
+    }
+
+
     public function getPriceByDetails($event, $duration, $courtid) {
         // Adjust the query to include courtid
         $query = "SELECT price FROM $this->table WHERE event = :event AND duration = :duration  AND courtid = :courtid LIMIT 1";
@@ -46,5 +51,40 @@ public function getPriceByEventDurationDescription($event, $duration) {
     return false;  // If no price is found, return false
 }
 
+public function updatePrice($courtid, $event, $duration, $price) {
+    $query = "UPDATE $this->table SET price = :price WHERE courtid = :courtid AND event = :event AND duration = :duration ";
+    $params = [
+        'price' => $price,
+        'courtid' => $courtid,
+        'event' => $event,
+        'duration' => $duration,
+       
+    ];
+    return $this->query($query, $params);
+}
+
+
+
+ //fetching price in form column
+ public function getPriceByCourtName($event, $duration, $courtName) {
+    // Join courts and groundcourts tables to find the price based on court name
+    $query = "SELECT ic.price 
+              FROM $this->table ic
+              JOIN courts c ON ic.courtid = c.courtid
+              WHERE ic.event = :event 
+              AND ic.duration = :duration 
+              AND c.name = :courtName
+              LIMIT 1";
+    
+    $params = [
+        'event' => $event, 
+        'duration' => $duration, 
+        'courtName' => $courtName
+    ];
+
+    $result = $this->query($query, $params);
+    
+    return $result ? $result[0]->price : null;
+}
 
 }

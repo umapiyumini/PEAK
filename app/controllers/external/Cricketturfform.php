@@ -4,161 +4,206 @@ class Cricketturfform extends Controller {
         // This will load the hockey form view
         $this->view('external/cricketturfform');
     }
+    
+    
 
     public function getPrice() {
-        // Assuming form values are coming from a POST request
+    
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            $event = $_POST['bookingFor']; // 'practice' or 'tournament'
-            $duration = $_POST['duration']; // 'half' or 'full'
-            $description ="no"; // Get the 'court markings' value (Yes or No)
-            $courtid = 27; // Hockey court id
-   
-            // Create an instance of the Groundcourts model
-            $groundcourt = new Groundcourts();
-   
-            // Call the getPriceByDetails function with the form values and court ID
-            $price = $groundcourt->getPriceByDetails($event, $duration, $description, $courtid);
-   
-            // Return the price as JSON so JavaScript can handle it
-            echo json_encode(['price' => $price]);
+          
+            $courtName = $_POST['court_name'] ?? '';
+            $event = $_POST['event'] ?? '';
+            $duration = $_POST['duration'] ?? '';
+            $description = $_POST['description'] ?? '';
+            
+            
+            if (empty($courtName) || empty($event) || empty($duration) || empty($description)) {
+                echo 'Missing required parameters';
+                return;
+            }
+            
+            $groundcourts = new Groundcourts();
+            $price = $groundcourts->getPriceByCourtName($event, $duration, $description, $courtName);
+            
+            
+            if ($price !== null) {
+                echo $price;
+            } else {
+                echo "Price not found";
+            }
+        } else {
+            echo "Invalid request method";
         }
+        
+        
+        exit;
     }
- 
     
-    public function checkAvailability() {
+    
+    
+    
+    public function getDiscount() {
+        
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            $date = $_POST['date'];
-            $courtid = 27;
-    
-            $courtsModel = new Courts();
-            $section = $courtsModel->getSectionByCourtid($courtid);
-    
-            $reservationsModel = new Reservations();
-            $bookings = $reservationsModel->getBookingsForDateSection($date, $section);
-            if (!is_array($bookings)) $bookings = [];
-    
-            $occupiedDurations = array_map(function($b) { return $b->duration; }, $bookings);
-            $bookedHalfSlots = [];
-            $booked2HourSlots = [];
-            foreach ($bookings as $booking) {
-                if ($booking->duration === 'half') {
-                    $bookedHalfSlots[] = $booking->time;
-                }
-                if ($booking->duration === '2 hour') {
-                    $booked2HourSlots[] = $booking->time;
-                }
+          
+            $userType = $_POST['usertype'] ?? '';
+            $price = $_POST['price'] ?? '';
+            
+            
+            
+            if (empty($userType) || empty($price) ) {
+                echo 'Missing required parameters';
+                return;
             }
+            $price = floatval($price);
     
-            // Map half-day slots to their corresponding 2-hour slots
-            $halfDayToTwoHour = [
-                '08:00:00' => ['08:00:00', '10:00:00'],
-                '13:00:00' => ['13:00:00', '15:00:00']
-            ];
-    
-            // Map 2-hour slots to their corresponding half-day slot
-            $twoHourToHalfDay = [
-                '08:00:00' => '08:00:00',
-                '10:00:00' => '08:00:00',
-                '13:00:00' => '13:00:00',
-                '15:00:00' => '13:00:00',
-            ];
-    
-            // Start with the 2-hour slots that are already booked
-            $disable2HourSlots = $booked2HourSlots;
-            foreach ($bookedHalfSlots as $halfSlot) {
-                if (isset($halfDayToTwoHour[$halfSlot])) {
-                    $disable2HourSlots = array_merge($disable2HourSlots, $halfDayToTwoHour[$halfSlot]);
-                }
+            $discounts = new Discounts();
+            $discount = $discounts->getDiscountByUserType($userType);
+           
+            
+            if ($discount !== null) {
+                $discountedPrice = $price - ($price * $discount);
+                echo number_format($discountedPrice,2,'.','');
+            } else {
+                echo "discount not found";
             }
-            $disable2HourSlots = array_unique($disable2HourSlots);
-    
-            // Disable half-day slots that overlap with booked 2-hour slots
-            $disableHalfDaySlots = [];
-            foreach ($booked2HourSlots as $slot) {
-                if (isset($twoHourToHalfDay[$slot])) {
-                    $disableHalfDaySlots[] = $twoHourToHalfDay[$slot];
-                }
-            }
-            $disableHalfDaySlots = array_unique($disableHalfDaySlots);
-    
-            // Default: all durations enabled unless booked
-            $response = [
-                'full' => !(
-                    in_array('full', $occupiedDurations) ||
-                    count($bookedHalfSlots) > 0 ||
-                    count($booked2HourSlots) > 0
-                ),
-                'half' => true,
-                '2hour' => true,
-                'bookedHalfSlots' => $bookedHalfSlots,
-                'disable2HourSlots' => $disable2HourSlots,
-                'disableHalfDaySlots' => $disableHalfDaySlots,
-                'message' => ''
-            ];
-    
-            // If full day is booked, disable everything
-            if (in_array('full', $occupiedDurations)) {
-                $response['full'] = false;
-                $response['half'] = false;
-                $response['2hour'] = false;
-                $response['message'] = "Fully booked - no slots available on $date";
-            }
-    
-            // Check if both halves are covered (by half-day or both 2-hour slots in that half)
-            $morningCovered = in_array('08:00:00', $bookedHalfSlots) ||
-                              (in_array('08:00:00', $disable2HourSlots) && in_array('10:00:00', $disable2HourSlots));
-            $afternoonCovered = in_array('13:00:00', $bookedHalfSlots) ||
-                                (in_array('13:00:00', $disable2HourSlots) && in_array('15:00:00', $disable2HourSlots));
-            $bothHalfDaysBooked = $morningCovered && $afternoonCovered;
-    
-            // If both halves are covered, disable full day and half-day
-            if ($bothHalfDaysBooked) {
-                $response['full'] = false;
-                $response['half'] = false;
-                if (empty($response['message'])) {
-                    $response['message'] = "Full day is not available as all time slots are booked on $date.";
-                }
-            }
-    
-            // If only both half-day slots (not 2-hour) are booked, show a specific message
-            if (in_array('08:00:00', $bookedHalfSlots) && in_array('13:00:00', $bookedHalfSlots) && empty($response['message'])) {
-                $response['half'] = false;
-                $response['message'] = "All half-day slots are booked on $date.";
-            }
-            // Message for one half-day slot booked
-            elseif (count($bookedHalfSlots) === 1 && empty($response['message'])) {
-                $slot = $bookedHalfSlots[0] === "08:00:00" ? "08:00 - 13:00" : "13:00 - 18:00";
-                $response['message'] = "The $slot half-day slot is already booked on $date.";
-            }
-            // Message for 2-hour slots
-            elseif (count($disable2HourSlots) > 0 && empty($response['message'])) {
-                $response['message'] = "Some 2-hour slots are already booked on $date.";
-            }
-    // Map 2-hour slots to their corresponding half-day slot
-    $twoHourToHalfDay = [
-        '08:00:00' => '08:00:00', // 08:00-10:00 disables morning half
-        '10:00:00' => '08:00:00', // 10:00-12:00 disables morning half
-        '13:00:00' => '13:00:00', // 13:00-15:00 disables afternoon half
-        '15:00:00' => '13:00:00', // 15:00-17:00 disables afternoon half
-    ];
-    
-    $disableHalfDaySlots = [];
-    foreach ($booked2HourSlots as $slot) {
-        if (isset($twoHourToHalfDay[$slot])) {
-            $disableHalfDaySlots[] = $twoHourToHalfDay[$slot];
+        } else {
+            echo "Invalid request method";
         }
+        
+        
+        exit;
     }
-    $disableHalfDaySlots = array_unique($disableHalfDaySlots);
     
-    // Add this to your response array:
-    $response['disableHalfDaySlots'] = $disableHalfDaySlots;
+    public function checkFullDayAvailability() {
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $date = $_POST['date'] ?? '';
+            $courtName = $_POST['court_name'] ?? '';
     
-            header('Content-Type: application/json');
-            echo json_encode($response);
-            exit;
+            if (empty($date) || empty($courtName)) {
+                echo 'Missing parameters';
+                return;
+            }
+    
+            // Get section of the court
+            $courts = new Courts();
+            $court = $courts->getCourtByName($courtName);
+            if (!$court) {
+                echo 'Court not found';
+                return;
+            }
+    
+            $section = $court->section;
+    
+    
+            
+            // Debug info
+            // error_log("Checking availability for date: $date, court: $courtName, section: $section");
+    
+            // Check if full day is booked
+            $reservations = new Reservations();
+            $isBooked = $reservations->isFullDayBooked($date, $section);
+    
+            // Debug info
+            // error_log("Is booked: " . ($isBooked ? 'Yes' : 'No'));
+    
+            // Return plain text response
+            echo $isBooked ? 'full' : 'available';
+        } else {
+            echo 'Invalid request method';
         }
+        exit;
     }
+    
+    
+    
+    public function checkHalfDayAvailability() {
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $date = $_POST['date'] ?? '';
+            $courtName = $_POST['court_name'] ?? '';
+    
+            if (empty($date) || empty($courtName)) {
+                echo 'Missing parameters';
+                return;
+            }
+    
+            // Get section of the court
+            $courts = new Courts();
+            $court = $courts->getCourtByName($courtName);
+            if (!$court) {
+                echo 'Court not found';
+                return;
+            }
+    
+            $section = $court->section;
+    
+            // Check which half-day slots are booked
+            $reservations = new Reservations();
+            $bookedHalfDaySlots = $reservations->getBookedHalfDaySlots($date, $section);
+            
+            // Check which two-hour slots are booked
+            $bookedTwoHourSlots = $reservations->getBookedTwoHourSlots($date, $section);
+            
+            // Determine half-day availability
+            $halfDayStatus = 'none';
+            if (in_array('08:00:00', $bookedHalfDaySlots) && in_array('13:00:00', $bookedHalfDaySlots)) {
+                $halfDayStatus = 'both';
+            } else if (in_array('08:00:00', $bookedHalfDaySlots)) {
+                $halfDayStatus = 'morning';
+            } else if (in_array('13:00:00', $bookedHalfDaySlots)) {
+                $halfDayStatus = 'afternoon';
+            }
+            
+            // Create a response string with pipe delimiter
+            $response = $halfDayStatus . '|';
+            
+            // Add two-hour booked slots
+            if (!empty($bookedTwoHourSlots)) {
+                $response .= implode(',', $bookedTwoHourSlots);
+            }
+            
+            echo $response;
+        } else {
+            echo 'Invalid request method';
+        }
+        exit;
+    }
+    
+    
+    
+public function checkTwoHourAvailability() {
+    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+        $date = $_POST['date'] ?? '';
+        $courtName = $_POST['court_name'] ?? '';
 
+        if (empty($date) || empty($courtName)) {
+            echo 'Missing parameters';
+            return;
+        }
+
+        // Get section of the court
+        $courts = new Courts();
+        $court = $courts->getCourtByName($courtName);
+        if (!$court) {
+            echo 'Court not found';
+            return;
+        }
+
+        $section = $court->section;
+
+        // Check which two-hour slots are booked
+        $reservations = new Reservations();
+        $bookedTwoHourSlots = $reservations->getBookedTwoHourSlots($date, $section);
+        
+        // Return the booked slots as a comma-separated string
+        echo implode(',', $bookedTwoHourSlots);
+    } else {
+        echo 'Invalid request method';
+    }
+    exit;
+}
+
+    
     public function reserve() {
         if (session_status() === PHP_SESSION_NONE) {
             session_start();
@@ -168,9 +213,17 @@ class Cricketturfform extends Controller {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             // 1. Get user/session info
             $userid = $_SESSION['userid'];
-            $courtid = 27;
-            $courtsModel = new Courts();
-            $section = $courtsModel->getSectionByCourtid($courtid);
+            $courtName = $_POST['court_name'] ?? '';
+            $courts = new Courts();
+            $court = $courts->getCourtByName($courtName);
+            if (!$court) {
+                echo 'Court not found';
+                return;
+            }
+    
+            $courtid = $court->courtid;
+    
+           
     
             // 2. Get form values
             $event = $_POST['bookingFor'];
@@ -184,7 +237,6 @@ class Cricketturfform extends Controller {
             $price = $_POST['price'];
             $discountedprice = $_POST['discountedPrice'];
             $status = 'pending';
-            $occupied = 1;
             $created_at = date('Y-m-d H:i:s');
     
             // 3. Handle file upload
@@ -201,8 +253,7 @@ class Cricketturfform extends Controller {
             // 4. Build data array
             $data = [
                 'userid' => $userid,
-                'courtid' => $courtid,
-                'section' => $section,
+                'courtid' => $courtid, 
                 'event' => $event,
                 'duration' => $duration,
                 'date' => $date,
@@ -215,7 +266,6 @@ class Cricketturfform extends Controller {
                 'extradetails' => $extradetails,
                 'price' => $price,
                 'discountedprice' => $discountedprice,
-                'occupied' => $occupied,
                 'created_at' => $created_at,
             ];
     
@@ -237,4 +287,6 @@ class Cricketturfform extends Controller {
     
     
     }
+    
     }
+    

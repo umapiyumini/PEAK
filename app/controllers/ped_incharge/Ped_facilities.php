@@ -5,6 +5,8 @@ class Ped_facilities extends Controller {
         $courts = $courtsModel->getAllCourts();
         $this->view('ped_incharge/ped_facilities', ['courts' => $courts]);
     }
+
+    
     public function update() {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $courtid = $_POST['courtid'] ?? null;

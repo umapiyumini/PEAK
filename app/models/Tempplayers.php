@@ -1,4 +1,6 @@
-<?php
+
+    
+<?php 
 
 class Tempplayers
 {
@@ -16,4 +18,8 @@ class Tempplayers
 
         return $this->query($query, $params);
     }
+
+  
 }
+
+
