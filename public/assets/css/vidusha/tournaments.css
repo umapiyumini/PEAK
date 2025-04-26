@@ -63,26 +63,6 @@ body {
     text-align: center;
   }
   
-  .category-buttons {
-    display: flex;
-    justify-content: center;
-    gap: 10px;
-    margin-bottom: 20px;
-  }
-  
-  .category-buttons button {
-    padding: 10px 20px;
-    font-size: 16px;
-    background-color: #5a2e8a;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-  }
-  
-  .category-buttons button:hover {
-    background-color: #71588d;
-  }
   
   form {
     margin-top: 20px;
@@ -101,7 +81,7 @@ body {
     color: white;
     border: none;
     cursor: pointer;
-    width:30%;
+    width:20%;
     
   }
   
@@ -113,98 +93,172 @@ body {
     display: none;
   }
   
+  /* Enhanced Table Styling */
+table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  margin: 25px 0;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+/* Table Header */
+table thead {
+  background-color: #5a2e8a;
+  color: white;
+}
+
+table th {
+  padding: 15px;
+  text-align: left;
+  font-weight: 600;
+  text-transform: uppercase;
+  font-size: 0.85rem;
+  letter-spacing: 0.5px;
+  border: none;
+  position: relative;
+}
+
+/* Add subtle separator between header cells */
+table th:not(:last-child)::after {
+  content: '';
+  position: absolute;
+  right: 0;
+  top: 25%;
+  height: 50%;
+  width: 1px;
+  background-color: rgba(255, 255, 255, 0.3);
+}
+
+/* Table Body */
+table tbody tr {
+  transition: all 0.3s ease;
+}
+
+table tbody tr:nth-child(odd) {
+  background-color: #f8f5fc;
+}
+
+table tbody tr:nth-child(even) {
+  background-color: #ffffff;
+}
+
+table tbody tr:hover {
+  background-color: #eee4f7;
+  transform: translateY(-2px);
+  box-shadow: 0 2px 5px rgba(90, 46, 138, 0.1);
+}
+
+table td {
+  padding: 15px;
+  border: none;
+  border-bottom: 1px solid #e6e6e6;
+  font-size: 0.95rem;
+  vertical-align: middle;
+}
+
+/* Last row without bottom border */
+table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+/* Button Container */
+table td .action-buttons {
+  display: flex;
+  gap: 8px;
+  justify-content: flex-start;
+}
+
+/* Action Buttons */
+table td button {
+  border-radius: 4px;
+  font-weight: 500;
+  padding: 8px 12px;
+  font-size: 0.8rem;
+  width: auto;
+  transition: all 0.2s ease;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+table td .edit-btn {
+  background-color: #28a745;
+}
+
+table td .edit-btn:hover {
+  background-color: #218838;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.15);
+}
+
+table td .update-btn {
+  background-color: #5a2e8a;
+}
+
+table td .update-btn:hover {
+  background-color: #7942b3;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.15);
+}
+
+table td button[class*="delete"] {
+  background-color: #dc3545;
+}
+
+table td button[class*="delete"]:hover {
+  background-color: #c82333;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.15);
+}
+
+/* Responsive Table */
+@media screen and (max-width: 768px) {
   table {
+    border-radius: 6px;
+  }
+  
+  table thead {
+    display: none;
+  }
+  
+  table, table tbody, table tr, table td {
+    display: block;
     width: 100%;
-    border-collapse: collapse;
-    margin-top: 20px;
   }
   
-  table th, table td {
-    padding: 12px;
-    text-align: left;
-    border: 1px solid #ddd;
+  table tr {
+    margin-bottom: 15px;
+    border-radius: 6px;
+    overflow: hidden;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
   }
   
-  table th {
-    background-color: #f8f9fa;
+  table td {
+    text-align: right;
+    padding: 10px 15px;
+    position: relative;
+    border-bottom: 1px solid #e6e6e6;
   }
   
-  table td button {
-    background-color: red;
-    color: white;
-    border: none;
-    cursor: pointer;
-    padding: 5px 5px;
-    margin-right: 5px;
-   
-  }
-  
-  table td button:hover {
-    background-color: #c82333;
-  }
-  
-  table td .update-btn {
-    background-color: #5a2e8a;
-  }
-  
-  table td .update-btn:hover {
-    background-color: #71588d;
-  }
-
-  table td .edit-btn {
-    background-color: rgb(17, 167, 37);
-    color: white;
-    border: none;
-    cursor: pointer;
-    padding: 5px 10px;
-    margin-right: 5px;
-  }
-  
-  .modal {
-    display: none; /* Hidden by default */
-    position: fixed; /* Stay in place */
-    z-index: 1000; /* Sit on top */
-    left: 0;
-    top: 0;
-    width: 100%; /* Full width */
-    height: 100%; /* Full height */
-    overflow: auto; /* Enable scroll if needed */
-    background-color: rgba(0, 0, 0, 0.4); /* Black background with opacity */
-}
-
-/* Modal content styles */
-.modal-content {
-    background-color: #ffffff;
-    margin: 10% auto; /* Center the modal */
-    padding: 20px;
-    border-radius: 10px;
-    width: 40%; /* Adjust as needed */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    animation: fadeIn 0.3s ease-in-out;
-}
-
-/* Close button */
-.close {
-    color: #aaa;
-    float: right;
-    font-size: 28px;
+  table td:before {
+    content: attr(data-label);
+    float: left;
     font-weight: bold;
-    cursor: pointer;
-}
-
-.close:hover,
-.close:focus {
-    color: #000;
-    text-decoration: none;
-    cursor: pointer;
-}
-
-/* Modal heading */
-.modal-content h2 {
-    margin-top: 0;
     color: #5a2e8a;
-    text-align: center;
+    text-transform: uppercase;
+    font-size: 0.75rem;
+  }
+  
+  table td:last-child {
+    border-bottom: none;
+  }
 }
+  
+  
 
 /* Form styles */
 .form-group {
@@ -249,4 +303,95 @@ input:focus, textarea:focus {
 
 .submit-btn:hover, .update-btn:hover {
     background-color: #743dbb;
+}
+
+.modal {
+  display: none; /* Hidden by default */
+  position: fixed; /* Stay in place */
+  z-index: 1000; /* Sit on top */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  background-color: rgba(0, 0, 0, 0.4); /* Black background with opacity */
+}
+
+/* Modal content styles */
+.modal-content {
+  background-color: #ffffff;
+  margin: 10% auto; /* Center the modal */
+  padding: 20px;
+  border-radius: 10px;
+  width: 40%; /* Adjust as needed */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+/* Close button */
+.close {
+  color: #aaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.close:hover,
+.close:focus {
+  color: #000;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+/* Modal heading */
+.modal-content h2 {
+  margin-top: 0;
+  color: #5a2e8a;
+  text-align: center;
+}
+
+/* Form styles */
+.form-group {
+  margin-bottom: 15px;
+  text-align: left;
+}
+
+label {
+  font-weight: bold;
+  color: #5a2e8a;
+  display: block;
+  margin-bottom: 5px;
+}
+
+input, textarea ,select{
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 14px;
+  resize: none; /* Prevent resizing for textareas */
+}
+
+input:focus, textarea:focus {
+  border-color: #5a2e8a;
+  box-shadow: 0 0 5px rgba(90, 46, 138, 0.3);
+  outline: none;
+}
+
+/* Submit button */
+.submit-btn {
+  background-color: #5a2e8a;
+  color: #ffffff;
+  border: none;
+  padding: 8px 13px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 14px;
+  width: 100%;
+  transition: background-color 0.3s ease;
+}
+
+.submit-btn:hover {
+  background-color: #743dbb;
 }

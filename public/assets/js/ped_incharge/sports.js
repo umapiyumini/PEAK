@@ -1,7 +1,7 @@
 
 // DOM Elements
 const sportsContainer = document.getElementById('sportsContainer');
-const addSportBtn = document.getElementById('addSportBtn');
+// const addSportBtn = document.getElementById('addSportBtn');
 const modal = document.getElementById('addSportModal');
 const modalTitle = document.getElementById('modalTitle');
 const sportForm = document.getElementById('addSportForm');
@@ -11,21 +11,21 @@ const searchInput = document.getElementById('searchInput');
 // Current editing sport id
 let editingId = null;
 
-// Render sports
-function renderSports(sportsToRender = sports) {
-    sportsContainer.innerHTML = sportsToRender.map(sport => `
-        <div class="sport-card" data-id="${sport.id}">
-            <img src="${sport.image}" alt="${sport.name}" class="sport-image">
-            <div class="sport-content">
-                <h3>${sport.name}</h3>
-            </div>
-            <div class="gender">
-                <a href="${sport.urlmen}" class="btn btn-male">Men</a>
-                <a href="${sport.urlwomen}" class="btn btn-female">Women</a>
-            </div>
-        </div>
-    `).join('');
-}
+// // Render sports
+// function renderSports(sportsToRender = sports) {
+//     sportsContainer.innerHTML = sportsToRender.map(sport => `
+//         <div class="sport-card" data-id="${sport.id}">
+//             <img src="${sport.image}" alt="${sport.name}" class="sport-image">
+//             <div class="sport-content">
+//                 <h3>${sport.name}</h3>
+//             </div>
+//             <div class="gender">
+//                 <a href="${sport.urlmen}" class="btn btn-male">Men</a>
+//                 <a href="${sport.urlwomen}" class="btn btn-female">Women</a>
+//             </div>
+//         </div>
+//     `).join('');
+// }
 
 // Add new sport
 function openModal() {
@@ -50,10 +50,10 @@ function searchSports(query) {
     renderSports(filteredSports);
 }
 
-// Event Listeners
-addSportBtn.addEventListener('click', openModal);
+// // Event Listeners
+// addSportBtn.addEventListener('click', openModal);
 
-closeBtn.addEventListener('click', closeModal);
+// closeBtn.addEventListener('click', closeModal);
 
 window.addEventListener('click', (e) => {
     if (e.target === modal) {
@@ -65,28 +65,28 @@ searchInput.addEventListener('input', (e) => {
     searchSports(e.target.value);
 });
 
-sportForm.addEventListener('submit', (e) => {
-    e.preventDefault();
+// sportForm.addEventListener('submit', (e) => {
+//     e.preventDefault();
     
-    const sportData = {
-        name: document.getElementById('sportName').value,
-        image: document.getElementById('imageUrl').value
-    };
+//     const sportData = {
+//         name: document.getElementById('sportName').value,
+//         image: document.getElementById('imageUrl').value
+//     };
 
-    if (editingId === null) {
-        // Add new sport
-        sportData.id = sports.length + 1;
-        sports.push(sportData);
-    } else {
-        // Update existing sport
-        sports = sports.map(s => 
-            s.id === editingId ? { ...sportData, id: editingId } : s
-        );
-    }
+//     if (editingId === null) {
+//         // Add new sport
+//         // sportData.id = sports.length + 1;
+//         sports.push(sportData);
+//     } else {
+//         // Update existing sport
+//         sports = sports.map(s => 
+//             s.id === editingId ? { ...sportData, id: editingId } : s
+//         );
+//     }
 
-    renderSports();
-    closeModal();
-});
+//     renderSports();
+//     closeModal();
+// });
 
 // Initial render
-renderSports();
+// renderSports();

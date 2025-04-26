@@ -25,6 +25,10 @@ class SportProfile extends Controller{
 
    public function addnews(){
 
+    if (session_status() == PHP_SESSION_NONE) {
+        session_start();
+    }
+
     if($_SERVER['REQUEST_METHOD'] == 'POST'){
 
         $topic = $_POST['topic'];
@@ -33,7 +37,8 @@ class SportProfile extends Controller{
         $sport_id = $_POST['sport_id'];
 
         if(empty($topic) || empty($content)){
-            die("Topic and content are required.");
+            $_SESSION['error'] = 'Topic and content are required';
+            exit();
         }
 
         try{

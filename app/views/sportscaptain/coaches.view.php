@@ -24,6 +24,7 @@
                         <?php foreach ($coaches as $coach): ?>
                             <div class="tile">
                                 <div class="tile-header">
+                                    <img src="<?=ROOT?>/assets/images/vidusha/<?php echo htmlspecialchars($coach->image);?>" alt="Coach Image" class="coach-image">
                                     <h2><?php echo htmlspecialchars($coach->name);?></h2>
                                     <p><?php echo htmlspecialchars($coach->role);?></p>
                                 </div>

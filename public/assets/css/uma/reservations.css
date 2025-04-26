@@ -426,7 +426,7 @@ body {
     display: flex;
     justify-content: center;
     gap: 15px;
-    z-index: 2;
+    z-index: 10;
 }
 /* Popup Styling */
 .popup {
@@ -453,7 +453,15 @@ body {
     max-height: 90vh;
     display: flex;
     flex-direction: column;
+   
 }
+
+ #reschedule-form {
+    overflow-y: auto; /* Make only the content area scrollable */
+    flex: 1;
+    padding-bottom: 70px; /* Add padding to ensure content isn't hidden behind buttons */
+}
+
 
 @keyframes popup-fade {
     from {
@@ -576,7 +584,19 @@ body {
 
 #reschedule-form input[type="text"],
 #reschedule-form input[type="date"],
-#reschedule-form input[type="time"] {
+#reschedule-form input[type="time"]
+#reschedule-form input[type='select'] {
+    background: var(--lightgrey);
+    border: 1px solid var(--lightpurple);
+    color: var(--darkpurple);
+    padding: 9px 12px;
+    border-radius: 7px;
+    font-size: 15px;
+    font-weight: 500;
+    transition: border-color 0.2s;
+}
+
+.abz {
     background: var(--lightgrey);
     border: 1px solid var(--lightpurple);
     color: var(--darkpurple);
@@ -617,7 +637,14 @@ body {
     font-weight: 600;
     transition: background 0.2s;
 }
-
+#reschedule-modal .confirm-btn:disabled {
+    background-color: #c4c4c4; /* Light gray background */
+    color: #8a8a8a; /* Darker gray text */
+    cursor: not-allowed; /* Changes cursor to indicate button can't be clicked */
+    opacity: 0.7; /* Reduces opacity to visually indicate disabled state */
+    transition: none; /* Disables the background transition effect */
+  }
+  
 #reschedule-modal .confirm-btn:hover {
     background: var(--darkpurple);
 }
@@ -666,6 +693,24 @@ body {
 #reschedule-time-slots input[type="radio"]:checked + span {
     background: var(--accent-purple);
     color: var(--white);
+}
+
+
+.alert {
+    padding: 10px;
+    margin-top: 5px;
+    border-radius: 4px;
+}
+
+.alert-danger {
+    background-color: #f8d7da;
+    color: #721c24;
+    border: 1px solid #f5c6cb;
+}
+
+select option:disabled {
+    color: #999;
+    background-color: #f2f2f2;
 }
 
 

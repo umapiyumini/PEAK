@@ -18,26 +18,36 @@ class Groundcourts {
     }
 
 
-    public function getPriceByDetails($event, $duration, $description, $courtid) {
-        // Adjust the query to include courtid
-        $query = "SELECT price FROM $this->table WHERE event = :event AND duration = :duration AND description = :description AND courtid = :courtid LIMIT 1";
+    //fetching price in form column
+    public function getPriceByCourtName($event, $duration, $description, $courtName) {
+        // Join courts and groundcourts tables to find the price based on court name
+        $query = "SELECT gc.price 
+                  FROM $this->table gc
+                  JOIN courts c ON gc.courtid = c.courtid
+                  WHERE gc.event = :event 
+                  AND gc.duration = :duration 
+                  AND gc.description = :description 
+                  AND c.name = :courtName
+                  LIMIT 1";
         
-        // Add courtid to the parameters array
         $params = [
             'event' => $event, 
             'duration' => $duration, 
             'description' => $description, 
-            'courtid' => $courtid
+            'courtName' => $courtName
         ];
     
-        // Assuming query() works as it did before (handles parameterized queries)
         $result = $this->query($query, $params);
-    
+        
         return $result ? $result[0]->price : null;
     }
     
 
 
+
+
+
+    
     //not yet
     
     

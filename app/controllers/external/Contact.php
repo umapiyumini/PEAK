@@ -24,7 +24,7 @@ class Contact extends Controller {
     
                 // Use the model's insert method
                 if ($messageModel->insert($messageData)) {
-                    $_SESSION['success_message'] = "Message sent successfully!";
+                    $_SESSION['success_message'] = true; // Set this to trigger the popup
                 } else {
                     $_SESSION['error_message'] = "Failed to send message.";
                 }

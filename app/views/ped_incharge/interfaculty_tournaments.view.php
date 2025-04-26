@@ -15,24 +15,20 @@
 
     <div class="container">
       <div class="header">
-          <h1>Tournament Records</h1>
-          <button class="bell-icon"><i class="uil uil-bell"></i></button>
-            <button class="bell-icon"><i class="uil uil-signout"></i></button>
+        <h1>Tournament Records</h1>
+        <button class="bell-icon"><i class="uil uil-bell"></i></button>
+        <button class="bell-icon"><i class="uil uil-signout"></i></button>
+      </div>
+    </div>
+    <main>
+      <div class="tournament-type">
+        <div class="grid-item interfacullty" id="interfaculty">
+          <a><h3>Inter Faculty</h3></a>
+        </div>
+        <div class="grid-item freshers" id="freshers">
+            <a><h3>Freshers</h3></a>
         </div>
       </div>
-      <main>
-      <div class="tournament-type">
-                    <div class="grid-item interfacullty" id="interfaculty">
-                        <a>
-                            <h3>Inter Faculty</h3>
-                        </a>
-                    </div>
-                    <div class="grid-item freshers" id="freshers">
-                        <a>
-                            <h3>Freshers</h3>
-                        </a>
-                    </div>
-                </div>
       <div class="interfaculty-tournaments" id="interfaculty-tournaments">          
         <div class="filters">
           <div class="filter-group">
@@ -72,53 +68,40 @@
                 <th>2nd Place</th>
                 <th>3rd Place</th>
                 <th>Men/Women</th>
-                <th>Participants</th>
                 <th>Actions</th>
               </tr>
             </thead>
+            <!-- In your view file where you display the tournaments -->
             <tbody id="tournamentsBody">
-            <?php if(!empty($tournamentList)):?>
-                <?php foreach ($tournamentList as $i): ?>
+              <?php if(!empty($interfacultyrecords)): ?>
+                <?php foreach ($interfacultyrecords as $record): ?>
                   <tr>
-                    <td><?=$i->sport_name?></td>
-                    <td><?=$i->year?></td>
-                    <td><?=$i->first_place?></td>
-                    <td><?=$i->second_place?></td>
-                    <td><?=$i->third_place?></td>
-                    <td><?php?></td><!-- men/women column is not in database yet (need to add it) -->
-                    <td><?=$i->no_of_players?></td>
+                    <td><?= $record['tournament_info']->sport_name ?></td>
+                    <td><?= $record['tournament_info']->year ?></td>
+                    <td><?= isset($record['places'][1]) ? $record['places'][1]->faculty_name : '' ?></td>
+                    <td><?= isset($record['places'][2]) ? $record['places'][2]->faculty_name : '' ?></td>
+                    <td><?= isset($record['places'][3]) ? $record['places'][3]->faculty_name : '' ?></td>
+                    <td><?= $record['tournament_info']->category ?></td>
                     <td>
-                      <button 
-                        class="btn btn-edit" 
-                        onclick="openModal(this)" 
-                        data-tournamentid="<?=$i->interfacrecid?>"
-                        data-sport="<?=$i->sport_name?>"
-                        data-date="<?=$i->year?>"
-                        data-place1="<?=$i->first_place?>"
-                        data-place2="<?=$i->second_place?>"
-                        data-place3="<?=$i->third_place?>"
-                        data-participantcount="<?=$i->no_of_players?>"
-                      >
-                        Edit
-                      </button>
-                      <button class="btn btn-delete" onclick="deleteTournament(<?=$i->interfacrecid?>)">Delete</button>
                       <button 
                         class="btn btn-view" 
                         onclick="viewTournament(this)"
-                        data-tournamentid="<?=$i->interfacrecid?>"
-                        data-sport="<?=$i->sport_name?>"
-                        data-date="<?=$i->year?>"
-                        data-place1="<?=$i->first_place?>"
-                        data-place2="<?=$i->second_place?>"
-                        data-place3="<?=$i->third_place?>"
-                        data-participantcount="<?=$i->no_of_players?>"
+                        data-tournamentid="<?= $record['tournament_info']->recordid ?>"
+                        data-sport="<?= $record['tournament_info']->sport_name ?>"
+                        data-date="<?= $record['tournament_info']->year ?>"
+                        data-place1="<?= isset($record['places'][1]) ? $record['places'][1]->faculty_name : '' ?>"
+                        data-place2="<?= isset($record['places'][2]) ? $record['places'][2]->faculty_name : '' ?>"
+                        data-place3="<?= isset($record['places'][3]) ? $record['places'][3]->faculty_name : '' ?>"
+                        data-category="<?= ucfirst($record['tournament_info']->category) ?>"
+                        data-players="<?= htmlspecialchars(json_encode($record['places'])) ?>"
+                        data-players="<?= htmlspecialchars(json_encode($record['places'])) ?>"
                       >
                         View
                       </button>
                     </td>
                   </tr>
-                <?php endforeach;?>
-              <?php endif;?>
+                  <?php endforeach; ?>
+              <?php endif; ?>
             </tbody>
           </table>
         </div>
@@ -164,54 +147,40 @@
                 <th>2nd Place</th>
                 <th>3rd Place</th>
                 <th>Men/Women</th>
-                <th>Participants</th>
                 <th>Actions</th>
               </tr>
             </thead>
             <tbody id="tournamentsBody">
-            <?php if(!empty($freshersList)):?>
-                <?php foreach ($freshersList as $i): ?>
-                  <tr>
-                    <td><?=$i->sport_name?></td>
-                    <td><?=$i->year?></td>
-                    <td><?=$i->first_place?></td>
-                    <td><?=$i->second_place?></td>
-                    <td><?=$i->third_place?></td>
-                    <td><?php?></td><!-- men/women column is not in database yet (need to add it) -->
-                    <td><?=$i->no_of_players?></td>
-                    <td>
-                      <button 
-                        class="btn btn-edit" 
-                        onclick="openModal(this)" 
-                        data-tournamentid="<?=$i->freshersid?>"
-                        data-sport="<?=$i->sport_name?>"
-                        data-date="<?=$i->year?>"
-                        data-place1="<?=$i->first_place?>"
-                        data-place2="<?=$i->second_place?>"
-                        data-place3="<?=$i->third_place?>"
-                        data-participantcount="<?=$i->no_of_players?>"
-                      >
-                        Edit
-                      </button>
-                      <button class="btn btn-delete" onclick="deleteTournament(<?=$i->freshersid?>)">Delete</button>
-                      <button 
-                        class="btn btn-view" 
-                        onclick="viewTournament(this)"
-                        data-tournamentid="<?=$i->freshersid?>"
-                        data-sport="<?=$i->sport_name?>"
-                        data-date="<?=$i->year?>"
-                        data-place1="<?=$i->first_place?>"
-                        data-place2="<?=$i->second_place?>"
-                        data-place3="<?=$i->third_place?>"
-                        data-participantcount="<?=$i->no_of_players?>"
-                      >
-                        View
-                      </button>
-                    </td>
-                  </tr>
-                <?php endforeach;?>
-              <?php endif;?>
-            </tbody>
+              <?php if(!empty($freshersrecords)): ?>
+                  <?php foreach ($freshersrecords as $record): ?>
+                      <tr>
+                          <td><?= $record['tournament_info']->sport_name ?></td>
+                          <td><?= $record['tournament_info']->year ?></td>
+                          <td><?= isset($record['places'][1]) ? $record['places'][1]->faculty_name : '' ?></td>
+                          <td><?= isset($record['places'][2]) ? $record['places'][2]->faculty_name : '' ?></td>
+                          <td><?= isset($record['places'][3]) ? $record['places'][3]->faculty_name : '' ?></td>
+                          <td><?= $record['tournament_info']->category ?></td>
+                          <td>
+                              <button 
+                                  class="btn btn-view" 
+                                  onclick="viewTournament(this)"
+                                  data-tournamentid="<?= $record['tournament_info']->recordid ?>"
+                                  data-sport="<?= $record['tournament_info']->sport_name ?>"
+                                  data-date="<?= $record['tournament_info']->year ?>"
+                                  data-place1="<?= isset($record['places'][1]) ? $record['places'][1]->faculty_name : '' ?>"
+                                  data-place2="<?= isset($record['places'][2]) ? $record['places'][2]->faculty_name : '' ?>"
+                                  data-place3="<?= isset($record['places'][3]) ? $record['places'][3]->faculty_name : '' ?>"
+                                  data-category="<?= ucfirst($record['tournament_info']->category) ?>"
+                                  data-players="<?= htmlspecialchars(json_encode($record['places'])) ?>"
+                                  data-players="<?= htmlspecialchars(json_encode($record['places'])) ?>"
+                              >
+                                  View
+                              </button>
+                          </td>
+                      </tr>
+                  <?php endforeach; ?>
+              <?php endif; ?>
+          </tbody>
           </table>
         </div>
       </div>
@@ -273,41 +242,41 @@
       </div>
 
       <div id="viewTournamentModal" class="modal">
-          <div class="modal-content">
-              <div class="modal-header">
-                  <h2>Tournament Details</h2>
-                  <span class="close" onclick="closeModal('viewTournamentModal')">&times;</span>
-              </div>
-              <div class="modal-body">
-                  <div class="details-grid">
-                      <div class="detail-item">
-                          <label>Sport:</label>
-                          <input type="text" id="viewSport" readonly>
-                      </div>
-                      <div class="detail-item">
-                          <label>Year:</label>
-                          <input type="text" id="viewDate" readonly>
-                      </div>
-                      <div class="detail-item">
-                          <label>1st Place:</label>
-                          <input type="text" id="viewPlace1" readonly>
-                      </div>
-                      <div class="detail-item">
-                          <label>2nd Place:</label>
-                          <input type="text" id="viewPlace2" readonly>
-                      </div>
-                      <div class="detail-item">
-                          <label>3rd Place:</label>
-                          <input type="text" id="viewPlace3" readonly>
-                      </div>
-                  </div>
-                  <div class="participants-section">
-                      <h3>Participants</h3>
-                      <div id="viewParticipantsList2" class="participants-list"></div>
-                  </div>
-              </div>
-          </div>
-      </div>
+    <div class="modal-content">
+        <div class="modal-header">
+            <h2>Tournament Details</h2>
+            <span class="close" onclick="closeModal('viewTournamentModal')">&times;</span>
+        </div>
+        <div class="modal-body">
+            <div class="details-grid">
+                <div class="detail-item">
+                    <label>Sport:</label>
+                    <input type="text" id="viewSport" readonly>
+                </div>
+                <div class="detail-item">
+                    <label>Year:</label>
+                    <input type="text" id="viewDate" readonly>
+                </div>
+                <div class="detail-item">
+                    <label>1st Place:</label>
+                    <input type="text" id="viewPlace1" readonly>
+                </div>
+                <div class="detail-item">
+                    <label>2nd Place:</label>
+                    <input type="text" id="viewPlace2" readonly>
+                </div>
+                <div class="detail-item">
+                    <label>3rd Place:</label>
+                    <input type="text" id="viewPlace3" readonly>
+                </div>
+            </div>
+            <div class="participants-section">
+                <h3>Participants by Place</h3>
+                <div id="viewParticipantsList2" class="participants-list"></div>
+            </div>
+        </div>
+    </div>
+</div>
     </main>
   </div>
 
@@ -318,37 +287,66 @@
       initializeEventListeners();
     });
 
-    function openModal(tournamentdata) {
-      let tournamentModal = document.getElementById("tournamentModal");
-      tournamentModal.style.display = "block";
-
-      document.getElementById("tournamentId").value = tournamentdata.dataset.tournamentid || '';
-      document.getElementById("sportInput").value = tournamentdata.dataset.sport || '';
-      document.getElementById("date").value = tournamentdata.dataset.date || '';
-      document.getElementById("place1").value = tournamentdata.dataset.place1 || '';
-      document.getElementById("place2").value = tournamentdata.dataset.place2 || '';
-      document.getElementById("place3").value = tournamentdata.dataset.place3 || '';
-      document.getElementById("participants").value = tournamentdata.dataset.participantcount || '';
-    }
-
-    function deleteTournament(interrecordid) {
-      if (confirm("Are you sure you want to delete this tournament?")) {
-        window.location.href = "<?=ROOT?>/ped_incharge/interfaculty_tournaments/deleteTournament/" + interrecordid;
-      }
-    }
+  
 
     function viewTournament(tournamentdata) {
-      let viewTournamentModal = document.getElementById("viewTournamentModal");
-      viewTournamentModal.style.display = "block";
+    let viewTournamentModal = document.getElementById("viewTournamentModal");
+    viewTournamentModal.style.display = "block";
 
-      document.getElementById("viewSport").value = tournamentdata.dataset.sport || '';
-      document.getElementById("viewDate").value = tournamentdata.dataset.date || '';
-      document.getElementById("viewPlace1").value = tournamentdata.dataset.place1 || '';
-      document.getElementById("viewPlace2").value = tournamentdata.dataset.place2 || '';
-      document.getElementById("viewPlace3").value = tournamentdata.dataset.place3 || '';
-      document.getElementById("viewMenWomen").value = tournamentdata.dataset.category || '';
-      document.getElementById("viewVenue").value = tournamentdata.dataset.venue || '';
+    // Set basic tournament details
+    document.getElementById("viewSport").value = tournamentdata.dataset.sport || '';
+    document.getElementById("viewDate").value = tournamentdata.dataset.date || '';
+    document.getElementById("viewPlace1").value = tournamentdata.dataset.place1 || '';
+    document.getElementById("viewPlace2").value = tournamentdata.dataset.place2 || '';
+    document.getElementById("viewPlace3").value = tournamentdata.dataset.place3 || '';
+    
+    // Display players for each place
+    const participantsContainer = document.getElementById("viewParticipantsList2");
+    participantsContainer.innerHTML = ''; // Clear previous content
+    
+    try {
+        // Parse the places data from the button's dataset
+        const placesData = JSON.parse(tournamentdata.dataset.players);
+        
+        // Create sections for each place (1st, 2nd, 3rd)
+        for (let placeNum = 1; placeNum <= 3; placeNum++) {
+            if (placesData[placeNum]) {
+                // Create a section for this place
+                const placeSection = document.createElement('div');
+                placeSection.className = 'place-players';
+                
+                // Add place title
+                const placeTitle = document.createElement('h4');
+                const placeSuffix = placeNum === 1 ? 'st' : placeNum === 2 ? 'nd' : 'rd';
+                placeTitle.textContent = `${placeNum}${placeSuffix} Place: ${placesData[placeNum].faculty_name}`;
+                placeSection.appendChild(placeTitle);
+                
+                // Add players list
+                if (placesData[placeNum].players && placesData[placeNum].players.length > 0) {
+                    const playersList = document.createElement('ul');
+                    playersList.className = 'players-list';
+                    
+                    placesData[placeNum].players.forEach(player => {
+                        const playerItem = document.createElement('li');
+                        playerItem.textContent = `${player.reg_no}`;
+                        playersList.appendChild(playerItem);
+                    });
+                    
+                    placeSection.appendChild(playersList);
+                } else {
+                    const noPlayers = document.createElement('p');
+                    noPlayers.textContent = 'No players recorded';
+                    placeSection.appendChild(noPlayers);
+                }
+                
+                participantsContainer.appendChild(placeSection);
+            }
+        }
+    } catch (e) {
+        console.error("Error parsing players data:", e);
+        participantsContainer.innerHTML = '<p>Error loading players data</p>';
     }
+}
 
     function closeModal(modalId) {
       const modal = document.getElementById(modalId);
@@ -378,6 +376,8 @@
         freshers.style.display = "block";
     });
   });
+
+  
   </script>
 </body>
 </html>

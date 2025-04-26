@@ -14,7 +14,7 @@ class Reservation extends Controller{
         $courtname = $court->getcourt();
         
         $reservation = new Reservations();
-        $allreservations = $reservation->getReservations();
+        $allreservations = $reservation->getReservationbyUser();
         
         // Get user ID from session
         
