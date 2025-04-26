@@ -1,5 +1,4 @@
 @charset "utf-8";
-
 * {
     margin: 0;
     padding: 0;
@@ -656,6 +655,11 @@ grid-template-columns: 1fr;
 
 .submit-btn:hover {
     background: #3E034A;
+}
+
+.btn-delete {
+    background-color: var(--danger-color);
+    color: var(--white);
 }
 
 .today {

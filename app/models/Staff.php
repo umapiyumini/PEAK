@@ -28,8 +28,9 @@ class Staff{
 
 
     public function addStaff($data){
-        $query = "INSERT INTO $this->table (name, emp_no, reg_no, designation, appointment_date, nic, dob, phone, address, type) VALUES (:name, :emp_no, :reg_no, :designation, :appointment_date, :nic, :dob, :phone, :address, :type)";
+        $query = "INSERT INTO $this->table (staff_id, name, emp_no, reg_no, designation, appointment_date, nic, dob, phone, address, type) VALUES (:staff_id, :name, :emp_no, :reg_no, :designation, :appointment_date, :nic, :dob, :phone, :address, :type)";
         $params = [
+            ':staff_id' => $data['id'],
             ':name' => $data['name'],
             ':emp_no' => $data['emp_no'],
             ':reg_no' => $data['reg_no'],
@@ -68,8 +69,9 @@ class Staff{
     }
 
     public function editPedStaff($data){
-        $query = "UPDATE $this->table SET name=:name, emp_no=:emp_no, reg_no=:reg_no, designation=:designation, appointment_date=:appointment_date, nic=:nic, dob=:dob, phone=:phone, address=:address WHERE staff_id = :staff_id";
+        $query = "UPDATE $this->table SET staff_id=:staff_id, name=:name, emp_no=:emp_no, reg_no=:reg_no, designation=:designation, appointment_date=:appointment_date, nic=:nic, dob=:dob, phone=:phone, address=:address WHERE staff_id = :staff_id";
         $params = [
+            ':staff_id' => $data['id'],
             ':name' => $data['name'],
             ':emp_no' => $data['emp_no'],
             ':reg_no' => $data['reg_no'],
@@ -87,6 +89,11 @@ class Staff{
     public function deleteById($id) {
         $query = "DELETE FROM $this->table WHERE staff_id = :id";
         return $this->query($query, [':id' => $id]);
+    }
+
+    public function getStaffByType($type){
+        $query = "SELECT * FROM $this->table WHERE type = '$type'";
+        return $this->query($query)[0];
     }
     
 }

@@ -24,4 +24,15 @@ class TournamentPlayers
         return $this->query($query);
     }
 
+
+    public function findTournamentOfPlayers($reg_no){
+        $query = "SELECT * FROM $this->table p
+                JOIN tournament_place tp ON tp.placeid = p.place_id
+                JOIN tournaments_records tr ON tr.recordid = tp.tournament_id
+                JOIN sport s ON s.sport_id = tr.sport_id
+                WHERE reg_no= '$reg_no'";
+
+        return $this->query($query);
+    }
+
 }
