@@ -52,12 +52,12 @@ class Strengthform extends Controller {
                 $subscriptionModel = new Subscription();
     
                 // 🔍 Check if the user is allowed to make a reservation
-                $check = $subscriptionModel->isWithinTwoWeeksOfExpiry($userid);
+                // $check = $subscriptionModel->isWithinTwoWeeksOfExpiry($userid);
     
-                if (!$check['allowed']) {
-                    echo $check['message']; // ❌ Not allowed: send back a message
-                    return;
-                }
+                // if (!$check['allowed']) {
+                //     echo $check['message']; // ❌ Not allowed: send back a message
+                //     return;
+                // }
     
                 // ✅ Allowed to make reservation
                 $data = [

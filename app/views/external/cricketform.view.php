@@ -130,7 +130,7 @@
 
 <!-- Proof of Identity -->
 <label for="userproof">Proof of Identity:</label>
-<input type="file" id="userproof" name="proof" required>
+<input type="file" id="userproof" name="proof" accept=".pdf,application/pdf" required>
 
 <!-- school -->
 <label for="userdetail">Name of organization:</label>

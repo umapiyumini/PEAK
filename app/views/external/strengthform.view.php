@@ -45,7 +45,7 @@
        
          <!-- Ongoing Subscriptions Section -->
          <div class="ongoing-subscriptions" style="margin-top: 30px;"> 
-    <h2>Current Ongoing Subscriptions</h2>
+    <h2>Current Subscriptions</h2>
     <?php if (!empty($subscriptions)): ?>
         <ul>
             <?php foreach ($subscriptions as $subscription): ?>

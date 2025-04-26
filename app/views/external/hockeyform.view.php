@@ -118,7 +118,8 @@
 
         <!-- Proof of Identity -->
         <label for="userproof">Proof of Identity:</label>
-        <input type="file" id="userproof" name="proof" required>
+        <input type="file" id="userproof" name="proof" accept=".pdf,application/pdf" required>
+
 
         <!-- Name of organization -->
         <label for="userdetail">Name of organization:</label>
