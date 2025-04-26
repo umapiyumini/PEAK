@@ -29,8 +29,11 @@ class TournamentRecord
             'category' => $category
         ];
 
+
+
         $this->query($query, $data);
         return $this->db->lastInsertId(); // get the ID of newly added record
+
     }
 
 
@@ -52,6 +55,19 @@ class TournamentRecord
     }
 
 
+    public function lastInsertId() {
+        $result = $this->query("SELECT LAST_INSERT_ID()");
+        return $result[0]->{"LAST_INSERT_ID()"};
+    }
+    
+    public function deleteRecord($tournament_id)
+    {
+        $query = "DELETE FROM tournaments_records WHERE recordid = :tournament_id";
+        $params = ['recordid' => $tournament_id];
+        return $this->query($query, $params);
+    }
+
+
     public function findInterfacultyRecords(){
         $query= "SELECT * FROM $this->table r
                   JOIN sport s ON  r.sport_id= s.sport_id 
@@ -69,4 +85,5 @@ class TournamentRecord
     }
 
     
+
 }

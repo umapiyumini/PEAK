@@ -64,17 +64,22 @@ document.addEventListener('DOMContentLoaded', function() {
   });
 
   // Edit buttons in schedule cards
-document.querySelectorAll('.edit-button').forEach(function(btn) {
-  btn.addEventListener('click', function() {
-    const scheduleId = this.getAttribute('data-id');
-    const card = this.closest('.schedule-card');
-    const dateText = card.querySelector('.schedule-date').textContent.trim();
-    const timeText = card.querySelector('.schedule-time').textContent.trim();
-
-    // Parse date string like "Fri, Apr 12"
-    const parsedDate = new Date(Date.parse(dateText));
-    const formattedDate = parsedDate.toISOString().split('T')[0];
-
+  document.querySelectorAll('.edit-button').forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      const scheduleId = this.getAttribute('data-id');
+      const card = this.closest('.schedule-card');
+      const dateText = card.querySelector('.schedule-date').textContent.trim();
+      const timeText = card.querySelector('.schedule-time').textContent.trim();
+  
+      // Parse date string like "Fri, Apr 12" - this is where the issue is
+      const dateParts = dateText.split(', ')[1].split(' ');
+      const month = {Jan: 0, Feb: 1, Mar: 2, Apr: 3, May: 4, Jun: 5, Jul: 6, Aug: 7, Sep: 8, Oct: 9, Nov: 10, Dec: 11}[dateParts[0]];
+      const day = parseInt(dateParts[1]);
+      const currentYear = new Date().getFullYear();
+      
+      // Create date without timezone conversion issues
+      const parsedDate = new Date(currentYear, month, day);
+      const formattedDate = parsedDate.toISOString().split('T')[0];
     // Parse time string like "04:00 PM - 06:00 PM"
     const [startTimeStr, endTimeStr] = timeText.split('-').map(t => t.trim());
 
@@ -179,3 +184,6 @@ document.querySelectorAll('.edit-button').forEach(function(btn) {
     });
   }
 });
+
+const category = card.querySelector('.schedule-category').textContent.trim();
+document.getElementById('edit-category').value = category;

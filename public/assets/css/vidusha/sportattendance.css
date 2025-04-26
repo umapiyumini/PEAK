@@ -150,3 +150,10 @@ table tr:hover {
     cursor: pointer;
     margin-left: 350px;
 }
+
+#qr-image {
+    margin-top: 10px;
+    width: 200px;
+    height: 200px;
+    margin-left:500px;
+  }
