@@ -30,16 +30,31 @@ class Reservation extends Controller {
     
             if ($reservationid && $userid) {
                 $reservationsModel = new Reservations();
-                // Optional: Check if reservation belongs to this user
+                // Get the reservation details to check its status
                 $reservation = $reservationsModel->findById($reservationid);
+                
                 if ($reservation && $reservation->userid == $userid) {
-                    $reservationsModel->delete($reservationid);
-                    // Optionally, log the cancellation reason
-                    // Redirect or show success message
-                    $notificationsModel = new Notifications();
-                    $notificationsModel->sendCancelNotification($userid, $reservationDetails);
-                    header("Location: " . ROOT . "/external/reservation?cancel=success");
-                    exit;
+                    $status = $reservation->status;
+                    $result = false;
+                    
+                    // Check status and take appropriate action
+                    if (in_array($status, ['pending', 'to pay', 'rejected'])) {
+                        // For these statuses, delete the reservation
+                        $result = $reservationsModel->delete($reservationid);
+                    } else if (in_array($status, ['paid', 'confirmed'])) {
+                        // For these statuses, update to 'cancelled'
+                        $result = $reservationsModel->update($reservationid, [
+                            'status' => 'cancelled'
+                        ]);
+                    }
+                    
+                    if ($result) {
+                        // Send notification
+                        $notificationsModel = new Notifications();
+                        $notificationsModel->sendCancelNotification($userid, $reservation);
+                        header("Location: " . ROOT . "/external/reservation?cancel=success");
+                        exit;
+                    }
                 }
             }
             // If failed
@@ -47,6 +62,7 @@ class Reservation extends Controller {
             exit;
         }
     }
+    
 
     public function checkAvailability() {
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {

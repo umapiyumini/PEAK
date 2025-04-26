@@ -178,9 +178,14 @@ body {
     color: #155724;
 }
 
-.status-badge.cancelled {
+.status-badge.rejected {
     background-color: #f8d7da;
-    color: #721c24;
+    color: #a44b54;
+}
+
+.status-badge.cancelled {
+    background-color: #dd890b;
+    color: #a44b54;
 }
 
 .expand-icon {
@@ -394,10 +399,17 @@ body {
     color: #155724;
 }
 
-.status-pill.cancelled {
+.status-pill.rejected {
     background-color: #f8d7da;
     color: #721c24;
 }
+
+.status-pill.cancelled {
+    background-color: #f2cc94;
+    color: #a44b54;
+}
+
+
 
 /* Status Styling */
 .status {

@@ -42,7 +42,7 @@ class StaffTodo {
         return $this->query($query, $params);
     }
 
-    public function updateStatus($taskid){
+    public function updateStatus2($taskid){
         $query= "UPDATE $this->table SET status = 'Overdue' WHERE taskid = :taskid";
         $params = [
 

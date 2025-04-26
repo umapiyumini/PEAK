@@ -50,7 +50,11 @@
                     <div class="error-message" style="text-align:left; color: red; font-size: 12px;"><?=$errors['email']?></div>
                 <?php endif;?>
 
-                
+                <div class="formlable">Address</div>   
+                <input type="text" name="address" value="<?=htmlspecialchars($_POST['address'] ?? '')?>">
+                <?php if(!empty($errors['address'])): ?>
+                    <div class="error-message" style="text-align:left; color: red; font-size: 12px;"><?=$errors['address']?></div>
+                <?php endif;?>
 
                 <div class="formlable">Organization Name</div>   
                 <input type="text" name="company_name" value="<?=htmlspecialchars($_POST['company_name'] ?? '')?>">
