@@ -196,7 +196,7 @@
                             <tr>
                                 <th>Request ID</th>
                                 <th>Reason for Medical</th>
-                                <th>Duration</th>
+                                <th>Status</th>
                                 <th>Actions</th>
                             </tr>
                         </thead>
@@ -206,11 +206,13 @@
                             <tr>
                                 <td><?= $medicalRequest->RequestID ?></td>
                                 <td><?= $medicalRequest->ReasonForMedical ?></td>
-                                <td><?= $medicalRequest->TimePeriod ?></td>
+                                <td><?= $medicalRequest->status ?></td>
+
+                                
                                 <td>
                                     <button class="action-btn view-btn" 
                                         onclick="openModal('<?= $medicalRequest->RequestID ?>',
-                                         '<?= htmlspecialchars($medicalRequest->ReasonForMedical, ENT_QUOTES) ?>', '<?= $medicalRequest->TimePeriod ?>')">
+                                         '<?= htmlspecialchars($medicalRequest->ReasonForMedical, ENT_QUOTES) ?>','<?= $medicalRequest->status ?>')">
                                         View
                                     </button>
                                     <?php $RequestId = $medicalRequest->RequestID ?>
@@ -235,6 +237,21 @@
         </div>
     </div>
 
+
+     <!-- Modal -->
+     <!-- Modal -->
+     <div id="viewModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal()">&times;</span>
+            <h3>Medical Request Details</h3>
+            <p><strong>Request ID:</strong> <span id="modalRequestID"></span></p>
+            <p><strong>Reason:</strong> <span id="modalReason"></span></p>
+            
+            
+        </div>
+    </div>
+
+
     
 
     <script>
@@ -243,10 +260,10 @@
             window.location.href = `<?= ROOT ?>/student/Medical/delete?RequestId=${id}`;
         }
     }
-        function openModal(id, reason, duration) {
+        function openModal(id, reason, status) {
             document.getElementById('modalRequestID').innerText = id;
             document.getElementById('modalReason').innerText = reason;
-            document.getElementById('modalDuration').innerText = duration;
+         
             document.getElementById('viewModal').style.display = 'block';
         }
 

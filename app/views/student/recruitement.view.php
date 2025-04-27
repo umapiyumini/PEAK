@@ -222,7 +222,7 @@
                             <?php endforeach; ?>
                             <?php else:?>
                             <tr>
-            <td colspan="6" style="text-align: center;">No medical requests to   show</td>
+            <td colspan="6" style="text-align: center;">No Recruitement  requests to   show</td>
         </tr>
                         <?php endif;?>
                     </tbody>

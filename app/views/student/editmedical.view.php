@@ -59,7 +59,7 @@
         }
         
         input[type="text"],input[type="number"],
-        textarea {
+        textarea ,select{
             width: 100%;
             padding: 12px;
             border: 1px solid #ddd;
@@ -168,20 +168,28 @@
                         <textarea id="medical-reason" placeholder="Enter Reason for Medical" rows="4" name="ReasonForMedical"></textarea>
                     </div>
                     
+
                     <div class="form-group">
-                        <label for="medical-duration">How long did the medical take?</label>
-                         <!-- error Starts -->
-                         <p class="errors">
-                            <?php 
-                            if(!empty($errors['TimePeriod']))
-                            {
-                                echo $errors['TimePeriod'];
-                            }
-                            ?>
-                        </p>
-                        <!-- error end  -->
-                        <input type="text" id="medical-duration" placeholder="Enter Duration of Medical (e.g., 1 week)" name="TimePeriod">
-                    </div>
+                    <label for="medical-status">Medical Status</label>
+                    <!-- error start -->
+                    <p class="errors">
+                        <?php 
+                        if (!empty($errors['status'])) {
+                            echo $errors['status'];
+                        }
+                        ?>
+                    </p>
+                    <!-- error end -->
+                    <select id="medical-status" name="status">
+                    <option value="" disabled selected>Status of the medical</option>
+                        <option value="accepted">Accepted</option>
+                        <option value="rejected">Rejected</option>
+                        <option value="pending">Pending</option>
+
+                    </select>
+                </div>
+                    
+                   
 
                     <button type="submit" class="submit-btn">Submit</button>
                 </form>

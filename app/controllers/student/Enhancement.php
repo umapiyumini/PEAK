@@ -28,7 +28,7 @@ class Enhancement extends Controller{
                 }
                 
             }else {
-                $errors = $medicalrequest->errors;
+                $errors = $enhancereq->errors;
                 // show($errors);
                 $data  = [
                     'errors' => $errors,

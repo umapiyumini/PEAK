@@ -56,15 +56,6 @@
             
 
 
-              <!-- pool  -->
-            <li class="nav-item">
-                <a href="<?=ROOT ?>/student/Pool" class="nav-link">
-                    
-                <i class="fa-solid fa-person-swimming fa-lg"></i>
-                    Pool
-                </a>
-            </li>
-
 
               <!-- Tournament -->
               <li class="nav-item">

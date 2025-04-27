@@ -10,7 +10,7 @@ class MedicalRequest{
         'Name',
         'RegistrationID',
         'ReasonForMedical',
-        'TimePeriod',
+        'status',
         'userid'
     ];
 
@@ -29,9 +29,14 @@ class MedicalRequest{
             $this->errors['ReasonForMedical'] = 'Reason for medical is required';
         }
 
-        if(empty($data['TimePeriod'])){
-            $this->errors['TimePeriod'] = 'Time Period is required';
+        
+        if(empty($data['status'])){
+            $this->errors['status'] = 'Reason for medical is required';
         }
+
+        
+
+       
 
         //var_dump($this->errors);
         return empty($this->errors);

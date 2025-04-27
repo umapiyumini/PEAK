@@ -14,8 +14,8 @@ class Medical extends Controller{
             $data = [
                 'Name' => $_POST['Name'],
                 'RegistrationID' => $_POST['RegistrationID'],
-                'ReasonForMedical' => $_POST['ReasonForMedical'],
-                'TimePeriod' => $_POST['TimePeriod'],  
+                'ReasonForMedical' => $_POST['ReasonForMedical'], 
+                'status' => $_POST['status'], 
                 'userid' => $_SESSION['userid']
             ];
 
@@ -23,6 +23,7 @@ class Medical extends Controller{
 
             if($medicalrequest->validate($data))
             {
+                show($data);
                 $isInserted = $medicalrequest->insert($data);
 
                 if ($isInserted){
@@ -62,8 +63,8 @@ class Medical extends Controller{
             $data = [
                 'Name' => $_POST['Name'],
                 'RegistrationID' => $_POST['RegistrationID'],
-                'ReasonForMedical' => $_POST['ReasonForMedical'],
-                'TimePeriod' => $_POST['TimePeriod'],  
+                'ReasonForMedical' => $_POST['ReasonForMedical'], 
+                'status' => $_POST['status'],
                 'userid' => $_SESSION['userid'],
             ];
 
@@ -71,6 +72,7 @@ class Medical extends Controller{
 
             if($medicalrequest->validate($data))
             {
+                show($data);
                 $RequestId = $_POST['RequestId'];
                 $isUpdated = $medicalrequest->update($RequestId, $data, 'RequestID');
 

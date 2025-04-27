@@ -39,7 +39,6 @@ class Temptournament{
         $sql = "SELECT * FROM temp_tournaments";
         return $this->query($sql);
     }
-    
 
   
 }

@@ -41,8 +41,7 @@ class Tournament extends Controller{
             $data1  = [
                 'errors' => $errors,
 
-            ];  
-            
+            ];       
             $this->view('student/Addtournament',['errors' => $errors]);
 
         }

@@ -68,9 +68,9 @@ public function edit()
 
         $data = [
             'regno' => $_POST['regno'],
-            'name' => $_POST['name'],
             'faculty' => $_POST['faculty'],
-            'reason' => $_POST['reason'],  
+            'reason' => $_POST['reason'], 
+            'sport_id' => $_POST['sport_id'], 
             'status' => $_POST['status']
         ];
 

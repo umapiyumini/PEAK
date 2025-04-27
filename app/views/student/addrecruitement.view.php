@@ -106,6 +106,9 @@
 </head>
 <body>
 
+<?php include 'nav.view.php';?>
+
+
 
 
 
@@ -117,14 +120,14 @@
                 <div class="form-group">
                     <label for="reg-no">Registration Number</label>
                     <p class="errors"><?php if (!empty($errors['regno'])) echo $errors['regno']; ?></p>
-                    <input type="text" id="reg-no" name="regno" placeholder="Enter Registration Number">
+                    <input type="text" id="reg-no" name="regno" placeholder="Enter Registration Number" required>
                 </div>
 
 
                 <div class="form-group">
                     <label for="faculty">Faculty</label>
                     <p class="errors"><?php if (!empty($errors['faculty'])) echo $errors['faculty']; ?></p>
-                    <input type="text" id="faculty" name="faculty" placeholder="Enter Faculty">
+                    <input type="text" id="faculty" name="faculty" placeholder="Enter Faculty" required>
                 </div>
 
 
@@ -132,12 +135,12 @@
                 <div class="form-group">
     <label for="name">Sport</label>
     <p class="errors"><?php if (!empty($errors['name'])) echo $errors['name']; ?></p>
-    <select id="name" name="sport_id">
-        
-        <option value="1">Cricket</option>
-        <option value="2">Baseball</option>
-        <option value="3">Hockey</option>
-        <option value="4">Football</option>
+    <select id="name" name="sport_id" required>
+    <option value="" disabled selected>Select a Sport</option>
+        <option value="Cricket">Cricket</option>
+        <option value="Baseball">Baseball</option>
+        <option value="Hockey">Hockey</option>
+        <option value="Football">Football</option>
         
     </select>
 </div>
@@ -146,20 +149,12 @@
                 <div class="form-group">
                     <label for="reason">Reason</label>
                     <p class="errors"><?php if (!empty($errors['reason'])) echo $errors['reason']; ?></p>
-                    <textarea id="reason" name="reason" rows="4" placeholder="Enter Reason"></textarea>
+                    <textarea id="reason" name="reason" rows="4" placeholder="Enter Reason" required></textarea>
                 </div>
 
                 <input type="hidden" name="status" value="pending">
 
-                <!-- <div class="form-group">
-                    <label for="status">Status</label>
-                    <p class="errors"><?php if (!empty($errors['accept'])) echo $errors['accept']; ?></p>
-                    <select id="status" name="status">
-                        <option value="">Select</option>
-                        <option value=1>Accepted</option>
-                        <option value=0>Not Accepted</option>
-                    </select>
-                </div> -->
+              
 
                 <button type="submit" class="submit-btn">Submit</button>
             </form>

@@ -109,6 +109,9 @@
 </head>
 <body>
 
+<?php include 'nav.view.php';?>
+
+
 
 <div class="container">
     <div class="card">
@@ -123,22 +126,22 @@
 
                 <div class="form-group">
                     <label for="name">Full Name</label>
-                    <p class="errors"><?php if (!empty($errors['Name'])) { echo $errors['Name']; } ?></p>
-                    <input type="text" id="name" placeholder="Enter Full Name" name="Name">
+                    <p class="errors"><?php if (!empty($errors['name'])) { echo $errors['name']; } ?></p>
+                    <input type="text" id="name" placeholder="Enter Full Name" name="name">
                 </div>
 
                 <div class="form-group">
                     <label for="registration-id">Student Registration Number</label>
-                    <p class="errors"><?php if (!empty($errors['RegistrationNumber'])) { echo $errors['RegistrationNumber']; } ?></p>
-                    <input type="text" id="registration-id" placeholder="Enter Registration Number" name="RegistrationNumber">
+                    <p class="errors"><?php if (!empty($errors['registration_number'])) { echo $errors['registration_number']; } ?></p>
+                    <input type="text" id="registration-id" placeholder="Enter Registration Number" name="registration_number">
                 </div>
 
               
 
                 <div class="form-group">
                     <label for="sport-name">Sport Name</label>
-                    <p class="errors"><?php if (!empty($errors['Sport'])) { echo $errors['Sport']; } ?></p>
-                    <input type="text" id="sport-name" placeholder="Enter Sport Name" name="Sport" value="<?= htmlspecialchars($data['Sport'] ?? '') ?>">
+                    <p class="errors"><?php if (!empty($errors['sport'])) { echo $errors['sport']; } ?></p>
+                    <input type="text" id="sport-name" placeholder="Enter Sport Name" name="sport">
                 </div>
 
                 <div class="form-group">
