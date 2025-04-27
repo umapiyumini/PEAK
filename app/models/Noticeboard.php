@@ -57,10 +57,47 @@ class Noticeboard{
         return $result[0];
     }
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> 9dca0a0ac48735620d60b8f87062b0554b1f37ff
     public function findStudentNotices(){
         $query= "SELECT * FROM $this->table WHERE visibility='students'";
         $result = $this->query($query);
         return $result;
+<<<<<<< HEAD
+=======
+
+
+    public function addNotice($data){
+        $query = "INSERT INTO $this->table (title, content, publishdate, publishtime, visibility, userid) VALUES (:title, :content, :publishdate, :publishtime, :visibility, :userid)";
+        $params = [
+            ':title' => $data['title'],
+            ':content' => $data['content'],
+            ':publishdate' => $data['publishdate'],
+            ':publishtime' => $data['publishtime'],
+            ':visibility' => $data['visibility'],
+            ':userid' => $data['userid']
+        ];
+        return $this->query($query,$params);
+    }
+
+    public function updateNotice($data){
+        $query = "UPDATE $this->table SET title = :title, content = :content, visibility = :visibility WHERE noticeid = :noticeid";
+        $params = [
+            ':title' => $data['title'],
+            ':content' => $data['content'],
+            ':visibility' => $data['visibility'],
+            ':noticeid' => $data['noticeid']
+        ];
+        return $this->query($query,$params);
+    }
+
+    public function deleteNotice($noticeid) {
+        $query = "DELETE FROM $this->table WHERE noticeid = :noticeid";
+        $params = [':noticeid' => $noticeid];
+        return $this->query($query, $params);
+>>>>>>> 9dca0a0ac48735620d60b8f87062b0554b1f37ff
 
     }
 }

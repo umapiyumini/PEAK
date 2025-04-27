@@ -19,14 +19,31 @@ Trait Model {
 
     
     // where
+<<<<<<< HEAD
+=======
+
+>>>>>>> 9dca0a0ac48735620d60b8f87062b0554b1f37ff
     // public function where($data,$data_not = []){
     //     $keys = array_keys($data);
     //     $keys_not = array_keys($data_not);
     //     $query = "SELECT * FROM $this->table WHERE ";
     //     foreach($keys as $key){
     //         $query .= $key . " = :".$key . "&&";
+<<<<<<< HEAD
+=======
+
+    public function where($data,$data_not = []){
+        $keys = array_keys($data);
+        $keys_not = array_keys($data_not);
+        $query = "SELECT * FROM $this->table WHERE ";
+        foreach($keys as $key){
+            $query .= "$key = :$key AND ";
+
+
+>>>>>>> 9dca0a0ac48735620d60b8f87062b0554b1f37ff
 
     //     }
+
 
     //     foreach($keys_not as $key){
     //         $query .= $key . " != :".$key . "&&";
@@ -36,6 +53,11 @@ Trait Model {
     //     $query = trim($query," && ");
 
     //     $query .= "order by $this->order_column $this->order_type  limit $this->limit offset $this->offset"; 
+
+        //exclusions
+        foreach($keys_not as $key){
+            $query .= "$key != :$key AND ";
+
 
     //     $data = array_merge($data,$data_not);
     //     return $this->query($query,$data);
@@ -61,6 +83,10 @@ Trait Model {
             $params[':' . str_replace(['>', '<', '=', ' '], '', $paramKey)] = $value;
         }
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> 9dca0a0ac48735620d60b8f87062b0554b1f37ff
         $query = "SELECT * FROM $this->table";
         if (!empty($conditions)) {
             $query .= " WHERE " . implode(" AND ", $conditions);
@@ -82,6 +108,12 @@ Trait Model {
                 $query .= " OFFSET " . (int)$options['offset'];
             }
         }
+
+        $query = rtrim($query, " AND ");
+
+
+         $query .= " ORDER BY $this->order_column $this->order_type LIMIT $this->limit OFFSET $this->offset";
+
 
         return $this->query($query, $params);
     }
