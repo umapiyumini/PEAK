@@ -234,6 +234,8 @@
         }
 
 
+ 
+
         /* ---- DROP DOWN---- */
         #venue-container {
     display: flex;
@@ -359,7 +361,7 @@ margin-bottom: 25px;      /* Vertically center the dropdown */
               const firstDay = new Date(year, month).getDay();
               const daysInMonth = new Date(year, month + 1, 0).getDate();
               daysContainer.innerHTML = ''; // Clear previous calendar cells
-              monthYearDisplay.textContent = `${monthNames[month]} ${year}`; // Update month-year display
+              monthYearDisplay.textContent = ${monthNames[month]} ${year}; // Update month-year display
 
               // Create blank cells for days before the start of the month
               let row = document.createElement('tr');
@@ -378,7 +380,7 @@ margin-bottom: 25px;      /* Vertically center the dropdown */
                   let cell = document.createElement('td');
                   cell.classList.add('day');
                   cell.textContent = day;
-                  cell.dataset.date = `${year}-${String(month + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
+                  cell.dataset.date = ${year}-${String(month + 1).padStart(2, '0')}-${String(day).padStart(2, '0')};
                   row.appendChild(cell);
 
                   // Add event listener to open modal for adding events
@@ -408,7 +410,7 @@ margin-bottom: 25px;      /* Vertically center the dropdown */
 
               if (eventName !== '' && currentDay) {
                   let eventDiv = document.createElement('div');
-                  eventDiv.textContent = `${eventName} at ${eventVenue} (${eventTime}) - ${eventDescription}`;
+                  eventDiv.textContent = ${eventName} at ${eventVenue} (${eventTime}) - ${eventDescription};
                   currentDay.appendChild(eventDiv);
                   modal.style.display = 'none'; // Hide modal after saving
               }

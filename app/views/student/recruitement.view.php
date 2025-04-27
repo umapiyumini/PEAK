@@ -1,12 +1,13 @@
 <?php
-    $medicalRequests = $data['medicaldata'];
+    $recruitmentRequests = $data['recuruitmentdata'];
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Student Medical Requests</title>
+    <title>Student Recruitment Requests</title>
     <style>
         * {
             margin: 0;
@@ -37,7 +38,7 @@
         h1 {
             font-size: 28px;
             margin-bottom: 10px;
-        }
+        }   
 
         h2 {
             font-size: 22px;
@@ -131,7 +132,6 @@
             font-size: 18px;
         }
 
-        /* Modal Styles */
         .modal {
             display: none;
             position: fixed;
@@ -151,12 +151,6 @@
             border-radius: 8px;
             width: 50%;
             box-shadow: 0 4px 8px rgba(0,0,0,0.2);
-            animation: fadeIn 0.3s ease;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: scale(0.95); }
-            to { opacity: 1; transform: scale(1); }
         }
 
         .close {
@@ -181,89 +175,92 @@
     </style>
 </head>
 <body>
-    <?php include 'nav.view.php';?>
+    <?php include 'nav.view.php'; ?>
 
     <div class="container">
         <div class="card">
-            <h2>Medical Request Portal</h2>
-            <button class="add-btn" onclick="(window.location.href='<?= ROOT ?>/student/Addmedical')">Add Medical</button>
+            <h2>Recruitment Request Portal</h2>
+            <button class="add-btn" onclick="(window.location.href='<?= ROOT ?>/student/Addrecruitement')">Add Recruitment Request</button>
 
-            <div class="table-section">
-                <h3>Your Medical Requests</h3>
-                <div id="requestsTable">
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>Request ID</th>
-                                <th>Reason for Medical</th>
-                                <th>Status</th>
-                                <th>Actions</th>
-                            </tr>
-                        </thead>
-                        <tbody id="tableBody">
-                        <?php if(!empty($medicalRequests)):?>
-                            <?php foreach($medicalRequests as $medicalRequest): ?>
-                            <tr>
-                                <td><?= $medicalRequest->RequestID ?></td>
-                                <td><?= $medicalRequest->ReasonForMedical ?></td>
-                                <td><?= $medicalRequest->status ?></td>
-
-                                
-                                <td>
-                                    <button class="action-btn view-btn" 
-                                        onclick="openModal('<?= $medicalRequest->RequestID ?>',
-                                         '<?= htmlspecialchars($medicalRequest->ReasonForMedical, ENT_QUOTES) ?>','<?= $medicalRequest->status ?>')">
-                                        View
-                                    </button>
-                                    <?php $RequestId = $medicalRequest->RequestID ?>
-                                    <button class="action-btn edit-btn" onclick="window.location.href='<?= ROOT ?>/student/Editmedical?RequestId=<?= $RequestId ?>'">Edit</button>
-                                    <button class="action-btn delete-btn" onclick="confirmDelete(<?= $RequestId ?>)">Delete</button>
+            <h3>Your Recruitment Requests</h3>
+            <div id="requestsTable">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Request ID</th>
+                            <th>Registration Number</th>
+                            <th>Faculty</th>
+                            <th>Reason</th>
+                            <th>Sport</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tableBody">
+                        <?php if(!empty($recruitmentRequests)):?>
+                            <?php foreach($recruitmentRequests as $request): ?>
+                                <tr>
+                                    <td><?= $request->recruitmentid ?></td>
+                                    <td><?= $request->regno ?></td>
+                                    <td><?= $request->faculty ?></td>
+                                    <td><?= $request->reason ?></td>
+                                    
+                                    <td><?= $request->sport_id  ?></td>
+                                    <td>
+                                        <button class="action-btn view-btn" 
+                                            onclick="openModal(
+                                                '<?= $request->recruitmentid ?>',
+                                                '<?= htmlspecialchars($request->regno, ENT_QUOTES) ?>',
+                                                '<?= $request->reason ?>',
+                                                '<?= $request->faculty ?>',
+                                                '<?= htmlspecialchars($request->sport_id , ENT_QUOTES) ?>'
+                                            )">View</button>
+                                             <?php $Recruitmentid = $request->recruitmentid ?>
+                                    <button class="action-btn edit-btn" onclick="window.location.href='<?= ROOT ?>/student/Editrecruitement?recruitmentid=<?= $Recruitmentid ?>'">Edit</button>
+                                    <button class="action-btn delete-btn" onclick="confirmDelete(<?= $Recruitmentid ?>)">Delete</button>
                                     </td>
-                            </tr>
+                                </tr>
                             <?php endforeach; ?>
                             <?php else:?>
                             <tr>
-            <td colspan="4" style="text-align: center;">No medical requests to show</td>
+            <td colspan="6" style="text-align: center;">No Recruitement  requests to   show</td>
         </tr>
-    <?php endif; ?> 
-                        </tbody>
-                    </table>
-                </div>
+                        <?php endif;?>
+                    </tbody>
+                </table>
+            </div>
 
-                <div id="emptyState" class="empty-state" style="display: none;">
-                    <p>You don't have any medical requests yet.</p>
-                </div>
+            <div id="emptyState" class="empty-state" style="display: none;">
+                <p>You don't have any recruitment requests yet.</p>
             </div>
         </div>
     </div>
 
-
-     <!-- Modal -->
-     <!-- Modal -->
-     <div id="viewModal" class="modal">
+    <!-- Modal -->
+    <div id="viewModal" class="modal">
         <div class="modal-content">
             <span class="close" onclick="closeModal()">&times;</span>
-            <h3>Medical Request Details</h3>
+            <h3>Recruitment Request Details</h3>
             <p><strong>Request ID:</strong> <span id="modalRequestID"></span></p>
+            <p><strong>Registration Number:</strong> <span id="modalRegNo"></span></p>
             <p><strong>Reason:</strong> <span id="modalReason"></span></p>
-            
-            
+            <p><strong>Faculty:</strong> <span id="modalFaculty"></span></p>
+            <p><strong>Status:</strong> <span id="modalStatus"></span></p>
         </div>
     </div>
 
-
-    
-
     <script>
         function confirmDelete(id) {
-        if (confirm("Are you sure you want to delete this request?")) {
-            window.location.href = <?= ROOT ?>/student/Medical/delete?RequestId=${id};
+            if (confirm("Are you sure you want to delete this recruitment request?")) {
+                window.location.href = <?= ROOT ?>/student/Recruitement/delete?recruitmentid=${id};
+            }
         }
-    }
-        function openModal(id, reason, status) {
+
+        function openModal(id, regNo, reason, faculty, status) {
             document.getElementById('modalRequestID').innerText = id;
+            document.getElementById('modalRegNo').innerText = regNo;
             document.getElementById('modalReason').innerText = reason;
-         
+            document.getElementById('modalFaculty').innerText = faculty;
+            document.getElementById('modalStatus').innerText = status;
             document.getElementById('viewModal').style.display = 'block';
         }
 
@@ -286,6 +283,7 @@
             }
         }
 
+
         function checkIfEmpty() {
             const tableBody = document.getElementById('tableBody');
             if (tableBody.children.length === 0) {
@@ -293,6 +291,8 @@
                 document.getElementById('emptyState').style.display = 'block';
             }
         }
+
+        checkIfEmpty();
     </script>
 </body>
 </html>

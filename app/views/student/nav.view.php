@@ -14,7 +14,7 @@
 
 
 
-    <div class="sidebar">
+    <div class="sidebar">   
         <div class="logo">
             <a href="home.php">
             <img src="<?=ROOT?>/assets/images/amar/P_logo.png" alt="PED logo" id="logo">
@@ -29,7 +29,7 @@
         <!-- DashBoard -->
            <!-- profile -->
         <li class="nav-item">
-                <a href="home" class="nav-link">
+                <a href="<?=ROOT ?>/student/Home" class="nav-link">
                 <i class="fa-solid fa-gauge"></i>
                    Home
                 </a>
@@ -38,7 +38,7 @@
 
         <!-- profile -->
         <li class="nav-item">
-                <a href="profile" class="nav-link">
+                <a href="<?=ROOT ?>/student/Profile" class="nav-link">
                 <i class="fa-regular fa-user"></i>
                     Profile
                 </a>
@@ -46,7 +46,7 @@
 
             <!-- sportsblog -->
             <li class="nav-item">
-                <a href="sport" class="nav-link">
+                <a href="<?=ROOT ?>/student/Sports" class="nav-link">
                 <i class="fa-solid fa-basketball"></i>
                     Sport 
                 </a>
@@ -56,24 +56,24 @@
             
 
 
-              <!-- pool  -->
-            <li class="nav-item">
-                <a href="pool" class="nav-link">
-                    
-                <i class="fa-solid fa-person-swimming fa-lg"></i>
-                    Pool
-                </a>
-            </li>
 
-              <!-- pool  -->
+              <!-- Tournament -->
               <li class="nav-item">
-                <a href="gym" class="nav-link">
-                <i class="fa-solid fa-dumbbell"></i>
-                    Gym
+                <a href="<?=ROOT ?>/student/Tournament" class="nav-link">
+                    
+                <i class="fa-solid fa-volleyball"></i>
+                    Tournament
                 </a>
             </li>
 
-           
+
+            
+
+
+            
+             
+
+             
 
             
 
@@ -88,9 +88,10 @@
                     <i class="arrow"></i>
                 </a>
                 <div class="dropdown">
-                    <a href="medical" class="dropdown-link">Medical</a>
-                    <a href="enhancement" class="dropdown-link">Enhancement Letter</a>
-                    <a href="certification" class="dropdown-link">Certifications</a>
+                    <a href="<?=ROOT ?>/student/Medical" class="dropdown-link">Medical</a>
+                    <a href="<?=ROOT ?>/student/Certification" class="dropdown-link">Certifications</a>
+                    <a href="<?=ROOT ?>/student/Enhancement" class="dropdown-link">Enhancement</a>
+
                 </div>
             </li>
 
