@@ -189,7 +189,7 @@ public function getBookingsForDateSection($date, $section) {
         ]);
     }
 
-
+  
     public function addReservation(){
 
         $userId = $this->getUserId();
@@ -230,19 +230,7 @@ public function getBookingsForDateSection($date, $section) {
         }
     }
 
-    public function getTimeSlots($date, $courtId) {
-        $query = "SELECT time FROM {$this->table} WHERE date = :date AND courtid = :courtId";
-        $result = $this->query($query, ['date' => $date, 'courtId' => $courtId]);
     
-        if (!$result || !is_array($result)) {
-            return []; // Return empty array if query fails
-        }
-    
-        $reservedTimes = array_column($result, 'time');
-        return $reservedTimes;
-    }
-    
-
     public function getAllReservedTimeSlots($courtId) {
         // Get all reservations for this court in the future
         $query = "SELECT date, time FROM {$this->table} 
@@ -289,6 +277,7 @@ public function getBookingsForDateSection($date, $section) {
         $result = $this->query($query, ['reservationid' => $reservationid]);
         return $result ? $result[0] : null;
     }
+    
     
 
     public function getReservationbyUser(){
@@ -348,6 +337,54 @@ public function getBookingsForDateSection($date, $section) {
         ]);
     }
 
+
+    
+    public function getReservationsByCourtSection($userId) {
+
+        $userId = $this->getUserId();
+        // Query to fetch reservations grouped by date and time
+        $query = "
+            SELECT r.date, r.time, r.duration, c.name AS courtname, c.section
+            FROM {$this->table} r
+            JOIN courts c ON r.courtid = c.courtid
+            WHERE c.section IN (
+                SELECT DISTINCT c2.section
+                FROM courts c2
+                JOIN {$this->table} r2 ON c2.courtid = r2.courtid
+                WHERE r2.userid = :userId
+            )
+            AND UPPER(r.status) IN ('CONFIRMED', 'PAID', 'TO PAY')
+            AND r.date >= CURDATE()
+        ";
+    
+        // Execute the query and fetch results
+        $result = $this->query($query, ['userId' => $userId]);
+        
+       
+    // Format reserved slots as date => section => [times]
+    $reservedTimeSlots = [];
+    foreach ($result as $row) {
+        if (!isset($reservedTimeSlots[$row->date])) {
+            $reservedTimeSlots[$row->date] = [];
+        }
+        if (!isset($reservedTimeSlots[$row->date][$row->section])) {
+            $reservedTimeSlots[$row->date][$row->section] = [];
+        }
+        $reservedTimeSlots[$row->date][$row->section][] = [
+            'time' => $row->time,
+            'duration' => $row->duration,
+            'courtname' => $row->courtname
+        ];
+    }
+    
+    // If you need to debug, use var_dump or print_r instead of show
+    // var_dump($reservedTimeSlots);
+    show($reservedTimeSlots);
+    return $reservedTimeSlots;
+
+    }
+
+
     public function cancelReservations($reservationId) {
         $userId = $this->getUserId();
     
@@ -386,6 +423,7 @@ public function getBookingsForDateSection($date, $section) {
         return false; // If we reach here, the status didn't match any of our conditions
     }
     
+
     public function getReservationsByCourtLocation($location) {
         $query = "SELECT reservations.*, courts.name, courts.location
                   FROM reservations

@@ -45,7 +45,7 @@ class Interfaculty extends Controller
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             // Retrieve POST data
             $year = $_POST['year'];
-            $sportID = $_POST['sportID'];
+            $sportID = $_POST['sport-id'];
             $tournament_name = $_POST['tournament_name'];
             $category = $_POST['category'];
 
@@ -55,14 +55,14 @@ class Interfaculty extends Controller
     
                 if ($tournament) {
                     // Get the last inserted tournament ID
-                    $tournamentId = $recordModel->lastInsertId();
+                    $tournamentId = $recordModel->getLastId();
                     
                     // Add places for the tournament
                     $facultyModel = new Faculties();
                     $faculties = $facultyModel->getAllFaculties();
                     
                     // Initialize TournamentPlaces model
-                $placeModel = new TournamentPlaces();
+                    $placeModel = new TournamentPlaces();
                     
                     // Check if place data is submitted
                     if (isset($_POST['place']) && is_array($_POST['place'])) {

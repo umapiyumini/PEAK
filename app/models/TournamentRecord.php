@@ -32,8 +32,6 @@ class TournamentRecord
 
 
         $this->query($query, $data);
-        return $this->db->lastInsertId(); // get the ID of newly added record
-
     }
 
 
@@ -55,9 +53,9 @@ class TournamentRecord
     }
 
 
-    public function lastInsertId() {
-        $result = $this->query("SELECT LAST_INSERT_ID()");
-        return $result[0]->{"LAST_INSERT_ID()"};
+    public function getLastId(){
+
+        $query = "SELECT recordid FROM tournaments_records ORDER BY recordid DESC LIMIT 1";
     }
     
     public function deleteRecord($tournament_id)

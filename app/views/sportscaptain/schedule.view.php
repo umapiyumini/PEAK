@@ -151,7 +151,7 @@
               <option value="Match">Match</option>
             </select>
           </div>
-          <input type="hidden" id="edit-id" name="shduleid">
+          <input type="hidden" id="edit-id" name="scheduleid">
           <div class="form-actions">
             <button type="submit" class="submit-button">Save Changes</button>
           </div>

@@ -187,3 +187,30 @@ document.addEventListener('DOMContentLoaded', function() {
 
 const category = card.querySelector('.schedule-category').textContent.trim();
 document.getElementById('edit-category').value = category;
+
+
+document.addEventListener('DOMContentLoaded', function() {
+    // Check for alerts
+    const successAlert = document.querySelector('.alert-success');
+    const errorAlert = document.querySelector('.alert-danger');
+    
+    if (successAlert) {
+        successAlert.style.display = 'block';
+        setTimeout(function() {
+            successAlert.style.opacity = '0';
+            setTimeout(function() {
+                successAlert.style.display = 'none';
+            }, 500);
+        }, 3000);
+    }
+    
+    if (errorAlert) {
+        errorAlert.style.display = 'block';
+        setTimeout(function() {
+            errorAlert.style.opacity = '0';
+            setTimeout(function() {
+                errorAlert.style.display = 'none';
+            }, 500);
+        }, 3000);
+    }
+});

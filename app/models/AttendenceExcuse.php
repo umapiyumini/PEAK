@@ -55,7 +55,7 @@ class AttendenceExcuse{
 
             $result = $this->query($query,[
                 'faculty' => $_POST['faculty'],
-                'sport_id' => (int) $sportId,
+                'sport_id' => $sportId,
                 'tournament_name' => $_POST['tournament_name'],
                 'start_date' => $_POST['start_date'],
                 'end_date' => $_POST['end_date'],

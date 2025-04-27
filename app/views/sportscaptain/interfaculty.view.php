@@ -98,7 +98,7 @@
                 <form method="POST" action="<?= ROOT ?>/sportscaptain/interfaculty/addrecord">
                     <!-- Tournament Details Section -->
                     <input type="hidden" name="tournament_name" value="Inter Faculty">
-                    <input type="hidden" name="sportID" value="<?=$sport_id ?? ''?>">
+                    <input type="hidden" name="sport_id" value="<?=$sport_id ?? ''?>">
                     <div class="form-group">
                         <label for="year">Year</label>
                         <input type="number" class="form-control" id="year" name="year" required>

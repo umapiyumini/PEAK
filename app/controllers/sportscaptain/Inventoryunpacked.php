@@ -15,6 +15,7 @@ class Inventoryunpacked extends Controller {
         $requestModel = new Inventoryrequest();
         $requests = $requestModel->getPreviousRequests();
 
+
         // Pass the data to the view
         $this->view('sportscaptain/inventoryunpacked', ['unpackedItems' => $unpackedItems, 
         'requests' => $requests]);
@@ -28,7 +29,7 @@ class Inventoryunpacked extends Controller {
             $inventoryModel = new Unpackedinventory();
             $inventoryEditModel = new Inventoryedit();
 
-            $equipmentid = $_POST['editid'];
+            $equipmentid = $_POST['equipmentid'];
             $newQuantity = $_POST['quantity'];
 
     
@@ -42,7 +43,7 @@ class Inventoryunpacked extends Controller {
     }
             
             $result = $inventoryEditModel->editQuantity(
-                $_POST['name'],
+                $_POST['equipmentid'],
                 $_POST['date'],
                 $_POST['quantity'],
                 $_POST['reason']
@@ -62,6 +63,8 @@ class Inventoryunpacked extends Controller {
     public function addrequest(){
         
         if($_SERVER['REQUEST_METHOD'] == 'POST'){
+
+             
             $requestModel = new Inventoryrequest();
             $result = $requestModel->addRequest();
 

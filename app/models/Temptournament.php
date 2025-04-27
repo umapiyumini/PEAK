@@ -18,7 +18,6 @@ class Temptournament{
         $name = $_POST['tournament_name'];
 
 
-
         $query = "SELECT tournament_id FROM temp_tournaments WHERE year = :year AND category = :category AND sport_id = :sport_id AND tournament_name = :tournament_name";
         $data = [
             'year' => $year,
@@ -26,7 +25,6 @@ class Temptournament{
             'sport_id' => $sportID,
             'tournament_name' => $tournament_name
         ];
-
 
         $result = $this->query($query, $data);
         
