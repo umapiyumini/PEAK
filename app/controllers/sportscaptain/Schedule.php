@@ -69,7 +69,7 @@ class Schedule extends Controller{
         if (!empty($existingSchedules)) {
             foreach ($existingSchedules as $existing) {
                 // Only check conflict if it's not the same schedule we're editing
-                if (isset($_POST['id']) && $existing->id == $_POST['id']) {
+                if (isset($_POST['scheduleid']) && $existing->id == $_POST['scheduleid']) {
                     continue;
                 }
                 
@@ -112,6 +112,10 @@ class Schedule extends Controller{
 
    public function deleteschedule($id = null){
 
+    if (session_status() == PHP_SESSION_NONE) {
+        session_start();
+    }
+
         if($_SERVER['REQUEST_METHOD'] === 'POST'){
 
             $id = $_POST['scheduleid'] ?? null;
@@ -126,7 +130,7 @@ class Schedule extends Controller{
             try{
                 $scheduleModel = new PracticeSchedule();
                 $schedule = $scheduleModel->deleteSchedule(
-                    $_POST['id']
+                    $_POST['scheduleid']
                 );
 
                 if($schedule){
@@ -145,6 +149,10 @@ class Schedule extends Controller{
 
    public function editschedule($id =null){
 
+    if (session_status() == PHP_SESSION_NONE) {
+        session_start();
+    }
+
         if($_SERVER['REQUEST_METHOD'] === 'POST'){
 
             $id = $_POST['scheduleid'] ?? null;
@@ -154,7 +162,7 @@ class Schedule extends Controller{
             $category = $_POST['category'] ?? null;
 
             if(!$id || !$date || !$start_time || !$end_time || !$category){
-                $_SESSION['error'] = 'All fielda are requierd';
+                $_SESSION['error'] = 'All fields are requierd';
                 header('location: ' .ROOT . '/sportscaptain/schedule');
                 exit();
             }

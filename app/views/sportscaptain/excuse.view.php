@@ -14,13 +14,31 @@
         <a href="colorsnight">Colors Night</a>
     </div>
     <div class = "container">
+
+    <?php if(isset($_SESSION['success'])): ?>
+        <div class="alert alert-success">
+            <?= $_SESSION['success'] ?>
+        </div>
+        <?php unset($_SESSION['success']); ?>
+    <?php endif; ?>
+    <?php if(isset($_SESSION['error'])): ?>
+        <div class="alert alert-danger">
+            <?= $_SESSION['error'] ?>
+        </div>
+        <?php unset($_SESSION['error']); ?>
+    <?php endif; ?>
     <div class="form-container" id="attendance-form">
         <h1>Attendance Excuse Letter</h1>
         <h3>Fill the Details</h3>
         <form  action="<?=ROOT?>/sportscaptain/excuse/addexcusedata" method="POST">
             <div class="form-group">
                 <label for="faculty">Faculty</label>
-                <input type="text" id="faculty" name="faculty" placeholder="Enter Faculty">
+                <select id="faculty" name="faculty" required>
+                    <option value="">Select Faculty</option>
+                    <?php foreach($data['faculties'] as $faculty): ?>
+                        <option value="<?=$faculty->faculty_name?>"><?=$faculty->faculty_name?></option>
+                    <?php endforeach; ?>
+                </select>
             </div>
             <div class="form-group">
                 <label for="tournament">Tournament Name</label>
