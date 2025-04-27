@@ -488,6 +488,7 @@
                         <option value="F">F</option>
                         <option value="G">G</option>
                     </select>
+                    <input type="hidden" id="hiddensection" name="section">
                 </div>
 
                 <div class="form-group">
@@ -582,6 +583,9 @@
                 break;
             }
         }
+
+        document.getElementById("hiddensection").value = section;
+
         populateCourts(section);
         
         updateDurationOptions(startTime);

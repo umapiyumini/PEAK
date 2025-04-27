@@ -15,7 +15,7 @@
                 $_POST['userid'] = $user->getLastID();
                 $student = new Student();
                 $student->studentReg($_POST);
-                $_SESSION['success']= "Student Registered Successfully"
+                $_SESSION['success']= "Student Registered Successfully";
             } else {
                 // show($user->errors);
                 $_SESSION['errors'] = $user->errors;
@@ -57,4 +57,7 @@
                 header('Location: users');
             }
         }
+
+    
+
 }
