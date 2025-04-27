@@ -122,6 +122,7 @@ class User {
             $this->errors['contact_number'] = 'Contact Number already exists in our system';
         }
         
+        // hbjf
         
         // Return true if no errors
         return empty($this->errors);
