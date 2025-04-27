@@ -30,12 +30,20 @@ class Ped_events{
         return $this->query($query, $params);
     }
 
-    public function deleteEvent($id){
-        $query = "DELETE FROM $this->table WHERE eventID = :eventID";
-        $params = [
-            ':eventID' => $id
+    public function updateEvent($data) {
+        $eventId = $data['id'];
+        $updatedData = [
+            'title' => $data['title'],
+            'time' => $data['time'],
+            'venue' => $data['venue'] ?? '',
+            'date' => $data['eventDate']
         ];
-        return $this->query($query, $params);
+        
+        return $this->update($eventId, $updatedData);
+    }
+
+    public function deleteEvent($eventId) {
+        return $this->delete($eventId);
     }
 }
 ?>

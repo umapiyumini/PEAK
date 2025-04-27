@@ -5,13 +5,15 @@
             $groundIndoorStaffList = $staffModel->findAllGroundIndoorStaff();
 
             $staffTodoModel = new StaffTodo();
-            $staffTodoList = $staffTodoModel->findAllStaffTodo();
+            $staffTodoList = $staffTodoModel->getAllStaffTodo();
 
             $this->view('ped_incharge/groundindoorstaff',['groundIndoorStaffList'=>$groundIndoorStaffList, 'staffTodoList'=>$staffTodoList]);
         }
 
         public function addTask(){
             if($_SERVER['REQUEST_METHOD'] == 'POST'){
+                $staffmodel= new Staff();
+                $_POST['staffid']= $staffmodel->getStaffByType($_POST['type'])->staff_id;
                 $staffTodoModel = new StaffTodo();
                 $_POST['date']= date('Y-m-d');
                 $staffTodoModel->addTask($_POST);
@@ -59,17 +61,17 @@
             header('Location: '. ROOT .'/ped_incharge/groundindoorstaff');
         }
 
-        public function updateStatus(){
+        public function updateStatus2(){
             $now= new DateTime();
             $staffTodoModel = new StaffTodo();
-            $staffTodoList = $staffTodoModel->findAllStaffTodo();
+            $staffTodoList = $staffTodoModel->getAllStaffTodo();
 
             foreach($staffTodoList as $task){
                 $taskid = $task->taskid;
                 $deadline = new DateTime($task->deadline);
                 $status = $task->status;
                 if($status !== 'Completed' && $now > $deadline){
-                    $staffTodoModel->updateStatus($taskid);
+                    $staffTodoModel->updateStatus2($taskid);
                 }
             }
             return true;

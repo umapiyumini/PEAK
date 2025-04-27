@@ -74,7 +74,7 @@
                 </div>
                 <input type="hidden" id="eventDate" name="eventDate">
                 <button type="submit" class="submit-btn">Save</button>
-                <button type="button" id="deleteEventBtn" class="delete-btn">Delete</button>
+                <button type="button" id="deleteEventBtn" class="btn btn-delete">Delete</button>
             </form>
         </div>
     </div>
@@ -286,10 +286,6 @@
                     }
                 });
 
-                // eventForm.addEventListener('submit', (e) => {
-                //     e.preventDefault();
-                //     this.addEvent();
-                // });
             }
 
             openEventModal(date) {

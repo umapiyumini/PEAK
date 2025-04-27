@@ -17,7 +17,7 @@ class Notifications {
         return $this->insert([
             'title' => 'Booking was rescheduled',
             'content' => $userName . ' has rescheduled a booking to the new date ' . $newDate,
-            'to_user_id' => 29, // PED incharge ID
+            'to_user_id' => 30, // PED incharge ID
             'to_role' => 'admin',
             'from_user_id' => $userId,
             'time' => date('H:i:s'),
@@ -71,6 +71,27 @@ class Notifications {
         ]);
     }
 
+
+    public function sendReplyNotification($toUserId, $replyContent) {
+        // Get the current user ID from the session
+        $fromUserId = $_SESSION['userid'] ?? 0;
+        // Calculate expiry date (1 week from now)
+        $expiryDate = date('Y-m-d', strtotime('+1 week'));
+        
+        // Insert notification
+        return $this->insert([
+            'title' => 'PED incharge replied to your message',
+            'content' => $replyContent,
+            'to_user_id' => $toUserId,
+            'to_role' => 'external_user',
+            'from_user_id' => $fromUserId,
+            'time' => date('H:i:s'),
+            'date' => date('Y-m-d'),
+            'created_at' => date('Y-m-d H:i:s'),
+            'expiry_date' => $expiryDate
+        ]);
+    }
+    
     
     
     
