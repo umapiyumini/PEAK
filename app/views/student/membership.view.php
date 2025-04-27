@@ -1,13 +1,14 @@
 <?php
-    $certificateRequests = $data['certificatedata'];
+    $membershipRequests = $data['teamdata'];
 ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Student Certificate Requests</title>
+    <title>Student Membership Requests</title>
     <style>
+        /* Same styles as before */
         * {
             margin: 0;
             padding: 0;
@@ -34,11 +35,6 @@
             margin-bottom: 20px;
         }
 
-        h1 {
-            font-size: 28px;
-            margin-bottom: 10px;
-        }
-
         h2 {
             font-size: 22px;
             margin-bottom: 15px;
@@ -59,10 +55,6 @@
 
         .add-btn:hover {
             background-color: #004c99;
-        }
-
-        .table-section {
-            margin-top: 30px;
         }
 
         table {
@@ -104,14 +96,6 @@
             background-color: #218838;
         }
 
-        .edit-btn {
-            background-color: #0066cc;
-        }
-
-        .edit-btn:hover {
-            background-color: #004c99;
-        }
-
         .delete-btn {
             background-color: #dc3545;
         }
@@ -124,11 +108,6 @@
             text-align: center;
             padding: 40px 0;
             color: #6c757d;
-        }
-
-        .empty-state p {
-            margin-bottom: 20px;
-            font-size: 18px;
         }
 
         .modal {
@@ -150,12 +129,6 @@
             border-radius: 8px;
             width: 50%;
             box-shadow: 0 4px 8px rgba(0,0,0,0.2);
-            animation: fadeIn 0.3s ease;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: scale(0.95); }
-            to { opacity: 1; transform: scale(1); }
         }
 
         .close {
@@ -184,53 +157,51 @@
 
     <div class="container">
         <div class="card">
-            <h2>Certificate Request Portal</h2>
-            <button class="add-btn" onclick="(window.location.href='<?= ROOT ?>/student/Addcertificate')">Add Certificate</button>
+            <h2>Membership Request Portal</h2>
+            <button class="add-btn" onclick="(window.location.href='<?= ROOT ?>/student/Addmembership')">Add Membership</button>
 
-            <div class="table-section">
-                <h3>Your Certificate Requests</h3>
-                <div id="requestsTable">
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>Request ID</th>
-                                <th>Tournament</th>
-                                <th>Year</th>
-                                <th>Sport</th>
-                                <th>Actions</th>
-                            </tr>
-                        </thead>
-                        <tbody id="tableBody">
-                            <?php if(!empty($certificateRequests)):?>
-                                <?php foreach($certificateRequests as $certificaterequest): ?>
-                                    <tr>
-                                    <td><?= $certificaterequest->RequestID ?></td>
-                                        <td><?= $certificaterequest->tournament ?></td>
-                                        <td><?= $certificaterequest->Year ?></td>
-                                        <td><?= $certificaterequest->Sport ?></td>
-                                        <td>
-                                            <button class="action-btn view-btn" 
-                                                onclick="openModal('<?= $certificaterequest->RequestID ?>','<?= $certificaterequest->tournament  ?>', '<?= htmlspecialchars($certificaterequest->Year, ENT_QUOTES) ?>', '<?= $certificaterequest  ->Sport ?>')">
-                                                View
-                                            </button>
-                                            <?php $RequestId = $certificaterequest->RequestID ?>
-                                            <button class="action-btn edit-btn" onclick="window.location.href='<?= ROOT ?>/student/Editcertificate?RequestID=<?= $RequestId ?>'">Edit</button>
-                                            <button class="action-btn delete-btn" onclick="confirmDelete(<?= $RequestId ?>)">Delete</button>
-                                        </td>
-                                    </tr>
-                                <?php endforeach; ?>
-                            <?php else:?>
-                            <tr>
-            <td colspan="5" style="text-align: center;">No Certificate requests to show</td>
-        </tr>
-    <?php endif; ?>
-                        </tbody>
-                    </table>
-                </div>
+            <h3>Your Membership Requests</h3>
+            <div id="requestsTable">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Request ID</th>
+                            <th>Faculty</th>
+                            <th>Year of Study</th>
+                            <th>Contact Number</th>
+                            <th>University Email</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tableBody">
+                        <?php if(!empty($membershipRequests)):?>
+                            <?php foreach($membershipRequests as $membership): ?>
+                                <tr>
+                                    <td><?= $membership->request_id ?></td>
+                                    <td><?= $membership->faculty ?></td>
+                                    <td><?= $membership->year_of_study ?></td>
+                                    <td><?= $membership->contact_number ?></td>
+                                    <td><?= $membership->university_email ?></td>
+                                    <td>
+                                        <button class="action-btn view-btn" 
+                                            onclick="openModal(
+                                                '<?= $membership->request_id ?>',
+                                                '<?= htmlspecialchars($membership->faculty, ENT_QUOTES) ?>',
+                                                '<?= $membership->year_of_study ?>',
+                                                '<?= $membership->contact_number ?>',
+                                                '<?= htmlspecialchars($membership->university_email, ENT_QUOTES) ?>'
+                                            )">View</button>
+                                            <button class="action-btn delete-btn" onclick="confirmDelete(<?= $membership->request_id ?>)">Delete</button>
+                                    </td>
+                                </tr>
+                            <?php endforeach; ?>
+                        <?php endif;?>
+                    </tbody>
+                </table>
+            </div>
 
-                <div id="emptyState" class="empty-state" style="display: none;">
-                    <p>You don't have any certificate requests yet.</p>
-                </div>
+            <div id="emptyState" class="empty-state" style="display: none;">
+                <p>You don't have any membership requests yet.</p>
             </div>
         </div>
     </div>
@@ -239,26 +210,28 @@
     <div id="viewModal" class="modal">
         <div class="modal-content">
             <span class="close" onclick="closeModal()">&times;</span>
-            <h3>Certificate Request Details</h3>
+            <h3>Membership Request Details</h3>
             <p><strong>Request ID:</strong> <span id="modalRequestID"></span></p>
-            <p><strong>Tournament:</strong> <span id="modaltournament"></span></p>
-            <p><strong>Sport:</strong> <span id="modalReason"></span></p>
-            <p><strong>Year:</strong> <span id="modalDuration"></span></p>
+            <p><strong>Faculty:</strong> <span id="modalFaculty"></span></p>
+            <p><strong>Year of Study:</strong> <span id="modalYear"></span></p>
+            <p><strong>Contact Number:</strong> <span id="modalContact"></span></p>
+            <p><strong>University Email:</strong> <span id="modalEmail"></span></p>
         </div>
     </div>
 
     <script>
         function confirmDelete(id) {
             if (confirm("Are you sure you want to delete this request?")) {
-                window.location.href = `<?= ROOT ?>/student/Certification/delete?RequestId=${id}`;
+                window.location.href = `<?= ROOT ?>/student/Membership/delete?request_id=${id}`;
             }
         }
 
-        function openModal(id, tournament,reason, duration) {
+        function openModal(id, faculty, year, contact, email) {
             document.getElementById('modalRequestID').innerText = id;
-            document.getElementById('modaltournament').innerText = tournament;
-            document.getElementById('modalReason').innerText = reason;
-            document.getElementById('modalDuration').innerText = duration;
+            document.getElementById('modalFaculty').innerText = faculty;
+            document.getElementById('modalYear').innerText = year;
+            document.getElementById('modalContact').innerText = contact;
+            document.getElementById('modalEmail').innerText = email;
             document.getElementById('viewModal').style.display = 'block';
         }
 
@@ -280,6 +253,8 @@
                 document.getElementById('emptyState').style.display = 'block';
             }
         }
+
+        checkIfEmpty();
     </script>
 </body>
 </html>

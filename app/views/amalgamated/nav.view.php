@@ -39,42 +39,21 @@
        
 
             
-          <!--Attendance-->
-          <li class="nav-item">
-                <a href="event" class="nav-link">
-                <i class="fa-solid fa-calendar-days"></i>
-                
-                    Event
-                </a>
-            </li>
+        
 
-            <!--Attendance-->
-             <li class="nav-item">
-                <a href="attendance" class="nav-link">
-                <i class="fa-solid fa-truck-ramp-box"></i>
-                    Attendance
-                </a>
-            </li>
-
+           
 
            
 
 
 
-              <!-- Hostel  -->
-              <li class="nav-item">
-                <a href="hostel" class="nav-link">
-                <i class="fa-solid fa-hotel"></i>
-               
-                    Hostel
-                </a>
-            </li>
+            
 
                <!-- Colours Night  -->
                <li class="nav-item">
-                <a href="night" class="nav-link">
+                <a href="<?=ROOT ?>/amalgamated/Night" class="nav-link">
                 <i class="fa-solid fa-trophy"></i>  
-                    Colours Night
+                    Rules & Regulations
                 </a>
             </li>
 

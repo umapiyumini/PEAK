@@ -1,12 +1,10 @@
-<?php
-    $certificateRequests = $data['certificatedata'];
-?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Student Certificate Requests</title>
+    <title>Student Tournament Requests</title>
     <style>
         * {
             margin: 0;
@@ -180,56 +178,54 @@
     </style>
 </head>
 <body>
-    <?php include 'nav.view.php'; ?>
+    <?php include 'nav.view.php';?>
 
     <div class="container">
         <div class="card">
-            <h2>Certificate Request Portal</h2>
-            <button class="add-btn" onclick="(window.location.href='<?= ROOT ?>/student/Addcertificate')">Add Certificate</button>
+            <h2>Tournament Entry Portal</h2>
+            <button class="add-btn" onclick="(window.location.href='<?= ROOT ?>/student/AddTournament')">Add Tournament Entry</button>
 
             <div class="table-section">
-                <h3>Your Certificate Requests</h3>
+                <h3>Your Tournament Requests</h3>
                 <div id="requestsTable">
                     <table>
                         <thead>
                             <tr>
                                 <th>Request ID</th>
-                                <th>Tournament</th>
-                                <th>Year</th>
-                                <th>Sport</th>
+                                <th>Sport/Event</th>
+                                <th>Participation Date</th>
                                 <th>Actions</th>
                             </tr>
                         </thead>
                         <tbody id="tableBody">
-                            <?php if(!empty($certificateRequests)):?>
-                                <?php foreach($certificateRequests as $certificaterequest): ?>
-                                    <tr>
-                                    <td><?= $certificaterequest->RequestID ?></td>
-                                        <td><?= $certificaterequest->tournament ?></td>
-                                        <td><?= $certificaterequest->Year ?></td>
-                                        <td><?= $certificaterequest->Sport ?></td>
-                                        <td>
-                                            <button class="action-btn view-btn" 
-                                                onclick="openModal('<?= $certificaterequest->RequestID ?>','<?= $certificaterequest->tournament  ?>', '<?= htmlspecialchars($certificaterequest->Year, ENT_QUOTES) ?>', '<?= $certificaterequest  ->Sport ?>')">
-                                                View
-                                            </button>
-                                            <?php $RequestId = $certificaterequest->RequestID ?>
-                                            <button class="action-btn edit-btn" onclick="window.location.href='<?= ROOT ?>/student/Editcertificate?RequestID=<?= $RequestId ?>'">Edit</button>
-                                            <button class="action-btn delete-btn" onclick="confirmDelete(<?= $RequestId ?>)">Delete</button>
-                                        </td>
-                                    </tr>
-                                <?php endforeach; ?>
-                            <?php else:?>
+                        <?php if(!empty($tournamentRequests)):?>
+                            <?php foreach($tournamentRequests as $tournamentRequest): ?>
                             <tr>
-            <td colspan="5" style="text-align: center;">No Certificate requests to show</td>
-        </tr>
-    <?php endif; ?>
+                                <td><?= $tournamentRequest->RequestID ?></td>
+                                <td><?= $tournamentRequest->SportName ?></td>
+                                <td><?= $tournamentRequest->ParticipationDate ?></td>
+                                <td>
+                                    <button class="action-btn view-btn" 
+                                        onclick="openModal('<?= $tournamentRequest->RequestID ?>', '<?= htmlspecialchars($tournamentRequest->SportName, ENT_QUOTES) ?>', '<?= $tournamentRequest->ParticipationDate ?>')">
+                                        View
+                                    </button>
+                                    <?php $RequestId = $tournamentRequest->RequestID ?>
+                                    <button class="action-btn edit-btn" onclick="window.location.href='<?= ROOT ?>/student/EditTournament?RequestId=<?= $RequestId ?>'">Edit</button>
+                                    <button class="action-btn delete-btn" onclick="confirmDelete(<?= $RequestId ?>)">Delete</button>
+                                </td>
+                            </tr>
+                            <?php endforeach; ?>
+                        <?php else:?>
+                            <tr>
+                                <td colspan="4" style="text-align: center;">No tournament entry requests to show</td>
+                            </tr>
+                        <?php endif; ?> 
                         </tbody>
                     </table>
                 </div>
 
                 <div id="emptyState" class="empty-state" style="display: none;">
-                    <p>You don't have any certificate requests yet.</p>
+                    <p>You don't have any tournament entry requests yet.</p>
                 </div>
             </div>
         </div>
@@ -239,26 +235,24 @@
     <div id="viewModal" class="modal">
         <div class="modal-content">
             <span class="close" onclick="closeModal()">&times;</span>
-            <h3>Certificate Request Details</h3>
+            <h3>Tournament Request Details</h3>
             <p><strong>Request ID:</strong> <span id="modalRequestID"></span></p>
-            <p><strong>Tournament:</strong> <span id="modaltournament"></span></p>
-            <p><strong>Sport:</strong> <span id="modalReason"></span></p>
-            <p><strong>Year:</strong> <span id="modalDuration"></span></p>
+            <p><strong>Sport/Event:</strong> <span id="modalReason"></span></p>
+            <p><strong>Participation Date:</strong> <span id="modalDuration"></span></p>
         </div>
     </div>
 
     <script>
         function confirmDelete(id) {
             if (confirm("Are you sure you want to delete this request?")) {
-                window.location.href = `<?= ROOT ?>/student/Certification/delete?RequestId=${id}`;
+                window.location.href = `<?= ROOT ?>/student/Tournament/delete?RequestId=${id}`;
             }
         }
 
-        function openModal(id, tournament,reason, duration) {
+        function openModal(id, sport, date) {
             document.getElementById('modalRequestID').innerText = id;
-            document.getElementById('modaltournament').innerText = tournament;
-            document.getElementById('modalReason').innerText = reason;
-            document.getElementById('modalDuration').innerText = duration;
+            document.getElementById('modalReason').innerText = sport;
+            document.getElementById('modalDuration').innerText = date;
             document.getElementById('viewModal').style.display = 'block';
         }
 
@@ -270,6 +264,14 @@
             const modal = document.getElementById('viewModal');
             if (event.target == modal) {
                 modal.style.display = "none";
+            }
+        }
+
+        function deleteRow(btn) {
+            if (confirm('Are you sure you want to delete this tournament entry?')) {
+                const row = btn.closest('tr');
+                row.remove();
+                checkIfEmpty();
             }
         }
 

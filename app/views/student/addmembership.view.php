@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Add Medical Request</title>
+    <title>Team Membership Request</title>
     <style>
         * {
             margin: 0;
@@ -57,19 +57,12 @@
         }
         
         input[type="text"],
-        textarea,
-        select {
+        input[type="email"] {
             width: 100%;
             padding: 12px;
             border: 1px solid #ddd;
             border-radius: 4px;
             font-size: 16px;
-            background-color: #fff;
-        }
-        
-        textarea {
-            height: 120px;
-            resize: vertical;
         }
         
         .submit-btn {
@@ -107,8 +100,6 @@
 
         .errors {
             color: red;
-            font-size: 14px;
-            margin-bottom: 8px;
         }
     </style>
 </head>
@@ -118,74 +109,61 @@
 
 <div class="container">
     <div class="card">
-        <div class="form-container" id="medical-form">
-            <h1>Medical Request</h1>
-            <form method="POST" action="<?= ROOT ?>/student/Medical/">
-
+        <div class="form-container" id="membership-form">
+            <h1>Team Membership</h1>
+            <form method="POST" action="<?= ROOT ?>/student/Membership/">
                 <div class="form-group">
                     <label for="name">Full Name</label>
-                    <!-- error start -->
                     <p class="errors">
-                        <?php
-                        if (!empty($errors['Name'])) {
-                            echo $errors['Name'];
-                        }
-                        ?>
+                        <?php if (!empty($errors['full_name'])) echo $errors['full_name']; ?>
                     </p>
-                    <!-- error end -->
-                    <input type="text" id="name" placeholder="Enter Full Name" name="Name">
+                    <input type="text" id="name" placeholder="Enter Full Name" name="full_name">
                 </div>
 
                 <div class="form-group">
                     <label for="registration-id">Student Registration ID</label>
-                    <!-- error start -->
                     <p class="errors">
-                        <?php 
-                        if (!empty($errors['RegistrationID'])) {
-                            echo $errors['RegistrationID'];
-                        }
-                        ?>
+                        <?php if (!empty($errors['student_id'])) echo $errors['student_id']; ?>
                     </p>
-                    <!-- error end -->
-                    <input type="text" id="registration-id" placeholder="Enter Registration ID" name="RegistrationID">
+                    <input type="text" id="registration-id" placeholder="Enter Registration ID" name="student_id">
                 </div>
 
                 <div class="form-group">
-                    <label for="medical-reason">Reason for Medical</label>
-                    <!-- error start -->
+                    <label for="faculty">Faculty</label>
                     <p class="errors">
-                        <?php 
-                        if (!empty($errors['ReasonForMedical'])) {
-                            echo $errors['ReasonForMedical'];
-                        }
-                        ?>
+                        <?php if (!empty($errors['faculty'])) echo $errors['faculty']; ?>
                     </p>
-                    <!-- error end -->
-                    <textarea id="medical-reason" placeholder="Enter Reason for Medical" rows="4" name="ReasonForMedical"></textarea>
+                    <input type="text" id="faculty" placeholder="Enter Faculty" name="faculty">
                 </div>
 
                 <div class="form-group">
-                    <label for="medical-status">Medical Status</label>
-                    <!-- error start -->
-                  
-                    <!-- error end -->
-                    <select id="medical-status" name="status">
-                    <option value="" disabled selected>Status of the medical</option>
-                        <option value="accepted">Accepted</option>
-                        <option value="rejected">Rejected</option>
-                        <option value="pending">Pending</option>
-
-                    </select>
+                    <label for="year">Year of Study</label>
+                    <p class="errors">
+                        <?php if (!empty($errors['year_of_study'])) echo $errors['year_of_study']; ?>
+                    </p>
+                    <input type="text" id="year" placeholder="Enter Year of Study" name="year_of_study">
                 </div>
 
+                <div class="form-group">
+                    <label for="contact">Contact Number</label>
+                    <p class="errors">
+                        <?php if (!empty($errors['contact_number'])) echo $errors['contact_number']; ?>
+                    </p>
+                    <input type="text" id="contact" placeholder="Enter Contact Number" name="contact_number">
+                </div>
 
- 
+                <div class="form-group">
+                    <label for="email">University Email</label>
+                    <p class="errors">
+                        <?php if (!empty($errors['university_email'])) echo $errors['university_email']; ?>
+                    </p>
+                    <input type="email" id="email" placeholder="Enter University Email" name="university_email">
+                </div>
 
                 <button type="submit" class="submit-btn">Submit</button>
             </form>
         </div>
     </div>
 </div>
-
 </body>
 </html>
