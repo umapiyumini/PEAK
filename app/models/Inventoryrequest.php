@@ -246,9 +246,15 @@ class Inventoryrequest {
         if (!$userId) {
             die("User ID not found in session.");
         }
+
+        $sportQuery = "SELECT sport_id FROM sports_captain WHERE userid = :userid";
+        $sportResult = $this->query($sportQuery, ['userid' => $userId]);
+
+        $sportId = $sportResult[0]->sport_id ?? null; 
     
         $query = "INSERT INTO inventoryrequest (
-                    equipmentid, 
+                    equipmentid,
+                    sport_id, 
                     quantityrequested, 
                     timeframe, 
                     date, 
@@ -256,20 +262,23 @@ class Inventoryrequest {
                     status, 
                     addnotes)
                   VALUES (
-                    (SELECT equipmentid FROM equipments WHERE name = :name),
+                    :equipmentid,
+                    :sport_id,
                     :quantityrequested,
                     :timeframe,
                     CURRENT_DATE,
                     :userid,
-                    'pending',
+                    :status,
                     :addnotes)";
     
         return $this->query($query, [
-            'name' => $_POST['name'],
+            'equipmentid' => $_POST['equipmentid'],
+            'sport_id' => $sportId,
             'quantityrequested' => $_POST['quantityrequested'],
             'timeframe' => $_POST['timeframe'],
             'userid' => $userId,
             'addnotes' => $_POST['addnotes'],
+            'status' => $_POST['status'] ?? 'pending', // Default to 'pending' if not provided
         ]);
     }
 

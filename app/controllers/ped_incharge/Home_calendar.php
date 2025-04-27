@@ -19,8 +19,16 @@
             if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $input = json_decode(file_get_contents("php://input"), true);
                 $eventModel = new Ped_events();
-                $eventModel->deleteEvent($input['eventID']);
-                echo json_encode(['success' => true]);
+                $result = $eventModel->deleteEvent($input['eventID']);
+                echo json_encode(['success' => $result]);
+            }
+        }
+        
+        public function updateEvent() {
+            if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+                $eventModel = new Ped_events();
+                $result = $eventModel->updateEvent($_POST);
+                header('Location: ' . ROOT . '/ped_incharge/home_calendar');
             }
         }
         

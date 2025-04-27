@@ -34,6 +34,7 @@ class Upcoming extends Controller{
             $venue = $_POST['venue'] ?? null;
 
             if(!$eventname || !$date || !$time || !$venue){
+                echo "<script>alert('All fields are required');</script>";
                 $_SESSION['error'] = 'All fields are required';
                 header('location: ' .ROOT . '/sportscaptain/upcoming');
                 exit();
@@ -45,8 +46,10 @@ class Upcoming extends Controller{
             $events = $upcomingModel->addUpcomingevent();
 
             if($events){
+                echo "<script>alert('Event added successfully');</script>";
                 $_SESSION['success'] = 'Event added successfully';
             }else{
+                echo "<script>alert('Failed to add event');</script>";
                 $_SESSION['error'] = 'Failed to add event';
             }
           }catch(Exception $e){

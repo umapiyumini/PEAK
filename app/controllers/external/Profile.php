@@ -25,43 +25,48 @@ class Profile extends Controller {
         }
 
         public function update()
-{
-    // Only allow POST
-    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-        // Get user id from session
-        if (!isset($_SESSION['userid'])) {
-            echo json_encode(['success' => false, 'message' => 'Not logged in']);
-            exit;
+        {
+            // Only allow POST
+            if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+                // Get user id from session
+                if (!isset($_SESSION['userid'])) {
+                    echo json_encode(['success' => false, 'message' => 'Not logged in']);
+                    exit;
+                }
+                $userid = $_SESSION['userid'];
+        
+                // Get JSON input
+                $data = json_decode(file_get_contents('php://input'), true);
+        
+                // Validate input (add more validation as needed)
+                if (empty($data['name']) || empty($data['email']) || empty($data['phone']) || empty($data['address'])) {
+                    echo json_encode(['success' => false, 'message' => 'All fields are required']);
+                    exit;
+                }
+        
+                // Update user in database
+                $userModel = new User();
+                $validationData = ['contact_number' => $data['phone']];
+                if (!$userModel->validate($validationData) && isset($userModel->errors['contact_number'])) {
+                    echo json_encode(['success' => false, 'message' => $userModel->errors['contact_number']]);
+                    exit;
+                }
+                $updateData = [
+                    'name' => $data['name'],
+                    'email' => $data['email'],
+                    'contact_number' => $data['phone'],
+                    'address' => $data['address']
+                ];
+                $result = $userModel->update($userid, $updateData);
+        
+                if ($result) {
+                    echo json_encode(['success' => true]);
+                } else {
+                    echo json_encode(['success' => false, 'message' => 'Database update failed']);
+                }
+                exit;
+            }
         }
-        $userid = $_SESSION['userid'];
-
-        // Get JSON input
-        $data = json_decode(file_get_contents('php://input'), true);
-
-        // Validate input (add more validation as needed)
-        if (empty($data['name']) || empty($data['email']) || empty($data['phone']) || empty($data['address'])) {
-            echo json_encode(['success' => false, 'message' => 'All fields are required']);
-            exit;
-        }
-
-        // Update user in database
-        $userModel = new User();
-        $updateData = [
-            'name' => $data['name'],
-            'email' => $data['email'],
-            'contact_number' => $data['phone'],
-            'address' => $data['address']
-        ];
-        $result = $userModel->update($userid, $updateData);
-
-        if ($result) {
-            echo json_encode(['success' => true]);
-        } else {
-            echo json_encode(['success' => false, 'message' => 'Database update failed']);
-        }
-        exit;
-    }
-}
 
 
 public function upload_image()

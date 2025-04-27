@@ -48,6 +48,10 @@ class PracticeSchedule{
 
     public function addSchedule(){
 
+        if (session_status() == PHP_SESSION_NONE) {
+            session_start();
+        }
+
         $userId = $this->getUserId();
 
         if(!$userId){
@@ -86,10 +90,14 @@ class PracticeSchedule{
 
     public function deleteSchedule($id){
 
+        if (session_status() == PHP_SESSION_NONE) {
+            session_start();
+        }
+
         try{
 
         $query = "DELETE FROM practiceschedule WHERE scheduleid = :scheduleid";
-        $result = $this->query($query, ['sheduleid' => $id]);
+        $result = $this->query($query, ['scheduleid' => $id]);
 
         if(is_bool($result)) {
             return $result; 
@@ -103,6 +111,10 @@ class PracticeSchedule{
     }
 
     public function editSchedule($id, $date, $start_time, $end_time,$category){
+
+        if (session_status() == PHP_SESSION_NONE) {
+            session_start();
+        }
 
         $userId = $this->getUserId();
 

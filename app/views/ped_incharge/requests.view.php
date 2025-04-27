@@ -39,7 +39,7 @@
       <h2><span class="dot new"></span> New <span class="count"></span></h2>
       <?php if(!empty($newPendingReservations)): ?>
         <?php foreach($newPendingReservations as $i): ?>
-          <div class="card sports" onclick="viewCard(this)" data-id="<?= $i->reservationid ?>" data-courtname="<?= $i->courtname ?>" data-location="<?= $i->location ?>" data-event="<?= $i->event ?>" data-date="<?= $i->date ?>" data-time="<?= $i->time ?>" data-numberof_participants="<?= $i->numberof_participants ?>" data-extradetails="<?= $i->extradetails ?>" data-userdescription="<?= $i->userdescription ?>" data-userproof="<?= $i->userproof ?>" data-name="<?= $i->name ?>" data-contact_number="<?= $i->contact_number ?>" data-email="<?= $i->email ?>" data-cardtype="new" data-has_conflict="<?= $i->has_conflict ? '1' : '0' ?> "data-duration="<?= $i->duration?>>
+          <div class="card sports" onclick="viewCard(this)" data-id="<?= $i->reservationid ?>" data-courtname="<?= $i->courtname ?>" data-location="<?= $i->location ?>" data-event="<?= $i->event ?>" data-date="<?= $i->date ?>" data-time="<?= $i->time ?>" data-numberof_participants="<?= $i->numberof_participants ?>" data-extradetails="<?= $i->extradetails ?>" data-userdescription="<?= $i->userdescription ?>" data-userproof="<?= $i->userproof ?>" data-name="<?= $i->name ?>" data-contact_number="<?= $i->contact_number ?>" data-email="<?= $i->email ?>" data-cardtype="new" data-has_conflict="<?= $i->has_conflict ? '1' : '0' ?> "data-duration="<?= $i->duration?>">
             <p class="facility"><?= $i->courtname ?></p>
             <p class="facility"><?= $i->location ?></p>
             <p class="reservation-id">ID: <?= $i->reservationid ?></p>
@@ -175,7 +175,30 @@
     <!-- Cancelled Column -->
     <div class="column cancelled" id="cancelledColumn" onmouseup="dropCard('cancelledColumn')">
       <h2><span class="dot cancelled"></span> Cancelled <span class="count"></span></h2>
-      <!-- cards here... -->
+      <?php if(!empty($cancelledReservation)): ?>
+        <?php foreach($cancelledReservation as $i): ?>
+          <div class="card sports" onclick="viewCard(this)" data-id="<?= $i->reservationid ?>" data-courtname="<?= $i->courtname ?>" data-location="<?= $i->location ?>" data-event="<?= $i->event ?>" data-date="<?= $i->date ?>" data-time="<?= $i->time ?>" data-numberof_participants="<?= $i->numberof_participants ?>" data-extradetails="<?= $i->extradetails ?>" data-userdescription="<?= $i->userdescription ?>" data-payment_proof="<?= $i->payment_proof ?>" data-name="<?= $i->name ?>" data-contact_number="<?= $i->contact_number ?>" data-email="<?= $i->email ?>" data-cardtype="confirmed" data-duration="<?= $i->duration?>">
+            <p class="facility"><?= $i->courtname ?></p>
+            <p class="facility"><?= $i->location ?></p>
+            <p class="reservation-id">ID: <?= $i->reservationid ?></p>
+            <p class="event"><?= $i->event ?></p>
+            <p class="date"><?= $i->date ?></p>
+            <p class="time"><?= $i->time ?></p>
+            <?php
+                  $durationMap = [
+                      '2 hour' => '2 Hours',
+                      'full' => 'Full day',
+                      'half' => 'Half day'
+                  ];
+                  $displayDuration = $durationMap[$i->duration] ?? ucfirst($i->duration);
+                  ?>
+
+            <p class="time"><?= $displayDuration ?></p>
+          </div>
+        <?php endforeach; ?>
+      <?php else: ?>
+        <p style="padding: 10px;">No Paid Reservations.</p>
+      <?php endif; ?>
     </div>
 
     <!-- Rejected Column -->

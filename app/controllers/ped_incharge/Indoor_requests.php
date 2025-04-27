@@ -8,7 +8,8 @@ class Indoor_requests extends Controller {
         $paidReservations = $reservationsModel->getAllIndoorPaidReservations();
         $confirmedReservations = $reservationsModel->getAllIndoorConfirmedReservations();
         $rejectedReservations = $reservationsModel->getAllInddorRejectedReservations();
-
+        
+        $cancelledReservation = $reservationsModel->getAllIndoorCancelledReservations();
         $activeReservations = $reservationsModel->getActiveReservationsIndoor();
 
         //flag for conflicting reservations
@@ -33,7 +34,7 @@ class Indoor_requests extends Controller {
         $flagConflicts($newPendingReservations);
         $flagConflicts($oldPendingReservations);
 
-        $this->view('ped_incharge/indoor_requests', ['newPendingReservations' => $newPendingReservations, 'oldPendingReservations' => $oldPendingReservations, 'topayReservations' => $topayReservations, 'paidReservations' => $paidReservations, 'confirmedReservations' => $confirmedReservations, 'rejectedReservations' => $rejectedReservations]);
+        $this->view('ped_incharge/indoor_requests', ['newPendingReservations' => $newPendingReservations, 'oldPendingReservations' => $oldPendingReservations, 'topayReservations' => $topayReservations, 'paidReservations' => $paidReservations, 'confirmedReservations' => $confirmedReservations, 'rejectedReservations' => $rejectedReservations, 'cancelledReservation'=> $cancelledReservation]);
     }
 
 

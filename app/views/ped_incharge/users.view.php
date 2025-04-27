@@ -25,6 +25,20 @@
             <button class="tab" onclick="showSection('user-display')">View Users</button>
         </div>
 
+        <?php if(!empty($_SESSION['errors'])){
+            foreach($_SESSION['errors'] as $err) {
+                $errr = $err;
+            }
+            echo "<div id='error-message' style='position: fixed ;top: 20px; right: 20px;background-color:rgb(206, 29, 29);color: white; padding: 15px 20px; border-radius: 5px; z-index: 9999; box-shadow: 0 2px 10px rgba(0,0,0,0.2); transition: opacity 0.5s ease-out;'>" . $errr ."</div>";
+            unset($_SESSION['errors']);
+        }
+        if (isset($_SESSION['success'])) {
+            echo "<div id='success-message' style='position: fixed ;top: 20px; right: 20px;background-color:rgb(57, 184, 11);color: white; padding: 15px 20px; border-radius: 5px; z-index: 9999; box-shadow: 0 2px 10px rgba(0,0,0,0.2); transition: opacity 0.5s ease-out;'>"
+                . htmlspecialchars($_SESSION['success']) . "</div>";
+            unset($_SESSION['success']);
+        }
+        ?>
+
         <!-- Student Registration Form -->
         <div id="student-registration" class="form-section active">
             <h2>Student Registration</h2>
@@ -153,17 +167,17 @@
         <div id="user-display" class="display-section">
             <h2>User Management</h2>
             <div class="filter-section">
-                <div class="form-group">
-                    <label>Filter by Role:</label>
+            <div class="form-group">
+                <label>Filter by Role:</label>
                     <select onchange="filterUsers(this.value)">
                         <option value="all">All Users</option>
-                        <option value="1">Administrators</option>
-                        <option value="2">Students</option>
-                        <option value="3">Sports Captains</option>
-                        <option value="4">Club Executives</option>
-                        <option value="5">Staff Members</option>
+                        <option value="Admin">Administrators</option>
+                        <option value="Internal User">Students</option>
+                        <option value="Sports Captain">Sports Captains</option>
+                        <option value="Amalgamated Club Executive">Club Executives</option>
+                        <option value="GroundIndoorStaff">Staff Members</option>
                     </select>
-                </div>
+            </div>
             </div>
             <div class="table-responsive">
                 <table class="user-table">
@@ -173,20 +187,16 @@
                             <th>Name</th>
                             <th>Email</th>
                             <th>Contact</th>
-                            <th>Actions</th>
                         </tr>
                     </thead>
                     <tbody id="userTableBody">
                        <?php if(!empty($usersList)): ?>
                         <?php foreach($usersList as $user): ?>
-                            <tr>
+                            <tr class="user-row" data-role="<?= $user->role ?>">
                                 <td><?= $user->role ?></td>
                                 <td><?= $user->name ?></td>
                                 <td><?= $user->email ?></td>
                                 <td><?= $user->contact_number ?></td>
-                                <td class="actions">
-                                    <button class="delete-btn" data-id="<?= $user->userid ?>">Delete</button>
-                                </td>
                             </tr>
                         <?php endforeach; ?>
                         <?php endif; ?>
@@ -197,7 +207,22 @@
     </div>
         </main>
 
-    
+    <script>
+           //error message disappear
+            setTimeout(() => {
+            const fadeOut = (id) => {
+                const el = document.getElementById(id);
+                if (el) {
+                    el.style.opacity = "0";
+                    el.style.transform = "translateY(-10px)";
+                    setTimeout(() => el.remove(), 500);
+                }
+            };
+
+            fadeOut('error-message');
+            fadeOut('success-message');
+        }, 3000);
+    </script>
 	<script src="<?=ROOT?>/assets/js/ped_incharge/users.js"></script>
 	<script src="<?=ROOT?>/assets/js/ped_incharge/navbar.js"></script>
 </body>

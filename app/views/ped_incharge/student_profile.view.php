@@ -337,7 +337,7 @@
                     <div class="info-item full-width">
                         <label>Achievements:</label>
                         <div class="card-body">    
-                            <div class="tournament-item">
+                            <div class="tournament-item interuni">
                                 <?php if (!empty($interuni)) : ?>
                                     <?php foreach ($interuni as $i): ?>
                                         <div class="tournament">
@@ -347,6 +347,33 @@
                                             </div>
                                             <div>
                                                 <div class="tournament-result"><?= htmlspecialchars($i->place) ?></div>
+                                            </div>
+                                        </div>
+                                    <?php endforeach; ?>
+                                <?php else : ?>
+                                    <div>No Tournaments.</div>
+                                <?php endif; ?>
+                            </div>
+                            <div class="tournament-item interfaculty">
+                                <?php if (!empty($tournament)) : ?>
+                                    <?php foreach ($tournament as $i): ?>
+                                        <div class="tournament">
+                                            <div class="tournament-header">
+                                                <div class="tournament-name"><?= htmlspecialchars($i->tournament_name) ?> - <span ><?= htmlspecialchars($i->sport_name) ?></span></div>
+                                                <div class="tournament-date"><?= htmlspecialchars($i->year) ?></div>
+                                            </div>
+                                            <div>
+                                                <div class="tournament-result">
+                                                    <?php
+                                                    $placeMap = [
+                                                        '1' => 'Champions',
+                                                        '2' => '2nd Place',
+                                                        '3' => '3rd Place'
+                                                    ];
+
+                                                    echo htmlspecialchars($placeMap[$i->place] ?? $i->place);
+                                                    ?>
+                                                </div>
                                             </div>
                                         </div>
                                     <?php endforeach; ?>

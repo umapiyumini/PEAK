@@ -109,7 +109,7 @@
 
     <!-- Proof of Identity -->
     <label for="proof">Proof of Identity:</label>
-    <input type="file" id="proof" name="proof" required>
+    <input type="file" id="proof" name="proof" accept=".pdf,application/pdf" required>
 
     <!-- Number of Participants -->
     <label for="participants">Number of Participants:</label>

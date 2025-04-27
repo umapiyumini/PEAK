@@ -14,7 +14,21 @@
     <a href="colorsnight">Colors Night</a>
   </div>
 
-  <div class="container" id="hostelForm">
+ 
+    <?php if(isset($_SESSION['success'])): ?>
+        <div class="alert alert-success">
+            <?= $_SESSION['success'] ?>
+        </div>
+        <?php unset($_SESSION['success']); ?>
+    <?php endif; ?>
+    <?php if(isset($_SESSION['error'])): ?>
+        <div class="alert alert-danger">
+            <?= $_SESSION['error'] ?>
+        </div>
+        <?php unset($_SESSION['error']); ?>
+    <?php endif; ?>
+    
+    <div class="container" id="hostelForm">
     <h1>Requesting Hostel Facilities</h1>
     <form id="form" action="<?=ROOT?>/sportscaptain/hostal/insertrequest" method="POST">
       
