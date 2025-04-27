@@ -3,7 +3,7 @@
 class CoachesInstructors{
     use Model;
     protected $table = 'coaches';
-    protected $columns = ['name','role', 'email', 'phone', 'address', 'experience', 'sport_id' ];
+    protected $columns = ['name','role', 'email', 'phone', 'address', 'experience', 'sport_id','image' ];
 
     public function getCoaches(){
 

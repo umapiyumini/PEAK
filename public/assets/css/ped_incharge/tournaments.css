@@ -236,52 +236,159 @@ tr:hover {
     border-radius: 4px;
 }
 
-.tournament-details {
+/* Modal styling */
+.modal-content {
+    max-width: 800px;
+    margin: 0 auto;
+    border-radius: 8px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+  }
+  
+
+  
+  .modal-header h2 {
+    margin: 0;
+    color: #333;
+    font-size: 1.5rem;
+  }
+  
+  .modal-body {
     padding: 20px;
-}
-
-.details-grid {
+    background-color: #fff;
+    border-bottom-left-radius: 8px;
+    border-bottom-right-radius: 8px;
+  }
+  
+  /* Details grid styling */
+  .details-grid {
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 20px;
-    margin-bottom: 30px;
-}
-
-.detail-item {
-    display: flex;
-    flex-direction: column;
-}
-
-.detail-item label {
-    font-weight: bold;
-    color: black;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 15px;
+    margin-bottom: 25px;
+    padding: 15px;
+    background-color: #f9f9f9;
+    border-radius: 6px;
+    border: 1px solid #eaeaea;
+  }
+  
+  .detail-item {
+    margin-bottom: 10px;
+  }
+  
+  .detail-item label {
+    display: block;
     margin-bottom: 5px;
-}
-
-.detail-item span {
-    font-size: 1.1em;
+    font-weight: 600;
+    color: #555;
+    font-size: 0.9rem;
+  }
+  
+  .detail-item input[readonly] {
+    width: 100%;
+    padding: 8px 12px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    background-color: #eeeeee;
     color: #333;
-}
-
-.participants-section {
-    border-top: 1px solid var(--secondary-color);
-    padding-top: 20px;
-}
-
-.participants-section h3 {
+    font-size: 0.95rem;
+  }
+  
+  /* Participants section styling */
+  .participants-section {
+    margin-top: 25px;
+    border-top: 2px solid #eee;
+    padding-top: 15px;
+  }
+  
+  .participants-section h3 {
+    color: #444;
     margin-bottom: 15px;
+    padding-bottom: 8px;
+    border-bottom: 2px solid #eee;
+    position: relative;
+  }
+  
+
+  /* Place and players styling */
+  .place-players {
+    margin-bottom: 20px;
+    padding: 15px;
+    background-color: #f9f9f9;
+    border-radius: 6px;
+    border-left: 4px solid #eeeeee;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    transition: all 0.3s ease;
+  }
+  
+  .place-players:nth-child(1) {
+    border-left-color: gold;
+  }
+  
+  .place-players:nth-child(2) {
+    border-left-color: silver;
+  }
+  
+  .place-players:nth-child(3) {
+    border-left-color: #cd7f32; /* bronze */
+  }
+  
+
+  
+  .place-players h4 {
+    margin-top: 0;
+    margin-bottom: 12px;
     color: #333;
-}
+    padding-bottom: 8px;
+    border-bottom: 1px solid #eee;
+    font-size: 1.1rem;
+  }
+  
+  .players-list {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    max-height: 200px;
+    overflow-y: auto;
+  }
+  
+  .players-list li {
+    padding: 8px 10px;
+    border-bottom: 1px dotted #eee;
+    display: flex;
+    align-items: center;
+    font-size: 0.9rem;
+  }
+  
+  
+  .players-list li:hover {
+    background-color: #eeeeee;
+  }
+  
+  .players-list li:last-child {
+    border-bottom: none;
+  }
+  
 
-.participants-list {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-    gap: 10px;
-}
-
-.participant-card {
-    background-color: var(--gray-light);
-    padding: 10px 15px;
-    border-radius: 5px;
-    border: 1px solid var(--gray-light);
-}
+  .close {
+    font-size: 24px;
+    font-weight: bold;
+    color: #999;
+    cursor: pointer;
+    transition: color 0.2s;
+  }
+  
+  .close:hover {
+    color: #333;
+  }
+  
+  /* Responsive adjustments */
+  @media (max-width: 768px) {
+    .details-grid {
+      grid-template-columns: 1fr;
+    }
+    
+    .modal-content {
+      width: 95%;
+      margin: 10px auto;
+    }
+  }

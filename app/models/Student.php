@@ -14,11 +14,18 @@ class Student{
     public $studenterrors = [];
 
     public function validate($data) {
-        //check if registrationnumber is empty
         if (empty($data['registrationnumber'])) {
             $this->studenterrors['registrationnumber'] = 'Registration Number is required';
+        } else {
+            // Check for duplicate registration number
+            $query = "SELECT COUNT(*) as count FROM $this->table WHERE registrationnumber = :regno";
+            $params = [':regno' => $data['registrationnumber']];
+            $result = $this->query($query, $params);
+            
+            if ($result[0]->count > 0) {
+                $this->studenterrors['registrationnumber'] = 'Registration Number already exists';
+            }
         }
-
         if (empty($data['faculty'])) {
             $this->studenterrors['faculty'] = 'Faculty is required';
         }   

@@ -1,8 +1,3 @@
-
-
-
-
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -14,7 +9,18 @@
     
 </head>
 <body>
-
+<?php if(isset($_SESSION['success'])): ?>
+        <div class="alert alert-success">
+            <?= $_SESSION['success'] ?>
+        </div>
+        <?php unset($_SESSION['success']); ?>
+    <?php endif; ?>
+    <?php if(isset($_SESSION['error'])): ?>
+        <div class="alert alert-danger">
+            <?= $_SESSION['error'] ?>
+        </div>
+        <?php unset($_SESSION['error']); ?>
+    <?php endif; ?>
 
 <div class="main-content">
         <main>
@@ -51,9 +57,9 @@
                             <td><?= htmlspecialchars($item->name) ?></td>
                             <td><?= htmlspecialchars($item->issued_quantity) ?></td>
                             <td><button class="update-quantity-btn"
-    data-id="<?= $item->stocktid ?>" 
-    data-name="<?= htmlspecialchars($item->name) ?>"
-    data-quantity="<?= $item->issued_quantity ?>">Edit</button></td>
+                                data-id="<?= $item->stocktid ?>" 
+                                data-name="<?= htmlspecialchars($item->name) ?>"
+                                data-quantity="<?= $item->issued_quantity ?>">Edit</button></td>
 
                     <?php endforeach; ?>
                 <?php else: ?>
@@ -127,7 +133,12 @@
             </div>
                     <div class="form-group">
                         <label for="productName">Product Name:</label>
-                        <input type="text" id="productName" name="name" required>
+                        <select id="productName" name="equipmentid" required>
+                            <option value="">Select a product</option>
+                            <?php foreach ($unpackedItems as $item): ?>
+                                <option value="<?= htmlspecialchars($item->equipmentid) ?>"><?= htmlspecialchars($item->name) ?></option>
+                            <?php endforeach; ?>
+                        </select>
                     </div>
                     <div class="form-group">
                         <label for="productQuantity">Quantity:</label>
@@ -137,6 +148,8 @@
                         <label for="additionalNotes">Additional Details</label>
                         <textarea id="additionalNotes" name="addnotes" rows="4" placeholder="Enter any additional notes"></textarea>
                     </div>
+                    <input type="hidden" name="status" value="pending">
+                   
                     <button type="submit" class="submit-btn">Submit</button>
                 </form>
                 
@@ -193,8 +206,8 @@
         <h2>Update Quantity</h2>
         <form id="updateQuantityForm" action="<?= ROOT ?>/sportscaptain/inventoryunpacked/editquantity" method="POST">
            
-  
-            <input type="hidden" id="updateid" name="editid">
+            <!-- <input type="hidden" id="updateid" name="equipmentid"> -->
+            <input type="hidden" id="updateid" name="equipmentid">
             <input type="hidden" name="date" value="<?= date('Y-m-d') ?>">
             <div class="form-group">
                 <label for="updateProductName">Product Name:</label>
@@ -202,11 +215,11 @@
             </div>
             <div class="form-group">
                 <label for="updateProductQuantity">New Quantity:</label>
-                <input type="number" id="updateProductQuantity" name="quantity" min="1"  required>
+                <input type="number" id="updateProductQuantity" name="quantity" min="0"  required>
             </div>
             <div class="form-group">
                 <label for="updateReason">Reason for Update:</label>
-                <textarea id="updateReason" name="reason" rows="4" placeholder="Enter reason for the update" required></textarea>
+                <textarea id="updateReason" name="reason" rows="2" placeholder="Enter reason for the update" required></textarea>
             </div>
             <button type="submit" name="submit_update" class="submit-btn">Update</button>
         </form>
@@ -248,7 +261,6 @@
 
     </div>
 </div>
-
 
     <script src="<?=ROOT?>/assets/js/vidusha/inventoryunpacked.js"></script>
 </body>

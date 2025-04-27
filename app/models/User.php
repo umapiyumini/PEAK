@@ -21,22 +21,14 @@ class User {
 
     public $errors = [];
 
-
     public function validate($data) {
-
         // Email validation
+        
         if (empty($data['email'])) {
             $this->errors['email'] = 'Email is required';
         } elseif (!filter_var($data['email'], FILTER_VALIDATE_EMAIL)) {
             $this->errors['email'] = 'Invalid email format';
         }
-
-        // Username validation
-        // if (empty($data['username'])) {
-        //     $this->errors['username'] = 'Username is required';
-        // } elseif (!preg_match("/^[a-zA-Z0-9]+$/", $data['username'])) {
-        //     $this->errors['username'] = 'Username cannot contain spaces or special characters';
-        // }
 
         // Password validation
         if (empty($data['password'])) {
@@ -99,18 +91,185 @@ class User {
             $this->errors['terms'] = 'You must agree to the terms and conditions';
         }
 
-        // if (empty($data['company'])) {
-        //     $this->errors['company'] = 'Company is required';
-        // }
-
-        // if(empty($data['companyid'])) {
-        //     $this->errors['companyid'] = 'Company ID is required';
-        // }
-
+        // NIC and DOB validation
+        if(!empty($data['nic']) && !empty($data['dob']) && !empty($data['gender'])) {
+            if(!$this->validateNicWithDob($data['nic'], $data['dob'], $data['gender'])) {
+                // Error message is set inside validateNicWithDob method
+            }
+        }
+        if (empty($data['email'])) {
+            $this->errors['email'] = 'Email is required';
+        } elseif (!filter_var($data['email'], FILTER_VALIDATE_EMAIL)) {
+            $this->errors['email'] = 'Invalid email format';
+        } elseif ($this->emailExists($data['email'])) {
+            $this->errors['email'] = 'Email already exists in our system';
+        }
+        
+        // NIC validation
+        if (empty($data['nic'])) {
+            $this->errors['nic'] = 'NIC is required';
+        } elseif (!preg_match("/^([0-9]{9}[vV]|[0-9]{12})$/", $data['nic'])) {
+            $this->errors['nic'] = 'Invalid NIC format. Must be 9 digits ending with V/v or 12 digits.';
+        } elseif ($this->nicExists($data['nic'])) {
+            $this->errors['nic'] = 'NIC already exists in our system';
+        }
+        
+        // Contact number validation
+        if (empty($data['contact_number'])) {
+            $this->errors['contact_number'] = 'Contact Number is required';
+        } elseif (!preg_match("/^[0-9]{10}$/", $data['contact_number'])) {
+            $this->errors['contact_number'] = 'Invalid Contact Number format';
+        } elseif ($this->contactNumberExists($data['contact_number'])) {
+            $this->errors['contact_number'] = 'Contact Number already exists in our system';
+        }
+        
+        // hbjf
+        
         // Return true if no errors
         return empty($this->errors);
     }
 
+    private function validateNicWithDob($nic, $dob, $gender)
+    {
+        // Clean the NIC number
+        $nic = trim($nic);
+        
+        // Get year from DOB
+        $dobYear = date('Y', strtotime($dob));
+        $dobYearLastTwo = substr($dobYear, -2);
+        
+        // Get day of year from DOB (1-366)
+        $dobDayOfYear = date('z', strtotime($dob)) + 1;
+        
+        // Check if old NIC format (9 digits + V/X)
+        if(strlen($nic) == 10 && (strtoupper(substr($nic, -1)) === 'V' || strtoupper(substr($nic, -1)) === 'X')) {
+            // Extract year and day from old NIC
+            $nicYear = substr($nic, 0, 2);
+            $nicDayGender = (int)substr($nic, 2, 3);
+            
+            // Calculate actual day (removing gender offset)
+            $nicDay = ($nicDayGender > 500) ? $nicDayGender - 500 : $nicDayGender;
+            
+            // Check gender consistency
+            $nicGender = ($nicDayGender > 500) ? 'female' : 'male';
+            if($nicGender !== $gender) {
+                $this->errors['gender'] = "Gender doesn't match the gender encoded in NIC";
+                return false;
+            }
+            
+            // Verify year and day match
+            if($nicYear != $dobYearLastTwo || $nicDay != $dobDayOfYear) {
+                $this->errors['nic'] = "NIC number doesn't match the provided date of birth";
+                return false;
+            }
+            
+            return true;
+        }
+        // Check if new NIC format (12 digits)
+        else if(strlen($nic) == 12 && is_numeric($nic)) {
+            // Extract year and day from new NIC
+            $nicYear = substr($nic, 0, 4);
+            $nicDayGender = (int)substr($nic, 4, 3);
+            
+            // Calculate actual day (removing gender offset)
+            $nicDay = ($nicDayGender > 500) ? $nicDayGender - 500 : $nicDayGender;
+            
+            // Check gender consistency
+            $nicGender = ($nicDayGender > 500) ? 'female' : 'male';
+            if($nicGender !== $gender) {
+                $this->errors['gender'] = "Gender doesn't match the gender encoded in NIC";
+                return false;
+            }
+            
+            // Verify year and day match
+            if($nicYear != $dobYear || $nicDay != $dobDayOfYear) {
+                $this->errors['nic'] = "NIC number doesn't match the provided date of birth";
+                return false;
+            }
+            
+            return true;
+        }
+        
+        // Invalid NIC format
+        $this->errors['nic'] = "Invalid NIC format";
+        return false;
+    }
+
+    
+
+    public function validate2($data) {
+
+        //email validation
+        if (empty($data['email'])) {
+            $this->errors['email'] = 'Email is required';
+        } elseif (!filter_var($data['email'], FILTER_VALIDATE_EMAIL)) {
+            $this->errors['email'] = 'Invalid email format';
+        } elseif ($this->emailExists($data['email'])) {
+            $this->errors['email'] = 'Email already exists in our system';
+        }
+
+        // Name validation
+        if (empty($data['name'])) {
+            $this->errors['name'] = 'Name is required';
+        } elseif (!preg_match("/^[a-zA-Z ]+$/", $data['name'])) {
+            $this->errors['name'] = 'Name must only contain letters and spaces';
+        }
+
+        // Gender validation
+        if (empty($data['gender'])) {
+            $this->errors['gender'] = 'Gender is required';
+        } elseif (!in_array($data['gender'], ['male', 'female'])) {
+            $this->errors['gender'] = 'Invalid gender selected';
+        }
+
+        // NIC validation
+        if (empty($data['nic'])) {
+            $this->errors['nic'] = 'NIC is required';
+        } elseif (!preg_match("/^([0-9]{9}[vV]|[0-9]{12})$/", $data['nic'])) {
+            $this->errors['nic'] = 'Invalid NIC format. Must be 9 digits ending with V/v or 12 digits.';
+        } elseif ($this->nicExists($data['nic'])) {
+            $this->errors['nic'] = 'NIC already exists in our system';
+        }
+
+        // Date of birth validation
+        if (empty($data['dob'])) {
+            $this->errors['dob'] = 'Date of Birth is required';
+        } elseif (!strtotime($data['dob'])) {
+            $this->errors['dob'] = 'Invalid Date of Birth format';
+        }
+
+       // Contact number validation
+       if (empty($data['contact_number'])) {
+            $this->errors['contact_number'] = 'Contact Number is required';
+        } elseif (!preg_match("/^[0-9]{10}$/", $data['contact_number'])) {
+            $this->errors['contact_number'] = 'Invalid Contact Number format';
+        } elseif ($this->contactNumberExists($data['contact_number'])) {
+            $this->errors['contact_number'] = 'Contact Number already exists in our system';
+        }
+
+        // NIC and DOB validation
+        if(!empty($data['nic']) && !empty($data['dob']) && !empty($data['gender'])) {
+            if(!$this->validateNicWithDob($data['nic'], $data['dob'], $data['gender'])) {
+                // Error message is set inside validateNicWithDob method
+            }
+        }
+
+        // Registered Date and Last Examination Date validation
+        if (!empty($data['id_start']) && !empty($data['id_end'])) {
+            $start_date = new DateTime($data['id_start']);
+            $end_date = new DateTime($data['id_end']);
+            
+            $interval = $start_date->diff($end_date);
+            $years = $interval->y;
+            
+            if ($years < 2 || ($years == 2 && $interval->m == 0 && $interval->d == 0)) {
+                $this->errors['id_end'] = 'Last Examination Date must be at least 2 years after Registered Date';
+            }
+        }
+        
+        // Return true if no errors
+        return empty($this->errors);
+    }
 
     //used 
     public function getUser($userid){
@@ -189,7 +348,6 @@ class User {
         return $this->query($query);
     }
 
-
     public function update($userid, $data)
 {
     $set = [];
@@ -203,6 +361,27 @@ class User {
     return $this->query($query, $params);
 }
 
+// Add these methods to your User class
+public function emailExists($email) {
+    $query = "SELECT * FROM $this->table WHERE email = :email LIMIT 1";
+    $params = [':email' => $email];
+    $result = $this->query($query, $params);
+    return !empty($result);
+}
+
+public function nicExists($nic) {
+    $query = "SELECT * FROM $this->table WHERE nic = :nic LIMIT 1";
+    $params = [':nic' => $nic];
+    $result = $this->query($query, $params);
+    return !empty($result);
+}
+
+public function contactNumberExists($contact_number) {
+    $query = "SELECT * FROM $this->table WHERE contact_number = :contact_number LIMIT 1";
+    $params = [':contact_number' => $contact_number];
+    $result = $this->query($query, $params);
+    return !empty($result);
+}
 
 
 

@@ -4,7 +4,7 @@ class Reservations {
     use Model;
     
     protected $table = 'reservations';
-    protected $fillable = ['reservationid','userid','courtid','section','event','duration','date','time','status','usertype','userdescription','userproof','numberof_participants','extradetails','price','discountedprice','occupied','created_at'];
+    protected $fillable = ['reservationid','userid','courtid','event','duration','date','time','status','usertype','userdescription','userproof','numberof_participants','extradetails','price','discountedprice','created_at'];
 
 
     //used
@@ -33,7 +33,87 @@ class Reservations {
     }
 
 
+//to check if date is fully booked
+public function isFullDayBooked($date, $section) {
+    $query = "SELECT COUNT(*) as count FROM {$this->table} r
+              JOIN courts c ON r.courtid = c.courtid
+              WHERE r.date = :date AND c.section = :section AND r.duration = 'full' AND (UPPER(r.status) = 'CONFIRMED' OR UPPER(r.status) = 'PAID' OR UPPER(r.status) = 'TO PAY')";
+    
+    $result = $this->query($query, ['date' => $date, 'section' => $section]);
+    return $result[0]->count > 0;
+}
 
+public function getBookedHalfDaySlots($date, $section) {
+    $query = "SELECT r.time FROM {$this->table} r
+              JOIN courts c ON r.courtid = c.courtid
+              WHERE r.date = :date AND c.section = :section 
+              AND r.duration = 'half'
+              AND (UPPER(r.status) = 'CONFIRMED' OR UPPER(r.status) = 'PAID' OR UPPER(r.status) = 'TO PAY')";
+    
+    $result = $this->query($query, ['date' => $date, 'section' => $section]);
+    
+    $bookedSlots = [];
+    if ($result) {
+        foreach ($result as $row) {
+            $bookedSlots[] = $row->time;
+        }
+    }
+    
+    return $bookedSlots;
+}
+
+
+
+public function getBookedTwoHourSlots($date, $section) {
+    $query = "SELECT r.time FROM {$this->table} r
+              JOIN courts c ON r.courtid = c.courtid
+              WHERE r.date = :date AND c.section = :section 
+              AND r.duration = '2 hour'
+              AND (UPPER(r.status) = 'CONFIRMED' OR UPPER(r.status) = 'PAID' OR UPPER(r.status) = 'TO PAY')";
+    
+    $result = $this->query($query, ['date' => $date, 'section' => $section]);
+    
+    $bookedSlots = [];
+    if ($result) {
+        foreach ($result as $row) {
+            $bookedSlots[] = $row->time;
+        }
+    }
+    
+    return $bookedSlots;
+}
+
+
+public function getBookedOneHourSlots($date, $section) {
+    $query = "SELECT r.time FROM {$this->table} r
+              JOIN courts c ON r.courtid = c.courtid
+              WHERE r.date = :date AND c.section = :section 
+              AND r.duration = '1 hour'
+              AND (UPPER(r.status) = 'CONFIRMED' OR UPPER(r.status) = 'PAID' OR UPPER(r.status) = 'TO PAY')";
+    
+    $result = $this->query($query, ['date' => $date, 'section' => $section]);
+    
+    $bookedSlots = [];
+    if ($result) {
+        foreach ($result as $row) {
+            $bookedSlots[] = $row->time;
+        }
+    }
+    
+    return $bookedSlots;
+}
+
+
+public function getBookingsForDateSection($date, $section) {
+    $query = "SELECT r.*, c.section 
+              FROM {$this->table} r
+              JOIN courts c ON r.courtid = c.courtid
+              WHERE r.date = :date 
+              AND c.section = :section
+              AND (UPPER(r.status) = 'CONFIRMED' OR UPPER(r.status) = 'PAID' OR UPPER(r.status) = 'TO PAY')";
+    
+    return $this->query($query, ['date' => $date, 'section' => $section]);
+}
 
     //not yet
     
@@ -109,7 +189,7 @@ class Reservations {
         ]);
     }
 
-
+  
     public function addReservation(){
 
         $userId = $this->getUserId();
@@ -150,19 +230,7 @@ class Reservations {
         }
     }
 
-    public function getTimeSlots($date, $courtId) {
-        $query = "SELECT time FROM {$this->table} WHERE date = :date AND courtid = :courtId";
-        $result = $this->query($query, ['date' => $date, 'courtId' => $courtId]);
     
-        if (!$result || !is_array($result)) {
-            return []; // Return empty array if query fails
-        }
-    
-        $reservedTimes = array_column($result, 'time');
-        return $reservedTimes;
-    }
-    
-
     public function getAllReservedTimeSlots($courtId) {
         // Get all reservations for this court in the future
         $query = "SELECT date, time FROM {$this->table} 
@@ -190,7 +258,29 @@ class Reservations {
         return $reservedSlots;
     }
 
-    public function getReservations(){
+
+    public function getReservations() {
+        $query = "SELECT * FROM {$this->table} JOIN courts ON courts.courtid = {$this->table}.courtid WHERE location='ground'";
+        return $this->query($query);
+    }
+
+
+    public function getReservationDetailsById($reservationid) {
+        $query = "
+            SELECT r.*, c.name AS courtname, c.location, c.section
+            FROM {$this->table} r
+            JOIN courts c ON r.courtid = c.courtid
+            WHERE r.reservationid = :reservationid
+            LIMIT 1
+        ";
+        
+        $result = $this->query($query, ['reservationid' => $reservationid]);
+        return $result ? $result[0] : null;
+    }
+    
+    
+
+    public function getReservationbyUser(){
 
         $userId = $this->getUserId();
 
@@ -247,6 +337,93 @@ class Reservations {
         ]);
     }
 
+
+    
+    public function getReservationsByCourtSection($userId) {
+
+        $userId = $this->getUserId();
+        // Query to fetch reservations grouped by date and time
+        $query = "
+            SELECT r.date, r.time, r.duration, c.name AS courtname, c.section
+            FROM {$this->table} r
+            JOIN courts c ON r.courtid = c.courtid
+            WHERE c.section IN (
+                SELECT DISTINCT c2.section
+                FROM courts c2
+                JOIN {$this->table} r2 ON c2.courtid = r2.courtid
+                WHERE r2.userid = :userId
+            )
+            AND UPPER(r.status) IN ('CONFIRMED', 'PAID', 'TO PAY')
+            AND r.date >= CURDATE()
+        ";
+    
+        // Execute the query and fetch results
+        $result = $this->query($query, ['userId' => $userId]);
+        
+       
+    // Format reserved slots as date => section => [times]
+    $reservedTimeSlots = [];
+    foreach ($result as $row) {
+        if (!isset($reservedTimeSlots[$row->date])) {
+            $reservedTimeSlots[$row->date] = [];
+        }
+        if (!isset($reservedTimeSlots[$row->date][$row->section])) {
+            $reservedTimeSlots[$row->date][$row->section] = [];
+        }
+        $reservedTimeSlots[$row->date][$row->section][] = [
+            'time' => $row->time,
+            'duration' => $row->duration,
+            'courtname' => $row->courtname
+        ];
+    }
+    
+    // If you need to debug, use var_dump or print_r instead of show
+    // var_dump($reservedTimeSlots);
+    show($reservedTimeSlots);
+    return $reservedTimeSlots;
+
+    }
+
+
+    public function cancelReservations($reservationId) {
+        $userId = $this->getUserId();
+    
+        if (!$userId) {
+            return false;
+        }
+        
+        // First, get the reservation details to check its status
+        $query = "SELECT * FROM {$this->table} WHERE reservationid = :reservationid AND userid = :userid";
+        $reservation = $this->query($query, [
+            'reservationid' => $reservationId,
+            'userid' => $userId
+        ], true); // true to get a single record
+        
+        if (!$reservation) {
+            return false; // Reservation not found or doesn't belong to this user
+        }
+        
+        // Check the status and take appropriate action
+        if (in_array($reservation->status, ['pending', 'To pay', 'rejected'])) {
+            // For these statuses, we can delete the reservation directly
+            $query = "DELETE FROM {$this->table} WHERE reservationid = :reservationid AND userid = :userid";
+            return $this->query($query, [
+                'reservationid' => $reservationId,
+                'userid' => $userId
+            ]);
+        } else if (in_array($reservation->status, ['paid', 'confirmed'])) {
+            // For these statuses, update the status to 'cancelled' instead of deleting
+            $query = "UPDATE {$this->table} SET status = 'cancelled' WHERE reservationid = :reservationid AND userid = :userid";
+            return $this->query($query, [
+                'reservationid' => $reservationId,
+                'userid' => $userId
+            ]);
+        }
+        
+        return false; // If we reach here, the status didn't match any of our conditions
+    }
+    
+
     public function getReservationsByCourtLocation($location) {
         $query = "SELECT reservations.*, courts.name, courts.location
                   FROM reservations
@@ -256,36 +433,39 @@ class Reservations {
         return $this->query($query, ['location' => $location]);
     }
 
-    
+    public function isDateAvailableForFullDay($date, $section, $currentReservationId = null) {
+        // Check if there are any reservations on this date in the same section
+        // Exclude the current reservation being rescheduled
+        $query = "SELECT COUNT(*) as count 
+                  FROM {$this->table} r
+                  JOIN courts c ON r.courtid = c.courtid
+                  WHERE r.date = :date 
+                  AND c.section = :section
+                  AND (UPPER(r.status) = 'CONFIRMED' OR UPPER(r.status) = 'PAID' OR UPPER(r.status) = 'TO PAY')";
+        
+        // If we're rescheduling an existing reservation, exclude it from the check
+        if ($currentReservationId) {
+            $query .= " AND r.reservationid != :reservationId";
+            $params = [
+                'date' => $date, 
+                'section' => $section,
+                'reservationId' => $currentReservationId
+            ];
+        } else {
+            $params = ['date' => $date, 'section' => $section];
+        }
+        
+        $result = $this->query($query, $params);
+        
+        // If count is greater than 0, the date is not available
+        return ($result[0]->count == 0);
+    }
        
 
 
 // Model function to check if the selected date is fully booked
 // Model: Function to check if the date is fully booked
-public function isDateFullyBooked($date, $section, $conn) {
-    $query = "SELECT * FROM reservations WHERE date = ? AND section = ? AND status IN ('to pay', 'paid', 'confirmed') AND duration = 'full'";
 
-    if ($stmt = $conn->prepare($query)) {
-        $stmt->bind_param('ss', $date, $section);
-        $stmt->execute();
-        $result = $stmt->get_result();
-
-        // If there's a match, it means the date is fully booked
-        return $result->num_rows > 0;
-    }
-
-    return false;
-}
-    public function getBookingsForDateSection($date, $section) {
-        $query = "SELECT * FROM {$this->table} 
-                  WHERE date = :date 
-                  AND section = :section 
-                  AND status IN ('to pay', 'paid', 'confirmed')";
-        return $this->query($query, [
-            'date' => $date,
-            'section' => $section
-        ]);
-    }
 
 
     
@@ -329,20 +509,81 @@ public function findById($reservationid) {
         }
     }
 
+    public function getAllIndoorPendingReservations($type = 'all') {
+        $now = new DateTime();
+        $oneweekago = clone $now;
+        $oneweekago->modify('-7 days');
+        $oneweekago = $oneweekago->format('Y-m-d H:i:s');
+        
+        if ($type == 'new') {
+            $query = "SELECT *,courts.name AS courtname, user.name AS username FROM {$this->table} 
+            JOIN user ON user.userid= $this->table.userid
+            JOIN courts ON courts.courtid= $this->table.courtid
+            WHERE status = 'pending' AND created_at <= :oneweekago AND location='indoor'";
+            return $this->query($query, ['oneweekago' => $oneweekago]);
+        }
+        elseif ($type == 'old') {
+            $query = "SELECT * ,courts.name AS courtname, user.name AS username FROM {$this->table} 
+            JOIN user ON user.userid= $this->table.userid
+            JOIN courts ON courts.courtid= $this->table.courtid
+            WHERE status = 'pending' AND created_at > :oneweekago AND location='indoor'";
+            return $this->query($query, ['oneweekago' => $oneweekago]);
+        }
+        else {
+            $query = "SELECT * FROM {$this->table} WHERE status = 'pending'";
+            return $this->query($query);
+        }
+    }
+
     public function acceptReservation($reservation) {
 
+        $query = "";
+        
         if($reservation->status == 'pending'){
             $query = "UPDATE {$this->table} SET status = 'To pay' WHERE reservationid = :reservationid";
         }
         elseif($reservation->status == 'paid'){
             $query = "UPDATE {$this->table} SET status = 'confirmed' WHERE reservationid = :reservationid";
         }
+        else {
+            return false; 
+        }
+        
+        if (!empty($query)) {
+            $params = [
+                'reservationid' => $reservation->reservationid
+            ];
+            return $this->query($query, $params);
+        }
+        
+        return false; 
+    }
 
-        $params = [
-            'reservationid' => $reservation->reservationid
-        ];
+
+    public function updates($reservationId, $data) {
+        $userId = $this->getUserId();
+        
+        if (!$userId) {
+            return false;
+        }
+        
+        // Build the SET part of the query
+        $setClause = "";
+        $params = ['reservationid' => $reservationId, 'userid' => $userId];
+        
+        foreach ($data as $key => $value) {
+            if ($setClause !== "") {
+                $setClause .= ", ";
+            }
+            $setClause .= "$key = :$key";
+            $params[$key] = $value;
+        }
+        
+        $query = "UPDATE {$this->table} SET $setClause WHERE reservationid = :reservationid AND userid = :userid";
+        
         return $this->query($query, $params);
     }
+    
     
 
     public function rejectReservation($reservation) {
@@ -386,43 +627,250 @@ public function findById($reservationid) {
         return $this->query($query);
     }
 
-    public function getAllReservationsGround(){
+    public function getAllCancelledReservations(){
+        $query = "SELECT * ,courts.name AS courtname, user.name AS username FROM {$this->table} 
+        JOIN user ON user.userid= $this->table.userid
+        JOIN courts ON courts.courtid= $this->table.courtid
+        LEFT JOIN payments ON payments.reservationid= $this->table.reservationid
+        WHERE status = 'cancelled' AND location='ground'";
+        return $this->query($query);
+    }
+
+    public function getAllIndoorTopayReservations(){
+        $query = "SELECT * ,courts.name AS courtname, user.name AS username FROM {$this->table} 
+        JOIN user ON user.userid= $this->table.userid
+        JOIN courts ON courts.courtid= $this->table.courtid
+        WHERE status = 'To pay' AND location='indoor'";
+        return $this->query($query);
+    }
+
+    public function getAllIndoorCancelledReservations(){
+        $query = "SELECT * ,courts.name AS courtname, user.name AS username FROM {$this->table} 
+        JOIN user ON user.userid= $this->table.userid
+        JOIN courts ON courts.courtid= $this->table.courtid
+        LEFT JOIN payments ON payments.reservationid= $this->table.reservationid
+        WHERE status = 'cancelled' AND location='indoor'";
+        return $this->query($query);
+    }
+
+    public function getAllIndoorPaidReservations(){
         $query = "SELECT * ,courts.name AS courtname, user.name AS username FROM {$this->table} 
         JOIN user ON user.userid= $this->table.userid
         JOIN courts ON courts.courtid= $this->table.courtid
         JOIN payments ON payments.reservationid = $this->table.reservationid
-        WHERE location='ground'
+        WHERE status = 'paid' AND location='indoor'";
+        return $this->query($query);
+    }
+
+    public function getAllIndoorConfirmedReservations(){
+        $query = "SELECT * ,courts.name AS courtname, user.name AS username FROM {$this->table} 
+        JOIN user ON user.userid= $this->table.userid
+        JOIN courts ON courts.courtid= $this->table.courtid
+        WHERE status = 'confirmed' AND location='indoor'";
+        return $this->query($query);
+    }
+
+    public function getAllInddorRejectedReservations(){
+        $query = "SELECT * ,courts.name AS courtname, user.name AS username FROM {$this->table} 
+        JOIN user ON user.userid= $this->table.userid
+        JOIN courts ON courts.courtid= $this->table.courtid
+        WHERE status = 'rejected' AND location='indoor'";
+        return $this->query($query);
+    }
+
+    public function getAllActiveReservationsGround(){
+        $query = "SELECT * ,courts.name AS courtname, user.name AS username FROM {$this->table} 
+        JOIN user ON user.userid= $this->table.userid
+        JOIN courts ON courts.courtid= $this->table.courtid
+        LEFT JOIN payments ON payments.reservationid = $this->table.reservationid
+        WHERE location='ground' AND status IN ('confirmed', 'To pay', 'paid', 'cancelled')
         ORDER BY $this->table.created_at DESC";
         return $this->query($query);
     }
 
-    public function getReservations() {
-        $query = "SELECT * FROM {$this->table} JOIN courts ON courts.courtid = {$this->table}.courtid WHERE location='ground'";
+    public function getAllActiveReservationsIndoor(){
+        $query = "SELECT * ,courts.name AS courtname, user.name AS username FROM {$this->table} 
+        JOIN user ON user.userid= $this->table.userid
+        JOIN courts ON courts.courtid= $this->table.courtid
+        LEFT JOIN payments ON payments.reservationid = $this->table.reservationid
+        WHERE location='indoor' AND status IN ('confirmed', 'To pay', 'paid','cancelled')
+        ORDER BY $this->table.created_at DESC";
         return $this->query($query);
     }
 
+
+//     public function getReservations2() {
+//         $query = "SELECT * ,courts.name AS courtname, user.name AS username FROM {$this->table} 
+//         JOIN user ON user.userid= $this->table.userid
+//         JOIN courts ON courts.courtid= $this->table.courtid
+//         WHERE location='ground'";
+//         return $this->query($query);
+//     }
+
+    public function getActiveReservations() {
+        $query = "SELECT * ,courts.name AS courtname, user.name AS username FROM {$this->table} 
+        JOIN user ON user.userid= $this->table.userid
+        JOIN courts ON courts.courtid= $this->table.courtid
+        WHERE location='ground' AND status IN ('confirmed', 'To pay', 'paid')";
+        return $this->query($query);
+    }
+
+    public function getActiveReservationsIndoor() {
+        $query = "SELECT * ,courts.name AS courtname, user.name AS username FROM {$this->table} 
+        JOIN user ON user.userid= $this->table.userid
+        JOIN courts ON courts.courtid= $this->table.courtid
+        WHERE location='indoor' AND status IN ('confirmed', 'To pay', 'paid')";
+        return $this->query($query);
+    }
+
+    public function getAllPaidTopayConfirmedReservations(){
+        $query = "SELECT * ,courts.name AS courtname, user.name AS username, reservations.time AS startTime FROM {$this->table} 
+        JOIN user ON user.userid= $this->table.userid
+        JOIN courts ON courts.courtid= $this->table.courtid
+        WHERE status IN ('confirmed', 'To pay', 'paid')";
+        return $this ->query($query);
+    }
+
     
-}
+    public function rejectConflictingReservations() {
+        // Get all pending reservations
+        $query = "SELECT * FROM {$this->table} WHERE status = 'pending'";
+        $pendingReservations = $this->query($query);
+        
+        if (empty($pendingReservations)) {
+            return 0; // No pending reservations to check
+        }
+        
+
+        $activeQuery = "SELECT * FROM {$this->table} r
+        JOIN courts c ON c.courtid= r.courtid
+        WHERE status IN ('confirmed', 'To pay', 'paid')";
+        $activeReservations = $this->query($activeQuery);
+        
+        $rejectedCount = 0;
+        
+        foreach ($pendingReservations as $pending) {
+            foreach ($activeReservations as $active) {
+
+                if ($pending->date == $active->date && 
+                    $pending->section == $active->section && 
+                    $this->isTimeOverlapping($pending, $active)) {
+                    
+                    // Reject the pending reservation
+                    $rejectQuery = "UPDATE {$this->table} SET status = 'rejected' WHERE reservationid = :reservationid";
+                    $this->query($rejectQuery, ['reservationid' => $pending->reservationid]);
+                    
+                    $rejectedCount++;
+                    break; // No need to check other active reservations for this pending one
+                }
+            }
+        }
+        
+        return $rejectedCount;
+    }
+
+
+    public function isTimeOverlapping($res1, $res2) {
+
+        $res1Start = strtotime($res1->time);
+        $res1End = strtotime($this->calculateEndTime($res1->time, $res1->duration));
+        
+        $res2Start = strtotime($res2->time);
+        $res2End = strtotime($this->calculateEndTime($res2->time, $res2->duration));
+        
+
+        return ($res1Start < $res2End && $res1End > $res2Start);
+    }
+
+    public function calculateEndTime($startTime, $duration) {
+        $start = strtotime($startTime);
+        switch ($duration) {
+            case '1 hour':
+                return date('H:i:s', $start + 1 * 3600);
+            case '2 hour':
+                return date('H:i:s', $start + 2 * 3600);
+            case 'half':
+                return date('H:i:s', $start + 4 * 3600);
+            case 'full':
+                return date('H:i:s', $start + 9 * 3600); 
+            default:
+                return date('H:i:s', $start + 2 * 3600); 
+        }
+    }
+
+    public function checkForConflicts($reservation) {
+        $activeReservations = $this->query("SELECT * FROM {$this->table} r
+            JOIN courts c ON c.courtid= r.courtid
+            WHERE status IN ('confirmed', 'To pay', 'paid')
+            AND section = :section
+            AND date = :date", [
+            'section' => $reservation->section,
+            'date' => $reservation->date
+        ]);
+
+        foreach ($activeReservations as $active) {
+            if ($this->isTimeOverlapping($reservation, $active)) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    public function addSpecialReservation($data){
+        $reservation = (object) $_POST; 
+        if ($this->checkForConflicts($reservation)) {
+            return false;
+        }
+
+        $query = "INSERT INTO $this->table (userid, courtid, event, duration, date, time, status, numberof_participants, extradetails) VALUES (:userid, :courtid, :event, :duration, :date, :time, :status, :numberof_participants, :extradetails)";
+        $params = [
+            ':userid' => $_SESSION['userid'],
+            ':courtid' => $data['court'],
+            ':event' => $data['event'],
+            ':duration' => $data['duration'],
+            ':date' => $data['date'],
+            ':time' => $data['time'],
+            ':status' => "confirmed",
+            ':numberof_participants' => $data['participants'],
+            ':extradetails' => $data['notes'],
+        ];
+        return $this->query($query, $params);
+    }
+
+    public function cancelSpecialReservations($id){
+        $query = "DELETE r
+                  FROM $this->table r
+                  JOIN user u ON u.userid = r.userid
+                  WHERE r.reservationid = :id AND u.role = 'Admin'";
+    
+        return $this->query($query, ['id' => $id]);
+    }
+
+    
+   
+    
+
 
   
-public function getFutureReservationsByUser($userid) {
-    $query = "
-        SELECT r.*, c.name AS courtname, c.location
-        FROM {$this->table} r
-        JOIN courts c ON r.courtid = c.courtid
-        WHERE r.userid = :userid
-          AND r.courtid != '38'
-          AND STR_TO_DATE(CONCAT(r.date, ' ', r.time), '%Y-%m-%d %H:%i:%s') > NOW()
-          AND r.status IN ('To pay', 'Confirmed', 'Paid', 'pending') -- Add other active statuses if needed
-        ORDER BY r.date, r.time
-    ";
-    return $this->query($query, ['userid' => $userid]);
-}
-
+    public function getFutureReservationsByUser($userid) {
+        $query = "
+            SELECT r.*, c.name AS courtname, c.location, c.section
+            FROM {$this->table} r
+            JOIN courts c ON r.courtid = c.courtid
+            WHERE r.userid = :userid
+              AND r.courtid != '38'
+              AND STR_TO_DATE(CONCAT(r.date, ' ', r.time), '%Y-%m-%d %H:%i:%s') > NOW()
+              AND r.status IN ('To pay', 'Confirmed', 'Paid', 'pending','rejected','cancelled')
+            ORDER BY r.date, r.time
+        ";
+        return $this->query($query, ['userid' => $userid]);
+    }
+    
 // All reservations for this user
 public function getAllReservationsByUser($userid) {
     $query = "
-        SELECT r.*, c.name AS courtname, c.location
+        SELECT r.*, c.name AS courtname, c.location, c.section
         FROM {$this->table} r
         JOIN courts c ON r.courtid = c.courtid
         WHERE r.userid = :userid

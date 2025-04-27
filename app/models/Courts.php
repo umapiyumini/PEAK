@@ -18,12 +18,12 @@ class Courts {
 
     //used 
 
-    // Fetch all courts
+    
     public function getAllCourts() {
-        // Query to select all records from the courts table
+        
         $query = "SELECT * FROM " . $this->table;
         
-        // Use the query method from the Database trait to execute the query
+        
         return $this->query($query);
     }
 
@@ -42,15 +42,13 @@ class Courts {
     
 
 
-     // Fetch courts by location
+ 
      public function getCourtsByLocation($location) {
         $query = "SELECT * FROM " . $this->table . " WHERE location = :location";
         
-        // Execute the query using the provided location
         return $this->query($query, ['location' => $location]);
     }
-    // Additional methods can be added here if needed for other operations
-
+   
     public function getTable() {
         return $this->table;
     }
@@ -113,8 +111,29 @@ class Courts {
         $query = "DELETE FROM $this->table WHERE courtid = :courtid";
         return $this->query($query, ['courtid' => $courtid]);
     }
+
+    public function getGroundCourtsBySection(){
+        $query = "SELECT * FROM $this->table WHERE location = 'ground' 
+          AND section IS NOT NULL 
+          AND section != ''";
+        return $this->query($query);
+    }
+
+    public function getIndoorCourtsBySection(){
+        $query = "SELECT * FROM $this->table WHERE location = 'indoor' 
+          AND section IS NOT NULL 
+          AND section != ''";
+        return $this->query($query);
+    }
     
 
+
+    public function getCourtByName($name) {
+        $query = "SELECT * FROM {$this->table} WHERE name = :name LIMIT 1";
+        $result = $this->query($query, ['name' => $name]);
+        return $result ? $result[0] : null;
+    }
+    
     
 }
 

@@ -48,6 +48,10 @@ class PracticeSchedule{
 
     public function addSchedule(){
 
+        if (session_status() == PHP_SESSION_NONE) {
+            session_start();
+        }
+
         $userId = $this->getUserId();
 
         if(!$userId){
@@ -86,10 +90,14 @@ class PracticeSchedule{
 
     public function deleteSchedule($id){
 
+        if (session_status() == PHP_SESSION_NONE) {
+            session_start();
+        }
+
         try{
 
-        $query = "DELETE FROM practiceschedule WHERE id = :id";
-        $result = $this->query($query, ['id' => $id]);
+        $query = "DELETE FROM practiceschedule WHERE scheduleid = :scheduleid";
+        $result = $this->query($query, ['scheduleid' => $id]);
 
         if(is_bool($result)) {
             return $result; 
@@ -102,7 +110,11 @@ class PracticeSchedule{
         }
     }
 
-    public function editSchedule($id, $date, $start_time,$category, $end_time){
+    public function editSchedule($id, $date, $start_time, $end_time,$category){
+
+        if (session_status() == PHP_SESSION_NONE) {
+            session_start();
+        }
 
         $userId = $this->getUserId();
 
@@ -120,27 +132,29 @@ class PracticeSchedule{
 
                 $query = "UPDATE practiceschedule
                         SET date = :date, start_time = :start_time, end_time = :end_time, category = :category
-                        WHERE id = :id AND sport_id = :sport_id";
+                        WHERE scheduleid = :scheduleid AND sport_id = :sport_id";
                 
                 $result = $this->query($query, [
                     'date' => $date, 
                     'start_time' => $start_time,
                     'end_time' => $end_time,
                     'category' => $category,
-                    'id' => $id,
+                    'scheduleid' => $id,
                     'sport_id' => $sport_id
                 ]);
 
-                 $result->rowCount() > 0;
-
-                 if(is_bool($result)) {
+                if(is_bool($result)) {
                     return $result; 
                 }
 
+                 return $result->rowCount() > 0;
+
             }
+                return false;
 
         }catch(Exception $e){
             $_SESSION['error'] = $e->getMessage();
+            return false;
         }
     }
 }

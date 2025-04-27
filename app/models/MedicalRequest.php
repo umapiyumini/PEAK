@@ -10,8 +10,10 @@ class MedicalRequest{
         'Name',
         'RegistrationID',
         'ReasonForMedical',
+        'userid'
         'status',
         'userid'
+
     ];
 
     public function validate($data){
@@ -29,6 +31,9 @@ class MedicalRequest{
             $this->errors['ReasonForMedical'] = 'Reason for medical is required';
         }
 
+        if(empty($data['userid'])){
+            $this->errors['userid'] = 'Time Period is required';
+        }
         
         if(empty($data['status'])){
             $this->errors['status'] = 'Reason for medical is required';
@@ -40,6 +45,41 @@ class MedicalRequest{
 
         //var_dump($this->errors);
         return empty($this->errors);
+    }
+
+    public function viewAllMedicalRequests(){
+        $query="SELECT * FROM $this->table m
+                JOIN student ON student.registrationnumber= m.RegistrationID
+                JOIN user ON user.userid = m.userid";
+        return $this->query($query);        
+
+    }
+
+
+    public function handleAction($id, $action)
+    {
+        if (!in_array($action, ['approve', 'reject'])) {
+            return ['success' => false, 'message' => 'Invalid action'];
+        }
+        
+        $status = ($action === 'approve') ? 'Accepted' : 'Rejected';
+        
+        $query = "UPDATE $this->table SET status = :status WHERE RequestID = :id";
+        $params = [':status' => $status, ':id' => $id];
+        
+        $result = $this->query($query, $params);
+        
+        if ($result) {
+            return [
+                'success' => true, 
+                'message' => "medical request " . ($action === 'approve' ? 'approved' : 'rejected') . " successfully"
+            ];
+        } else {
+            return [
+                'success' => false,
+                'message' => "Failed to " . $action . " medical request"
+            ];
+        }
     }
 
   

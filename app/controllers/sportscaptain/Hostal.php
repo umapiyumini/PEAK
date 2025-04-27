@@ -20,6 +20,23 @@ class Hostal extends Controller{
             $enddate = $_POST['end_date']; 
             $priority = $_POST['priority'];
 
+           /*validations*/
+            if(empty($reg_no) || empty($startdate) || empty($enddate) || empty($priority)){
+                $_SESSION['error'] = 'All fields are required';
+                header('Location: ' . ROOT . '/sportscaptain/hostal');
+                exit();
+            }
+            
+            $playerModel = new Players();
+            $player = $playerModel->getPlayers();
+            $playerRegNos = array_column($player, 'regno');
+            $invalidRegNos = array_diff($reg_no, $playerRegNos);
+            if (!empty($invalidRegNos)) {
+                $_SESSION['error'] = 'Invalid registration numbers: ' . implode(', ', $invalidRegNos);
+                header('Location: ' . ROOT . '/sportscaptain/hostal');
+                exit();
+            }
+
             try{
                 $facilities = [];
 

@@ -37,7 +37,7 @@
             <div class="sports-container" id="sportsContainer">
                 <?php foreach($sportsList as $row): ?>
                     <div class="sport-card">
-                        <img src="" alt="" class="sport-image">
+                        <img src="<?=ROOT.'/'.$row->frontimage?>" alt="" class="sport-image">
                         <div class="sport-content">
                             <h3><?=$row->sport_name?></h3>
                         </div>
@@ -61,14 +61,14 @@
                     <h2 id="modalTitle">Add Sport</h2>
                     <button class="close">&times;</button>
                 </div>
-                <form id="addSportForm" method="POST" >
+                <form action="ped_sports/addSport" id="addSportForm" method="POST" enctype="multipart/form-data">
                     <div class="form-group">
                         <label for="sportName">Sport Name</label>
-                        <input type="text" id="sportName" required>
+                        <input type="text" id="sportName" name="sport_name" required>
                     </div>
                     <div class="form-group">
                         <label for="imageUrl">Image URL</label>
-                        <input type="url" id="imageUrl" required>
+                        <input type="file" id="imageUrl" name="image" required>
                     </div>
                     <button type="submit" class="submit-btn">Add Sport</button>
                 </form>

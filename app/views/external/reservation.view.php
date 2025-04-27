@@ -8,9 +8,12 @@
     </head>
 
     <body>
+
         <!-- navigation bar -->
         <?php include 'enav.view.php'; ?>
         <div class="main">
+      
+
         <?php include 'top.view.php'; ?>
 
         <section class="statusboard">
@@ -44,6 +47,9 @@
                                 <span class="detail-label">ID:</span>
                                 <span class="detail-value"><?= htmlspecialchars($res->reservationid) ?></span>
                             </div>
+                            
+                            
+
                             <div class="detail-item">
                                 <span class="detail-label">Event:</span>
                                 <span class="detail-value"><?= htmlspecialchars($res->event) ?></span>
@@ -62,6 +68,13 @@
                         </div>
                         
                         <div class="detail-row">
+                        
+                            <div class="detail-item">
+                                <span class="detail-label">Section:</span>
+                                <span class="detail-value"><?= htmlspecialchars($res->section) ?></span>
+                            </div>
+
+
                             <div class="detail-item">
                                 <span class="detail-label">Price:</span>
                                 <span class="detail-value">Rs.<?= htmlspecialchars($res->price) ?></span>
@@ -80,18 +93,17 @@
                             </form>
                             <?php endif; ?>
                             
-                                                        <a href="javascript:void(0);"
-                            class="action-btn reschedule-btn"
-                            onclick="openRescheduleModal(
-                                '<?= htmlspecialchars($res->reservationid) ?>',
-                                '<?= htmlspecialchars($res->courtname) ?>',
-                                '<?= htmlspecialchars($res->event) ?>',
-                                '<?= htmlspecialchars($res->date) ?>',
-                                '<?= htmlspecialchars($res->time) ?>',
-                                '<?= htmlspecialchars($res->duration) ?>',
-                                '<?= htmlspecialchars($res->price) ?>',
-                                '<?= htmlspecialchars($res->section) ?>' // ADD THIS
-                            )">Reschedule</a>
+                            <a href="javascript:void(0);" 
+   class="action-btn reschedule-btn" 
+   onclick="event.stopPropagation(); openRescheduleModal('<?= htmlspecialchars($res->reservationid) ?>', '<?= htmlspecialchars($res->date) ?>', '<?= htmlspecialchars($res->time) ?>', '<?= htmlspecialchars($res->courtid) ?>', '<?= htmlspecialchars($res->courtname) ?>', '<?= htmlspecialchars($res->event) ?>', '<?= htmlspecialchars($res->duration) ?>', '<?= htmlspecialchars($res->numberof_participants) ?>', '<?= htmlspecialchars($res->price) ?>', '<?= htmlspecialchars($res->section) ?>')">
+   Reschedule
+</a>
+
+
+
+
+
+
 
 
                             
@@ -117,7 +129,8 @@
                         <option value="Pending">Pending</option>
                         <option value="To pay">To Pay</option>
                         <option value="Paid">Paid</option>
-                        <option value="Cancelled">Cancelled</option>
+                        <option value="rejected">Rejected</option>
+                        <option value="rejected">Cancelled</option>
                     </select>
                 </div>
             </div>
@@ -168,45 +181,50 @@
         </div>
 
 
-        <div id="reschedule-modal" class="popup" style="display:none;">
+
+        </div>
+        </div>
+        <!-- reschedule modal -->
+         <!-- Reschedule Modal -->
+<div id="reschedule-modal" class="popup" style="display:none;">
     <div class="popup-content">
         <span class="close-icon" onclick="closeRescheduleModal()">&times;</span>
         <h3>Reschedule Reservation</h3>
+        
+        <div class="reservation-details">
+            <p><strong>Court:</strong> <span id="modal-court-name"></span></p>
+            <p><strong>Event:</strong> <span id="modal-event"></span></p>
+            <p><strong>Duration:</strong> <span id="modal-duration"></span></p>
+            <p><strong>Participants:</strong> <span id="modal-participants"></span></p>
+            <p><strong>Current Date:</strong> <span id="modal-current-date"></span></p>
+            <p><strong>Current Time:</strong> <span id="modal-current-time"></span></p>
+            <p><strong>Section:</strong> <span id="modal-section"></span></p>
+        </div>
+        
         <form id="reschedule-form" method="POST" action="<?= ROOT ?>/external/reservation/rescheduleReservation">
-        <div class="form-fields-scrollable">   
-        <input type="hidden" name="reservationid" id="reschedule-reservationid">
-            <div class="form-group">
-                <label>Facility</label>
-                <input type="text" id="reschedule-courtname" readonly>
-            </div>
-            <div class="form-group">
-                <label>Event</label>
-                <input type="text" id="reschedule-event" readonly>
-            </div>
-            <div class="form-group">
-                <label>Date</label>
-                <input type="date" name="date" id="reschedule-date" required>
-            </div>
-
-            <div id="date-message" style="color:red; margin-top:5px;"></div>
-            <div class="form-group">
-                <label>Duration</label>
-                <input type="text" id="reschedule-duration" readonly>
-                <input type="hidden" name="duration" id="reschedule-duration-hidden">
-            </div>
+            <input type="hidden" id="reschedule-reservation-id" name="reservationid">
+            <input type="hidden" id="reschedule-court-id" name="courtid">
+            <input type="hidden" id="reschedule-event" name="event">
+            <input type="hidden" id="reschedule-duration" name="duration">
+            <input type="hidden" id="reschedule-participants" name="numberof_participants">
+            <input type="hidden" id="reschedule-price" name="price">
             
             <div class="form-group">
-                <label>Time</label>
-                <div id="reschedule-time-slots"></div>
+                <label for="reschedule-date">New Date:</label>
+                <input type="date" id="reschedule-date" name="date" class="form-control" required>
+                <div id="availability-message" class="alert" style="display:none;"></div>
             </div>
 
+            
             <div class="form-group">
-                <label>Price</label>
-                <input type="text" id="reschedule-price" readonly>
+                <label for="reschedule-time">New Time:</label>
+                <select id="reschedule-time" name="time" class="form-control abz" required>
+                    <!-- Time options will be populated dynamically -->
+                </select>
             </div>
-                        </div> 
+            
             <div class="popup-buttons">
-                <button type="submit" class="confirm-btn">Submit</button>
+                <button type="submit" class="confirm-btn">Reschedule</button>
                 <button type="button" class="cancel-btn" onclick="closeRescheduleModal()">Cancel</button>
             </div>
         </form>
@@ -214,9 +232,6 @@
 </div>
 
 
-        </div>
-        </div>
-        
 
         <!-- success modal-->
         <div id="reschedule-success-modal" class="popup" style="display:none;">
@@ -291,470 +306,224 @@ document.addEventListener('DOMContentLoaded', function() {
     filterTable();
 });
 
-// Time slot logic for reschedule modal
-function getTimeSlots(duration) {
-    if (duration === "half") {
-        return ["8:00-13:00", "13:00-18:00"];
-    } else if (duration === "full") {
-        return ["8:00-18:00"];
-    } else if (duration === "2 hour" || duration === "2 hours") {
-        return ["8:00-10:00", "10:00-12:00", "13:00-15:00", "15:00-17:00"];
-    } else if (duration === "1 hour" || duration === "1 hours") {
-        let slots = [];
-        for (let h = 8; h < 18; h++) {
-            let start = h.toString().padStart(2, '0') + ":00";
-            let end = (h+1).toString().padStart(2, '0') + ":00";
-            slots.push(`${start}-${end}`);
-        }
-        return slots;
-    }
-    return [];
-}
+//reschedule
 
-// ---- RESCHEDULE MODAL LOGIC ----
 
-// Store section for use in reschedule modal
-let currentRescheduleSection = null;
+// Reschedule modal functions
+function openRescheduleModal(reservationId, date, time, courtId, courtName, event, duration, participants, price,section) {
+    // Set values in the form fields
+    document.getElementById("reschedule-reservation-id").value = reservationId;
+    document.getElementById("reschedule-court-id").value = courtId;
+    document.getElementById("reschedule-event").value = event;
+    document.getElementById("reschedule-duration").value = duration;
+    document.getElementById("reschedule-participants").value = participants;
+    document.getElementById("reschedule-price").value = price;
+    
+    // Display reservation details in the modal
+    document.getElementById("modal-court-name").textContent = courtName;
+    document.getElementById("modal-event").textContent = event;
+    document.getElementById("modal-duration").textContent = duration;
+    document.getElementById("modal-participants").textContent = participants;
+    document.getElementById("modal-current-date").textContent = date;
+    document.getElementById("modal-current-time").textContent = formatTimeDisplay(time);
+    document.getElementById("modal-section").textContent = section;
 
-// Open reschedule modal and populate fields and time slots
-function openRescheduleModal(reservationid, courtname, event, date, time, duration, price, section) {
-    document.getElementById('reschedule-reservationid').value = reservationid;
-    document.getElementById('reschedule-courtname').value = courtname;
-    document.getElementById('reschedule-event').value = event;
-    document.getElementById('reschedule-date').value = date;
-    document.getElementById('reschedule-duration').value = duration;
-    document.getElementById('reschedule-price').value = price;
-    document.getElementById('reschedule-duration-hidden').value = duration;
+   
+    // Set minimum date to today
+    const today = new Date();
+    const formattedToday = today.toISOString().split('T')[0];
+    document.getElementById("reschedule-date").min = formattedToday;
+    
+    // Set the current date as default
+    document.getElementById("reschedule-date").value = date;
+    
+    // Populate time slots based on duration
+    populateTimeSlots(duration, time);
+    
 
-    // Store section for AJAX (if your backend expects "section", pass it here; adjust if needed)
-    currentRescheduleSection = section;
-
-    const timeSlotsDiv = document.getElementById('reschedule-time-slots');
-    const slots = getTimeSlots(duration);
-    timeSlotsDiv.innerHTML = '';
-    slots.forEach((slot, idx) => {
-        const radioId = `reschedule-time-slot-${idx}`;
-        const label = document.createElement('label');
-        label.style.marginRight = "15px";
-        label.style.cursor = "pointer";
-        label.htmlFor = radioId;
-
-        const radio = document.createElement('input');
-        radio.type = "radio";
-        radio.name = "time";
-        const startTime = slot.split('-')[0].padStart(5, '0') + ':00';
-radio.value = startTime; // Now value is "08:00:00"
-        radio.id = radioId;
-        radio.required = true;
-        if (slot === time) radio.checked = true;
-
-        label.appendChild(radio);
-        label.appendChild(document.createTextNode(" " + slot));
-        timeSlotsDiv.appendChild(label);
-    });
-
-    document.getElementById('reschedule-modal').style.display = 'block';
+    // Show the modal
+    document.getElementById("reschedule-modal").style.display = "block";
     setTimeout(() => {
         document.querySelector('#reschedule-modal .popup-content').classList.add('active');
     }, 10);
-
-    // Trigger availability check on modal open
-    checkRescheduleDateAvailability();
 }
+
 
 function closeRescheduleModal() {
     document.querySelector('#reschedule-modal .popup-content').classList.remove('active');
     setTimeout(() => {
-        document.getElementById('reschedule-modal').style.display = 'none';
-        document.getElementById('reschedule-duration').disabled = false;
+        document.getElementById("reschedule-modal").style.display = "none";
     }, 300);
 }
 
-// --- AVAILABILITY CHECK LOGIC ---
-function parseTime(str) {
-    // "8:00-13:00" -> [8, 13], "13:00:00" -> [8, null]
-    if (str.includes('-')) {
-        const [start, end] = str.split('-').map(s => parseInt(s.split(':')[0], 10));
-        return [start, end];
-    } else {
-        return [parseInt(str.split(':')[0], 10), null];
+function populateTimeSlots(duration, currentTime) {
+    const timeSelect = document.getElementById("reschedule-time");
+    timeSelect.innerHTML = ""; // Clear existing options
+    
+    // Define available time slots based on duration
+    let timeSlots = [];
+    
+    if (duration === "1 hour") {
+        timeSlots = ["08:00:00", "09:00:00", "10:00:00", "11:00:00", "12:00:00", 
+                     "13:00:00", "14:00:00", "15:00:00", "16:00:00", "17:00:00"];
+    } else if (duration === "2 hour") {
+        timeSlots = ["08:00:00", "10:00:00", "13:00:00", "15:00:00"];
+    } else if (duration === "half") {
+        timeSlots = ["08:00:00", "13:00:00"];
+    } else if (duration === "full") {
+        timeSlots = ["08:00:00"];
     }
-}
-
-
-function setTimeSlotsDisabled(disabled, slotIndexes = null) {
-    const radios = document.querySelectorAll('#reschedule-time-slots input[type="radio"]');
-    radios.forEach((radio, idx) => {
-        if (slotIndexes === null) {
-            radio.disabled = disabled;
-        } else {
-            radio.disabled = slotIndexes.includes(idx);
-        }
-    });
-}
-
-function timeToSeconds(timeStr) {
-    // Accepts "08:00" or "08:00:00"
-    const parts = timeStr.split(':');
-    const h = parseInt(parts[0], 10);
-    const m = parseInt(parts[1], 10);
-    const s = parts[2] ? parseInt(parts[2], 10) : 0;
-    return h * 3600 + m * 60 + s;
-}
-
-
-function parseSlot(slotStr) {
-    // Accepts "8:00-13:00", "13:00:00-18:00:00", etc.
-    const [start, end] = slotStr.split('-');
-    return [timeToSeconds(start), timeToSeconds(end)];
-}
-
-function checkRescheduleDateAvailability() {
-    const dateInput = document.getElementById('reschedule-date');
-    const messageDiv = document.getElementById('date-message');
-    const submitBtn = document.querySelector('#reschedule-form button[type="submit"]');
-    const section = currentRescheduleSection;
-
-    function check() {
-    const date = dateInput.value;
-    messageDiv.textContent = '';
-    submitBtn.disabled = false;
-    setTimeSlotsDisabled(false);
-
-    if (!date || !section) {
-        console.warn("Skipping availability check: missing date or section", {date, section});
-        return;
-    }
-
-
-        const duration = document.getElementById('reschedule-duration').value.trim().toLowerCase();
-        const slots = getTimeSlots('half'); // always 2: ["8:00-13:00", "13:00-18:00"]
-
-        fetch('<?= ROOT ?>/external/reservation/checkAvailability', {
-            method: 'POST',
-            headers: {'Content-Type': 'application/x-www-form-urlencoded'},
-            body: `date=${encodeURIComponent(date)}&section=${encodeURIComponent(section)}`
-        })
-        .then(res => {
-    console.log("Availability check status:", res.status);
-    return res.json().catch(err => {
-        console.error("Failed to parse JSON:", err);
-        throw new Error("Invalid JSON");
-    });
-})
-.then(data => {
-    console.log("Availability check data:", data);
-    //for two hour slot logics
-    if (duration === '2 hour' || duration === '2 hours') {
-    const slots = getTimeSlots('2 hour');
-    let disabledIndexes = [];
-
-    // 1. If any full booking, block all
-    let fullBooked = data.some(reservation =>
-        reservation.duration === 'full' &&
-        ['to pay', 'paid', 'confirmed'].includes(reservation.status.toLowerCase())
-    );
-    if (fullBooked) {
-        messageDiv.textContent = 'Date not available. Please select another date.';
-        submitBtn.disabled = true;
-        setTimeSlotsDisabled(true);
-        return;
-    }
-
-    // 2. Disable slots that overlap with half-day bookings
-    data.forEach(reservation => {
-        const statusOk = ['to pay', 'paid', 'confirmed'].includes(reservation.status.toLowerCase());
-        if (!statusOk) return;
-
-        // If there's a half-day booking, disable overlapping 2-hour slots
-        if (reservation.duration === 'half') {
-    // Convert half-day booking time to a range in hours
-    let halfStart, halfEnd;
-    if (reservation.time === '8:00:00') {
-        halfStart = 8;
-        halfEnd = 13;
-    } else if (reservation.time === '13:00:00') {
-        halfStart = 13;
-        halfEnd = 18;
-    } else if (reservation.time.includes('-')) {
-        [halfStart, halfEnd] = reservation.time.split('-').map(s => parseInt(s.split(':')[0], 10));
-    } else {
-        // fallback: treat as 5-hour slot from start
-        halfStart = parseInt(reservation.time.split(':')[0], 10);
-        halfEnd = halfStart + 5;
-    }
-    slots.forEach((slot, idx) => {
-        let [slotStart, slotEnd] = slot.split('-').map(s => parseInt(s.split(':')[0], 10));
-        if (slotStart >= halfStart && slotEnd <= halfEnd) {
-            disabledIndexes.push(idx);
-        }
-    });
-}
-
-
-        // 3. If there's a 2-hour booking, disable that exact slot
-        if (reservation.duration === '2 hour' || reservation.duration === '2 hours') {
-            slots.forEach((slot, idx) => {
-                const [slotStart, slotEnd] = parseSlot(slot); // e.g. [28800, 36000] for 8:00-10:00
-const resStart = timeToSeconds(reservation.time); // e.g. 28800 for 8:00:00
-const resEnd = resStart + 2 * 3600; // 2-hour booking
-
-// If the slot overlaps with the reservation, disable it
-if (
-    (resStart < slotEnd && resEnd > slotStart)
-) {
-    disabledIndexes.push(idx);
-}
-
-            });
-        }
-    });
-
-    // Remove duplicates
-    disabledIndexes = [...new Set(disabledIndexes)];
-
-    // If all slots are disabled, treat as fully booked
-    if (disabledIndexes.length === slots.length) {
-        messageDiv.textContent = 'Date not available. Please select another date.';
-        submitBtn.disabled = true;
-        setTimeSlotsDisabled(true);
-    } else {
-        messageDiv.textContent = '';
-        submitBtn.disabled = false;
-        setTimeSlotsDisabled(false, disabledIndexes);
-    }
-    return;
-}
-
-            // ---- NEW LOGIC: For full-day, block if ANY booking exists ----
-            if (duration === 'full') {
-                let anyBooking = data.some(reservation =>
-                    ['to pay', 'paid', 'confirmed'].includes(reservation.status.toLowerCase())
-                );
-                if (anyBooking) {
-                    messageDiv.textContent = 'Date not available. Please select another date.';
-                    submitBtn.disabled = true;
-                    setTimeSlotsDisabled(true);
-                    return;
-                }
-            }
-            // 1. If any full reservation, block all
-            let fullBooked = data.some(reservation =>
-                reservation.duration === 'full' &&
-                ['to pay', 'paid', 'confirmed'].includes(reservation.status.toLowerCase())
-            );
-            if (duration === 'half' && fullBooked) {
-                messageDiv.textContent = 'Date not available. Please select another date.';
-                submitBtn.disabled = true;
-                setTimeSlotsDisabled(true);
-                return;
-            }
-
-            // 2. For half, disable only the matching slot(s)
-    let disabledIndexes = [];
-    if (duration === 'half') {
-        data.forEach(reservation => {
-            const statusOk = ['to pay', 'paid', 'confirmed'].includes(reservation.status.toLowerCase());
-            if (!statusOk) return;
-
-            // Disable the slot if another half is booked
-            if (reservation.duration === 'half') {
-   let halfStart, halfEnd;
-if (reservation.time.includes('-')) {
-    [halfStart, halfEnd] = parseSlot(reservation.time);
-} else if (reservation.time === '8:00:00') {
-    halfStart = timeToSeconds('8:00:00');
-    halfEnd = timeToSeconds('13:00:00');
-} else if (reservation.time === '13:00:00') {
-    halfStart = timeToSeconds('13:00:00');
-    halfEnd = timeToSeconds('18:00:00');
-} else {
-    halfStart = timeToSeconds(reservation.time);
-    halfEnd = halfStart + 5 * 3600;
-}
-slots.forEach((slot, idx) => {
-    const [slotStart, slotEnd] = parseSlot(slot);
-    if (slotStart >= halfStart && slotEnd <= halfEnd) {
-        disabledIndexes.push(idx);
-    }
-});
-
-}
-
-            
-            // Disable slot if a 2-hour booking overlaps with a half slot
-            if (reservation.duration === '2 hour' || reservation.duration === '2 hours') {
-    slots.forEach((slot, idx) => {
-        // slot: "8:00-10:00"
-        const [slotStartStr, slotEndStr] = slot.split('-');
-        const slotStart = timeToSeconds(slotStartStr);
-        const resStart = timeToSeconds(reservation.time);
-        if (slotStart === resStart) {
-            disabledIndexes.push(idx);
-        }
-    });
-}
-
-            // Disable slot if a 1-hour booking overlaps with a half slot
-            if (reservation.duration === '1 hour' || reservation.duration === '1 hours') {
-    const resStart = timeToSeconds(reservation.time);
-    const resEnd = resStart + 3600;
-    slots.forEach((slot, idx) => {
-        const [slotStart, slotEnd] = parseSlot(slot); // slotStart/slotEnd in seconds
-        // If the 1-hour booking overlaps with the half slot, disable it
-        if (resStart < slotEnd && resEnd > slotStart) {
-            disabledIndexes.push(idx);
-        }
-    });
-}
-
-        });
-
+    
+    // Create and append options
+    timeSlots.forEach(time => {
+        const option = document.createElement("option");
+        option.value = time;
+        option.textContent = formatTimeDisplay(time);
         
-
-        // Remove duplicates
-        disabledIndexes = [...new Set(disabledIndexes)];
-
-        // If all slots are disabled, treat as fully booked
-        if (disabledIndexes.length === slots.length) {
-            messageDiv.textContent = 'Date not available. Please select another date.';
-            submitBtn.disabled = true;
-            setTimeSlotsDisabled(true);
-        } else {
-            messageDiv.textContent = '';
-            submitBtn.disabled = false;
-            setTimeSlotsDisabled(false, disabledIndexes);
+        // Set current time as selected
+        if (time === currentTime) {
+            option.selected = true;
         }
-    }
-
-    if (duration === '1 hour' || duration === '1 hours') {
-    const slots = getTimeSlots('1 hour');
-    let disabledIndexes = [];
-
-    // Block all if any full booking exists
-    let fullBooked = data.some(reservation =>
-        reservation.duration === 'full' &&
-        ['to pay', 'paid', 'confirmed'].includes(reservation.status.toLowerCase())
-    );
-    if (fullBooked) {
-        messageDiv.textContent = 'Date not available. Please select another date.';
-        submitBtn.disabled = true;
-        setTimeSlotsDisabled(true);
-        return;
-    }
-
-    data.forEach(reservation => {
-        const statusOk = ['to pay', 'paid', 'confirmed'].includes(reservation.status.toLowerCase());
-        if (!statusOk) return;
-
-        // Disable all hour slots inside a half booking
-        if (reservation.duration === 'half') {
-            let halfStart, halfEnd;
-            if (reservation.time === '8:00:00') {
-                halfStart = timeToSeconds('8:00:00');
-                halfEnd = timeToSeconds('13:00:00');
-            } else if (reservation.time === '13:00:00') {
-                halfStart = timeToSeconds('13:00:00');
-                halfEnd = timeToSeconds('18:00:00');
-            } else if (reservation.time.includes('-')) {
-                [halfStart, halfEnd] = reservation.time.split('-').map(timeToSeconds);
-            } else {
-                // Fallback: treat as 5-hour slot from start
-                halfStart = timeToSeconds(reservation.time);
-                halfEnd = halfStart + 5 * 3600;
-            }
-            slots.forEach((slot, idx) => {
-                const [slotStart, slotEnd] = parseSlot(slot);
-                if (slotStart >= halfStart && slotEnd <= halfEnd) {
-                    disabledIndexes.push(idx);
-                }
-            });
-        }
-
-        // Disable the slot if another 1-hour is booked
-        if (reservation.duration === '1 hour' || reservation.duration === '1 hours') {
-            const resStart = timeToSeconds(reservation.time);
-            slots.forEach((slot, idx) => {
-                const [slotStart, ] = parseSlot(slot);
-                if (slotStart === resStart) {
-                    disabledIndexes.push(idx);
-                }
-            });
-        }
-
-        // Disable both hour slots covered by a 2-hour booking
-        if (reservation.duration === '2 hour' || reservation.duration === '2 hours') {
-            const resStart = timeToSeconds(reservation.time);
-            const resEnd = resStart + 2 * 3600;
-            slots.forEach((slot, idx) => {
-                const [slotStart, slotEnd] = parseSlot(slot);
-                // If the 1-hour slot is within the 2-hour booking
-                if (slotStart >= resStart && slotEnd <= resEnd) {
-                    disabledIndexes.push(idx);
-                }
-            });
-        }
+        
+        timeSelect.appendChild(option);
     });
-
-    // Remove duplicates
-    disabledIndexes = [...new Set(disabledIndexes)];
-
-    if (disabledIndexes.length === slots.length) {
-        messageDiv.textContent = 'Date not available. Please select another date.';
-        submitBtn.disabled = true;
-        setTimeSlotsDisabled(true);
-    } else {
-        messageDiv.textContent = '';
-        submitBtn.disabled = false;
-        setTimeSlotsDisabled(false, disabledIndexes);
+    
+    // If it's a half-day booking, check availability immediately
+    if (duration === 'half') {
+        checkAvailability();
     }
-    return;
 }
 
-
-})
-.catch((err) => {
-    console.error("Availability check failed:", err);
-    messageDiv.textContent = 'Error checking availability.';
-    submitBtn.disabled = true;
-    setTimeSlotsDisabled(true);
-});
-    }
-
-  
-    // Initial check on modal open
-    check();
+function formatTimeDisplay(timeString) {
+    // Convert 24-hour format to 12-hour format with AM/PM
+    if (!timeString) return "";
+    
+    const [hours, minutes] = timeString.split(':');
+    const hour = parseInt(hours);
+    const ampm = hour >= 12 ? 'PM' : 'AM';
+    const hour12 = hour % 12 || 12;
+    return `${hour12}:${minutes || '00'} ${ampm}`;
 }
 
-
+//checking avaialbility
+// Add this to your existing script section
+// Add this to your existing script section
 document.addEventListener('DOMContentLoaded', function() {
+    // Get the date input element
     const dateInput = document.getElementById('reschedule-date');
+    
+    // Add event listener for date change
     if (dateInput) {
-        dateInput.addEventListener('change', checkRescheduleDateAvailability);
+        dateInput.addEventListener('change', function() {
+            checkAvailability();
+        });
     }
 });
+function checkAvailability() {
+    const date = document.getElementById('reschedule-date').value;
+    const courtId = document.getElementById('reschedule-court-id').value;
+    const duration = document.getElementById('reschedule-duration').value;
+    const section = document.getElementById('modal-section').textContent;
+    
+    // Clear previous messages
+    const availabilityMessage = document.getElementById('availability-message');
+    if (availabilityMessage) {
+        availabilityMessage.style.display = 'none';
+    }
+    
+    // Only proceed if we have a date and courtId
+    if (!date || !courtId) return;
+    
+    // Create form data for the AJAX request
+    const formData = new FormData();
+    formData.append('date', date);
+    formData.append('courtid', courtId);
+    formData.append('duration', duration);
+    formData.append('section', section);
+    
+    // Send AJAX request
+    fetch('<?= ROOT ?>/external/reservation/checkAvailability', {
+        method: 'POST',
+        body: formData
+    })
+    .then(response => response.json())
+    .then(data => {
+    if (!data.available) {
+        // Show unavailability message
+        availabilityMessage.textContent = data.message;
+        availabilityMessage.className = "alert alert-danger";
+        availabilityMessage.style.display = 'block';
+        
+        // Disable the submit button
+        document.querySelector('#reschedule-form .confirm-btn').disabled = true;
+    } else {
+        // Enable the submit button if date is available
+        document.querySelector('#reschedule-form .confirm-btn').disabled = false;
+        
+        // Handle disabled slots for different durations
+        if ((duration === '1 hour' || duration === '2 hour' || duration === 'half') && data.disabledSlots) {
+            updateTimeSlotOptions(data.disabledSlots);
+        }
+    }
+})
 
+    .catch(error => {
+        console.error('Error checking availability:', error);
+    });
+}
+
+function updateTimeSlotOptions(disabledSlots) {
+    const timeSelect = document.getElementById('reschedule-time');
+    const options = timeSelect.options;
+    
+    // Enable all options first
+    for (let i = 0; i < options.length; i++) {
+        options[i].disabled = false;
+    }
+    
+    // Disable specific slots
+    for (let i = 0; i < options.length; i++) {
+        const optionValue = options[i].value;
+        
+        if (disabledSlots.includes(optionValue)) {
+            options[i].disabled = true;
+        }
+    }
+    
+    // If the currently selected option is disabled, select the first available option
+    if (timeSelect.selectedOptions[0].disabled && options.length > 0) {
+        for (let i = 0; i < options.length; i++) {
+            if (!options[i].disabled) {
+                timeSelect.selectedIndex = i;
+                break;
+            }
+        }
+    }
+}
+
+// Add this to your existing script
+document.addEventListener('DOMContentLoaded', function() {
+    // Check for reschedule success parameter in URL
+    const urlParams = new URLSearchParams(window.location.search);
+    if (urlParams.get('reschedule') === 'success') {
+        document.getElementById("reschedule-success-modal").style.display = "block";
+        setTimeout(() => {
+            document.querySelector('#reschedule-success-modal .popup-content').classList.add('active');
+        }, 10);
+    }
+});
 
 function closeRescheduleSuccessModal() {
     document.querySelector('#reschedule-success-modal .popup-content').classList.remove('active');
     setTimeout(() => {
-        document.getElementById('reschedule-success-modal').style.display = 'none';
+        document.getElementById("reschedule-success-modal").style.display = "none";
+        // Remove the query parameter from URL
+        const url = new URL(window.location);
+        url.searchParams.delete('reschedule');
+        window.history.replaceState({}, '', url);
     }, 300);
 }
 
-document.addEventListener('DOMContentLoaded', function() {
-    // Check if the URL contains ?reschedule=success
-    const urlParams = new URLSearchParams(window.location.search);
-    if (urlParams.get('reschedule') === 'success') {
-        const modal = document.getElementById('reschedule-success-modal');
-        modal.style.display = 'block';
-        setTimeout(() => {
-            modal.querySelector('.popup-content').classList.add('active');
-        }, 10);
-        // Optionally, remove the query param from URL after showing modal
-        window.history.replaceState({}, document.title, window.location.pathname);
-    }
-});
 
 
         </script>

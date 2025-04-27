@@ -15,16 +15,13 @@ if (isset($_SESSION['userid'])) {
     }
 }
 
-$notificationsModel = new Notifications();
-$userId = $_SESSION['userid'] ?? null;
 
 $notifications = [];
+$userId = $_SESSION['userid'] ?? null;
+
 if ($userId) {
-    // Fetch notifications for this user, order by newest first
-    $notifications = $notificationsModel->query(
-        "SELECT * FROM notifications WHERE to_user_id = :userid ORDER BY created_at DESC",
-        ['userid' => $userId]
-    );
+    $notificationsModel = new Notifications();
+    $notifications = $notificationsModel->getActiveUnreadNotifications($userId);
 }
 ?>
 
@@ -58,22 +55,22 @@ if ($userId) {
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M12 22C13.1 22 14 21.1 14 20H10C10 21.1 10.9 22 12 22ZM18 16V11C18 7.93 16.37 5.36 13.5 4.68V4C13.5 3.17 12.83 2.5 12 2.5C11.17 2.5 10.5 3.17 10.5 4V4.68C7.64 5.36 6 7.92 6 11V16L4 18V19H20V18L18 16ZM16 17H8V11C8 8.52 9.51 6.5 12 6.5C14.49 6.5 16 8.52 16 11V17Z" fill="#360335"/>
             </svg>
-            <span class="notification-badge">3</span>
+           
         </div>
     </a>
         <!-- Notification Dropdown -->
         <div class="notification-dropdown" id="notificationDropdown">
-            <div class="notification-header">
-                <h3>Notifications</h3>
-                <a href="javascript:void(0);" class="mark-all-read">Mark all as read</a>
-            </div>
-            <div class="notification-list">
+        <div class="notification-header">
+    <h3>Notifications</h3>
+    
+</div>
+
+            <!-- In top.view.php -->
+<div class="notification-list">
     <?php if (!empty($notifications)) : ?>
         <?php foreach ($notifications as $notification) : ?>
-            <div class="notification-item <?= $notification->is_read ? '' : 'unread' ?>">
-                <?php if (!$notification->is_read): ?>
-                    <div class="notification-dot"></div>
-                <?php endif; ?>
+            <div class="notification-item">
+                
                 <div class="notification-content">
                     <p><?= htmlspecialchars($notification->content) ?></p>
                     <span class="notification-time">
@@ -91,6 +88,7 @@ if ($userId) {
     <?php endif; ?>
 </div>
 
+
 <?php
 function timeAgo($timestamp) {
     $time = time() - $timestamp; // time difference in seconds
@@ -103,9 +101,7 @@ function timeAgo($timestamp) {
 }
 ?>
 
-            <div class="notification-footer">
-                <a href="notifications">View all notifications</a>
-            </div>
+          
         </div>
     </div>
 

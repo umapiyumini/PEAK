@@ -9,5 +9,4 @@ class Editmedical extends Controller{
         ];
         $this->view('student/editmedical', $data);
     }
-}   
 

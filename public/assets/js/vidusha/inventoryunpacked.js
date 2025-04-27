@@ -134,3 +134,41 @@ document.querySelectorAll(".update-request-btn").forEach(button => {
         });
     });
 });
+
+// Function to show popup message
+function showPopupMessage(message, type) {
+    const popup = document.getElementById("popupMessage");
+    const popupText = document.getElementById("popupText");
+
+    // Set message and type (success or error)
+    popupText.textContent = message;
+    popup.classList.remove("hidden");
+    popup.classList.add(type === "success" ? "success" : "error");
+
+    // Auto-hide the popup after 3 seconds
+    setTimeout(() => {
+        popup.classList.add("hidden");
+    }, 3000);
+}
+
+// Close popup manually
+document.getElementById("closePopup").addEventListener("click", () => {
+    const popup = document.getElementById("popupMessage");
+    popup.classList.add("hidden");
+});
+
+// Example usage: Replace these with your actual success/error triggers
+document.addEventListener("DOMContentLoaded", () => {
+    // Simulate success message
+   // Example: Replace this
+// alert("Operation completed successfully!");
+
+// With this
+showPopupMessage("Operation completed successfully!", "success");
+
+// Example: Replace this
+// alert("An error occurred!");
+
+// With this
+showPopupMessage("An error occurred!", "error");
+});

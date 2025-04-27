@@ -9,33 +9,24 @@ class Reservation extends Controller{
     }
 
 
-    public function index($courtId = null) {
+    public function index() {
+        $userId = $this->getUserId();
+    
         $court = new Courts();
         $courtname = $court->getcourt();
         
         $reservation = new Reservations();
-        $allreservations = $reservation->getReservations();
+        $allreservations = $reservation->getReservationbyUser();
         
-        // Get user ID from session
         
-        // Use the court ID from the URL or from the court object if available
-        if ($courtId === null && isset($courtname->courtid)) {
-            $courtId = $courtname->courtid;
-        }
-        
-        // Get reserved time slots for this court
-        if ($courtId) {
-            $reservedTimeSlots = $reservation->getAllReservedTimeSlots($courtId);
-        } else {
-            $reservedTimeSlots = [];
-        }
-        
-        // Pass data to view
-        $this->view('sportscaptain/reservation', [
-            'courtname' => $courtname,
-            'reservedTimeSlots' => json_encode($reservedTimeSlots),
-            'allreservations' => $allreservations
-        ]);
+        $reservedTimeSlots = $reservation->getReservationsByCourtSection($userId);
+
+
+$this->view('sportscaptain/reservation', [
+    'courtname' => $courtname,
+    'reservedTimeSlots' => json_encode($reservedTimeSlots),
+    'allreservations' => $allreservations
+]);
     }
     
     public function addreservation(){
@@ -81,40 +72,50 @@ class Reservation extends Controller{
     exit;
     }
 
-    public function getAvailableSlots() {
-        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            $reservationsModel = new Reservations();
     
-            $date = $_POST['date'];
-            $duration = $_POST['duration'];
-    
-            // Get existing reservations on the selected date
-            $existingTimes = $reservationsModel-> getTimeSlots($date, $courtId);
-    
-            // Get time slots based on selected duration
-            $allSlots = $this->generateTimeSlots($duration);
-    
-            // Filter out already reserved times
-            $availableSlots = array_diff($allSlots, $existingTimes);
-    
-            echo json_encode(array_values($availableSlots));
-            exit;
+        public function getAvailableSlots() {
+            if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+                $reservationsModel = new Reservations();
+                $userId = $this->getUserId(); 
+                
+                $date = $_POST['date'];
+                $duration = $_POST['duration'];
+        
+                // Get existing reservations for the user
+                $reservedTimeSlots = $reservationsModel->getReservationsByCourtSection($userId);
+        
+                // Extract times for the selected date only
+                $reservedTimes = [];
+                if (isset($reservedTimeSlots[$date])) {
+                    foreach ($reservedTimeSlots[$date] as $slot) {
+                        $reservedTimes[] = $slot['time'];
+                    }
+                }
+        
+                // Generate all possible slots
+                $allSlots = $this->generateTimeSlots($duration);
+        
+                // Filter out reserved slots
+                $availableSlots = array_diff($allSlots, $reservedTimes);
+        
+                echo json_encode(array_values($availableSlots));
+                exit;
+            }
         }
-    }
-    
+        
     private function generateTimeSlots($duration) {
         $slots = [];
     
         if ($duration == '2 hours') {
             $start = strtotime('08:00');
-            $end = strtotime('20:00');
+            $end = strtotime('18:00');
     
             while ($start + 7200 <= $end) {
                 $slots[] = date('H:i', $start);
                 $start += 7200; // next 2 hours
             }
         } elseif ($duration == 'half day') {
-            $slots = ['08:00', '14:00']; // morning and evening
+            $slots = ['08:00', '13:00']; // morning and evening
         } elseif ($duration == 'full day') {
             $slots = ['08:00']; // full day slot
         }

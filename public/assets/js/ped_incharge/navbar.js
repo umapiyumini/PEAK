@@ -19,62 +19,7 @@ window.addEventListener('click', function (e) {
     }
 });
 
-//  // Sample notification data
-//  const notifications = [
-//     {
-//         id: 1,
-//         message: "New order received #1234",
-//         type: "order",
-//         timestamp: new Date('2024-02-15T10:30:00')
-//     },
-//     {
-//         id: 2,
-//         message: "Inventory low on Product X",
-//         type: "inventory",
-//         timestamp: new Date('2024-02-14T15:45:00')
-//     },
-//     {
-//         id: 3,
-//         message: "Shipment delayed for Order #5678",
-//         type: "shipping",
-//         timestamp: new Date('2024-02-13T09:15:00')
-//     }
-// ];
 
-// document.addEventListener('DOMContentLoaded', () => {
-//     const bellIcon = document.querySelector('.bell-icon');
-//     const notificationsDropdown = document.querySelector('.notifications-dropdown');
-//     const notificationsList = document.getElementById('notificationsList');
-//     const notificationBadge = document.querySelector('.notification-badge');
-
-//     // Render notifications
-//     function renderNotifications() {
-//         notificationsList.innerHTML = notifications.map(notification => `
-//             <li data-id="${notification.id}">
-//                 <a href="#">${notification.message}</a>
-//             </li>
-//         `).join('');
-
-//         // Update badge count
-//         notificationBadge.textContent = notifications.length;
-//     }
-
-//     bellIcon.addEventListener('click', (event) => {
-//         event.stopPropagation();
-//         notificationsDropdown.classList.toggle('show');
-//     });
-
-//     // Close dropdown when clicking outside
-//     document.addEventListener('click', (event) => {
-//         if (!notificationsDropdown.contains(event.target) && 
-//             !bellIcon.contains(event.target)) {
-//             notificationsDropdown.classList.remove('show');
-//         }
-//     });
-
-//     // Initial render
-//     renderNotifications();
-// });
 
 const notifications = [
     {
@@ -152,4 +97,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
     renderNotifications();
 });
+
+
 
