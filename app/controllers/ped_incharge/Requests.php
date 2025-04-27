@@ -8,6 +8,7 @@ class Requests extends Controller {
         $paidReservations = $reservationsModel->getAllPaidReservations();
         $confirmedReservations = $reservationsModel->getAllConfirmedReservations();
         $rejectedReservations = $reservationsModel->getAllRejectedReservations();
+        $cancelledReservation = $reservationsModel->getAllCancelledReservations();
 
         $activeReservations = $reservationsModel->getAllPaidTopayConfirmedReservations();
 
@@ -20,7 +21,7 @@ class Requests extends Controller {
                 foreach ($activeReservations as $active) {
                     if (
                         $pending->date == $active->date &&
-                        $pending->courtid == $active->courtid &&
+                        $pending->section == $active->section &&
                         $reservationsModel->isTimeOverlapping($pending, $active)
                     ) {
                         $pending->has_conflict = true;
@@ -33,7 +34,7 @@ class Requests extends Controller {
         $flagConflicts($newPendingReservations);
         $flagConflicts($oldPendingReservations);
 
-        $this->view('ped_incharge/requests', ['newPendingReservations' => $newPendingReservations, 'oldPendingReservations' => $oldPendingReservations, 'topayReservations' => $topayReservations, 'paidReservations' => $paidReservations, 'confirmedReservations' => $confirmedReservations, 'rejectedReservations' => $rejectedReservations]);
+        $this->view('ped_incharge/requests', ['newPendingReservations' => $newPendingReservations, 'oldPendingReservations' => $oldPendingReservations, 'topayReservations' => $topayReservations, 'paidReservations' => $paidReservations, 'confirmedReservations' => $confirmedReservations, 'rejectedReservations' => $rejectedReservations, 'cancelledReservation'=>$cancelledReservation]);
     }
 
 

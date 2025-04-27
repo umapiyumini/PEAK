@@ -23,6 +23,7 @@ class User {
 
     public function validate($data) {
         // Email validation
+        
         if (empty($data['email'])) {
             $this->errors['email'] = 'Email is required';
         } elseif (!filter_var($data['email'], FILTER_VALIDATE_EMAIL)) {
@@ -194,12 +195,17 @@ class User {
         return false;
     }
 
+    
+
     public function validate2($data) {
-        // Email validation
+
+        //email validation
         if (empty($data['email'])) {
             $this->errors['email'] = 'Email is required';
         } elseif (!filter_var($data['email'], FILTER_VALIDATE_EMAIL)) {
             $this->errors['email'] = 'Invalid email format';
+        } elseif ($this->emailExists($data['email'])) {
+            $this->errors['email'] = 'Email already exists in our system';
         }
 
         // Name validation
@@ -221,6 +227,8 @@ class User {
             $this->errors['nic'] = 'NIC is required';
         } elseif (!preg_match("/^([0-9]{9}[vV]|[0-9]{12})$/", $data['nic'])) {
             $this->errors['nic'] = 'Invalid NIC format. Must be 9 digits ending with V/v or 12 digits.';
+        } elseif ($this->nicExists($data['nic'])) {
+            $this->errors['nic'] = 'NIC already exists in our system';
         }
 
         // Date of birth validation
@@ -230,11 +238,13 @@ class User {
             $this->errors['dob'] = 'Invalid Date of Birth format';
         }
 
-        // Contact number validation
-        if (empty($data['contact_number'])) {
+       // Contact number validation
+       if (empty($data['contact_number'])) {
             $this->errors['contact_number'] = 'Contact Number is required';
         } elseif (!preg_match("/^[0-9]{10}$/", $data['contact_number'])) {
             $this->errors['contact_number'] = 'Invalid Contact Number format';
+        } elseif ($this->contactNumberExists($data['contact_number'])) {
+            $this->errors['contact_number'] = 'Contact Number already exists in our system';
         }
 
         // NIC and DOB validation
@@ -311,7 +321,6 @@ class User {
         $query = "SELECT * FROM $this->table";
         return $this->query($query);
     }
-
 
     public function update($userid, $data)
 {

@@ -589,11 +589,29 @@ public function findById($reservationid) {
         return $this->query($query);
     }
 
+    public function getAllCancelledReservations(){
+        $query = "SELECT * ,courts.name AS courtname, user.name AS username FROM {$this->table} 
+        JOIN user ON user.userid= $this->table.userid
+        JOIN courts ON courts.courtid= $this->table.courtid
+        LEFT JOIN payments ON payments.reservationid= $this->table.reservationid
+        WHERE status = 'cancelled' AND location='ground'";
+        return $this->query($query);
+    }
+
     public function getAllIndoorTopayReservations(){
         $query = "SELECT * ,courts.name AS courtname, user.name AS username FROM {$this->table} 
         JOIN user ON user.userid= $this->table.userid
         JOIN courts ON courts.courtid= $this->table.courtid
         WHERE status = 'To pay' AND location='indoor'";
+        return $this->query($query);
+    }
+
+    public function getAllIndoorCancelledReservations(){
+        $query = "SELECT * ,courts.name AS courtname, user.name AS username FROM {$this->table} 
+        JOIN user ON user.userid= $this->table.userid
+        JOIN courts ON courts.courtid= $this->table.courtid
+        LEFT JOIN payments ON payments.reservationid= $this->table.reservationid
+        WHERE status = 'cancelled' AND location='indoor'";
         return $this->query($query);
     }
 
@@ -627,7 +645,7 @@ public function findById($reservationid) {
         JOIN user ON user.userid= $this->table.userid
         JOIN courts ON courts.courtid= $this->table.courtid
         LEFT JOIN payments ON payments.reservationid = $this->table.reservationid
-        WHERE location='ground' AND status IN ('confirmed', 'To pay', 'paid')
+        WHERE location='ground' AND status IN ('confirmed', 'To pay', 'paid', 'cancelled')
         ORDER BY $this->table.created_at DESC";
         return $this->query($query);
     }
@@ -637,7 +655,7 @@ public function findById($reservationid) {
         JOIN user ON user.userid= $this->table.userid
         JOIN courts ON courts.courtid= $this->table.courtid
         LEFT JOIN payments ON payments.reservationid = $this->table.reservationid
-        WHERE location='indoor' AND status IN ('confirmed', 'To pay', 'paid')
+        WHERE location='indoor' AND status IN ('confirmed', 'To pay', 'paid','cancelled')
         ORDER BY $this->table.created_at DESC";
         return $this->query($query);
     }
@@ -686,7 +704,9 @@ public function findById($reservationid) {
         }
         
 
-        $activeQuery = "SELECT * FROM {$this->table} WHERE status IN ('confirmed', 'To pay', 'paid')";
+        $activeQuery = "SELECT * FROM {$this->table} r
+        JOIN courts c ON c.courtid= r.courtid
+        WHERE status IN ('confirmed', 'To pay', 'paid')";
         $activeReservations = $this->query($activeQuery);
         
         $rejectedCount = 0;
@@ -695,7 +715,7 @@ public function findById($reservationid) {
             foreach ($activeReservations as $active) {
 
                 if ($pending->date == $active->date && 
-                    $pending->courtid == $active->courtid && 
+                    $pending->section == $active->section && 
                     $this->isTimeOverlapping($pending, $active)) {
                     
                     // Reject the pending reservation
@@ -741,11 +761,12 @@ public function findById($reservationid) {
     }
 
     public function checkForConflicts($reservation) {
-        $activeReservations = $this->query("SELECT * FROM {$this->table} 
+        $activeReservations = $this->query("SELECT * FROM {$this->table} r
+            JOIN courts c ON c.courtid= r.courtid
             WHERE status IN ('confirmed', 'To pay', 'paid')
-            AND courtid = :courtid
+            AND section = :section
             AND date = :date", [
-            'courtid' => $reservation->court,
+            'section' => $reservation->section,
             'date' => $reservation->date
         ]);
 
