@@ -99,14 +99,14 @@ class Badmintonform extends Controller {
             // Debug info
             // error_log("Checking availability for date: $date, court: $courtName, section: $section");
     
-            // Check if full day is booked
+            
             $reservations = new Reservations();
             $isBooked = $reservations->isFullDayBooked($date, $section);
     
             // Debug info
             // error_log("Is booked: " . ($isBooked ? 'Yes' : 'No'));
     
-            // Return plain text response
+            
             echo $isBooked ? 'full' : 'available';
         } else {
             echo 'Invalid request method';
@@ -201,6 +201,8 @@ public function checkOneHourAvailability() {
     }
     exit;
 }
+
+
 public function reserve() {
     if (session_status() === PHP_SESSION_NONE) {
         session_start();

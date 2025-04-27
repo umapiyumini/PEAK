@@ -65,9 +65,9 @@ public function updatePrice($courtid, $event, $duration, $price) {
 
 
 
- //fetching price in form column
+ 
  public function getPriceByCourtName($event, $duration, $courtName) {
-    // Join courts and groundcourts tables to find the price based on court name
+    
     $query = "SELECT ic.price 
               FROM $this->table ic
               JOIN courts c ON ic.courtid = c.courtid

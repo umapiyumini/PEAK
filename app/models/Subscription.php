@@ -48,7 +48,7 @@ public function getOngoingByUserId($userid) {
     $query = "SELECT * FROM {$this->table} WHERE userid = :userid AND status IN ('paid', 'to pay','active')";
     $data = ['userid' => $userid];
 
-    return $this->query($query, $data);  // use your trait's query() method
+    return $this->query($query, $data);  
 }
 
 
