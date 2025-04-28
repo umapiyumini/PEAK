@@ -8,7 +8,7 @@ class Student{
         'userid',
         'registrationnumber',
         'faculty',
-        'department',
+        'department'
     ];
 
     public $studenterrors = [];
@@ -28,7 +28,7 @@ class Student{
         }
         if (empty($data['faculty'])) {
             $this->studenterrors['faculty'] = 'Faculty is required';
-        }
+        }   
 
         if (empty($data['department'])) {
             $this->studenterrors['department'] = 'Department is required';
@@ -42,6 +42,35 @@ class Student{
         return empty($this->studenterrors);
     }
     
+<<<<<<< HEAD
+=======
+
+>>>>>>> 9dca0a0ac48735620d60b8f87062b0554b1f37ff
+    public function getStudent($userid)
+    
+    {
+        $query = "SELECT * FROM $this->table
+        JOIN user ON $this->table.userid = user.userid
+        WHERE $this->table.userid = :userid";
+        $param = [
+            'userid' => $userid
+        ];
+        $result = $this->query($query, $param);
+        return $result;
+    }
+
+    public function find($userid)
+    {
+        $query = "SELECT * FROM $this->table WHERE userid = :userid";
+        $param = [
+            'userid' => $userid
+        ];
+        $result = $this->query($query, $param);
+        return $result[0];
+    }
+
+<<<<<<< HEAD
+=======
     public function studentReg($data){
         $querey ="INSERT INTO student (userid, registrationnumber, faculty, department, id_start, id_end) VALUES (:userid, :registrationnumber, :faculty, :department, :id_start, :id_end)";
         $params = [
@@ -54,6 +83,7 @@ class Student{
         ];
         return $this->query($querey, $params);
     }
+>>>>>>> 9dca0a0ac48735620d60b8f87062b0554b1f37ff
 
     public function getuserID($regno){
         $query = "SELECT userid FROM $this->table WHERE registrationnumber = :regno";
@@ -73,6 +103,7 @@ class Student{
         $query = "SELECT u.userid, u.name, u.gender, u.nic, u.email, u.date_of_birth, u.contact_number, u.address, 
                 s.registrationnumber, s.faculty, s.department, s.id_start, s.id_end FROM $this->table s 
                 JOIN user u ON s.userid = u.userid WHERE s.registrationnumber = :regno";
+
 
         $params = [':regno' => $regno];
         return $this->query($query, $params);

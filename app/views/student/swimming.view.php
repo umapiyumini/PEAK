@@ -10,6 +10,7 @@
             margin: 0;
             padding: 0;
             background-color: #f5f5f5;
+
         }
         header {
             background-color: #0d47a1;
@@ -27,6 +28,7 @@
             padding: 0 20px;
             margin-left: 240px;
         }
+
         .sport-details {
             background-color: white;
             border-radius: 10px;
@@ -158,7 +160,9 @@
         </div>
         
         <div class="info-section">
+
             <h3 class="section-title">Coaches and Captains</h3>
+
             <div class="team-grid">
                 <div class="team-member">
                     <div class="member-photo"></div>
@@ -178,7 +182,24 @@
             </div>
         </div>
         
-      
+
+        <div class="info-section">
+            <h3 class="section-title">Practice Schedule</h3>
+            <div class="schedule">
+                <div class="schedule-item">
+                    <div class="day">Monday</div>
+                    <div class="time">4:00 PM - 6:00 PM</div>
+                </div>
+                <div class="schedule-item">
+                    <div class="day">Wednesday</div>
+                    <div class="time">4:00 PM - 6:00 PM</div>
+                </div>
+                <div class="schedule-item">
+                    <div class="day">Friday</div>
+                    <div class="time">3:30 PM - 5:30 PM</div>
+                </div>
+            </div>
+
         </div>
     </div>
 </div>

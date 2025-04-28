@@ -254,7 +254,7 @@ main{
 
 }
 
-    /calendar style/
+
 
     section.content {
         flex: 1; 

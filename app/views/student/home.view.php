@@ -81,4 +81,4 @@ include 'nav.view.php';
 <script src="home.js"></script>
 <script src="navbar.js"></script>
 </body>
-</html>
+
