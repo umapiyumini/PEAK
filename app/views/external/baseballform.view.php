@@ -12,16 +12,16 @@
     $showSuccessModal = false;
     if (isset($_SESSION['reservation_success']) && $_SESSION['reservation_success'] === true) {
         $showSuccessModal = true;
-        // Clear the session variable
+        
         $_SESSION['reservation_success'] = false;
     }
     ?>
-        <!-- navigation bar -->
+       
         <?php include 'enav.view.php'; ?>
         <div class="main">
         <?php include 'top.view.php'; ?>
 
-        <!-- form part -->
+        
         <div class="container1">
         <h1 class="title1">Baseball court Reservation</h1>
 

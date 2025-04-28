@@ -1,6 +1,6 @@
 <?php
 class Courts {
-    use Model; // Use the Database trait to access the query methods
+    use Model; 
 
     protected $table = 'courts';
     protected $fillable = ['courtid', 'name', 'location', 'section', 'description', 'image','sport_id'];
@@ -16,7 +16,7 @@ class Courts {
     }
 
 
-    //used 
+    
 
     
     public function getAllCourts() {
@@ -34,7 +34,7 @@ class Courts {
         return $result ? $result[0] : null;
     }
 
-    //not yet
+   
 
 
 
