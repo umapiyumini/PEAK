@@ -1,6 +1,6 @@
 <?php
 
-//debugging
+
 function show($stuff)
 {
     echo "<pre>";
@@ -8,7 +8,7 @@ function show($stuff)
     echo "</pre>";
 }
 
-//ignores html tags
+
 function esc($str){
     return htmlspecialchars($str);
 }

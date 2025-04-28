@@ -18,19 +18,13 @@ Trait Model {
     }
 
     
-    // where
-<<<<<<< HEAD
-=======
 
->>>>>>> 9dca0a0ac48735620d60b8f87062b0554b1f37ff
     // public function where($data,$data_not = []){
     //     $keys = array_keys($data);
     //     $keys_not = array_keys($data_not);
     //     $query = "SELECT * FROM $this->table WHERE ";
     //     foreach($keys as $key){
     //         $query .= $key . " = :".$key . "&&";
-<<<<<<< HEAD
-=======
 
     public function where($data,$data_not = []){
         $keys = array_keys($data);
@@ -40,7 +34,7 @@ Trait Model {
             $query .= "$key = :$key AND ";
 
 
->>>>>>> 9dca0a0ac48735620d60b8f87062b0554b1f37ff
+
 
     //     }
 
@@ -54,7 +48,7 @@ Trait Model {
 
     //     $query .= "order by $this->order_column $this->order_type  limit $this->limit offset $this->offset"; 
 
-        //exclusions
+    
         foreach($keys_not as $key){
             $query .= "$key != :$key AND ";
 
@@ -83,10 +77,7 @@ Trait Model {
             $params[':' . str_replace(['>', '<', '=', ' '], '', $paramKey)] = $value;
         }
 
-<<<<<<< HEAD
-=======
 
->>>>>>> 9dca0a0ac48735620d60b8f87062b0554b1f37ff
         $query = "SELECT * FROM $this->table";
         if (!empty($conditions)) {
             $query .= " WHERE " . implode(" AND ", $conditions);
@@ -118,7 +109,7 @@ Trait Model {
         return $this->query($query, $params);
     }
 
-    // findAll
+    
     public function findAll(){
 
         $query = "SELECT * FROM $this->table order by $this->order_column $this->order_type limit $this->limit offset $this->offset"; 
@@ -128,7 +119,7 @@ Trait Model {
     }
 
 
-    // first
+    
     public function first($data, $data_not = []){
         $keys = array_keys($data);
         $keys_not = array_keys($data_not);
@@ -155,9 +146,9 @@ Trait Model {
         return false;
     }
 
-    // insert
+    
     public function insert($data){
-        //remove unwanted data
+    
         if(!empty($this->allowed_columns)){
             foreach($data as $key => $value){
                 if(!in_array($key,$this->allowed_columns)){
@@ -174,10 +165,10 @@ Trait Model {
     
 
    
-    // update
+    
     public function update($id,$data,$id_column='userid'){
 
-        //remove unwanted data
+        
         if(!empty($this->allowed_columns)){
             foreach($data as $key => $value){
                 if(!in_array($key,$this->allowed_columns)){
@@ -207,7 +198,7 @@ Trait Model {
         return false;
     }
 
-    // delete 
+    
     public function delete($id, $id_column='userid'){
         $data[$id_column] = $id;
         $query = "DELETE  FROM $this->table WHERE $id_column = :$id_column ";
@@ -226,15 +217,15 @@ Trait Model {
     }
 
 
-    //FOR NOW
+    
     public function executeQuery($query, $data = []) {
         $con = $this->connect();
         $stm = $con->prepare($query);
     
         if ($stm->execute($data)) {
-            return true; // Query executed successfully
+            return true; 
         } else {
-            // Output detailed error message
+        
             echo "SQL Error: " . implode(", ", $stm->errorInfo());
             return false;
         }
@@ -248,5 +239,5 @@ Trait Model {
 
 }
 
-//for now
+
 

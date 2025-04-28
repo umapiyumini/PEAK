@@ -15,7 +15,7 @@ addFacilityBtn.onclick = function() {
     editCourtidInput.value = "";
 };
 
-// Open Edit Modal and populate with selected court data
+// Open Edit Modal 
 function fetchFacility(courtid) {
     fetch("/PEAK/public/ped_incharge/ped_facilities/getFacility", {
         method: "POST",
@@ -43,7 +43,7 @@ function openEditModal(court) {
     document.getElementById("facilitysection").value = court.section || "";
     document.getElementById("currentImage").src = court.image || "";
 
-    // Show current image if you want
+    
     if (document.getElementById("currentImage")) {
         document.getElementById("currentImage").src = court.image || "";
     }
@@ -61,11 +61,10 @@ function deleteFacility(courtid) {
     .then(response => response.text())
     .then(result => {
         if (result.trim() === "success") {
-            // Option 1: Reload the page
+            
             window.location.reload();
 
-            // Option 2: Remove the card from the DOM (uncomment if you want instant update)
-            // document.querySelector(`.facility-card[data-id='${courtid}']`).remove();
+            
         } else {
             alert("Error deleting facility: " + result);
         }

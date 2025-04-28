@@ -1,6 +1,6 @@
 <?php
 
-session_start(); // Start session
+session_start(); 
 
 // Debugging
 echo "<pre>";
@@ -10,10 +10,7 @@ exit;
 
 class ReservationsController {
     public function index() {
-        // if (!isset($_SESSION['userid'])) {
-        //     die("User not logged in");
-        // }
-
+       
         $reservations = new Reservations();
         $user_id = $_SESSION['userid'];
 

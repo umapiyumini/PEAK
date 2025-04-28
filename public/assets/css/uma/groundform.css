@@ -351,3 +351,93 @@ input[type="file"]:focus {
     animation: fadeIn 0.3s;
   }
   @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+  /* Responsive Styles */
+
+@media screen and (max-width: 992px) {
+    .container1 {
+      max-width: 95%;
+      padding: 15px;
+    }
+    
+    button[type="submit"] {
+      width: 30%;
+    }
+    
+    .modal-content {
+      width: 90%;
+      margin: 10% auto;
+    }
+  }
+  
+  @media screen and (max-width: 768px) {
+    .container1 {
+      margin: 30px auto;
+    }
+    
+    .title1 {
+      font-size: 1.5rem;
+    }
+    
+    button[type="submit"] {
+      width: 50%;
+    }
+    
+    .slot-container {
+      flex-direction: column;
+      gap: 10px;
+    }
+    
+    .slot {
+      padding: 8px 15px;
+      font-size: 0.85em;
+      margin: 3px;
+    }
+    
+    .modal-buttons {
+      flex-direction: column;
+      gap: 10px;
+    }
+    
+    .modal-buttons button {
+      width: 100%;
+    }
+  }
+  
+  @media screen and (max-width: 480px) {
+    .container1 {
+      max-width: 100%;
+      margin: 10px auto;
+      padding: 10px;
+      border-radius: 5px;
+    }
+    
+    button[type="submit"] {
+      width: 100%;
+    }
+    
+    form select,
+    form input[type="date"],
+    form input[type="text"],
+    form input[type="number"],
+    form textarea {
+      padding: 8px;
+    }
+    
+    .modal-content {
+      margin: 5% auto;
+      padding: 15px;
+      width: 95%;
+    }
+    
+    .rules ul {
+      padding-left: 15px;
+    }
+    
+    .slot {
+      display: block;
+      width: 100%;
+      margin: 8px 0;
+    }
+  }
+  

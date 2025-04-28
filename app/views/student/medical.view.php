@@ -257,7 +257,9 @@
     <script>
         function confirmDelete(id) {
         if (confirm("Are you sure you want to delete this request?")) {
+
             window.location.href = `<?= ROOT ?>/student/Medical/delete?RequestId=${id}`;
+
         }
     }
         function openModal(id, reason, status) {

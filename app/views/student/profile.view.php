@@ -34,11 +34,11 @@
                 <h3><i class="uil uil-info-circle"></i> General Information</h3>
                 <div class="info-grid">
                     <div class="info-item">
-                        <label>Registered Date:</label>
+                        <label>Registered Date:<?= $d->id_start ?></label>
                         <span id="studentRegDate"></span>
                     </div>
                     <div class="info-item">
-                        <label>ID Expiry Date:</label>
+                        <label>ID Expiry Date:<?= $d->id_end ?></label>
                         <span id="studentExpireDate"></span>
                     </div>
                     <div class="info-item">
@@ -78,6 +78,7 @@
                 </div>
             </div>
 
+
             <div class="info-card">
                 <h3><i class="uil uil-medal"></i> Achievements & Activities</h3>
                 <div class="info-grid">
@@ -99,6 +100,7 @@
     </div>
 </main>
 
+
 <script>
     document.getElementById('editRequestBtn').addEventListener('click', function() {
         alert("Redirected to PED Admin");
@@ -108,3 +110,4 @@
 
 </body>
 </html>
+
