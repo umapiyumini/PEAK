@@ -133,14 +133,14 @@
 
                 
                 <div class="form-group">
-    <label for="name">Sport</label>
+    <label for="name">Sport </label>
     <p class="errors"><?php if (!empty($errors['name'])) echo $errors['name']; ?></p>
     <select id="name" name="sport_id" required>
     <option value="" disabled selected>Select a Sport</option>
-        <option value="Cricket">Cricket</option>
-        <option value="Baseball">Baseball</option>
-        <option value="Hockey">Hockey</option>
-        <option value="Football">Football</option>
+        <option value="1">Cricket</option>
+        <option value="2">Baseball</option>
+        <option value="3">Hockey</option>
+        <option value="4">Football</option>
         
     </select>
 </div>

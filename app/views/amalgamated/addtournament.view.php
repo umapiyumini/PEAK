@@ -166,6 +166,13 @@
             margin-top: 5px;
             font-style: italic;
         }
+
+        .errors {
+            color: red;
+            font-size: 14px;
+            margin-bottom: 8px;
+        }
+
     </style>
 </head>
 <body>
@@ -179,9 +186,16 @@
             <h2>Tournament Entry Form</h2>
             
             <div class="form-container">
-                <form id="sportRegistrationForm" action="<?= ROOT ?>/student/Tournament/" method="POST">
+                <form id="sportRegistrationForm" action="<?= ROOT ?>/amalgamated/Tournament/" method="POST">
                     <div class="form-group">
                         <label for="sportType">Tournament Type:</label>
+                        <p class="errors">
+                        <?php 
+                        if (!empty($errors['tournament'])) {
+                            echo $errors['tournament'];
+                        }
+                        ?>
+                    </p>
                         <select id="sportType" name="tournament" >
                             <option value="">-- Select Tournament Type --</option>
                             <option value="interfaculty">Interfaculty Tournament</option>
@@ -191,6 +205,12 @@
                     
                     <div class="form-group">
                         <label for="faculty">Faculty:</label>
+                        <p class="errors">
+                        <?php 
+                        if (!empty($errors['faculty'])) {
+                            echo $errors['faculty'];
+                        }
+                        ?>
                         <select id="faculty" name="faculty" >
                             <option value="">-- Select Faculty --</option>
                             <option value="UCSC">UCSC</option>
@@ -210,28 +230,67 @@
                     
                     <div class="form-group">
                         <label for="category">Category:</label>
+                        <p class="errors">
+                        <?php 
+                        if (!empty($errors['category'])) {
+                            echo $errors['category'];
+                        }
+                        ?>
                         <select id="category" name="category" >
                             <option value="">-- Select Category --</option>
                             <option value="men">Men</option>
                             <option value="women">Women</option>
                         </select>
                     </div>
+
+                    
+                    <div class="form-group">
+                        <label for="sportType">Sport</label>
+                        <p class="errors">
+                        <?php 
+                        if (!empty($errors['Sport'])) {
+                            echo $errors['Sport'];
+                        }
+                        ?>
+                        <select id="sportType" name="Sport" >
+                            <option value="">-- Select Sport Type --</option>
+                            <option value="football">FootBall</option>
+                            <option value="cricket">Cricket</option>
+                            <option value="hockey">Hockey</option>
+                            <option value="carrom">Carrom</option>
+                        </select>
+                    </div>
+
+
+                   
                     
                     <div class="form-group">
     <label for="year">Year:</label>
+    <p class="errors">
+                        <?php 
+                        if (!empty($errors['year'])) {
+                            echo $errors['year'];
+                        }
+                        ?>
     <input type="text" id="year" name="year" placeholder="Enter your year">
 </div>
+
 
                     
                     <!-- Players Registration Section -->
                     <div class="player-section">
+
                         <h3>Team Members</h3>
                         <p>Add all student registration numbers who will participate in this tournament.</p>
                         
+                       
                         <div class="player-header">
                             <div class="col-number">#</div>
                             <div class="col-reg">Registration Number</div>
                         </div>
+
+
+                        
                         
                         <div class="player-rows">
                             <!-- First row (always present) -->
@@ -303,6 +362,7 @@
                 return false;
             }
         });
+    
     </script>
 </body>
 </html>

@@ -8,7 +8,9 @@ class Student{
         'userid',
         'registrationnumber',
         'faculty',
-        'department'
+        'department',
+        'id_start',
+        'id_end'
     ];
 
     public $studenterrors = [];
@@ -42,10 +44,7 @@ class Student{
         return empty($this->studenterrors);
     }
     
-<<<<<<< HEAD
-=======
 
->>>>>>> 9dca0a0ac48735620d60b8f87062b0554b1f37ff
     public function getStudent($userid)
     
     {
@@ -69,8 +68,6 @@ class Student{
         return $result[0];
     }
 
-<<<<<<< HEAD
-=======
     public function studentReg($data){
         $querey ="INSERT INTO student (userid, registrationnumber, faculty, department, id_start, id_end) VALUES (:userid, :registrationnumber, :faculty, :department, :id_start, :id_end)";
         $params = [
@@ -83,7 +80,6 @@ class Student{
         ];
         return $this->query($querey, $params);
     }
->>>>>>> 9dca0a0ac48735620d60b8f87062b0554b1f37ff
 
     public function getuserID($regno){
         $query = "SELECT userid FROM $this->table WHERE registrationnumber = :regno";

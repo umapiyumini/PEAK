@@ -29,9 +29,23 @@
         <!-- DashBoard -->
     
         <li class="nav-item">
-                <a href="home" class="nav-link">
+                <a href="<?=ROOT ?>/amalgamated/Home" class="nav-link">
                 <i class="fa-solid fa-gauge"></i>
                     Home
+                </a>
+            </li>
+
+            <li class="nav-item">
+                <a href="<?=ROOT ?>/amalgamated/Tournament" class="nav-link">
+                <i class="fa-solid fa-gauge"></i>
+                    Tournament
+                </a>
+            </li>
+
+            <li class="nav-item">
+                <a href="<?=ROOT ?>/amalgamated/Retrieve" class="nav-link">
+                <i class="fa-solid fa-gauge"></i>
+                        Retrieve
                 </a>
             </li>
 
@@ -59,13 +73,7 @@
 
            
 
-            <li class="nav-item">
-                <a href="../choose1" class="nav-link">
-                <i class="fa-solid fa-gauge"></i>
-                    Switch User
-                </a>
-            </li>
-
+           
 
 
             

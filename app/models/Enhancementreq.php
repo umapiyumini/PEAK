@@ -11,6 +11,7 @@ class Enhancementreq{
         'registration_number',
         'sport',
         'achievement',
+        'status',
         'userid'
         
     ];
@@ -29,6 +30,8 @@ class Enhancementreq{
         if(empty($data['sport'])){
             $this->errors['sport'] = 'Sport is required';
         }
+
+
 
         if(empty($data['achievement'])){
             $this->errors['achievement'] = 'Achievement is required';

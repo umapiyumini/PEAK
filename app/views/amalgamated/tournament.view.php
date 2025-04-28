@@ -1,12 +1,15 @@
 <?php
-    $medicalRequests = $data['medicaldata'];
+    $tournamentCards = $data['tournamentdata'];
 ?>
+
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Student Medical Requests</title>
+    <title>Student Tournament Requests</title>
     <style>
         * {
             margin: 0;
@@ -131,7 +134,6 @@
             font-size: 18px;
         }
 
-        /* Modal Styles */
         .modal {
             display: none;
             position: fixed;
@@ -181,102 +183,134 @@
     </style>
 </head>
 <body>
-    <?php include 'nav.view.php';?>
+    
+<?php include 'nav.view.php'; ?>
 
     <div class="container">
         <div class="card">
-            <h2>Medical Request Portal</h2>
-            <button class="add-btn" onclick="(window.location.href='<?= ROOT ?>/student/Addmedical')">Add Medical</button>
+            <h2>Tournament Entry Portal</h2>
+            <button class="add-btn" onclick="(window.location.href='<?= ROOT ?>/amalgamated/Addtournament')">Add Tournament Entry</button>
 
             <div class="table-section">
-                <h3>Your Medical Requests</h3>
+                <h3>Your Tournament Requests</h3>
                 <div id="requestsTable">
                     <table>
                         <thead>
                             <tr>
-                                <th>Request ID</th>
-                                <th>Reason for Medical</th>
-                                <th>Status</th>
+                                <th>Tournament ID</th>
+                                <th>Tournament</th>
+                                <th>Faculty</th>
+                                <th>Category</th>
+                                <th>Sport</th>
                                 <th>Actions</th>
                             </tr>
                         </thead>
                         <tbody id="tableBody">
-                        <?php if(!empty($medicalRequests)):?>
-                            <?php foreach($medicalRequests as $medicalRequest): ?>
+                        <?php if(!empty($tournamentCards)):?>
+                            <?php foreach($tournamentCards as $t): ?>
                             <tr>
-                                <td><?= $medicalRequest->RequestID ?></td>
-                                <td><?= $medicalRequest->ReasonForMedical ?></td>
-                                <td><?= $medicalRequest->status ?></td>
-
-                                
+                                <td><?= $t->tourid  ?></td>
+                                <td><?= $t->tournament ?></td>
+                                <td><?= $t->faculty ?></td>
+                                <td><?= $t->category ?></td>
+                                <td><?= $t->Sport ?></td>
                                 <td>
                                     <button class="action-btn view-btn" 
-                                        onclick="openModal('<?= $medicalRequest->RequestID ?>',
-                                         '<?= htmlspecialchars($medicalRequest->ReasonForMedical, ENT_QUOTES) ?>',
-                                         '<?= $medicalRequest->status ?>')">
+                                        onclick="openModal('<?= $t->tourid ?>',
+                                         '<?= htmlspecialchars($t->tournament, ENT_QUOTES) ?>',
+                                        '<?= $t->faculty ?>',
+                                         '<?= $t->category ?>',
+                                        '<?= $t->Sport ?>' )">
                                         View
                                     </button>
-                                    <?php $RequestId = $medicalRequest->RequestID ?>
-                                    <button class="action-btn edit-btn" onclick="window.location.href='<?= ROOT ?>/student/Editmedical?RequestId=<?= $RequestId ?>'">Edit</button>
-                                    <button class="action-btn delete-btn" onclick="confirmDelete(<?= $RequestId ?>)">Delete</button>
-                                    </td>
+                                    <?php $Tournamentid = $t->tourid  ?>
+                                    <button class="action-btn edit-btn" onclick="window.location.href='<?= ROOT ?>/student/Edittournament?Tournamentid=<?= $Tournamentid ?>'">Edit</button>
+                                    <button class="action-btn delete-btn" onclick="confirmDelete(<?= $Tournamentid ?>)">Delete</button>
+                                </td>
                             </tr>
                             <?php endforeach; ?>
-                            <?php else:?>
+                        <?php else:?>
                             <tr>
-            <td colspan="4" style="text-align: center;">No medical requests to show</td>
-        </tr>
-    <?php endif; ?> 
+                                <td colspan="5" style="text-align: center;">No tournament entry requests to show</td>
+                            </tr>
+                        <?php endif; ?> 
                         </tbody>
                     </table>
                 </div>
 
                 <div id="emptyState" class="empty-state" style="display: none;">
-                    <p>You don't have any medical requests yet.</p>
+                    <p>You don't have any tournament entry requests yet.</p>
                 </div>
             </div>
         </div>
     </div>
 
-
-     <!-- Modal -->
-     <!-- Modal -->
-     <div id="viewModal" class="modal">
+    <!-- Modal -->
+    <div id="viewModal" class="modal">
         <div class="modal-content">
             <span class="close" onclick="closeModal()">&times;</span>
-            <h3>Medical Request Details</h3>
-            <p><strong>Request ID:</strong> <span id="modalRequestID"></span></p>
-            <p><strong>Reason:</strong> <span id="modalReason"></span></p>
-            
-            <p><strong>Status:</strong> 
-    <select id="modalStatus" disabled>
-        <option value="accepted">Accepted</option>
-        <option value="rejected">Rejected</option>
-        <option value="pending">Pending</option>
-    </select>
-</p>
-            
-            
+            <h3>Tournament Request Details</h3>
+            <p><strong>Tournament ID:</strong> <span id="modalID"></span></p>
+            <p><strong>Tournament:</strong> 
+            <select id="modaltournament" disabled >
+                            
+                            <option value="interfaculty">Interfaculty Tournament</option>
+                            <option value="freshers">Freshers Tournament</option>
+                        </select>
+        </p>
+            <p><strong>Faculty:</strong> 
+            <select id="modalfaculty" disabled >
+                            
+                            <option value="UCSC">UCSC</option>
+                            <option value="Management">Management</option>
+                            <option value="Arts">Arts</option>
+                            <option value="Technology">Technology</option>
+                            <option value="Science">Science</option>
+                            <option value="FIM">FIM</option>
+                            <option value="FOM">FOM</option>
+                            <option value="FOL">FOL</option>
+                            <option value="Nursing">Nursing</option>
+                            <option value="Sripalee">Sri Palee</option>
+                            <option value="Education">Education</option>
+                            <option value="graduate ">Graduate Studies</option>
+                        </select>
+        </p>
 
-            
-            
+            <p><strong>Category:</strong>
+            <select id="modalcategory" disabled >
+                            
+                            <option value="men">Men</option>
+                            <option value="women">Women</option>
+                        </select>
+        </p>
+
+        <p><strong>Sport:</strong>
+        <select id="modalSport" disabled >
+                            <option value="">-- Select Tournament Type --</option>
+                            <option value="football">FootBall</option>
+                            <option value="cricket">Cricket</option>
+                            <option value="hockey">Hockey</option>
+                            <option value="carrom">Carrom</option>
+                        </select>
         </div>
     </div>
 
-
-    
+   
 
     <script>
         function confirmDelete(id) {
-        if (confirm("Are you sure you want to delete this request?")) {
-            window.location.href = `<?= ROOT ?>/student/Medical/delete?RequestId=${id}`;
+            if (confirm("Are you sure you want to delete this request?")) {
+                window.location.href = `<?= ROOT ?>/amalgamated/Tournament/delete?Tournamentid=${id}`;
+            }
         }
-    }
-        function openModal(id, reason,status) {
-            document.getElementById('modalRequestID').innerText = id;
-            document.getElementById('modalReason').innerText = reason;
-            document.getElementById('modalStatus').value = status.toLowerCase();
-         
+
+        function openModal(id, tournament, faculty, category,sport) {
+            document.getElementById('modalID').innerText = id;
+            document.getElementById('modaltournament').value = tournament.toLowerCase();
+            document.getElementById('modalfaculty').value = faculty;
+            document.getElementById('modalcategory').value = category.toLowerCase();
+            document.getElementById('modalSport').value = sport.toLowerCase();
+
             document.getElementById('viewModal').style.display = 'block';
         }
 
@@ -292,7 +326,7 @@
         }
 
         function deleteRow(btn) {
-            if (confirm('Are you sure you want to delete this medical request?')) {
+            if (confirm('Are you sure you want to delete this tournament entry?')) {
                 const row = btn.closest('tr');
                 row.remove();
                 checkIfEmpty();

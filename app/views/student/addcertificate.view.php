@@ -148,7 +148,7 @@
                 </div>
 
                 <div class="form-group">
-                    <label for="sport-name">Sport Name</label>
+                    <label for="sport-name">Sport Number</label>
                      <!-- error start -->
                      <p class="errors"><?php
                             if (!empty($errors['Sport'])) {

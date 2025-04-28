@@ -191,7 +191,7 @@
                             <th>Registration Number</th>
                             <th>Faculty</th>
                             <th>Reason</th>
-                            <th>Sport</th>
+                            <th>Sport No</th>
                             <th>Actions</th>
                         </tr>
                     </thead>
@@ -244,7 +244,7 @@
             <p><strong>Registration Number:</strong> <span id="modalRegNo"></span></p>
             <p><strong>Reason:</strong> <span id="modalReason"></span></p>
             <p><strong>Faculty:</strong> <span id="modalFaculty"></span></p>
-            <p><strong>Status:</strong> <span id="modalStatus"></span></p>
+           
         </div>
     </div>
 
@@ -255,12 +255,12 @@
             }
         }
 
-        function openModal(id, regNo, reason, faculty, status) {
+        function openModal(id, regNo, reason, faculty) {
             document.getElementById('modalRequestID').innerText = id;
             document.getElementById('modalRegNo').innerText = regNo;
             document.getElementById('modalReason').innerText = reason;
             document.getElementById('modalFaculty').innerText = faculty;
-            document.getElementById('modalStatus').innerText = status;
+            
             document.getElementById('viewModal').style.display = 'block';
         }
 

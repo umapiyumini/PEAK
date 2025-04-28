@@ -1,3 +1,8 @@
+<?php
+    $tournamentCards = $data['tournamentdata'];
+?>
+
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -178,12 +183,13 @@
     </style>
 </head>
 <body>
-    <?php include 'nav.view.php';?>
+    
+<?php include 'nav.view.php'; ?>
 
     <div class="container">
         <div class="card">
             <h2>Tournament Entry Portal</h2>
-            <button class="add-btn" onclick="(window.location.href='<?= ROOT ?>/student/AddTournament')">Add Tournament Entry</button>
+            <button class="add-btn" onclick="(window.location.href='<?= ROOT ?>/student/Addtournament')">Add Tournament Entry</button>
 
             <div class="table-section">
                 <h3>Your Tournament Requests</h3>
@@ -191,33 +197,38 @@
                     <table>
                         <thead>
                             <tr>
-                                <th>Request ID</th>
-                                <th>Sport/Event</th>
-                                <th>Participation Date</th>
+                                <th>Tournament ID</th>
+                                <th>Tournament</th>
+                                <th>Faculty</th>
+                                <th>Category</th>
                                 <th>Actions</th>
                             </tr>
                         </thead>
                         <tbody id="tableBody">
-                        <?php if(!empty($tournamentRequests)):?>
-                            <?php foreach($tournamentRequests as $tournamentRequest): ?>
+                        <?php if(!empty($tournamentCards)):?>
+                            <?php foreach($tournamentCards as $t): ?>
                             <tr>
-                                <td><?= $tournamentRequest->RequestID ?></td>
-                                <td><?= $tournamentRequest->SportName ?></td>
-                                <td><?= $tournamentRequest->ParticipationDate ?></td>
+                                <td><?= $t->tourid  ?></td>
+                                <td><?= $t->tournament ?></td>
+                                <td><?= $t->faculty ?></td>
+                                <td><?= $t->category ?></td>
                                 <td>
                                     <button class="action-btn view-btn" 
-                                        onclick="openModal('<?= $tournamentRequest->RequestID ?>', '<?= htmlspecialchars($tournamentRequest->SportName, ENT_QUOTES) ?>', '<?= $tournamentRequest->ParticipationDate ?>')">
+                                        onclick="openModal('<?= $t->tourid ?>',
+                                         '<?= htmlspecialchars($t->tournament, ENT_QUOTES) ?>',
+                                        '<?= $t->faculty ?>',
+                                         '<?= $t->category ?>')">
                                         View
                                     </button>
-                                    <?php $RequestId = $tournamentRequest->RequestID ?>
-                                    <button class="action-btn edit-btn" onclick="window.location.href='<?= ROOT ?>/student/EditTournament?RequestId=<?= $RequestId ?>'">Edit</button>
-                                    <button class="action-btn delete-btn" onclick="confirmDelete(<?= $RequestId ?>)">Delete</button>
+                                    <?php $Tournamentid = $t->tourid  ?>
+                                    <button class="action-btn edit-btn" onclick="window.location.href='<?= ROOT ?>/student/Edittournament?Tournamentid=<?= $Tournamentid ?>'">Edit</button>
+                                    <button class="action-btn delete-btn" onclick="confirmDelete(<?= $Tournamentid ?>)">Delete</button>
                                 </td>
                             </tr>
                             <?php endforeach; ?>
                         <?php else:?>
                             <tr>
-                                <td colspan="4" style="text-align: center;">No tournament entry requests to show</td>
+                                <td colspan="5" style="text-align: center;">No tournament entry requests to show</td>
                             </tr>
                         <?php endif; ?> 
                         </tbody>
@@ -236,23 +247,57 @@
         <div class="modal-content">
             <span class="close" onclick="closeModal()">&times;</span>
             <h3>Tournament Request Details</h3>
-            <p><strong>Request ID:</strong> <span id="modalRequestID"></span></p>
-            <p><strong>Sport/Event:</strong> <span id="modalReason"></span></p>
-            <p><strong>Participation Date:</strong> <span id="modalDuration"></span></p>
+            <p><strong>Tournament ID:</strong> <span id="modalID"></span></p>
+            <p><strong>Tournament:</strong> 
+            <select id="modaltournament" disabled >
+                            
+                            <option value="interfaculty">Interfaculty Tournament</option>
+                            <option value="freshers">Freshers Tournament</option>
+                        </select>
+        </p>
+            <p><strong>Faculty:</strong> 
+            <select id="modalfaculty" disabled >
+                            
+                            <option value="UCSC">UCSC</option>
+                            <option value="Management">Management</option>
+                            <option value="Arts">Arts</option>
+                            <option value="Technology">Technology</option>
+                            <option value="Science">Science</option>
+                            <option value="FIM">FIM</option>
+                            <option value="FOM">FOM</option>
+                            <option value="FOL">FOL</option>
+                            <option value="Nursing">Nursing</option>
+                            <option value="Sripalee">Sri Palee</option>
+                            <option value="Education">Education</option>
+                            <option value="graduate ">Graduate Studies</option>
+                        </select>
+        </p>
+
+            <p><strong>Category:</strong>
+            <select id="modalcategory" disabled >
+                            
+                            <option value="men">Men</option>
+                            <option value="women">Women</option>
+                        </select>
+        </p>
         </div>
     </div>
+
+   
 
     <script>
         function confirmDelete(id) {
             if (confirm("Are you sure you want to delete this request?")) {
-                window.location.href = `<?= ROOT ?>/student/Tournament/delete?RequestId=${id}`;
+                window.location.href = `<?= ROOT ?>/student/Tournament/delete?Tournamentid=${id}`;
             }
         }
 
-        function openModal(id, sport, date) {
-            document.getElementById('modalRequestID').innerText = id;
-            document.getElementById('modalReason').innerText = sport;
-            document.getElementById('modalDuration').innerText = date;
+        function openModal(id, tournament, faculty, category) {
+            document.getElementById('modalID').innerText = id;
+            document.getElementById('modaltournament').value = tournament.toLowerCase();
+            document.getElementById('modalfaculty').value = faculty;
+            document.getElementById('modalcategory').value = category.toLowerCase();
+
             document.getElementById('viewModal').style.display = 'block';
         }
 

@@ -14,7 +14,7 @@
 
 
 
-    <div class="sidebar">
+    <div class="sidebar">   
         <div class="logo">
             <a href="home.php">
             <img src="<?=ROOT?>/assets/images/amar/P_logo.png" alt="PED logo" id="logo">
@@ -52,19 +52,7 @@
                 </a>
             </li>
 
-
-            
-
-
-
-              <!-- Tournament -->
-              <li class="nav-item">
-                <a href="<?=ROOT ?>/student/Tournament" class="nav-link">
-                    
-                <i class="fa-solid fa-volleyball"></i>
-                    Tournament
-                </a>
-            </li>
+          
 
 
             

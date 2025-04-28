@@ -169,25 +169,7 @@
                     </div>
                     
 
-                    <div class="form-group">
-                    <label for="medical-status">Medical Status</label>
-                    <!-- error start -->
-                    <p class="errors">
-                        <?php 
-                        if (!empty($errors['status'])) {
-                            echo $errors['status'];
-                        }
-                        ?>
-                    </p>
-                    <!-- error end -->
-                    <select id="medical-status" name="status">
-                    <option value="" disabled selected>Status of the medical</option>
-                        <option value="accepted">Accepted</option>
-                        <option value="rejected">Rejected</option>
-                        <option value="pending">Pending</option>
-
-                    </select>
-                </div>
+                    
                     
                    
 

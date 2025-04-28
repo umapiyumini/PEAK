@@ -24,8 +24,7 @@
                         <h3><?= $d->name ?></h3>
                         <p>Registration No: <?= $d->registrationnumber ?></p>
                         <p>Faculty: <?= $d->faculty ?></p>
-                    <?php endforeach; ?>
-                <?php endif; ?>
+                  
             </div>
         </div>
 
@@ -34,17 +33,18 @@
                 <h3><i class="uil uil-info-circle"></i> General Information</h3>
                 <div class="info-grid">
                     <div class="info-item">
-                        <label>Registered Date:</label>
+                        <label>Registered Date:2023-05-21<?= $d->id_start ?></label>
                         <span id="studentRegDate"></span>
                     </div>
                     <div class="info-item">
-                        <label>ID Expiry Date:</label>
+                        <label>ID Expiry Date:2026-05-21<?= $d->id_end ?></label>
                         <span id="studentExpireDate"></span>
                     </div>
                     <div class="info-item">
-                        <label>Academic Year:</label>
+                        <label>Academic Year:1</label>
                         <span id="academicYearDisplay"></span>
                     </div>
+                    
                     <div class="info-item">
                         <label>Gender: <?= $d->gender ?></label>
                         <span id="studentGender"></span>
@@ -56,7 +56,7 @@
                 <h3><i class="uil uil-user"></i> Personal Information</h3>
                 <div class="info-grid">
                     <div class="info-item">
-                        <label>Birth Date: <?= $d->date_of_birth ?></label>
+                        <label>Birth Date: 2002-07-02</label>
                         <span id="dobDisplay"></span>
                     </div>
                     <div class="info-item">
@@ -72,26 +72,15 @@
                         <span id="studentContact"></span>
                     </div>
                     <div class="info-item">
-                        <label>Address: <?= $d->address ?></label>
+                        <label>Address: No:47,Ulpothapitiya,Kiula,Matale</label>
                         <span id="studentAddress"></span>
                     </div>
                 </div>
             </div>
+            <?php endforeach; ?>
+            <?php endif; ?> 
 
-            <div class="info-card">
-                <h3><i class="uil uil-medal"></i> Achievements & Activities</h3>
-                <div class="info-grid">
-                    <div class="info-item">
-                        <label>Sports:</label>
-                        <span id="studentSports"></span>
-                    </div>
-                    <div class="info-item full-width">
-                        <label>Achievements:</label>
-                        <span id="studentAchievements"></span>
-                    </div>
-                </div>
-            </div>
-
+           
             <div class="actions">
                 <button id="editRequestBtn">Request to Edit</button>
             </div>
@@ -102,7 +91,6 @@
 <script>
     document.getElementById('editRequestBtn').addEventListener('click', function() {
         alert("Redirected to PED Admin");
-        window.location.href = "http://localhost/PEAK/public/ped_incharge/users"; // Redirects to the PED Admin page
     });
 </script>
 

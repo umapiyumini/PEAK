@@ -164,20 +164,7 @@
                     <textarea id="medical-reason" placeholder="Enter Reason for Medical" rows="4" name="ReasonForMedical"></textarea>
                 </div>
 
-                <div class="form-group">
-                    <label for="medical-status">Medical Status</label>
-                    <!-- error start -->
-                  
-                    <!-- error end -->
-                    <select id="medical-status" name="status">
-                    <option value="" disabled selected>Status of the medical</option>
-                        <option value="accepted">Accepted</option>
-                        <option value="rejected">Rejected</option>
-                        <option value="pending">Pending</option>
-
-                    </select>
-                </div>
-
+                
 
  
 

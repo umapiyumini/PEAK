@@ -103,45 +103,45 @@
 <div class="container">
     <div class="sports-grid">
         <div class="sport-card">
-            <a href="<?=ROOT ?>/student/Swimming">
+            <a href="<?=ROOT ?>/student/Badminton">
                 <div class="sport-image">
-                    <img src="/api/placeholder/400/320" alt="Basketball player dunking" />
+                    <img src="http://localhost/PEAK/public/assets/images/ped_incharge/badminton.jpg" alt="Basketball player dunking" />
                 </div>
             </a>
-            <div class="sport-name">Basketball</div>
+            <div class="sport-name">Badminton</div>
         </div>
         
         <div class="sport-card">
-            <a href="<?=ROOT ?>/student/Swimming">
+            <a href="<?=ROOT ?>/student/Carrom">
                 <div class="sport-image">
-                    <img src="/api/placeholder/400/320" alt="Soccer player kicking ball" />
+                    <img src="http://localhost/PEAK/public/assets/images/ped_incharge/carrom.jpg" alt="Soccer player kicking ball" />
                 </div>
             </a>
-            <div class="sport-name">Soccer</div>
+            <div class="sport-name">Carrom</div>
         </div>
         
         <div class="sport-card">
-            <a href="<?=ROOT ?>/student/Swimming">
+            <a href="<?=ROOT ?>/student/Hockey">
                 <div class="sport-image">
-                    <img src="/api/placeholder/400/320" alt="Tennis player serving" />
+                    <img src="http://localhost/PEAK/public/assets/images/ped_incharge/hockey.jpeg" alt="Tennis player serving" />
                 </div>
             </a>
-            <div class="sport-name">Tennis</div>
+            <div class="sport-name">Hockey</div>
         </div>
         
         <div class="sport-card">
-            <a href="<?=ROOT ?>/student/Swimming">
+            <a href="<?=ROOT ?>/student/Cricket">
                 <div class="sport-image">
-                    <img src="/api/placeholder/400/320" alt="Swimming competition" />
+                    <img src="http://localhost/PEAK/public/assets/images/ped_incharge/cricket.jpg" alt="Swimming competition" />
                 </div>
             </a>
-            <div class="sport-name">Swimming</div>
+            <div class="sport-name">Cricket</div>
         </div>
         
         <div class="sport-card">
-            <a href="<?=ROOT ?>/student/Swimming">
+            <a href="<?=ROOT ?>/student/Baseball">
                 <div class="sport-image">
-                    <img src="/api/placeholder/400/320" alt="Baseball player batting" />
+                    <img src="http://localhost/PEAK/public/assets/images/ped_incharge/baseball.jpg" alt="Baseball player batting" />
                 </div>
             </a>
             <div class="sport-name">Baseball</div>

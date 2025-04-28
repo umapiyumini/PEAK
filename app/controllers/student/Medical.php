@@ -15,7 +15,7 @@ class Medical extends Controller{
                 'Name' => $_POST['Name'],
                 'RegistrationID' => $_POST['RegistrationID'],
                 'ReasonForMedical' => $_POST['ReasonForMedical'], 
-                'status' => $_POST['status'], 
+                'status' => 'Pending', 
                 'userid' => $_SESSION['userid']
             ];
 
@@ -38,7 +38,7 @@ class Medical extends Controller{
 
                 ];
                 
-                $this->view('student/Addmedical',['errors' => $errors]);
+                $this->view('student/addmedical',['errors' => $errors]);
 
             }
         } else {
@@ -64,7 +64,7 @@ class Medical extends Controller{
                 'Name' => $_POST['Name'],
                 'RegistrationID' => $_POST['RegistrationID'],
                 'ReasonForMedical' => $_POST['ReasonForMedical'], 
-                'status' => $_POST['status'],
+                'status' => 'Pending',
                 'userid' => $_SESSION['userid'],
             ];
 
@@ -72,7 +72,7 @@ class Medical extends Controller{
 
             if($medicalrequest->validate($data))
             {
-                show($data);
+            
                 $RequestId = $_POST['RequestId'];
                 $isUpdated = $medicalrequest->update($RequestId, $data, 'RequestID');
 

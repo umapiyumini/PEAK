@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Basketball - Sports Academy</title>
+    <title>Cricket - Sports Academy</title>
     <style>
         body {
             font-family: 'Arial', sans-serif;
@@ -47,6 +47,7 @@
             display: flex;
             align-items: center;
             justify-content: center;
+            font-size: 36px;
             margin-right: 20px;
         }
         .sport-title {
@@ -144,39 +145,42 @@
 
     <div class="sport-details">
         <div class="sport-header">
-            <div class="sport-icon">🏀</div>
-            <h2 class="sport-title">Basketball</h2>
+            <div class="sport-icon">🏏</div>
+            <h2 class="sport-title">Cricket</h2>
         </div>
+
         
-       
         <div class="sport-info">
-            <p>Welcome to the Basketball program at Sports Academy. Our basketball program focuses on developing fundamental skills, game strategy, and teamwork for players of all levels.</p>
-            <p>Training sessions include drills to improve ball handling, shooting technique, defensive skills, and game awareness. Our coaches emphasize both individual development and team dynamics.</p>
+            <p>Welcome to the Cricket division at PEAK. Cricket is not just a sport here; it’s a passion that unites players and fans alike. Whether you aspire to be a batsman, bowler, or all-rounder, our professional training programs help you sharpen your skills and understand the game deeply.</p>
+            <p>Training includes batting techniques, bowling variations, fielding drills, and match strategies. Our experienced coaches will mentor you to improve technical precision, fitness, teamwork, and match temperament to compete at the highest levels.</p>
         </div>
-        
+
         <div class="info-section">
             <h3 class="section-title">Coaches and Captains</h3>
             <div class="team-grid">
                 <div class="team-member">
-                    <div class="member-photo"></div>
-                    <h4>Coach Mike Johnson</h4>
+                   
+                    <h4>Coach Michael Clarke</h4>
                     <p>Head Coach</p>
                 </div>
                 <div class="team-member">
-                    <div class="member-photo"></div>
+                   
                     <h4>Sarah Williams</h4>
                     <p>Assistant Coach</p>
                 </div>
                 <div class="team-member">
-                    <div class="member-photo"></div>
-                    <h4>James Rodriguez</h4>
+                    
+                    <h4>Rohan Perera</h4>
                     <p>Team Captain</p>
+                </div>
+                <div class="team-member">
+                   
+                    <h4>Anjali De Silva</h4>
+                    <p>Vice Captain</p>
                 </div>
             </div>
         </div>
-        
-      
-        </div>
+
     </div>
 </div>
 

@@ -18,8 +18,9 @@ class Tournament extends Controller{
                 'faculty' => $_POST['faculty'],
                 'category' => $_POST['category'], 
                 'registration_number' => $_POST['registration_number'],
-                'year' => $_POST['year'], 
-                 'userid' => $_SESSION['userid']
+                'year' => $_POST['year'],
+                'Sport' => $_POST['Sport'], 
+                'userid' => $_SESSION['userid']
             ];
 
             //show($data);
@@ -32,7 +33,7 @@ class Tournament extends Controller{
                 $isInserted = $tournamentreq->insert($data);
 
                 if ($isInserted){
-                    redirect('student/Tournament');
+                    redirect('amalgamated/Tournament');
                 }
                 
             }else {
@@ -43,7 +44,7 @@ class Tournament extends Controller{
 
                 ];
                 
-                $this->view('student/addtournament',['errors' => $errors]);
+                $this->view('amalgamated/addtournament',['errors' => $errors]);
 
             }
         } else {
@@ -54,7 +55,7 @@ class Tournament extends Controller{
                 'tournamentdata' => $tournamentData, 
             ];
             
-            $this->view('student/tournament', $data); 
+            $this->view('amalgamated/tournament', $data); 
         }
     }
 
@@ -66,13 +67,14 @@ class Tournament extends Controller{
         {
             //Get DATA
 
-            echo "hello";
+            
             $data = [
                 'tournament' => $_POST['tournament'],
                 'faculty' => $_POST['faculty'],
                 'category' => $_POST['category'], 
                 'registration_number' => $_POST['registration_number'],
                 'year' => $_POST['year'], 
+                'Sport' => $_POST['Sport'],
                 'userid' => $_SESSION['userid'],
             ];
 
@@ -87,7 +89,7 @@ class Tournament extends Controller{
                 $isUpdated = $tournamentreq->update($Tournamentid, $data, 'tourid');
 
                 if (!$isUpdated){
-                    redirect('student/Tournament');
+                    redirect('amalgamated/Tournament');
                 }
                 
             }else {
@@ -98,7 +100,7 @@ class Tournament extends Controller{
                     'errors' => $errors,
                 ];
                 
-                $this->view('student/edittournament', $data);
+                $this->view('amalgamated/edittournament', $data);
 
             }
         } else {
@@ -109,7 +111,7 @@ class Tournament extends Controller{
                 'tournamentdata' => $tournamentData, 
             ];
             
-            $this->view('student/tournament', $data); 
+            $this->view('amalgamated/tournament', $data); 
         }
     
     }
@@ -123,7 +125,7 @@ class Tournament extends Controller{
             $isDeleted = $tournamentreq->delete($Tournamentid, 'tourid');
             //DELETE FUNCTION RETURN TRUE IF THE DATA IS NOT DELETED
             if (!$isDeleted) {
-                redirect('student/Tournament');
+                redirect('amalgamated/Tournament');
             } else {
                 // Handle deletion failure (optional)
                 echo "Failed to delete the medical request.";
@@ -133,6 +135,9 @@ class Tournament extends Controller{
             echo "Invalid Request.";
         }
     }
+
+    
+    
 
 
 }

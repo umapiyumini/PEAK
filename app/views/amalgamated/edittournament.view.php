@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sport Management System</title>
     <style>
+        /* [ your same CSS, no changes ] */
         * {
             margin: 0;
             padding: 0;
@@ -72,6 +73,7 @@
         }
         
         input[type="text"],
+        input[type="number"],
         select,
         textarea {
             width: 100%;
@@ -169,17 +171,21 @@
     </style>
 </head>
 <body>
-
-<?php include 'nav.view.php'; ?>
-
-
+<?php include 'nav.view.php';?>
 
     <div class="container">
         <div class="card">
             <h2>Tournament Entry Form</h2>
             
             <div class="form-container">
-                <form id="sportRegistrationForm" action="<?= ROOT ?>/student/Tournament/" method="POST">
+                <form id="sportRegistrationForm" action="<?= ROOT ?>/amalgamated/Tournament/edit" method="POST">
+                    
+                    <!-- New Request ID input added here -->
+                    <div class="form-group">
+                        <label for="name">Tournament Id</label>
+                        <input type="number" id="Tournamentid" name="Tournamentid" value="<?= $data['Tournamentid'] ?>" readonly>
+                    </div>
+
                     <div class="form-group">
                         <label for="sportType">Tournament Type:</label>
                         <select id="sportType" name="tournament" >
@@ -204,7 +210,7 @@
                             <option value="Nursing">Nursing</option>
                             <option value="Sripalee">Sri Palee</option>
                             <option value="Education">Education</option>
-                            <option value="graduate ">Graduate Studies</option>
+                            <option value="graduate">Graduate Studies</option>
                         </select>
                     </div>
                     
@@ -216,12 +222,25 @@
                             <option value="women">Women</option>
                         </select>
                     </div>
+
+                      <!-- sport added -->
+                      <div class="form-group">
+                        <label for="sportType">Sport</label>
+                        <select id="sportType" name="Sport" >
+                            <option value="">-- Select Tournament Type --</option>
+                            <option value="football">FootBall</option>
+                            <option value="cricket">Cricket</option>
+                            <option value="hockey">Hockey</option>
+                            <option value="carrom">Carrom</option>
+                        </select>
+                    </div>
                     
                     <div class="form-group">
-    <label for="year">Year:</label>
-    <input type="text" id="year" name="year" placeholder="Enter your year">
-</div>
+                        <label for="year">Year:</label>
+                        <input type="text" id="year" name="year" placeholder="Enter your year">
+                    </div>
 
+                  
                     
                     <!-- Players Registration Section -->
                     <div class="player-section">
@@ -234,15 +253,13 @@
                         </div>
                         
                         <div class="player-rows">
-                            <!-- First row (always present) -->
                             <div class="player-row">
                                 <div class="col-number">1</div>
                                 <div class="col-reg">
-                                    <input type="text" name="registration_number" placeholder="Enter registration number" >
+                                    <input type="text" name="registration_number" placeholder="Enter registration number">
                                 </div>
                             </div>
                             
-                            <!-- Additional player rows will be inserted here -->
                             <div class="player-row">
                                 <div class="col-number">2</div>
                                 <div class="col-reg">
@@ -284,14 +301,18 @@
     </div>
     
     <script>
-        // Very minimal JavaScript - just for form validation
-          
+        document.getElementById('sportRegistrationForm').addEventListener('submit', function(e) {
+            const regFields = document.querySelectorAll('input[name="regNumber[]"]');
+            
+            let validPlayerCount = 0;
+            for (let i = 0; i < regFields.length; i++) {
+                if (regFields[i].value) {
+                    validPlayerCount++;
+                }
+            }
             
            
             
-          
-            
-            // Check that required fields are filled
             const sportType = document.getElementById('sportType').value;
             const faculty = document.getElementById('faculty').value;
             const category = document.getElementById('category').value;

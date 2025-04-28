@@ -13,6 +13,7 @@ class Enhancement extends Controller{
                 'name' => $_POST['name'],
                 'registration_number' => $_POST['registration_number'],
                 'sport' => $_POST['sport'],
+                'status' => 'Pending',
                 'achievement' => $_POST['achievement'],  
                 'userid' => $_SESSION['userid']
             ];
