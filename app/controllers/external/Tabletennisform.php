@@ -96,17 +96,17 @@ class Tabletennisform extends Controller {
     
     
             
-            // Debug info
+            
             error_log("Checking availability for date: $date, court: $courtName, section: $section");
     
-            // Check if full day is booked
+           
             $reservations = new Reservations();
             $isBooked = $reservations->isFullDayBooked($date, $section);
     
-            // Debug info
+        
             error_log("Is booked: " . ($isBooked ? 'Yes' : 'No'));
     
-            // Return plain text response
+            
             echo $isBooked ? 'full' : 'available';
         } else {
             echo 'Invalid request method';
@@ -126,7 +126,6 @@ class Tabletennisform extends Controller {
                 return;
             }
     
-            // Get section of the court
             $courts = new Courts();
             $court = $courts->getCourtByName($courtName);
             if (!$court) {
@@ -136,14 +135,14 @@ class Tabletennisform extends Controller {
     
             $section = $court->section;
     
-            // Check which half-day slots are booked
+            
             $reservations = new Reservations();
             $bookedHalfDaySlots = $reservations->getBookedHalfDaySlots($date, $section);
             
-            // Check which two-hour slots are booked
+          
             $bookedOneHourSlots = $reservations->getBookedOneHourSlots($date, $section);
             
-            // Determine half-day availability
+           
             $halfDayStatus = 'none';
             if (in_array('08:00:00', $bookedHalfDaySlots) && in_array('13:00:00', $bookedHalfDaySlots)) {
                 $halfDayStatus = 'both';
@@ -153,10 +152,10 @@ class Tabletennisform extends Controller {
                 $halfDayStatus = 'afternoon';
             }
             
-            // Create a response string with pipe delimiter
+            
             $response = $halfDayStatus . '|';
             
-            // Add two-hour booked slots
+           
             if (!empty($bookedOneHourSlots)) {
                 $response .= implode(',', $bookedOneHourSlots);
             }
@@ -180,7 +179,7 @@ public function checkOneHourAvailability() {
             return;
         }
 
-        // Get section of the court
+        
         $courts = new Courts();
         $court = $courts->getCourtByName($courtName);
         if (!$court) {
@@ -190,11 +189,11 @@ public function checkOneHourAvailability() {
 
         $section = $court->section;
 
-        // Check which two-hour slots are booked
+        
         $reservations = new Reservations();
         $bookedOneHourSlots = $reservations->getBookedOneHourSlots($date, $section);
         
-        // Return the booked slots as a comma-separated string
+        
         echo implode(',', $bookedOneHourSlots);
     } else {
         echo 'Invalid request method';
@@ -208,7 +207,7 @@ public function reserve() {
     
 
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-        // 1. Get user/session info
+        
         $userid = $_SESSION['userid'];
         $courtName = $_POST['court_name'] ?? '';
         $courts = new Courts();
@@ -222,7 +221,7 @@ public function reserve() {
 
        
 
-        // 2. Get form values
+        
         $event = $_POST['bookingFor'];
         $duration = $_POST['duration'];
         $date = $_POST['date'];
@@ -236,7 +235,7 @@ public function reserve() {
         $status = 'pending';
         $created_at = date('Y-m-d H:i:s');
 
-        // 3. Handle file upload
+        
         $userproof = '';
         if (isset($_FILES['proof']) && $_FILES['proof']['error'] === UPLOAD_ERR_OK) {
             $uploadDir = 'C:/xampp1/htdocs/PEAK/uploads/user_proofs/';
@@ -247,7 +246,7 @@ public function reserve() {
             }
         }
 
-        // 4. Build data array
+        
         $data = [
             'userid' => $userid,
             'courtid' => $courtid, 
@@ -266,14 +265,14 @@ public function reserve() {
             'created_at' => $created_at,
         ];
 
-        // 5. Insert into database
+        
         $reservationsModel = new Reservations();
         $result = $reservationsModel->insert($data);
 
         if ($result) {
             session_start();
             $_SESSION['reservation_success'] = true;
-            header("Location: " . ROOT . "/external/tennisform"); // or your correct form page route
+            header("Location: " . ROOT . "/external/tennisform"); 
 
             exit;
         } else {

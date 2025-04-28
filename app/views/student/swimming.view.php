@@ -3,288 +3,206 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hockey</title>
+    <title>Basketball - Sports Academy</title>
     <style>
-        @charset "utf-8";
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
         body {
             font-family: 'Arial', sans-serif;
-            background-color: #f8f8f8;
-            color: #333;
-            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+            background-color: #f5f5f5;
+
         }
-
-        .navbar {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            width: 100%;
-            background-color: #222;
-            padding: 15px 30px;
-            position: fixed;
-            top: 0;
-            z-index: 1000;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-            margin-left: 220px;
-            
-           
-           
-        }
-
-
-        .navbar .sports-btn
-        {
-            margin-right: 220px;
-        }
-
-      
-
-        .navbar h2 {
-            color: #fff;
-            font-size: 24px;
-            font-weight: bold;
-        }
-
-        .navbar a {
+        header {
+            background-color: #0d47a1;
             color: white;
-            text-decoration: none;
-            padding: 12px 20px;
-            background-color: #5a2e8a;
-            border-radius: 5px;
-            font-weight: 500;
-            transition: background-color 0.3s ease, transform 0.3s ease;
-            margin-right: 280px;
-        }
-
-        .navbar a:hover {
-            background-color: #7a4bb8;
-            transform: scale(1.05);
-        }
-
-        .content-container {
-            display: flex;
-            justify-content: space-between;
-            flex-wrap: wrap;
-            padding: 120px 40px 30px;
-            background-color: #f8f8f8;
-            margin-left: 220px;
-        }
-
-        .main-content {
-            width: 100%;
+            text-align: center;
+            padding: 20px 0;
             margin-bottom: 30px;
         }
-
-        .main-content h2 {
-            font-size: 28px;
-            color: #333;
-            margin-bottom: 20px;
-            text-align: center;
-            font-weight: bold;
+        h1 {
+            margin: 0;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            margin-left: 240px;
         }
 
-        .captains {
-            display: flex;
-            justify-content: space-between;
-            flex-wrap: wrap;
-            gap: 40px;
-            margin-top: 30px;
-        }
-
-        .captains .tile2 {
-            flex: 1 1 200px;
-            text-align: center;
-            padding: 20px;
-            background-color: #fff;
-            border: 2px solid #ddd;
+        .sport-details {
+            background-color: white;
             border-radius: 10px;
-            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
-            transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease;
-            margin-bottom: 20px;
-            max-width: 240px;
-        }
-
-        .captains .tile2 img {
-            width: 100%;
-            border-radius: 50%;
-            margin-bottom: 15px;
-            transition: transform 0.3s ease;
-        }
-
-        .captains .tile2 p {
-            font-size: 18px;
-            font-weight: bold;
-            color: #333;
-            text-transform: uppercase;
-        }
-
-        .captains .tile2:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 12px 20px rgba(0, 0, 0, 0.15);
-            background-color: #e1f7e1;
-        }
-
-        .captains .tile2:hover img {
-            transform: scale(1.05);
-        }
-
-        .latest-news {
-            background-color: #fff;
             padding: 30px;
-            border-radius: 10px;
-            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
-            margin-top: 50px;
-            width: 100%;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            margin-bottom: 40px;
         }
-
-        .latest-news h2 {
-            font-size: 26px;
-            font-weight: bold;
-            margin-bottom: 20px;
-            color: #222;
-        }
-
-        .news-row {
+        .sport-header {
             display: flex;
-            flex-wrap: wrap;
-            gap: 30px;
-            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
         }
-
-        .news-item {
-            flex: 1 1 280px;
-            max-width: 400px;
+        .sport-icon {
+            width: 80px;
+            height: 80px;
+            background-color: #f0f0f0;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 20px;
+        }
+        .sport-title {
+            font-size: 28px;
+            color: #0d47a1;
+            margin: 0;
+        }
+        .sport-banner {
+            width: 100%;
+            height: 300px;
+            background-color: #ddd;
             border-radius: 10px;
-            padding: 20px;
-            background-color: #f9f9f9;
-            border: 1px solid #ddd;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-            transition: transform 0.2s ease, box-shadow 0.3s ease;
+            margin-bottom: 30px;
+            overflow: hidden;
         }
-
-        .news-item:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+        .sport-banner img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
         }
-
-        .news-item h3 {
+        .sport-info {
+            margin-bottom: 30px;
+            line-height: 1.6;
+        }
+        .info-section {
+            margin-bottom: 30px;
+        }
+        .section-title {
             font-size: 22px;
-            color: #222;
+            color: #0d47a1;
             margin-bottom: 15px;
+            border-bottom: 2px solid #e0e0e0;
+            padding-bottom: 10px;
+        }
+        .team-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+        .team-member {
+            background-color: #f9f9f9;
+            border-radius: 8px;
+            padding: 15px;
+            text-align: center;
+        }
+        .member-photo {
+            width: 100px;
+            height: 100px;
+            background-color: #e0e0e0;
+            border-radius: 50%;
+            margin: 0 auto 15px;
+        }
+        .schedule-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 12px 0;
+            border-bottom: 1px solid #e0e0e0;
+        }
+        .button-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 30px;
+        }
+        .back-button, .join-button {
+            display: inline-block;
+            padding: 12px 24px;
+            background-color: #0d47a1;
+            color: white;
+            text-decoration: none;
             font-weight: bold;
+            border-radius: 5px;
+            margin-top: 20px;
         }
-
-        .news-item p {
-            font-size: 16px;
-            color: #666;
-            line-height: 1.5;
-            margin-bottom: 10px;
+        .back-button:hover, .join-button:hover {
+            background-color: #0a3880;
         }
-
-        .news-item .news-date {
-            font-size: 14px;
-            color: #888;
-            font-style: italic;
-            margin-top: 10px;
-        }
-
-        @media (max-width: 768px) {
-            .navbar {
-                flex-direction: column;
-                align-items: center;
-            }
-
-            .content-container {
-                flex-direction: column;
-                align-items: center;
-            }
-
-            .captains .tile2 {
-                margin-bottom: 20px;
-                width: 100%;
-            }
-
-            .news-row {
-                flex-direction: column;
-                align-items: center;
-            }
+        footer {
+            background-color: #333;
+            color: white;
+            text-align: center;
+            padding: 20px 0;
         }
     </style>
 </head>
 <body>
+
 <?php include 'nav.view.php';?>
-    
-    <nav class="navbar">
-        <h2>Captains and Coaches</h2>
-        <a href="request" class="sports-btn">Join</a>
-    </nav>
 
-    <main>
-        <section class="content-container">
-            <div class="main-content">
-                <h2>Captain and Vice Captain</h2>
-                <article class="captains">
-                    <div class="tile2">
-                        <img src="http://localhost/PEAK/public/assets/images/amar/men_coach.jpg" alt="cap-men">
-                        <p>Men's Captain</p>
-                    </div>
-                    <div class="tile2">
-                        <img src="http://localhost/PEAK/public/assets/images/amar/women.png" alt="cap-women">
-                        <p>Women's Captain</p>
-                    </div>
-                    <div class="tile2">
-                        <img src="http://localhost/PEAK/public/assets/images/amar/men_coach.jpg" alt="vc-men">
-                        <p>Men's Vice Captain</p>
-                    </div>
-                    <div class="tile2">
-                        <img src="http://localhost/PEAK/public/assets/images/amar/women.png" alt="vc-women">
-                        <p>Women's Vice Captain</p>
-                    </div>
-                </article>
+<div class="container">
+    <div class="button-row">
+        <a href="sports" class="back-button">Back to All Sports</a>
+        <a href="<?=ROOT ?>/student/Recruitement" class="join-button">Join</a>
+    </div>
 
-                <h2>Coaches</h2>
-                <article class="captains">
-                    <div class="tile2">
-                        <img src="http://localhost/PEAK/public/assets/images/amar/men_coach.jpg" alt="cap-men">
-                        <p>Men's Coach</p>
-                    </div>
-                    <div class="tile2">
-                        <img src="http://localhost/PEAK/public/assets/images/amar/women.png" alt="cap-women">
-                        <p>Women's Coach</p>
-                    </div>
-                    <div class="tile2">
-                        <img src="http://localhost/PEAK/public/assets/images/amar/men_coach.jpg" alt="assistant-men">
-                        <p>Men's Instructor Coach</p>
-                    </div>
-                    <div class="tile2">
-                        <img src="http://localhost/PEAK/public/assets/images/amar/women.png" alt="assistant-women">
-                        <p>Women's Instructor Coach</p>
-                    </div>
-                </article>
+    <div class="sport-details">
+        <div class="sport-header">
+            <div class="sport-icon">🏀</div>
+            <h2 class="sport-title">Basketball</h2>
+        </div>
+        
+        <div class="sport-banner">
+            <img src="/api/placeholder/800/300" alt="Basketball team in action" />
+        </div>
+        
+        <div class="sport-info">
+            <p>Welcome to the Basketball program at Sports Academy. Our basketball program focuses on developing fundamental skills, game strategy, and teamwork for players of all levels.</p>
+            <p>Training sessions include drills to improve ball handling, shooting technique, defensive skills, and game awareness. Our coaches emphasize both individual development and team dynamics.</p>
+        </div>
+        
+        <div class="info-section">
+
+            <h3 class="section-title">Coaches and Captains</h3>
+
+            <div class="team-grid">
+                <div class="team-member">
+                    <div class="member-photo"></div>
+                    <h4>Coach Mike Johnson</h4>
+                    <p>Head Coach</p>
+                </div>
+                <div class="team-member">
+                    <div class="member-photo"></div>
+                    <h4>Sarah Williams</h4>
+                    <p>Assistant Coach</p>
+                </div>
+                <div class="team-member">
+                    <div class="member-photo"></div>
+                    <h4>James Rodriguez</h4>
+                    <p>Team Captain</p>
+                </div>
+            </div>
+        </div>
+        
+
+        <div class="info-section">
+            <h3 class="section-title">Practice Schedule</h3>
+            <div class="schedule">
+                <div class="schedule-item">
+                    <div class="day">Monday</div>
+                    <div class="time">4:00 PM - 6:00 PM</div>
+                </div>
+                <div class="schedule-item">
+                    <div class="day">Wednesday</div>
+                    <div class="time">4:00 PM - 6:00 PM</div>
+                </div>
+                <div class="schedule-item">
+                    <div class="day">Friday</div>
+                    <div class="time">3:30 PM - 5:30 PM</div>
+                </div>
             </div>
 
-            <aside class="latest-news">
-                <h2>Latest News</h2>
-                <div class="news-row">
-                    <div class="news-item">
-                        <h3>Inter-Faculty Tournament Winners</h3>
-                        <p>The hockey team from the Faculty of Science emerged as champions in the inter-faculty hockey tournament. Their teamwork and dedication set a new benchmark for sportsmanship!</p>
-                        <p class="news-date">Published: November 18, 2024</p>
-                    </div>
-                    <div class="news-item">
-                        <h3>Hockey Tournament 2024</h3>
-                        <p>Congratulations to the Hockey team for an incredible performance! They clinched the title in this year’s Hockey Tournament, showcasing immense potential and talent.</p>
-                        <p class="news-date">Published: November 15, 2024</p>
-                    </div>
-                </div>
-            </aside>
-        </section>
-    </main>
+        </div>
+    </div>
+</div>
+
 </body>
 </html>

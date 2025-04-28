@@ -9,7 +9,7 @@ class Notifications {
         $userModel = new User();
         $user = $userModel->getUser($userId);
         
-        // Check if user exists and access the first element of the array
+        
         $userName = $user && isset($user[0]) ? $user[0]->name : "A user";
         
         $expiryDate = date('Y-m-d', strtotime('+2 weeks'));
@@ -17,7 +17,7 @@ class Notifications {
         return $this->insert([
             'title' => 'Booking was rescheduled',
             'content' => $userName . ' has rescheduled a booking to the new date ' . $newDate,
-            'to_user_id' => 30, // PED incharge ID
+            'to_user_id' => 30,
             'to_role' => 'admin',
             'from_user_id' => $userId,
             'time' => date('H:i:s'),
@@ -29,25 +29,25 @@ class Notifications {
 
 
     public function sendCancelNotification($userId, $reservationDetails) {
-        // Get user information
+        
         $userModel = new User();
         $user = $userModel->getUser($userId);
         $userName = isset($user[0]) ? $user[0]->name : "A user";
         
-        // Calculate expiry date (2 weeks from now)
+        
         $expiryDate = date('Y-m-d', strtotime('+2 weeks'));
         
-        // Format the cancellation date for display
+        
         $cancellationDate = date('Y-m-d');
         
-        // Create notification content
+        
         $content = $userName . ' has cancelled a booking ';
         
         // Insert notification
         return $this->insert([
             'title' => 'Booking Cancellation',
             'content' => $content,
-            'to_user_id' => 29, // PED incharge ID
+            'to_user_id' => 29, 
             'to_role' => 'admin',
             'from_user_id' => $userId,
             'time' => date('H:i:s'),
@@ -58,7 +58,7 @@ class Notifications {
     }
 
     public function getActiveUnreadNotifications($userId) {
-        $currentDate = date('Y-m-d'); // Today's date
+        $currentDate = date('Y-m-d'); 
         
         $query = "SELECT * FROM {$this->table} 
                   WHERE to_user_id = :userid 
@@ -73,12 +73,12 @@ class Notifications {
 
 
     public function sendReplyNotification($toUserId, $replyContent) {
-        // Get the current user ID from the session
+        
         $fromUserId = $_SESSION['userid'] ?? 0;
-        // Calculate expiry date (1 week from now)
+        
         $expiryDate = date('Y-m-d', strtotime('+1 week'));
         
-        // Insert notification
+        
         return $this->insert([
             'title' => 'PED incharge replied to your message',
             'content' => $replyContent,

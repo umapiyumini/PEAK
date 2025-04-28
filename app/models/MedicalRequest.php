@@ -2,7 +2,7 @@
 
 class MedicalRequest{
     use Model;
-    protected $errors;
+    public $errors;
     protected $table = 'medicalrequests';
 
     protected $allowedColumns = [
@@ -11,7 +11,9 @@ class MedicalRequest{
         'RegistrationID',
         'ReasonForMedical',
         'userid'
-        
+        'status',
+        'userid'
+
     ];
 
     public function validate($data){
@@ -32,7 +34,16 @@ class MedicalRequest{
         if(empty($data['userid'])){
             $this->errors['userid'] = 'Time Period is required';
         }
+        
+        if(empty($data['status'])){
+            $this->errors['status'] = 'Reason for medical is required';
+        }
 
+        
+
+       
+
+        //var_dump($this->errors);
         return empty($this->errors);
     }
 

@@ -9,7 +9,7 @@
             $prices = $groundcourtsModel->getAllGroundRates();
             
 
-            // Enrich each price entry with court details
+           
             foreach ($prices as &$price) {
                 $court = $courtsModel->getCourtById($price->courtid);
                 $price->court_name = $court ? $court->name : '';
@@ -30,16 +30,16 @@
                 $description = $_POST['description'] ?? null;
                 $price = $_POST['price'] ?? null;
         
-                // Validate input as needed
+            
         
                 $groundcourtsModel = new Groundcourts();
                 $groundcourtsModel->updatePrice($courtid, $event, $duration, $description, $price);
         
-                // Redirect back to rates page (PRG pattern)
+               
                 header("Location: " . ROOT . "/ped_incharge/rates");
                 exit;
             }
-            // Optionally, handle GET or invalid requests
+       
             header("Location: " . ROOT . "/ped_incharge/rates");
             exit;
         }
