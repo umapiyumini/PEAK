@@ -59,12 +59,6 @@
             <div class="assigned-tasks">
                 <div class="filter-section">
                     <h2>Assigned Tasks</h2>
-                    <label for="filterStatus">Filter by Status:</label>
-                    <select id="filterStatus" onchange="filterTasks()">
-                        <option value="all">All Tasks</option>
-                        <option value="pending">Pending</option>
-                        <option value="completed">Completed</option>
-                    </select>
                 <div class="task-list" id="taskList">
                     <?php if(!empty($staffTodoList)):?>
                         <ul id="assignedTasksList">

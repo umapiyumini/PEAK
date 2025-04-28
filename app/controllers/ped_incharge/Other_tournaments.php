@@ -1,10 +1,10 @@
 <?php
     class Other_tournaments extends Controller{
         public function index(){
-            // $tournamentModel = new OtherTournaments();
-            // $tournamentList = $tournamentModel->findAllTournaments();
+            $tournamentModel = new OtherTournaments();
+            $tournamentList = $tournamentModel->getAllOtherTournaments();
             
-            $this->view('ped_incharge/other_tournaments');
+            $this->view('ped_incharge/other_tournaments', ['tournamentList'=>$tournamentList]);
         }
 
         // public function saveTournament() {

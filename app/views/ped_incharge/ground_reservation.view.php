@@ -124,7 +124,7 @@
         
         .section:hover {
             transform: scale(1.03);
-            white-space: normal; /* Show full text on hover */
+            white-space: normal; 
             z-index: 1;
         }
         
@@ -185,16 +185,13 @@
             gap: 10px;
         }
 
-        /* Style for cells that span multiple rows */
         .section[style*="grid-row: span"] {
             display: flex;
             flex-direction: column;
             justify-content: center;
         }
 
-/* Add these CSS rules to your existing style section */
 
-/* Highlight available slots as clickable */
 .section.available {
     background-color: #f1f5f9;
     color: #333;
@@ -357,14 +354,13 @@
 
                     <div class="time-slots-content" id="slots-container">
                     <?php 
-                            $processed = []; //keep track of process handled
+                            $processed = []; 
                             foreach ($allTimeSlots as $timeIndex => $time): ?>
                                 <div class="time-slot">
                                     <div class="time-label"><?= $time ?></div>
                                     <?php foreach ($allSections as $section): 
                                         $slotKey = "$timeIndex-$section";
                                         
-                        // Skip this cell if it's been covered by a previous span
                         if (isset($processed[$slotKey])) {
                             continue;
                         }
@@ -495,7 +491,6 @@
                     <label for="court">Court:</label>
                     <select id="court" name="court" required>
                         <option value="">Select a court</option>
-                        <!-- Options will be populated dynamically -->
                     </select>
                 </div>
                 <?php
@@ -539,43 +534,23 @@
 
     <script>
 
-        // document.addEventListener('DOMContentLoaded', function() {
-        //     updateDisplayDate();
-            
-        //     document.getElementById('newReservationForm').addEventListener('submit', function(event) {
-        //         const selectedDate = document.getElementById('event_date').value;
-        //         const today = new Date().toISOString().split('T')[0];
-                
-        //         if (selectedDate < today) {
-        //             event.preventDefault();
-        //             alert('Cannot make reservations for past dates.');
-        //             return false;
-        //         }
-        //         return true;
-        //     });
-        // });
-
-
     function openReservationModal(timeSlot, section) {
-        // Check if selected date is today or future
         const calendarDate = document.getElementById("reservation-date").value;
         const today = new Date().toISOString().split('T')[0];
         
         if (calendarDate < today) {
             alert('Cannot make reservations for past dates.');
-            return; // Don't open the modal
+            return;
         }
         
         const startTime = timeSlot.split(' - ')[0];
-        const modal = document.getElementById("reservationModal"); // Make sure to get the modal
+        const modal = document.getElementById("reservationModal"); 
         modal.style.display = "block";
         document.body.style.overflow = "hidden";
 
-        // Set current date & time
         document.getElementById("event_date").value = calendarDate;   
         document.getElementById("start_time").value = startTime;
         
-        // Set the section
         const sectionSelect = document.getElementById("section");
         for (let i = 0; i < sectionSelect.options.length; i++) {
             if (sectionSelect.options[i].value === section) {
@@ -592,41 +567,34 @@
     }
 
         function openModal() {
-            // Check if selected date is today or future
             const calendarDate = document.getElementById("reservation-date").value;
             const today = new Date().toISOString().split('T')[0];
 
             if (calendarDate < today) {
                 alert('Cannot make reservations for past dates.');
-                return; // Don't open the modal
+                return; 
             }
             
             modal.style.display = "block";
             document.body.style.overflow = "hidden";
             
-            // Set the current selected date in the form
             document.getElementById("event_date").value = calendarDate;
             
-            // Reset the form for manual entry
             document.getElementById("start_time").value = "";
             document.getElementById("section").selectedIndex = 0;
             
-            // Update duration options with default (8 AM)
             updateDurationOptions("08:00:00");
         }
 
-        // Function to change the date and reload the page with the selected date
         function changeDate() {
             const dateInput = document.getElementById('reservation-date').value;
             window.location.href = window.location.pathname + '?date=' + dateInput;
         }
 
-        // Format date for display
         function updateDisplayDate() {
             const dateInput = document.getElementById('reservation-date').value;
             const availabilityDate = document.getElementById('availability-date');
             
-            // Format date for display
             const displayDate = new Date(dateInput).toLocaleDateString('en-US', { 
                 weekday: 'long', 
                 year: 'numeric', 
@@ -637,55 +605,43 @@
             availabilityDate.textContent = `Ground Availability for ${displayDate}`;
         }
 
-        // When the page loads, update the display date
         document.addEventListener('DOMContentLoaded', function() {
-            // Only set it to today if it's empty
             if (!document.getElementById('reservation-date').value) {
                 const today = new Date();
                 const formattedDate = today.toISOString().split('T')[0];
                 document.getElementById('reservation-date').value = formattedDate;
             }
             
-            // Always update the display date
             updateDisplayDate();
         });
 
-        // Get the modal element
         const modal = document.getElementById("reservationModal");
 
 
-// Add this new function to dynamically update duration options
 function updateDurationOptions(startTime) {
     const durationSelect = document.getElementById("duration");
     
-    // Clear existing options
     durationSelect.innerHTML = "";
     
-    // Add default empty option
     const defaultOption = document.createElement("option");
     defaultOption.value = "";
     defaultOption.text = "Select a duration";
     durationSelect.add(defaultOption);
     
-    // Add options based on start time
     if (startTime === "08:00:00") {
-        // For 8:00 AM, all options are available
         addDurationOption(durationSelect, "2 hour", "2 Hours");
         addDurationOption(durationSelect, "half", "Half Day");
         addDurationOption(durationSelect, "full", "Full Day");
     } 
     else if (startTime === "13:00:00") {
-        // For 1:00 PM, only 2 hours and half day options
         addDurationOption(durationSelect, "2 hour", "2 Hours");
         addDurationOption(durationSelect, "half", "Half Day");
     }
     else {
-        // For 10:00 AM and 3:00 PM, only 2 hours option
         addDurationOption(durationSelect, "2 hour", "2 Hours");
     }
 }
 
-// Helper function to add options to select
 function addDurationOption(selectElement, value, text) {
     const option = document.createElement("option");
     option.value = value;

@@ -9,6 +9,21 @@
 </head>
 <body>
     <?php $current_page = 'sports'; include 'sidebar.view.php'?>
+
+    <?php
+        if (isset($_SESSION['error'])) {
+            echo "<div id='error-message' style='position: fixed ;top: 20px; right: 20px;background-color:rgb(206, 29, 29);color: white; padding: 15px 20px; border-radius: 5px; z-index: 9999; box-shadow: 0 2px 10px rgba(0,0,0,0.2); transition: opacity 0.5s ease-out;'>"
+                . htmlspecialchars($_SESSION['error']) . "</div>";
+            unset($_SESSION['error']);
+        }
+
+        if (isset($_SESSION['success'])) {
+            echo "<div id='success-message' style='position: fixed ;top: 20px; right: 20px;background-color:rgb(57, 184, 11);color: white; padding: 15px 20px; border-radius: 5px; z-index: 9999; box-shadow: 0 2px 10px rgba(0,0,0,0.2); transition: opacity 0.5s ease-out;'>"
+                . htmlspecialchars($_SESSION['success']) . "</div>";
+            unset($_SESSION['success']);
+        }
+    ?>
+
     <div class="main-content">
 
         <div class="header">
@@ -28,12 +43,7 @@
         </div>
 
         <main>
-            <div class="inventory-controls">
-                <div class="search-bar">
-                    <input type="text" id="searchInput" placeholder="Search sports...">
-                    <i class="uil uil-search"></i>
-                </div>
-            </div>
+           
             <div class="sports-container" id="sportsContainer">
                 <?php foreach($sportsList as $row): ?>
                     <div class="sport-card">
@@ -42,7 +52,7 @@
                             <h3><?=$row->sport_name?></h3>
                         </div>
                         <div class="gender">
-                            <a href="<?= $row->sport_name ?>" class="btn btn-male">Men</a>
+                            <a href="sportProfile/<?= $row->sport_id ?>" class="btn btn-male">Men</a>
                             <a href="<?= $row->sport_name ?>" class="btn btn-female">Women</a>
                         </div>
                     </div>
@@ -75,6 +85,21 @@
             </div>
         </div>
     </div>
+    <script>
+        setTimeout(() => {
+            const fadeOut = (id) => {
+                const el = document.getElementById(id);
+                if (el) {
+                    el.style.opacity = "0";
+                    el.style.transform = "translateY(-10px)";
+                    setTimeout(() => el.remove(), 500);
+                }
+            };
+
+            fadeOut('error-message');
+            fadeOut('success-message');
+        }, 3000);
+    </script>
 	<script src="<?=ROOT?>/assets/js/ped_incharge/navbar.js"></script>
 	<script src="<?=ROOT?>/assets/js/ped_incharge/sports.js"></script>
 </body>

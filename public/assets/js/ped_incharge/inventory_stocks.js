@@ -1,47 +1,3 @@
-// Sample initial data
-let packedStocks = [
-    {
-        id: 'EQ001',
-        name: 'Sticks',
-        sport: 'Hockey',
-        indentNo: 'IN2024001',
-        description: 'carbon sticks',
-        unit: '1',
-        quantity: 20,
-        date: '2024-02-15'
-    },
-    {
-        id: 'EQ002',
-        name: 'Balls',
-        sport: 'Hockey',
-        indentNo: 'IN2024761',
-        description: 'white balls',
-        unit: '6',
-        quantity: 20,
-        date: '2024-02-15'
-    },
-    {
-        id: 'EQ002',
-        name: 'Balls',
-        sport: 'Hockey',
-        indentNo: 'IN267751',
-        description: 'white balls',
-        unit: '9',
-        quantity: 20,
-        date: '2024-05-15'
-    },
-    {
-        id: 'EQ012',
-        name: 'Basketballs',
-        sport: 'Basketball',
-        indentNo: 'IN267678',
-        description: '',
-        unit: '1',
-        quantity: 20,
-        date: '2024-02-15'
-    },
-    // Add more sample data as needed
-];
 
 // DOM Elements
 const addModal = document.getElementById('addStockModal');
@@ -50,18 +6,6 @@ const addStockForm = document.getElementById('addStockForm');
 const searchInput = document.getElementById('searchInput');
 const packedStocksTable = document.getElementById('packedStocksTable');
 
-// Initialize data from localStorage
-// function initializeData() {
-//     const storedData = localStorage.getItem('packedStocks');
-//     if (storedData) {
-//         packedStocks = JSON.parse(storedData);
-//     }
-// }
-
-// // Store data in localStorage
-// function storeData() {
-//     localStorage.setItem('packedStocks', JSON.stringify(packedStocks));
-// }
 
 // Render table function
 function renderTable(data = packedStocks) {
@@ -110,13 +54,9 @@ function openAddModal() {
     addModal.style.display = 'block';
 }
 
-//open issue modal
-// function openIssueModal() {
-//     issueModal.style.display = 'block';
-// }
 
 function openIssueModal(stock) {
-    document.getElementById('stockId').value = stock.stockid; // Set equipment ID
+    document.getElementById('stockId').value = stock.stockid; 
     issueModal.style.display = 'block';
 }
 
@@ -133,26 +73,6 @@ function closeModal() {
     addStockForm.reset();
 }
 
-// Add stock form submission
-// function handleAddStock(e) {
-//     e.preventDefault();
-    
-//     const newStock = {
-//         // id: document.getElementById('equipmentId').value,
-//         // name: document.getElementById('name').value,
-//         // sport: document.getElementById('sport').value,
-//         // indentNo: document.getElementById('indentNo').value,
-//         // description: document.getElementById('description').value,
-//         // unit: document.getElementById('unit').value,
-//         // quantity: parseInt(document.getElementById('quantity').value),
-//         // date: document.getElementById('date').value
-//     };
-    
-//     packedStocks.push(newStock);
-//     storeData();
-//     renderTable();
-//     closeModal();
-// }
 
 // Delete stock function
 function deleteStock(stockId) {
@@ -167,26 +87,20 @@ function deleteStock(stockId) {
 function viewStock(stockId) {
     const stock = packedStocks.find(s => s.id === stockId);
     if (stock) {
-        // You can implement a view modal or redirect to a details page
         alert(`Viewing stock: ${stock.name}`);
     }
 }
 
 // Event listeners
 document.addEventListener('DOMContentLoaded', () => {
-    // initializeData();
-    // renderTable();
+
     
-    // Search input
     searchInput.addEventListener('input', handleSearch);
     
-    // Add stock form
-    // addStockForm.addEventListener('submit', handleAddStock);
+
     
-    // Add stock button
     document.getElementById('openAddModal').addEventListener('click', openAddModal);
     
-    // Close button
     document.querySelector('.close').addEventListener('click', closeModal);
     
     // Close modal when clicking outside
@@ -196,6 +110,5 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
     
-    // Cancel button
-    // document.querySelector('.btn btn-cancel').addEventListener('click', closeModal);
+
 });

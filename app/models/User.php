@@ -91,12 +91,6 @@ class User {
             $this->errors['terms'] = 'You must agree to the terms and conditions';
         }
 
-        // NIC and DOB validation
-        if(!empty($data['nic']) && !empty($data['dob']) && !empty($data['gender'])) {
-            if(!$this->validateNicWithDob($data['nic'], $data['dob'], $data['gender'])) {
-                
-            }
-        }
         if (empty($data['email'])) {
             $this->errors['email'] = 'Email is required';
         } elseif (!filter_var($data['email'], FILTER_VALIDATE_EMAIL)) {
@@ -126,6 +120,7 @@ class User {
         
         return empty($this->errors);
     }
+
 
     private function validateNicWithDob($nic, $dob, $gender)
     {
@@ -193,6 +188,7 @@ class User {
         return false;
     }
 
+
     
 
     public function validate2($data) {
@@ -243,13 +239,6 @@ class User {
             $this->errors['contact_number'] = 'Invalid Contact Number format';
         } elseif ($this->contactNumberExists($data['contact_number'])) {
             $this->errors['contact_number'] = 'Contact Number already exists in our system';
-        }
-
-        // NIC and DOB validation
-        if(!empty($data['nic']) && !empty($data['dob']) && !empty($data['gender'])) {
-            if(!$this->validateNicWithDob($data['nic'], $data['dob'], $data['gender'])) {
-                // Error message is set inside validateNicWithDob method
-            }
         }
 
         // Registered Date and Last Examination Date validation

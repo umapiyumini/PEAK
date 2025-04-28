@@ -8,24 +8,9 @@ const sportForm = document.getElementById('addSportForm');
 const closeBtn = document.querySelector('.close');
 const searchInput = document.getElementById('searchInput');
 
-// Current editing sport id
 let editingId = null;
 
-// // Render sports
-// function renderSports(sportsToRender = sports) {
-//     sportsContainer.innerHTML = sportsToRender.map(sport => `
-//         <div class="sport-card" data-id="${sport.id}">
-//             <img src="${sport.image}" alt="${sport.name}" class="sport-image">
-//             <div class="sport-content">
-//                 <h3>${sport.name}</h3>
-//             </div>
-//             <div class="gender">
-//                 <a href="${sport.urlmen}" class="btn btn-male">Men</a>
-//                 <a href="${sport.urlwomen}" class="btn btn-female">Women</a>
-//             </div>
-//         </div>
-//     `).join('');
-// }
+
 
 // Add new sport
 function openModal() {
@@ -42,18 +27,6 @@ function closeModal() {
     editingId = null;
 }
 
-// Search sports
-function searchSports(query) {
-    const filteredSports = sports.filter(sport => 
-        sport.name.toLowerCase().includes(query.toLowerCase())
-    );
-    renderSports(filteredSports);
-}
-
-// // Event Listeners
-// addSportBtn.addEventListener('click', openModal);
-
-// closeBtn.addEventListener('click', closeModal);
 
 window.addEventListener('click', (e) => {
     if (e.target === modal) {
@@ -61,32 +34,5 @@ window.addEventListener('click', (e) => {
     }
 });
 
-searchInput.addEventListener('input', (e) => {
-    searchSports(e.target.value);
-});
 
-// sportForm.addEventListener('submit', (e) => {
-//     e.preventDefault();
-    
-//     const sportData = {
-//         name: document.getElementById('sportName').value,
-//         image: document.getElementById('imageUrl').value
-//     };
 
-//     if (editingId === null) {
-//         // Add new sport
-//         // sportData.id = sports.length + 1;
-//         sports.push(sportData);
-//     } else {
-//         // Update existing sport
-//         sports = sports.map(s => 
-//             s.id === editingId ? { ...sportData, id: editingId } : s
-//         );
-//     }
-
-//     renderSports();
-//     closeModal();
-// });
-
-// Initial render
-// renderSports();

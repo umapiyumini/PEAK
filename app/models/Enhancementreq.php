@@ -41,4 +41,21 @@ class Enhancementreq{
     }
 
   
+
+    public function getAllRequests(){
+        $query= "SELECT * FROM $this->table";
+        
+        return $this->query($query);
+    }
+
+    public function approve($id) {
+        show($id);
+        $query = "UPDATE $this->table SET status = 'Accepted' WHERE request_id = $id";
+        return $this->query($query);
+    }
+    public function reject($id) {
+        $query = "UPDATE $this->table SET status = 'Rejected' WHERE request_id = $id";
+        return $this->query($query);
+    }
+
 }

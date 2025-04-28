@@ -7,7 +7,6 @@ function generateCalendar(year, month) {
     const grid = document.getElementById('calendarGrid');
     grid.innerHTML = '';
 
-    // Add day headers
     const days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
     days.forEach(day => {
         const dayHeader = document.createElement('div');
@@ -16,7 +15,6 @@ function generateCalendar(year, month) {
         grid.appendChild(dayHeader);
     });
 
-    // Add empty cells for days before the first of the month
     for (let i = 0; i < firstDay.getDay(); i++) {
         grid.appendChild(document.createElement('div'));
     }
@@ -75,7 +73,6 @@ function displayBookings(dateString) {
     const container = document.getElementById('bookingsContainer');
     container.innerHTML = '';
 
-    // const bookingsForDate = bookings.filter(b => b.booking_date === dateString);
     const bookingsForDate = bookings.filter(b => {
         const bookingDate = new Date(b.booking_date).toISOString().slice(0, 10);
         return bookingDate === dateString;

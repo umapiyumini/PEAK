@@ -140,4 +140,9 @@ class Othertournaments{
             return false;
         }
     }
+
+    public function getAllOtherTournaments(){
+        $query = "SELECT * FROM $this->table";
+        return $this->query($query);
+    }
 }

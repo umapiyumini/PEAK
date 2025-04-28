@@ -35,15 +35,13 @@
 
         .sidebar {
             height: 100vh;
-            width: 4rem; /* default width */
+            width: 4rem; 
             transition: width 0.3s ease;
-            /* background-color: #cecdce; */
             background-color:#2B124C;
             position: fixed;
             left: 0;
             top: 0;
             border-radius: 8px;
-            /* box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1); */
             z-index: 1000;
             flex-direction: column;
             display: flex;
@@ -115,7 +113,7 @@
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            width: 40px; /* Adjust size as needed */
+            width: 40px;
         }
 
         .sidebar.collapsed .logo .logo-expanded {
@@ -151,7 +149,7 @@
             transition: all 0.3s ease;
             cursor: pointer;
             position: relative;
-            /* overflow: hidden; */
+          
         }
 
         .nav-link span {
@@ -445,7 +443,6 @@
                 <div class="dropdown">
                     <a href="<?=ROOT?>/ped_incharge/interuni_tournaments" class="dropdown-link">Inter University</a>
                     <a href="<?=ROOT?>/ped_incharge/interfaculty_tournaments" class="dropdown-link">Inter Faculty</a>
-                    <a href="<?=ROOT?>/ped_incharge/other_tournaments" class="dropdown-link">Other Tournaments</a>
                 </div>
             </li>
             <li class="nav-item has-dropdown <?= $current_page == 'letters' ? 'actived' : '' ?>">
@@ -557,8 +554,7 @@
                     activeDropdown = null;
                 }
             });
-            // const sidebar = document.querySelector('.sidebar');
-            // sidebar.classList.add('collapsed');
+            
 
             
         });
@@ -569,11 +565,11 @@
             const mainContent = document.querySelector('.main-content');
 
             sidebar.addEventListener('mouseover', () => {
-                mainContent.style.marginLeft = '250px'; // Match the sidebar hover width
+                mainContent.style.marginLeft = '250px'; 
             });
 
             sidebar.addEventListener('mouseout', () => {
-                mainContent.style.marginLeft = '4rem'; // Reset to default
+                mainContent.style.marginLeft = '4rem'; 
             });
         });
 

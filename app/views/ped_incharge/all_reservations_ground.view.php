@@ -81,15 +81,12 @@ document.addEventListener('DOMContentLoaded', function() {
             const roleFilter = document.getElementById('roleFilter');
             const reservations = document.querySelectorAll('.reservation');
             
-            // Add debug info to see what classes are actually present
             console.log('Available classes:', Array.from(reservations).map(r => r.className));
 
-            // Function to filter reservations based on role
             function filterReservations() {
                 const roleValue = roleFilter.value;
                 
                 reservations.forEach(reservation => {
-                    // If "All" is selected or the reservation has the selected class
                     if (roleValue === 'all' || reservation.classList.contains(roleValue)) {
                         reservation.style.display = 'block';
                     } else {
@@ -98,7 +95,6 @@ document.addEventListener('DOMContentLoaded', function() {
                 });
             }
 
-            // Add event listener for filter changes
             roleFilter.addEventListener('change', filterReservations);
         });
 </script>

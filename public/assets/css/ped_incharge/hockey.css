@@ -2,13 +2,57 @@
 
 @import url(ped.css);
 
+
+.container {
+    display: flex;
+    flex-wrap: wrap; 
+    justify-content: space-between;
+    padding: 80px 20px; 
+    background-color: #f7f7f7;
+    width: 100%; 
+    max-width: 1400px; 
+    margin: 0 auto;
+    border-radius: 10px; 
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05); 
+    gap: 30px; 
+}
+
+
+
+.main-content2 {
+    width: 100%; 
+    max-width: 65%; 
+    background-color: #fff; 
+    padding: 25px;
+    border-radius: 10px;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
+    margin-bottom: 30px;
+}
+
+@media (max-width: 992px) {
+    .container {
+        padding: 70px 15px;
+        flex-direction: column;
+    }
+    
+    .main-content2 {
+        max-width: 100%;
+        margin-bottom: 20px;
+    }
+    
+    .latest-news {
+        width: 100%;
+        margin-top: 0;
+    }
+}
+
 .navbar {
     display: flex;
     width: 100%;
     background-color: #333;
     padding: 10px;
     justify-content: flex-start;
-    position: fixed; /* Keeps the navbar at the top */
+    position: fixed;
     top: 0;
     z-index: 1000;
     /* margin: 70px 0px 50px 200px; */
@@ -65,16 +109,6 @@
     display: block;
 }
 
-
-
-.content-container {
-    display: flex;
-    justify-content: space-between;
-    /* align-items: flex-start; */
-    padding:80px 30px;
-	/* margin: 50px 0px 0px 200px; */
-	background-color: #f1f1f1;
-}
 
 .main-content2 {
     width: 65%;

@@ -54,5 +54,10 @@ class News{
         return true;
     }
 
+    public function getBySportID($sportid) {
+        $query = "SELECT * FROM $this->table WHERE sport_id = $sportid";
+        return $this->query($query);
+    }
+
     
 }

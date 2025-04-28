@@ -69,6 +69,11 @@ class Sports_captain{
         $params = [':regno' => $regno];
         return $this->query($query, $params);
     }
+
+    public function getAllBySport($sportid) {
+        $query = "SELECT * FROM $this->table JOIN user ON user.userid = $this->table.userid WHERE sport_id = $sportid";
+        return $this->query($query);
+    }
 }
 
 ?>

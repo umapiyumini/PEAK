@@ -26,11 +26,6 @@
             <button class="bell-icon"><a href="<?=ROOT?>/logout"><i class="uil uil-signout"></i></a></button>
         </div>
         <main>
-
-
-
-
-
             <section class="inventory-section">
                 <div class="inventory-type">
                     <div class="grid-item team" id="team">
@@ -123,19 +118,6 @@
                                 <input type="text" id="searchInput" placeholder="Search inventory...">
                                 <i class="uil uil-search"></i>
                             </div>
-                            <select id="status-filter">
-                                <option value="all">All Sports</option>
-                                <option value="pending">Athletics</option>
-                                <option value="approved">Basketball</option>
-                                <option value="rejected">Badminton</option>
-                                <option value="issued">Baseball</option>
-                                <option value="issued">Carrom</option>
-                                <option value="issued">Cricket</option>
-                                <option value="issued">Elle</option>
-                                <option value="issued">Hockey</option>
-                                <option value="issued">Football</option>
-                                <option value="issued">Rowing</option>
-                            </select>
                         </div>
                         <div class="buttons">
                         <button class="add-product-btn" id="openAddModal2">
