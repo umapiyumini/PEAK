@@ -15,19 +15,19 @@
     </head>
 
     <body>
-        <!-- navigation bar -->
+        
         <?php include 'enav.view.php'; ?>
         <div class="main">
         <?php include 'top.view.php'; ?>
 
         
 
-        <!-- form part -->
+        
         <div class="container1">
         <h1 class="title1">Strength hall Reservation</h1>
 
 
-        <form id="reservationForm">
+        <form id="reservationForm" >
             <label for="subscription">Subscription:</label>
             <select id="subscription" name="subscription" required>
                 <option value="" disabled selected>Select subscription</option>
@@ -43,7 +43,7 @@
             <button type="submit" id="nextBtn">Next</button>
         </form>
        
-         <!-- Ongoing Subscriptions Section -->
+         
          <div class="ongoing-subscriptions" style="margin-top: 30px;"> 
     <h2>Current Subscriptions</h2>
     <?php if (!empty($subscriptions)): ?>
@@ -107,15 +107,14 @@ document.getElementById('subscription').addEventListener('change', function() {
     });
 });
 
-// Handle form submission
 document.getElementById('reservationForm').addEventListener('submit', function(event) {
-    event.preventDefault(); // Prevent the default form submission
+    event.preventDefault(); 
 
     const subscription = document.getElementById('subscription').value;
     const price = document.getElementById('price').value;
-    const userId = '<?= $this->getUserId() ?>'; // Ensure this outputs the correct user ID dynamically
+    const userId = '<?= $this->getUserId() ?>'; 
 
-    // Send the data to the controller to insert into the database
+   
     fetch('<?= ROOT ?>/external/strengthform/submitReservation', {
         method: 'POST',
         headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
@@ -123,31 +122,31 @@ document.getElementById('reservationForm').addEventListener('submit', function(e
     })
     .then(response => response.text())
     .then(data => {
-        // Show the reservation summary in the modal
+        // Summary
         const modal = document.getElementById('reservationSummaryModal');
         document.getElementById('summaryArea').innerText = subscription;
         document.getElementById('summaryPrice').innerText = price;
         document.getElementById('summaryStatus').innerText = 'Pending'; // Status is always "Pending" initially
 
-        modal.style.display = "block"; // Show the modal
+        modal.style.display = "block"; 
     })
     .catch(error => {
         console.error('Error submitting reservation:', error);
     });
 });
 
-// Modal close functionality
+
 document.querySelector('.close').addEventListener('click', function() {
     document.getElementById('reservationSummaryModal').style.display = "none";
 });
 
-//allow or dont allow 
+//allow
 document.getElementById('subscription').addEventListener('change', function() {
-    var subscriptionType = this.value; // Get selected subscription
-    var userId = <?php echo $_SESSION['userid']; ?>; // Get user ID from PHP session
+    var subscriptionType = this.value; 
+    var userId = <?php echo $_SESSION['userid']; ?>; 
 
     if (subscriptionType && userId) {
-        // Make an AJAX call to check the active subscription status
+        
         var xhr = new XMLHttpRequest();
         xhr.open('POST', '<?= ROOT ?>/external/strengthform/checksubscriptionstatus', true);
         xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
@@ -163,7 +162,7 @@ document.getElementById('subscription').addEventListener('change', function() {
     }
 });
 
-//button disabling
+//button 
 document.getElementById('subscription').addEventListener('change', function () {
     const subscriptionType = this.value;
     const userId = <?= json_encode($_SESSION['userid']) ?>;
@@ -178,12 +177,12 @@ document.getElementById('subscription').addEventListener('change', function () {
     .then(response => response.json())
     .then(data => {
         messageDiv.textContent = data.message;
-        nextButton.disabled = !data.canPay;  // Disable button when canPay is false
+        nextButton.disabled = !data.canPay;  
     })
     .catch(error => {
         console.error('Error:', error);
         messageDiv.textContent = "An error occurred while checking subscription status.";
-        nextButton.disabled = true;  // Disable the button if there's an error
+        nextButton.disabled = true;  
     });
 });
 

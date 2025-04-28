@@ -26,17 +26,17 @@ Trait Model {
     //     foreach($keys as $key){
     //         $query .= $key . " = :".$key . "&&";
 
-    public function where($data,$data_not = []){
-        $keys = array_keys($data);
-        $keys_not = array_keys($data_not);
-        $query = "SELECT * FROM $this->table WHERE ";
-        foreach($keys as $key){
-            $query .= "$key = :$key AND ";
+    // public function where($data,$data_not = []){
+    //     $keys = array_keys($data);
+    //     $keys_not = array_keys($data_not);
+    //     $query = "SELECT * FROM $this->table WHERE ";
+    //     foreach($keys as $key){
+    //         $query .= "$key = :$key AND ";
 
 
 
 
-    //     }
+    //      }
 
 
     //     foreach($keys_not as $key){
@@ -49,8 +49,8 @@ Trait Model {
     //     $query .= "order by $this->order_column $this->order_type  limit $this->limit offset $this->offset"; 
 
     
-        foreach($keys_not as $key){
-            $query .= "$key != :$key AND ";
+        // foreach($keys_not as $key){
+        //     $query .= "$key != :$key AND ";
 
 
     //     $data = array_merge($data,$data_not);
@@ -241,3 +241,4 @@ Trait Model {
 
 
 
+        

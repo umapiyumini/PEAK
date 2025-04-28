@@ -1,10 +1,6 @@
 <?php
-// Your existing code follows below:
-class Strengthform extends Controller {
 
-    // public function index() {
-    //     $this->view('external/strengthform');
-    // }
+class Strengthform extends Controller {
 
     public function index() {
         $subscriptions = $this->getOngoingSubscriptions();
@@ -20,18 +16,18 @@ class Strengthform extends Controller {
             $strengthhall = new Strengthhall();
             $price = $strengthhall->getPriceBySubscription($subscription);
     
-            // Return the price as plain text
+           
             if ($price !== null) {
-                echo $price;  // Return the price as plain text
+                echo $price;  
             } else {
-                echo "Price not found";  // In case no price is returned
+                echo "Price not found";  
             }
         }
     }
 
     
     public function getUserId() {
-        // Use correct session key
+        
         if (!isset($_SESSION['userid'])) {
             die("User not logged in");
         }
@@ -51,13 +47,7 @@ class Strengthform extends Controller {
             if ($subscription && $userid) {
                 $subscriptionModel = new Subscription();
     
-                // Check if the user is allowed to make a reservation
-                // $check = $subscriptionModel->isWithinTwoWeeksOfExpiry($userid);
-    
-                // if (!$check['allowed']) {
-                //     echo $check['message']; //  Not allowed: send back a message
-                //     return;
-                // }
+              
     
               
                 $data = [
@@ -77,12 +67,12 @@ class Strengthform extends Controller {
     }
     
 
-   // Controller Method to handle the Strength Form page
+   
 public function showStrengthForm() {
-    // Fetch the ongoing subscriptions for the logged-in user
+    
     $subscriptions = $this->getOngoingSubscriptions();
 
-    // Pass the subscriptions data to the view
+    
     $this->view('external/strengthform', ['subscriptions' => $subscriptions]);
 }
 
@@ -112,9 +102,9 @@ public function checkSubscriptionStatus() {
 
     if (!$subscriptions || empty($subscriptions[0])) {
         echo json_encode([
-            'status' => 'failed',
-            'canPay' => false,
-            'message' => 'No active subscription found for the user.'
+            'status' => 'first',
+            'canPay' => true,
+            'message' => 'No subscriptions found for the user.'
         ]);
         exit;
     }
