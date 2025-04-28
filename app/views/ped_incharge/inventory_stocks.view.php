@@ -76,10 +76,6 @@
                                             <button class="btn btn-update" id="openEditModal" onclick="openEditModal(<?= htmlspecialchars(json_encode($i), ENT_QUOTES, 'UTF-8') ?>)">
                                                 <i class="uil uil-edit"></i>
                                             </button>
-                                            <!-- <button class="btn btn-delete" onclick="deleteEquipment(<?= htmlspecialchars(json_encode($i), ENT_QUOTES, 'UTF-8') ?>)">
-                                                <i class="uil uil-trash-alt"></i>
-                                            </button> -->
-                                            <!-- issue quantity button -->
                                              <button class="btn btn-issue" onclick="openIssueModal(<?= htmlspecialchars(json_encode($i), ENT_QUOTES, 'UTF-8')?>)">
                                                 <i class="uil uil-minus-circle"></i>
                                             </button>
@@ -118,21 +114,13 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <h2>Add New Stock</h2>
-                    <span class="close">&times;</span>
+                    <span class="close" onclick="closeModal()">&times;</span>
                 </div>
                 <form id="addStockForm" action="<?=ROOT?>/ped_incharge/inventory_stocks/addStockRecord" method="POST">
                     <div class="form-group">
                         <label for="equipmentid">Equipment ID</label>
                         <input type="text" id="equipmentid" name="equipmentid" value="<?= isset($i->equipmentid) ? htmlspecialchars($i->equipmentid, ENT_QUOTES, 'UTF-8') : '' ?>" required>
                     </div>
-                    <!-- <div class="form-group">
-                        <label for="name">Name</label>
-                        <input type="text" id="name" name="name" required>
-                    </div> -->
-                    <!-- <div class="form-group">
-                        <label for="sport">Sport</label>
-                        <input type="text" id="sport" name="sport" required>
-                    </div> -->
                     <div class="form-group">
                         <label for="indentNo">Indent Number</label>
                         <input type="text" id="indentNo" name="indentNo" required>

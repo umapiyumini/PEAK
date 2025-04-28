@@ -21,13 +21,32 @@
     </div>
     <main>
       <div class="sub-header">
-        <h2 class="sub-topic">Inter University Games</h2>
+        <h2 class="sub-topic">Other Tournaments</h2>
       </div>
       <div class="filters">
         <div class="filter-group">
           <label for="search">Search</label>
           <input type="text" id="search" placeholder="Search tournaments...">
         </div>
+        <div class="filter-group">
+          <label for="sport">Sport</label>
+          <select id="sport">
+            <option value="">All Sports</option>
+            <option value="basketball">Basketball</option>
+            <option value="soccer">Soccer</option>
+            <option value="volleyball">Volleyball</option>
+          </select>
+        </div>
+        <div class="filter-group">
+          <label for="year">Year</label>
+          <select id="year">
+            <option value="">All Years</option>
+            <option value="2024">2024</option>
+            <option value="2023">2023</option>
+            <option value="2022">2022</option>
+          </select>
+        </div>   
+
         <div class="records-table">
           <table>
             <thead>

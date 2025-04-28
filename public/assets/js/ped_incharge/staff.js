@@ -49,16 +49,15 @@
     
         // Event listener for search input
         searchInput.addEventListener("input", function () {
-            const searchTerm = searchInput.value.toLowerCase(); // Get the search term and convert it to lowercase
+            const searchTerm = searchInput.value.toLowerCase();
             tableRows.forEach(row => {
-                const fullNameCell = row.querySelector("td:nth-child(2)"); // Full Name is the 2nd column
-                const fullName = fullNameCell.textContent.trim().toLowerCase(); // Get the full name text
+                const fullNameCell = row.querySelector("td:nth-child(2)"); 
+                const fullName = fullNameCell.textContent.trim().toLowerCase(); 
     
-                // Check if the full name matches the search term
                 if (fullName.includes(searchTerm)) {
-                    row.style.display = ""; // Show row if search term is found
+                    row.style.display = ""; 
                 } else {
-                    row.style.display = "none"; // Hide row if no match
+                    row.style.display = "none";
                 }
             });
         });

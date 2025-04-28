@@ -79,7 +79,6 @@
             }
         }
 
-        // Initialize the display if we're on the user display section
         if (document.getElementById('user-display').classList.contains('active')) {
             displayUsers();
         }

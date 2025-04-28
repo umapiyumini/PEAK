@@ -27,8 +27,8 @@
 }
 .cal-section {
     display: grid;
-    grid-template-columns: 1fr 1fr; /* Two equal columns */
-    gap: 20px; /* Space between columns */
+    grid-template-columns: 1fr 1fr; 
+    gap: 20px; 
     padding: 20px;
 }
 
@@ -65,7 +65,6 @@
 }
 
 .calendar-day.has-bookings {
-    /* background-color: #cea9bd; */
     background-color: #B2DFDB;
 }
 

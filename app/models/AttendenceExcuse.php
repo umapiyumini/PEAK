@@ -121,5 +121,23 @@ class AttendenceExcuse{
     }
 
 
+    public function getAllRequests(){
+        $query= "SELECT * FROM $this->table e
+                 JOIN sport ON sport.sport_id = e.sport_id
+                 WHERE status='Pending'";
+        
+        return $this->query($query);
+    }
+
+    public function approve($id) {
+        $query = "UPDATE $this->table SET status = 'Accepted' WHERE request_id = $id";
+        return $this->query($query);
+    }
+    public function reject($id) {
+        $query = "UPDATE $this->table SET status = 'Rejected' WHERE request_id = $id";
+        return $this->query($query);
+    }
+
+
 
 }

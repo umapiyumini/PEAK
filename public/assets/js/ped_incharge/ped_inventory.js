@@ -1,8 +1,6 @@
 // DOM Elements
 const addModal = document.getElementById('addModal');
 const addProductForm = document.getElementById('addProductForm');
-// const editModal = document.getElementById('editModal');
-// const editProductForm = document.getElementById('editProductForm');
 const searchInput = document.getElementById('searchInput');
 const inventoryTableTeam = document.getElementById('inventoryTableTeam');
 const inventoryTableRecreational = document.getElementById('inventoryTableRecreational');
@@ -66,7 +64,6 @@ function openEditModal(equipment) {
 
 function deleteEquipment(equipment) {
     if (confirm('Are you sure you want to delete this equipment?')) {
-        // Create the URL using the equipment ID
         window.location.href = `ped_inventory/deleteEquipment/${equipment.equipmentid}`;
     }
 }
@@ -81,11 +78,6 @@ document.addEventListener('DOMContentLoaded', () => {
         openAddModalBtn.addEventListener('click', () => addModal.style.display = 'block');
     }
 
-    // edit product button
-    // const openEditModalBtn = document.getElementById('openEditModal');
-    // if (openEditModalBtn) {
-    //     openEditModalBtn.addEventListener('click', () => editModal.style.display = 'block');
-    // }
     
     // Close buttons
     document.querySelectorAll('.modal .close').forEach(closeBtn => {
@@ -157,28 +149,6 @@ function deleteRequest(request) {
     }
 }
 
-document.getElementById('status-filter').addEventListener('change', filterRequests);
-
-
-function filterRequests() {
-    const searchTerm = document.getElementById('search-requests').value.toLowerCase();
-    const statusFilter = document.getElementById('status-filter').value;
-    const typeFilter = document.getElementById('request-type').value;
-
-    const filtered = requests.filter(request => {
-        const matchesSearch = 
-            request.requester.toLowerCase().includes(searchTerm) ||
-            request.equipment.toLowerCase().includes(searchTerm) ||
-            request.id.toLowerCase().includes(searchTerm);
-        
-        const matchesStatus = statusFilter === 'all' || request.status === statusFilter;
-        const matchesType = typeFilter === 'all' || request.type === typeFilter;
-
-        return matchesSearch && matchesStatus && matchesType;
-    });
-
-    renderRequests(filtered);
-}
 
 // Load saved data from localStorage
 function loadSavedData() {
@@ -188,10 +158,6 @@ function loadSavedData() {
     }
 }
 
-// Initial load
-// loadSavedData();
-// updateStats();
-// renderRequests();
 
 
 

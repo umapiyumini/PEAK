@@ -33,147 +33,13 @@
         <main>
             <div class="container">
                 <div class="tabs">
-                    <button class="tab active" onclick="showSection('colors-night')">Colors Night</button>
-                    <button class="tab" onclick="showSection('certificates')">Certificates Requests</button>
+                    <button class="tab active" onclick="showSection('certificates')">Certificates Requests</button>
                     <button class="tab" onclick="showSection('medical')">Medical Requests</button>
                     <button class="tab" onclick="showSection('transport')">Transport Requests</button>
                     <button class="tab" onclick="showSection('hostel')">Hostel Facilities Requests</button>
                 </div>
 
-                <!-- colors night -->
-                <div id="colors-night" class="form-section active">
-                    <h2>Colors Night Requests</h2>
-                    
-                    <!-- requests table -->
-                    <table class="request-table">
-                        <thead>
-                            <tr>
-                                <th>Request ID</th>
-                                <th>Sport</th>
-                                <th>Date</th>
-                                <th>Status</th>
-                                <th><!-- Actions --></th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <!-- Sample row - duplicate and modify as needed -->
-                            <tr>
-                                <td>REQ001</td>
-                                <td>Hockey</td>
-                                <td>2024-11-29</td>
-                                <td><span class="status-badge status-pending">Pending</span></td>
-                                <td>
-                                    <button class="action-btn view-btn" onclick="openModal('REQ001', 'colors-night')">View</button>
-                                    <!-- <button class="action-btn approve-btn">Approve</button> -->
-                                    <!-- <button class="action-btn reject-btn">Reject</button> -->
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>REQ002</td>
-                                <td>Baseball</td>
-                                <td>2024-11-29</td>
-                                <td><span class="status-badge status-approved">Approved</span></td>
-                                <td>
-                                    <button class="action-btn view-btn" onclick="openModal('REQ001', 'colors-night')">View</button>
-                                    <!-- <button class="action-btn approve-btn">Approve</button> -->
-                                    <!-- <button class="action-btn reject-btn">Reject</button> -->
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>REQ003</td>
-                                <td>Swimmming</td>
-                                <td>2024-11-29</td>
-                                <td><span class="status-badge status-rejected">Rejected</span></td>
-                                <td>
-                                    <button class="action-btn view-btn" onclick="openModal('REQ001', 'colors-night')">View</button>
-                                    <!-- <button class="action-btn approve-btn">Approve</button> -->
-                                    <!-- <button class="action-btn reject-btn">Reject</button> -->
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>REQ004</td>
-                                <td>Cricket</td>
-                                <td>2024-11-29</td>
-                                <td><span class="status-badge status-pending">Pending</span></td>
-                                <td>
-                                    <button class="action-btn view-btn" onclick="openModal('REQ001', 'colors-night')">View</button>
-                                    <!-- <button class="action-btn approve-btn">Approve</button> -->
-                                    <!-- <button class="action-btn reject-btn">Reject</button> -->
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-
-                    <!-- modal for viewing request -->
-                    <div id="colors-nightModal" class="modal">
-                        <div class="modal-content">
-                            <span class="close" onclick="closeModal('colors-nightModal')">&times;</span>
-                            <h2>Colors Night Request Details</h2>
-                            <div class="form-details">
-                                <div class="request-info">
-                                    <p><strong>Request ID:</strong> <span id="requestId"></span></p>
-                                    <p><strong>Student Name:</strong> <span id="studentName"></span></p>
-                                    <p><strong>Student ID:</strong> <span id="studentId"></span></p>
-                                    <p><strong>Sport:</strong> <span id="sport"></span></p>
-                                    <p><strong>Year:</strong> <span id="year"></span></p>
-                                </div>
-
-                                <div class="nominations-section">
-                                    <h3>Colors Nominations</h3>
-                                    <table class="nominations-table">
-                                        <thead>
-                                            <tr>
-                                                <th>Student Name</th>
-                                                <th>Student ID</th>
-                                                <th>Achievement</th>
-                                                <th>Qualification Met</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody id="colorsTableBody">
-                                            <!-- Will be populated dynamically -->
-                                        </tbody>
-                                    </table>
-
-                                    <h3>Merit Awards Nominations</h3>
-                                    <table class="nominations-table">
-                                        <thead>
-                                            <tr>
-                                                <th>Student Name</th>
-                                                <th>Student ID</th>
-                                                <th>Achievement</th>
-                                                <th>Qualification Met</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody id="meritsTableBody">
-                                            <!-- Will be populated dynamically -->
-                                        </tbody>
-                                    </table>
-
-                                    <h3>Special Awards Nominations</h3>
-                                    <table class="nominations-table">
-                                        <thead>
-                                            <tr>
-                                                <th>Student Name</th>
-                                                <th>Student ID</th>
-                                                <th>Award Category</th>
-                                                <th>Qualification Met</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody id="specialAwardsTableBody">
-                                            <!-- Will be populated dynamically -->
-                                        </tbody>
-                                    </table>
-                                </div>
-
-                                <div class="modal-actions">
-                                    <button class="action-btn approve-btn">Approve Request</button>
-                                    <button class="action-btn reject-btn">Reject Request</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
+                
                 <div id="certificates" class="form-section">
                     <h2>Certificates Requests</h2>
                     
@@ -369,8 +235,6 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <!-- Sample row - duplicate and modify as needed -->
-                          
                          
                             <tr>
                                 <td>REQ001</td>
@@ -379,53 +243,16 @@
                                 <td><span class="status-badge status-pending">Pending</span></td>
                                 <td>
                                     <button class="action-btn view-btn" onclick="openModal('REQ001', 'medical')">View</button>
-                                    <!-- <button class="action-btn approve-btn">Approve</button> -->
-                                    <!-- <button class="action-btn reject-btn">Reject</button> -->
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>REQ001</td>
-                                <td>John Doe</td>
-                                <td>2024-11-29</td>
-                                <td><span class="status-badge status-pending">Pending</span></td>
-                                <td>
-                                    <button class="action-btn view-btn" onclick="openModal('REQ001', 'medical')">View</button>
-                                    <!-- <button class="action-btn approve-btn">Approve</button> -->
-                                    <!-- <button class="action-btn reject-btn">Reject</button> -->
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>REQ001</td>
-                                <td>John Doe</td>
-                                <td>2024-11-29</td>
-                                <td><span class="status-badge status-pending">Pending</span></td>
-                                <td>
-                                    <button class="action-btn view-btn" onclick="openModal('REQ001', 'medical')">View</button>
-                                    <!-- <button class="action-btn approve-btn">Approve</button> -->
-                                    <!-- <button class="action-btn reject-btn">Reject</button> -->
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>REQ001</td>
-                                <td>John Doe</td>
-                                <td>2024-11-29</td>
-                                <td><span class="status-badge status-pending">Pending</span></td>
-                                <td>
-                                    <button class="action-btn view-btn" onclick="openModal('REQ001', 'medical')">View</button>
-                                    <!-- <button class="action-btn approve-btn">Approve</button> -->
-                                    <!-- <button class="action-btn reject-btn">Reject</button> -->
                                 </td>
                             </tr>
                         </tbody>
                     </table>
 
-                    <!-- modal for viewing request -->
                     <div id="hostelModal" class="modal">
                         <div class="modal-content">
                             <span class="close" onclick="closeModal('hostelModal')">&times;</span>
                             <h2>Request Details</h2>
                             <div class="form-details">
-                                <!-- Details will be populated dynamically -->
                             </div>
                         </div>
                     </div>

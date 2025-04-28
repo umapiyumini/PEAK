@@ -257,7 +257,6 @@
 
 
     </style>
-    </style>
 </head>
 <body>
 <?php $current_page = 'studentprofile'; include 'sidebar.view.php'?>

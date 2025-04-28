@@ -57,14 +57,12 @@
                 <button class="btn btn-next" onclick="nextMonth()">&gt;</button>
             </div>
             <div class="calendar-grid" id="calendarGrid">
-                <!-- Calendar days will be inserted here -->
             </div>
         </div>
 
         <div class="bookings-list" id="bookingsList">
             <h2>Bookings for <span id="selectedDate">November 27, 2024</span></h2>
             <div id="bookingsContainer">
-                <!-- dynamically displayed using php and js -->
             </div>
         </div>
     </div>

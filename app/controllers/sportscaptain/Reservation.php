@@ -40,14 +40,14 @@ $this->view('sportscaptain/reservation', [
                 $reservation = new Reservations();
 
                 $data = [
-                    'userid' => $_SESSION['USER']->userid ?? null, // assuming user is logged in
+                    'userid' => $_SESSION['USER']->userid ?? null,
                     'courtid' => $_POST['courtid'],
                     'event' => $_POST['event'],
                     'date' => $_POST['date'],
                     'duration' => $_POST['duration'],
-                    'time' => $_POST['time'],  // radio input selected
-                    'status' => $_POST['status'], // default 'pending'
-                    'usertype' => 'sportscaptain', // static
+                    'time' => $_POST['time'], 
+                    'status' => $_POST['status'], 
+                    'usertype' => 'sportscaptain', 
                     'numberof_participants' => $_POST['numberof_participants'],
                     'created_at' => date('Y-m-d H:i:s')
                 ];

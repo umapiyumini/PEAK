@@ -44,11 +44,6 @@ class Sport {
 
     public function getSportDetails($sport_id){
         $query = "SELECT * FROM $this->table d
-                JOIN sports_captain C ON c.sport_id = d.sport_id
-                LEFT JOIN sportnews n ON n.sport_id = d.sport_id
-                LEFT JOIN sport_players p ON p.sport_id = d.sport_id
-                LEFT JOIN attendance a ON a.sport_id = d.sport_id
-                LEFT JOIN coaches ON coaches.sport_id = d.sport_id
                 WHERE d.sport_id= :sport_id";
                 
         $params=[':sport_id'=> $sport_id];

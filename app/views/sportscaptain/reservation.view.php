@@ -223,7 +223,7 @@
     document.getElementById('previous-reservations-tab').style.display = (tabId === 'previous-reservations') ? 'block' : 'none';
 
     document.querySelectorAll('.tab').forEach(tab => tab.classList.remove('active'));
-    document.querySelector(`.tab[onclick*="${tabId}"]`).classList.add('active');
+    document.querySelector(.tab[onclick*="${tabId}"]).classList.add('active');
   }
 
   
@@ -420,7 +420,7 @@ function checkAvailability() {
   };
   
   // Start building HTML
-  let html = `<h3>${courtName} - ${formattedDate}</h3>`;
+  let html = <h3>${courtName} - ${formattedDate}</h3>;
   
   // Check if any slots are reserved
   if (reservedStartTimes.length === 0) {
@@ -436,7 +436,7 @@ function checkAvailability() {
   
   allTimeSlots["2 hours"].forEach(slot => {
     if (!reservedStartTimes.includes(slot.start)) {
-      html += `<li>${slot.display}</li>`;
+      html += <li>${slot.display}</li>;
       available2Hour = true;
     }
   });
@@ -455,7 +455,7 @@ function checkAvailability() {
     const isSlotAvailable = !slot.start.some(time => reservedStartTimes.includes(time));
     
     if (isSlotAvailable) {
-      html += `<li>${slot.display}</li>`;
+      html += <li>${slot.display}</li>;
       halfDayAvailable = true;
     }
   });
@@ -474,7 +474,7 @@ function checkAvailability() {
   );
   
   if (isFullDayAvailable) {
-    html += `<li>${allTimeSlots["Full Day"].display}</li>`;
+    html += <li>${allTimeSlots["Full Day"].display}</li>;
   } else {
     html += "<li>No full-day slots available</li>";
   }
@@ -627,7 +627,7 @@ function deleteReservation(reservationId) {
     document.body.appendChild(loadingDiv);
     
     // Redirect to the delete endpoint
-    window.location.href = `${ROOT}/sportscaptain/reservation/deletereservation/${reservationId}`;
+    window.location.href = ${ROOT}/sportscaptain/reservation/deletereservation/${reservationId};
   }
 }
 

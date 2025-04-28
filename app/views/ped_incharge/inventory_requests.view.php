@@ -72,9 +72,6 @@
                                         <td><?=$i->date?></td>
                                         <td><?=$i->status?></td>
                                         <td>
-                                            <!-- <button class="btn btn-view" id="openRequest" onclick="openRequest(<?= htmlspecialchars(json_encode($i), ENT_QUOTES, 'UTF-8') ?>)">
-                                                <i class="uil uil-eye"></i>
-                                            </button> -->
                                             <button class="btn btn-update <?= ($i->status === 'Approved') ? 'disabled-btn' : '' ?>" 
                                                     id="acceptRequest" 
                                                     onclick="acceptRequest(<?= htmlspecialchars(json_encode($i), ENT_QUOTES, 'UTF-8') ?>)"
@@ -95,7 +92,6 @@
                 
                 
                 <?php
-                    // Group records by sport
                     $sportGroups = array();
                     if (!empty($endreqdata)) {
                         foreach ($endreqdata as $item) {
@@ -107,7 +103,6 @@
                     
                     
                 <div class="year-end-requests" id="end-section">
-                    <!-- tab switching buttons within the year end requests tab -->
                     <button class="btn btn-pending" id="pendingBtn">
                         <i class="uil uil-clock"></i> Pending Requests
                     </button>
@@ -202,6 +197,89 @@
     function rejectRequest(sport) {
         confirm("Are you sure you want to reject this request?") ? window.location.href = "<?=ROOT?>/ped_incharge/inventory_requests/processRequest/" + sport + "/rejected" : null;
     }
+
+    
+document.addEventListener('DOMContentLoaded', function() {
+    const searchInput = document.getElementById('search-requests');
+    const statusFilter = document.getElementById('status-filter');
+    const typeFilter = document.getElementById('request-type');
+    const requestsTable = document.getElementById('requests-table');
+    const requestsBody = document.getElementById('requests-body');
+    
+    function filterRequests() {
+        const searchTerm = searchInput.value.toLowerCase();
+        const statusValue = statusFilter.value.toLowerCase();
+        const typeValue = typeFilter.value.toLowerCase();
+        
+        const rows = requestsBody.querySelectorAll('tr');
+        
+        rows.forEach(row => {
+            const requestId = row.cells[0].textContent.toLowerCase();
+            const type = row.cells[1].textContent.toLowerCase();
+            const sport = row.cells[2].textContent.toLowerCase();
+            const equipment = row.cells[3].textContent.toLowerCase();
+            const status = row.cells[6].textContent.toLowerCase();
+            
+            const matchesSearch = 
+                requestId.includes(searchTerm) || 
+                type.includes(searchTerm) || 
+                sport.includes(searchTerm) || 
+                equipment.includes(searchTerm);
+                
+            const matchesStatus = statusValue === 'all' || status === statusValue;
+            const matchesType = typeValue === 'all' || type === typeValue;
+            
+            if (matchesSearch && matchesStatus && matchesType) {
+                row.style.display = '';
+            } else {
+                row.style.display = 'none';
+            }
+        });
+    }
+    
+    if (searchInput) searchInput.addEventListener('keyup', filterRequests);
+    if (statusFilter) statusFilter.addEventListener('change', filterRequests);
+    if (typeFilter) typeFilter.addEventListener('change', filterRequests);
+    
+    const historyTable = document.getElementById('yearend-history-table');
+    if (historyTable) {
+        const searchHistoryInput = document.createElement('input');
+        searchHistoryInput.type = 'text';
+        searchHistoryInput.id = 'search-history';
+        searchHistoryInput.placeholder = 'Search history...';
+        searchHistoryInput.style.margin = '0 0 15px 0';
+        searchHistoryInput.style.padding = '8px';
+        searchHistoryInput.style.width = '100%';
+        
+        const historyList = document.getElementById('history-list');
+        if (historyList) {
+            historyList.insertBefore(searchHistoryInput, historyTable);
+            
+            searchHistoryInput.addEventListener('keyup', function() {
+                const searchTerm = searchHistoryInput.value.toLowerCase();
+                const historyRows = document.querySelectorAll('#yearend-history-body tr');
+                
+                historyRows.forEach(row => {
+                    const requestId = row.cells[0].textContent.toLowerCase();
+                    const sport = row.cells[1].textContent.toLowerCase();
+                    const item = row.cells[2].textContent.toLowerCase();
+                    const specs = row.cells[4].textContent.toLowerCase();
+                    const status = row.cells[5].textContent.toLowerCase();
+                    
+                    if (requestId.includes(searchTerm) || 
+                        sport.includes(searchTerm) || 
+                        item.includes(searchTerm) || 
+                        specs.includes(searchTerm) ||
+                        status.includes(searchTerm)) {
+                        row.style.display = '';
+                    } else {
+                        row.style.display = 'none';
+                    }
+                });
+            });
+        }
+    }
+});
 
 </script>
 	<script src="<?=ROOT?>/assets/js/ped_incharge/ped_inventory.js"></script>
