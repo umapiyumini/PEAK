@@ -441,3 +441,81 @@ body{
 .request-item strong {
     color: var(--darkpurple);
 }
+
+/* Responsive Styles */
+@media screen and (max-width: 1024px) {
+    .container1, .container2 {
+        flex-direction: column;
+    }
+    
+    .namecard, .popularreservations {
+        width: 90%;
+        margin: 10px auto;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .navigation {
+        width: 80px;
+    }
+    
+    .navigation .title {
+        opacity: 0;
+        display: none;
+    }
+    
+    .navigation.active {
+        width: 200px;
+    }
+    
+    .navigation.active .title {
+        opacity: 1;
+        display: inline;
+    }
+    
+    .main {
+        width: calc(100% - 80px);
+        left: 80px;
+    }
+    
+    .main.active {
+        width: calc(100% - 200px);
+        left: 200px;
+    }
+    
+    .action-buttons {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .navigation {
+        left: -80px;
+        z-index: 1000;
+    }
+    
+    .navigation.active {
+        left: 0;
+        width: 200px;
+    }
+    
+    .main {
+        width: 100%;
+        left: 0;
+    }
+    
+    .main.active {
+        width: 100%;
+        left: 0;
+        padding-left: 200px;
+    }
+    
+    .topbar {
+        padding: 0 5px;
+    }
+    
+    .imageitem .reservationimage {
+        width: 150px;
+        height: 130px;
+    }
+}
