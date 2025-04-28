@@ -94,7 +94,7 @@ class User {
         // NIC and DOB validation
         if(!empty($data['nic']) && !empty($data['dob']) && !empty($data['gender'])) {
             if(!$this->validateNicWithDob($data['nic'], $data['dob'], $data['gender'])) {
-                // Error message is set inside validateNicWithDob method
+                
             }
         }
         if (empty($data['email'])) {
@@ -123,31 +123,29 @@ class User {
             $this->errors['contact_number'] = 'Contact Number already exists in our system';
         }
         
-        // hbjf
         
-        // Return true if no errors
         return empty($this->errors);
     }
 
     private function validateNicWithDob($nic, $dob, $gender)
     {
-        // Clean the NIC number
+      
         $nic = trim($nic);
         
-        // Get year from DOB
+       
         $dobYear = date('Y', strtotime($dob));
         $dobYearLastTwo = substr($dobYear, -2);
         
         // Get day of year from DOB (1-366)
         $dobDayOfYear = date('z', strtotime($dob)) + 1;
         
-        // Check if old NIC format (9 digits + V/X)
+        // old format?
         if(strlen($nic) == 10 && (strtoupper(substr($nic, -1)) === 'V' || strtoupper(substr($nic, -1)) === 'X')) {
             // Extract year and day from old NIC
             $nicYear = substr($nic, 0, 2);
             $nicDayGender = (int)substr($nic, 2, 3);
             
-            // Calculate actual day (removing gender offset)
+            // Calculate actual day
             $nicDay = ($nicDayGender > 500) ? $nicDayGender - 500 : $nicDayGender;
             
             // Check gender consistency
@@ -165,7 +163,7 @@ class User {
             
             return true;
         }
-        // Check if new NIC format (12 digits)
+        // Check if new NIc format
         else if(strlen($nic) == 12 && is_numeric($nic)) {
             // Extract year and day from new NIC
             $nicYear = substr($nic, 0, 4);
@@ -271,7 +269,7 @@ class User {
         return empty($this->errors);
     }
 
-    //used 
+  
     public function getUser($userid){
         $query = "SELECT * FROM $this->table WHERE userid = :userid";
         $params = [':userid' => $userid];
@@ -279,7 +277,7 @@ class User {
     }
 
 
-    //not yet
+
     public function getLastID() {
         $query = "SELECT userid FROM $this->table ORDER BY userid DESC LIMIT 1";
         $result = $this->query($query); // Likely returns an array of objects
@@ -335,7 +333,7 @@ class User {
     return $this->query($query, $params);
 }
 
-// Add these methods to your User class
+
 public function emailExists($email) {
     $query = "SELECT * FROM $this->table WHERE email = :email LIMIT 1";
     $params = [':email' => $email];
