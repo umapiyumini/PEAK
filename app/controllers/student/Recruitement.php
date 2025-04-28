@@ -1,3 +1,4 @@
+
 <?php
 class Recruitement extends Controller{
    public function index(){
@@ -126,5 +127,3 @@ public function delete()
     }
 }
 
-
-}

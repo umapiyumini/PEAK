@@ -286,6 +286,32 @@ class User {
         return $result[0]->userid ?? null; 
     }    
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> 9dca0a0ac48735620d60b8f87062b0554b1f37ff
+    public function getName($userid)
+    {
+        $query = "SELECT name FROM $this->table WHERE userid = :userid";
+        $params = ['userid' => $userid];
+        $result = $this->query($query, $params); // Likely returns an array of objects
+        return $result[0]->name ?? null; // Access as an object
+    }
+<<<<<<< HEAD
+
+    public function find($userid) {
+        $query = "SELECT * FROM $this->table WHERE userid = :userid";
+        $params = ['userid' => $userid];
+        return $this->query($query, $params)[0] ?? null; // Access as an object
+    }
+=======
+
+    public function find($userid) {
+        $query = "SELECT * FROM $this->table WHERE userid = :userid";
+        $params = ['userid' => $userid];
+        return $this->query($query, $params)[0] ?? null; // Access as an object
+    }
+
     public function studentReg($data){
         $query="INSERT INTO $this->table (name,gender,nic,email,date_of_birth,contact_number,address,username,password,role) VALUES (:name,:gender,:nic,:email,:date_of_birth,:contact_number,:address,:username,:password,:role)";
         $params=[
@@ -358,4 +384,6 @@ public function contactNumberExists($contact_number) {
 }
 
 
+
+>>>>>>> 9dca0a0ac48735620d60b8f87062b0554b1f37ff
 }

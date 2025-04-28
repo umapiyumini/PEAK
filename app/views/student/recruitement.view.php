@@ -251,7 +251,9 @@
     <script>
         function confirmDelete(id) {
             if (confirm("Are you sure you want to delete this recruitment request?")) {
-                window.location.href = <?= ROOT ?>/student/Recruitement/delete?recruitmentid=${id};
+
+                window.location.href = `<?= ROOT ?>/student/Recruitement/delete?recruitmentid=${id}`;
+
             }
         }
 
@@ -295,4 +297,4 @@
         checkIfEmpty();
     </script>
 </body>
-</html>
+

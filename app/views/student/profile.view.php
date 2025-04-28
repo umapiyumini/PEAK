@@ -78,13 +78,28 @@
                 </div>
             </div>
 
-           
+
+            <div class="info-card">
+                <h3><i class="uil uil-medal"></i> Achievements & Activities</h3>
+                <div class="info-grid">
+                    <div class="info-item">
+                        <label>Sports:</label>
+                        <span id="studentSports"></span>
+                    </div>
+                    <div class="info-item full-width">
+                        <label>Achievements:</label>
+                        <span id="studentAchievements"></span>
+                    </div>
+                </div>
+            </div>
+
             <div class="actions">
                 <button id="editRequestBtn">Request to Edit</button>
             </div>
         </div>
     </div>
 </main>
+
 
 <script>
     document.getElementById('editRequestBtn').addEventListener('click', function() {
@@ -95,3 +110,4 @@
 
 </body>
 </html>
+
