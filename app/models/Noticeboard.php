@@ -3,6 +3,8 @@
 class Noticeboard{
     use Model;
 
+    public $errors;
+
     protected $table = 'noticeboard';
 
     protected $allowedColumns = [
@@ -34,6 +36,8 @@ class Noticeboard{
             $this->errors['publishtime'] = 'publlishtime is required';
         }
 
+      
+
         //var_dump($this->errors);
         return empty($this->errors);
     }
@@ -52,6 +56,18 @@ class Noticeboard{
         $result = $this->query($query,$param);
         return $result[0];
     }
+
+<<<<<<< HEAD
+=======
+
+>>>>>>> 9dca0a0ac48735620d60b8f87062b0554b1f37ff
+    public function findStudentNotices(){
+        $query= "SELECT * FROM $this->table WHERE visibility='students'";
+        $result = $this->query($query);
+        return $result;
+<<<<<<< HEAD
+=======
+
 
     public function addNotice($data){
         $query = "INSERT INTO $this->table (title, content, publishdate, publishtime, visibility, userid) VALUES (:title, :content, :publishdate, :publishtime, :visibility, :userid)";
@@ -81,5 +97,7 @@ class Noticeboard{
         $query = "DELETE FROM $this->table WHERE noticeid = :noticeid";
         $params = [':noticeid' => $noticeid];
         return $this->query($query, $params);
+>>>>>>> 9dca0a0ac48735620d60b8f87062b0554b1f37ff
+
     }
 }

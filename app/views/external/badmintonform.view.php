@@ -12,7 +12,7 @@
             $showSuccessModal = false;
             if (isset($_SESSION['reservation_success']) && $_SESSION['reservation_success'] === true) {
                 $showSuccessModal = true;
-                // Clear
+                
                 $_SESSION['reservation_success'] = false;
             }
             ?>
@@ -143,7 +143,7 @@
 
 
     document.addEventListener('DOMContentLoaded', function() {
-            // form elements
+            
             const bookingForSelect = document.getElementById('bookingFor');
             const durationSelect = document.getElementById('duration');
             const priceInput = document.getElementById('price');
@@ -151,7 +151,7 @@
             const discountedPriceInput = document.getElementById('discountedPrice')
             const dateInput = document.getElementById('date');
 
-            //event listeners
+            
             bookingForSelect.addEventListener('change', updatePrice);
             durationSelect.addEventListener('change', updatePrice);
             userTypeSelect.addEventListener('change',updateDiscountedPrice);
@@ -165,14 +165,14 @@
                     const duration = durationSelect.value ;
                 
                     
-                    // Creating the form data
+                   
                     const formData = new FormData();
                     formData.append('court_name', 'badminton'); 
                     formData.append('event', event);
                     formData.append('duration', duration);
                     
                     
-                    // Send
+                 
                     const xhr = new XMLHttpRequest();
                     xhr.open('POST', '<?=ROOT?>/external/badmintonform/getPrice', true);
                     xhr.onreadystatechange = function() {
@@ -224,7 +224,7 @@
         halfDaySlots.style.display = 'none';
         oneHourSlots.style.display = 'none';
         
-        // Show the appropriate container based on selection
+        
         if (durationSelect.value === 'half') {
             halfDaySlots.style.display = 'block';
         } else if (durationSelect.value === '1 hour') {
@@ -245,7 +245,7 @@
         const slot1 = document.getElementById('slot1');
         const slot2 = document.getElementById('slot2');
 
-        // Reset options and message
+        
         messageElem.style.display = 'none';
         halfDayOption.disabled = false;
         fullDayOption.disabled = false;
@@ -257,27 +257,27 @@
             return;
         }
 
-        // Create form data
+        
         const formData = new FormData();
         formData.append('date', dateInput.value);
         formData.append('court_name', 'badminton');
         
-        // Send request
+      
         const xhr = new XMLHttpRequest();
         xhr.open('POST', '<?=ROOT?>/external/badmintonform/checkFullDayAvailability', true);
         xhr.onreadystatechange = function() {
             if (xhr.readyState === 4 && xhr.status === 200) {
                 if (xhr.responseText === 'full') {
-                    // Show message
+                    
                     messageElem.style.display = 'block';
                     messageElem.textContent = 'This date is fully booked for this section.';
                     
-                    // Disable all duration options
+                    
                     fullDayOption.disabled = true;
                     halfDayOption.disabled = true;
                     onehourOption.disabled = true;
                     
-                    // Reset duration selection if needed
+                    
                     if (durationSelect.value === 'full' || durationSelect.value === 'half' || durationSelect.value === '1 hour') {
                         durationSelect.value = '';
                         document.getElementById('halfDayOptions').style.display = 'none';
@@ -310,7 +310,7 @@
         const slotJ = document.getElementById('slotJ');
         
         
-        // Reset all slots
+        
         slotA.disabled = false;
         slotB.disabled = false;
         slotC.disabled = false;
@@ -321,7 +321,7 @@
         slotH.disabled = false;
         onehourOption.disabled = false;
         
-        // Create form data
+       
         const formData = new FormData();
         formData.append('date', date);
         formData.append('court_name', 'badminton');
@@ -337,57 +337,57 @@
                 console.log("Half-day status:", halfDayStatus);
                 console.log("1-hour slots booked:", oneHourSlots);
                 
-                // Process half-day availability
+                
                 if (halfDayStatus === 'both') {
-                    // Both half-day slots are booked
+                    
                     messageElem.style.display = 'block';
                     messageElem.textContent = 'All time slots are booked for this date.';
                     halfDayOption.disabled = true;
                     fullDayOption.disabled = true;
                     onehourOption.disabled = true;
                 } else if (halfDayStatus === 'morning') {
-                    // Morning slot is booked
+                    
                     messageElem.style.display = 'block';
                     messageElem.textContent = 'Morning slot is already booked. Only afternoon slot is available.';
                     fullDayOption.disabled = true;
                     slot1.disabled = true;
                     
-                    // Disable morning one-hour slots
+                    
                     slotA.disabled = true;
                     slotB.disabled = true;
                     slotC.disabled = true;
                     slotD.disabled = true;
                     
-                    // If morning slot was selected, clear it
+                  
                     if (slot1.checked) {
                         slot1.checked = false;
                     }
                 } else if (halfDayStatus === 'afternoon') {
-                    // Afternoon slot is booked
+                    
                     messageElem.style.display = 'block';
                     messageElem.textContent = 'Afternoon slot is already booked. Only morning slot is available.';
                     fullDayOption.disabled = true;
                     slot2.disabled = true;
                     
-                    // Disable afternoon one-hour slots
+                    
                     slotE.disabled = true;
                     slotF.disabled = true;
                     slotG.disabled = true;
                     slotH.disabled = true;
                     
-                    // If afternoon slot was selected, clear it
+                    
                     if (slot2.checked) {
                         slot2.checked = false;
                     }
                 }
                 
-                // Process one-hour slot availability
+               
                 if (oneHourSlots.length > 0) {
-                    // Enable one-hour option since we need to check individual slots
+                    
                     onehourOption.disabled = false;
                     
                     oneHourSlots.forEach(slot => {
-                        // Disable specific two-hour slots
+                      
                         if (slot === '08:00:00') {
                             slotA.disabled = true;
                             slot1.disabled =true;
@@ -440,16 +440,16 @@
                         }
                     });
                     
-                    // Disable full day option if any two-hour slot is booked
+                   
                     fullDayOption.disabled = true;
                     
-                    // Display message about two-hour bookings if no other message is displayed
+                   
                     if (halfDayStatus === 'none' && !messageElem.textContent) {
                         messageElem.style.display = 'block';
                         messageElem.textContent = 'Some time slots are already booked for this date.';
                     }
                     
-                    // Check if all morning or afternoon slots are booked
+               
                     const morningSlotsFull = slotA.disabled && slotB.disabled &&  slotC.disabled && slotD.disabled;
                     const afternoonSlotsFull = slotE.disabled && slotF.disabled &&  slotG.disabled && slotH.disabled;
                     
@@ -469,27 +469,25 @@
     }
 
 
-    // Add event listener to date input
+  
     document.addEventListener('DOMContentLoaded', function() {
-        // Your existing code...
-        
-        // Add event listener for date changes
+ 
         const dateInput = document.getElementById('date');
         dateInput.addEventListener('change', checkAvailability);
     });
 
     document.addEventListener('DOMContentLoaded', function() {
-        // Check if we should show the success modal
+       
         <?php if ($showSuccessModal): ?>
         const successModal = document.getElementById('successModal');
         successModal.style.display = 'block';
         
-        // Add event listener to close button
+        
         document.getElementById('closeModal').addEventListener('click', function() {
             successModal.style.display = 'none';
         });
         
-        // Close modal when clicking outside of it
+        
         window.addEventListener('click', function(event) {
             if (event.target === successModal) {
                 successModal.style.display = 'none';

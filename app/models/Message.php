@@ -15,7 +15,7 @@ class Message {
         return $this->query($sql, $data);
     }
     
-    // Inside the Message model
+    
 public function getTable() {
     return $this->table;
 }
@@ -36,10 +36,10 @@ public function getMessagesWithUsers() {
 
     $messages = $this->query($query);
     
-    // Format the results
+
     return array_map(function($message) {
         return [
-            'id' => $message->messageid, // Add this line
+            'id' => $message->messageid, 
             'content' => $message->content,
             'date' => $message->date,
             'time' => $message->time,

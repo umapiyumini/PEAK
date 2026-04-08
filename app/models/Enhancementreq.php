@@ -41,6 +41,7 @@ class Enhancementreq{
     }
 
   
+
     public function getAllRequests(){
         $query= "SELECT * FROM $this->table";
         
@@ -56,4 +57,5 @@ class Enhancementreq{
         $query = "UPDATE $this->table SET status = 'Rejected' WHERE request_id = $id";
         return $this->query($query);
     }
+
 }

@@ -2,11 +2,11 @@
 class Subscription {
     use Model;
 
-    protected $table = 'subscription'; // Ensure this is the correct table name
+    protected $table = 'subscription'; 
     protected $fillable = ['subscriptionid','userid','subscription','status','date_of_payment','subscription_end_date'];
    
     public function insert($data){
-        //remove unwanted data
+   
         if(!empty($this->allowed_columns)){
            foreach($data as $key => $value){
                if(!in_array($key,$this->allowed_columns)){
@@ -24,7 +24,7 @@ class Subscription {
 
     
 
-   // Method to get the subscription end date for a user
+  
 //    public function getSubscriptionEndDateByUser($userId) {
 //     $query = "SELECT subscription_end_date FROM $this->table WHERE userid = :userid ORDER BY subscription_end_date DESC LIMIT 1";
 //     $result = $this->query($query, ['userid' => $userId]);
@@ -54,14 +54,14 @@ public function getOngoingByUserId($userid) {
 
 public function getById($id) {
     $query = "SELECT * FROM subscriptions WHERE subscriptionid = :id";
-    return $this->query($query, ['id' => $id])[0] ?? null;  // Returns the first result or null if not found
+    return $this->query($query, ['id' => $id])[0] ?? null; 
 }
 
 public function updateStatus($data, $condition) {
-    // Prepare the update query for the subscription table
+
     $query = "UPDATE subscription SET status = :status WHERE userid = :userid";
     
-    // Execute the query with the provided data
+
     return $this->query($query, $data);
 }
 
@@ -69,12 +69,12 @@ public function updateStatus($data, $condition) {
 public function updateSubscriptionStatus($subscriptionId, $paymentDate) {
     $query = "UPDATE subscription SET status = :status, date_of_payment = :date_of_payment WHERE subscriptionid = :subscriptionid";
     $data = [
-        'status' => 'paid', // Setting status to 'paid'
-        'date_of_payment' => $paymentDate, // Date when payment was made
-        'subscriptionid' => $subscriptionId, // Subscription to be updated
+        'status' => 'paid', 
+        'date_of_payment' => $paymentDate, 
+        'subscriptionid' => $subscriptionId, 
     ];
 
-    // Execute the query using the query function (which you already have)
+    
     return $this->query($query, $data);
 }
 
@@ -91,7 +91,7 @@ public function isWithinTwoWeeksOfExpiry($userId) {
         $endDate = $result[0]->subscription_end_date; 
 
         $today = date('Y-m-d');
-        $diff = (strtotime($endDate) - strtotime($today)) / (60 * 60 * 24); // difference in days
+        $diff = (strtotime($endDate) - strtotime($today)) / (60 * 60 * 24); 
 
         if ($diff <= 14) {
             return ['allowed' => true, 'message' => 'You are within 2 weeks of expiry. You can proceed.'];

@@ -21,7 +21,7 @@ class External_User{
 
         
 
-        //return true if no errors
+        
         return empty($this->exerrors);
     }
     

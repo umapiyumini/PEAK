@@ -7,13 +7,13 @@ class Groundprices extends Controller {
         $rates = $groundModel->getAllGroundRates(); // All rates
         $courts = $courtModel->getAllCourts();      // All courts
 
-        // Map courts by courtid for easy lookup
+        
         $courtMap = [];
         foreach ($courts as $court) {
             $courtMap[$court->courtid] = $court;
         }
 
-        // Combine rate info with court info
+        
         $ratesWithCourt = [];
         foreach ($rates as $rate) {
             $court = $courtMap[$rate->courtid] ?? null;

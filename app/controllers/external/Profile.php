@@ -26,25 +26,25 @@ class Profile extends Controller {
 
         public function update()
         {
-            // Only allow POST
+            
             if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-                // Get user id from session
+              
                 if (!isset($_SESSION['userid'])) {
                     echo json_encode(['success' => false, 'message' => 'Not logged in']);
                     exit;
                 }
                 $userid = $_SESSION['userid'];
         
-                // Get JSON input
+             
                 $data = json_decode(file_get_contents('php://input'), true);
         
-                // Validate input (add more validation as needed)
+               
                 if (empty($data['name']) || empty($data['email']) || empty($data['phone']) || empty($data['address'])) {
                     echo json_encode(['success' => false, 'message' => 'All fields are required']);
                     exit;
                 }
         
-                // Update user in database
+                
                 $userModel = new User();
                 $validationData = ['contact_number' => $data['phone']];
                 if (!$userModel->validate($validationData) && isset($userModel->errors['contact_number'])) {
@@ -71,7 +71,7 @@ class Profile extends Controller {
 
 public function upload_image()
 {
-    // Only allow POST
+
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         if (!isset($_SESSION['userid'])) {
             echo json_encode(['success' => false, 'message' => 'Not logged in']);
@@ -79,7 +79,7 @@ public function upload_image()
         }
         $userid = $_SESSION['userid'];
 
-        // Check if file is uploaded
+
         if (!isset($_FILES['image']) || $_FILES['image']['error'] !== UPLOAD_ERR_OK) {
             echo json_encode(['success' => false, 'message' => 'No file uploaded or upload error']);
             exit;
@@ -87,7 +87,7 @@ public function upload_image()
 
         $uploadDir = __DIR__ . '/../../../uploads/profile_pictures/';
         if (!is_dir($uploadDir)) {
-            mkdir($uploadDir, 0777, true); // Create directory if it doesn't exist
+            mkdir($uploadDir, 0777, true);// Create directory if it doesn't exist
         }
 
         $file = $_FILES['image'];
@@ -98,12 +98,12 @@ public function upload_image()
             exit;
         }
 
-        // Generate a unique file name (e.g., userid_timestamp.ext)
+    
         $newName = $userid . '_' . time() . '.' . $ext;
         $destination = $uploadDir . $newName;
 
         if (move_uploaded_file($file['tmp_name'], $destination)) {
-            // Optionally: Save the image path/filename in the user's DB record
+        
             $userModel = new User();
             $userModel->update($userid, ['image' => $newName]);
 
@@ -135,9 +135,9 @@ public function remove_image()
         if ($user && !empty($user->image)) {
             $filePath = __DIR__ . '/../../../uploads/profile_pictures/' . $user->image;
             if (file_exists($filePath)) {
-                unlink($filePath); // Delete the file
+                unlink($filePath); 
             }
-            // Remove image reference from DB
+            
             $userModel->update($userid, ['image' => null]);
             echo json_encode(['success' => true]);
         } else {

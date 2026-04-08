@@ -3,9 +3,38 @@
 class Sport {
     use Model;
     protected $table = 'sport';
+<<<<<<< HEAD
+=======
+
+>>>>>>> 9dca0a0ac48735620d60b8f87062b0554b1f37ff
+    protected $allowed_columns = [
+        'sport_id',
+        'sport_name'
+
+    ];
+
+    public $studenterrors = [];
+
+    public function validate($data) {
+        //check if registrationnumber is empty
+        if (empty($data['sport_name'])) {
+            $this->sporterrors['sport_name'] = 'Sport Name is required';
+        }
+
+         
+
+
+        //return true if no errors
+        return empty($this->sporterrors);
+    }
+<<<<<<< HEAD
+=======
+
     protected $allowedColumns = [
         'sport_id',
         'sport_name'];
+
+>>>>>>> 9dca0a0ac48735620d60b8f87062b0554b1f37ff
 
     public function findAllSports() {
         $query = "SELECT * FROM $this->table";

@@ -93,6 +93,19 @@
    
     <h2>Attendance List</h2>
         <div class="controls">
+
+        
+        <div id="venue-container">
+    <select id="venue">
+        <option value="">Select Venue</option>
+        <option value="Ground">Ground</option>
+        <option value="Indoor Stadium">Indoor Stadium</option>
+        <option value="Basket ball court">Basket ball court</option>
+        <option value="Tennis court">Tennis court</option>
+    </select>
+</div>
+
+       
         
             
             <input type="text" id="search-bar" placeholder="Search by player name..." onkeyup="filterTable()">

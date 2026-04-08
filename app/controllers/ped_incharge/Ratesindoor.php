@@ -21,16 +21,16 @@
                 $duration = $_POST['duration'] ?? null;
                 $price = $_POST['price'] ?? null;
         
-                // Validate input as needed
+               
         
                 $indoorcourtsModel = new Indoorcourts();
                 $indoorcourtsModel->updatePrice($courtid, $event, $duration, $price);
         
-                // Redirect back to rates page (PRG pattern)
+             
                 header("Location: " . ROOT . "/ped_incharge/ratesindoor");
                 exit;
             }
-            // Optionally, handle GET or invalid requests
+        
             header("Location: " . ROOT . "/ped_incharge/ratesindoor");
             exit;
         }

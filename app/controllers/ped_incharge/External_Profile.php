@@ -12,7 +12,7 @@ class External_Profile extends Controller
         $reservationsModel = new Reservations();
 
 
-        // Fetch user and external user details with a join
+       
         $query = "SELECT u.*, eu.company_name 
                   FROM user u 
                   JOIN external_user eu ON u.userid = eu.userid 
@@ -26,14 +26,14 @@ class External_Profile extends Controller
 
         $user = $result[0];
 
-        // Set the correct image URL for the view
+        
         if (!empty($user->image)) {
             $user->image_url = LINKROOT . '/uploads/profile_pictures/' . htmlspecialchars($user->image);
         } else {
             $user->image_url = LINKROOT . '/assets/images/ped_incharge/externalcustomer.png';
         }
 
-        // Fetch reservations
+        
        
         $reservations = $reservationsModel->getReservationsByUser($userid);
 

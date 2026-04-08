@@ -3,65 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Colours Night</title>
+    <title>Upload Rules and Regulations</title>
     <style>
-        /* Global Styles
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-            font-family: 'Arial', sans-serif;
-        }
-
-        body {
-            color: #333;
-            background-color: #ffffff;
-            padding: 0;
-            margin: 0;
-        }
-
-        .container {
-            display: flex;
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 20px;
-        }
-
-        /* Sidebar Styles 
-        .sidebar {
-            width: 250px;
-            background-color: #e9eef5;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        }
-
-        .sidebar ul {
-            list-style: none;
-            padding-left: 0;
-        }
-
-        .sidebar ul li {
-            margin-bottom: 20px;
-        }
-
-        .sidebar ul li a {
-            text-decoration: none;
-            color: #333;
-            font-weight: bold;
-            display: block;
-            padding: 10px;
-            border-radius: 5px;
-            transition: all 0.3s;
-        }
-
-        .sidebar ul li a.active,
-        .sidebar ul li a:hover {
-            background-color: #d0dae8;
-            padding-left: 15px;
-            border-radius: 8px;
-        }
-
         /* Main Content Styles */
         .main-content {
             flex-grow: 1;
@@ -169,11 +112,11 @@
 <?php include 'nav.view.php'; ?>
 
 <main class="main-content">
-    <h1>Colours Night Criteria</h1>
-    <p class="subtext">Upload and update the criteria for the Colours Night awarding ceremony for outstanding performance in sports</p>
+    <h1>Upload Rules and Regulations</h1>
+    <p class="subtext">Upload and update the rules and regulations for the Colours Night awarding ceremony for outstanding performance in sports</p>
     
     <section class="upload-section">
-        <h2>Upload Colours Night Criteria</h2>
+        <h2>Upload Rules and Regulations</h2>
         <label for="upload-file">Upload PDF file</label>
         <input type="file" id="upload-file" class="file-input">
         <button class="btn btn-upload">Upload</button>

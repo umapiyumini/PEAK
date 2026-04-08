@@ -22,7 +22,7 @@ class Ped_facilities extends Controller {
                 'section' => $section
             ];
     
-            // Handle image upload if a new file is provided
+           
             if (isset($_FILES['image']) && $_FILES['image']['error'] === UPLOAD_ERR_OK) {
                 $uploadDir = 'C:/xampp1/htdocs/PEAK/public/assets/images/uma/';
                 $filename = uniqid() . '_' . basename($_FILES['image']['name']);
@@ -95,7 +95,7 @@ class Ped_facilities extends Controller {
             ];
             $result = $courtsModel->insert($data);
     
-            // ADD THIS:
+            
             if ($result) {
                 echo 'success';
             } else {

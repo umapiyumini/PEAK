@@ -1,7 +1,7 @@
 <?php
 class Netballform extends Controller {
     public function index() {
-        // This will load the hockey form view
+        
         $this->view('external/netballform');
     }
     public function getPrice() {
@@ -82,7 +82,7 @@ class Netballform extends Controller {
                 return;
             }
     
-            // Get section of the court
+        
             $courts = new Courts();
             $court = $courts->getCourtByName($courtName);
             if (!$court) {
@@ -94,17 +94,11 @@ class Netballform extends Controller {
     
     
             
-            // Debug info
-            // error_log("Checking availability for date: $date, court: $courtName, section: $section");
-    
-            // Check if full day is booked
+            
             $reservations = new Reservations();
             $isBooked = $reservations->isFullDayBooked($date, $section);
     
-            // Debug info
-            // error_log("Is booked: " . ($isBooked ? 'Yes' : 'No'));
-    
-            // Return plain text response
+            
             echo $isBooked ? 'full' : 'available';
         } else {
             echo 'Invalid request method';
@@ -124,7 +118,7 @@ class Netballform extends Controller {
                 return;
             }
     
-            // Get section of the court
+    
             $courts = new Courts();
             $court = $courts->getCourtByName($courtName);
             if (!$court) {
@@ -134,14 +128,14 @@ class Netballform extends Controller {
     
             $section = $court->section;
     
-            // Check which half-day slots are booked
+        
             $reservations = new Reservations();
             $bookedHalfDaySlots = $reservations->getBookedHalfDaySlots($date, $section);
             
-            // Check which two-hour slots are booked
+            
             $bookedTwoHourSlots = $reservations->getBookedTwoHourSlots($date, $section);
             
-            // Determine half-day availability
+        
             $halfDayStatus = 'none';
             if (in_array('08:00:00', $bookedHalfDaySlots) && in_array('13:00:00', $bookedHalfDaySlots)) {
                 $halfDayStatus = 'both';
@@ -151,10 +145,10 @@ class Netballform extends Controller {
                 $halfDayStatus = 'afternoon';
             }
             
-            // Create a response string with pipe delimiter
+        
             $response = $halfDayStatus . '|';
             
-            // Add two-hour booked slots
+            
             if (!empty($bookedTwoHourSlots)) {
                 $response .= implode(',', $bookedTwoHourSlots);
             }
@@ -178,7 +172,7 @@ public function checkTwoHourAvailability() {
             return;
         }
 
-        // Get section of the court
+    
         $courts = new Courts();
         $court = $courts->getCourtByName($courtName);
         if (!$court) {
@@ -188,11 +182,11 @@ public function checkTwoHourAvailability() {
 
         $section = $court->section;
 
-        // Check which two-hour slots are booked
+        
         $reservations = new Reservations();
         $bookedTwoHourSlots = $reservations->getBookedTwoHourSlots($date, $section);
         
-        // Return the booked slots as a comma-separated string
+        
         echo implode(',', $bookedTwoHourSlots);
     } else {
         echo 'Invalid request method';
@@ -208,7 +202,7 @@ public function checkTwoHourAvailability() {
         
     
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            // 1. Get user/session info
+    
             $userid = $_SESSION['userid'];
             $courtName = $_POST['court_name'] ?? '';
             $courts = new Courts();
@@ -222,7 +216,7 @@ public function checkTwoHourAvailability() {
     
            
     
-            // 2. Get form values
+        
             $event = $_POST['bookingFor'];
             $duration = $_POST['duration'];
             $date = $_POST['date'];
@@ -236,7 +230,7 @@ public function checkTwoHourAvailability() {
             $status = 'pending';
             $created_at = date('Y-m-d H:i:s');
     
-            // 3. Handle file upload
+        
             $userproof = '';
             if (isset($_FILES['proof']) && $_FILES['proof']['error'] === UPLOAD_ERR_OK) {
                 $uploadDir = 'C:/xampp1/htdocs/PEAK/uploads/user_proofs/';
@@ -247,7 +241,7 @@ public function checkTwoHourAvailability() {
                 }
             }
     
-            // 4. Build data array
+            
             $data = [
                 'userid' => $userid,
                 'courtid' => $courtid, 
@@ -266,7 +260,7 @@ public function checkTwoHourAvailability() {
                 'created_at' => $created_at,
             ];
     
-            // 5. Insert into database
+    
             $reservationsModel = new Reservations();
             $result = $reservationsModel->insert($data);
     

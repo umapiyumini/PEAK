@@ -581,3 +581,139 @@ body{
 .btn-group .fbtn.cancel:hover {
     background: #2f0629;
 }
+/* Responsive Styles */
+
+/* For tablets and smaller screens */
+@media screen and (max-width: 1024px) {
+    .navigation {
+      width: 80px;
+    }
+    
+    .navigation .logo img {
+      width: 70px;
+    }
+    
+    .main {
+      width: calc(100% - 80px);
+      left: 80px;
+    }
+    
+    .contain {
+      flex-direction: column;
+    }
+    
+    .contain .contactinfo,
+    .contactform {
+      width: 100%;
+      margin-left: 0;
+      margin-top: 30px;
+    }
+  }
+  
+  /* For mobile devices */
+  @media screen and (max-width: 768px) {
+    .navigation {
+      width: 0;
+      left: -10px;
+      z-index: 1000;
+    }
+    
+    .navigation.active {
+      width: 250px;
+      left: 0;
+    }
+    
+    .main {
+      width: 100%;
+      left: 0;
+    }
+    
+    .main.active {
+      left: 250px;
+    }
+    
+    .contact {
+      padding: 30px 20px;
+    }
+    
+    .contactform {
+      padding: 20px;
+    }
+    
+    .toggle {
+      z-index: 10001;
+    }
+  }
+  
+  /* For smaller mobile devices */
+  @media screen and (max-width: 480px) {
+    .topbar {
+      padding: 0 5px;
+    }
+    
+    .contact .content h2 {
+      font-size: 24px;
+    }
+    
+    .contactform h2 {
+      font-size: 22px;
+    }
+    
+    .contactform .inputbox input[type="submit"] {
+      width: 100%;
+    }
+    
+    .fwrapper {
+      padding: 1rem;
+      max-width: 90%;
+    }
+    
+    .rating {
+      font-size: 1.5rem;
+    }
+    
+    .btn-group {
+      flex-direction: column;
+      width: 100%;
+    }
+    
+    .btn-group .fbtn {
+      width: 100%;
+      margin-bottom: 10px;
+    }
+  }
+  
+  /* For landscape orientation on mobile */
+  @media screen and (max-height: 500px) and (orientation: landscape) {
+    .navigation {
+      overflow-y: auto;
+    }
+    
+    .contactform {
+      max-height: 80vh;
+      overflow-y: auto;
+    }
+    
+    .fwrapper {
+      max-height: 90vh;
+      overflow-y: auto;
+    }
+  }
+  
+  /* Make images responsive */
+  img {
+    max-width: 100%;
+    height: auto;
+  }
+  
+  /* Flexible grid system */
+  .flex-container {
+    display: flex;
+    flex-wrap: wrap;
+  }
+  
+  .flex-item {
+    flex: 1 1 300px;
+    margin: 10px;
+  }
+  

@@ -1,8 +1,8 @@
 <?php 
 class Subscriptionpayments {
-    use Model; // Use the Database trait to access the query methods
+    use Model; 
 
-    protected $table = 'subscriptionpayments';  // Correct table name
+    protected $table = 'subscriptionpayments';  
     protected $fillable = ['paymentid', 'userid', 'subscriptionid', 'payment_date', 'paymentproof'];
     protected $allowed_columns = ['userid', 'subscriptionid', 'paymentproof', 'payment_date'];
 
@@ -21,7 +21,7 @@ class Subscriptionpayments {
         $query = "INSERT INTO $this->table (" . implode(",", $keys) . ") VALUES (:" . implode(",:", $keys) . ")";
         
       
-        return $this->query($query, $data); // this will execute the insert query
+        return $this->query($query, $data); 
     }
    
     
